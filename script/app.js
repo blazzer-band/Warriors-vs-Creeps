@@ -65,9 +65,14 @@ function Game(content) {
 			return this.map[x][y]
 		}
 
-		// Возвращает все объекты клетки типа type (new array[Cells])
-		this.GetAll = function(type){
+		// Возвращает все объекты клетки типа tileType (new Cell[])
+		this.GetAllCells = function(type){
 			return this.typesCells[tileType[type]]
+		}
+
+		// Возвращает все объекты клетки типа unitType (new Unit[])
+		this.GetAllUnits = function(type){
+			//return this.typesCells[tileType[type]]
 		}
 
 
