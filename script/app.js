@@ -54,24 +54,21 @@ function Game(content) {
 
 	}
 
+	// this.Type = null; /* Тип карты между картой схем, командной картой и
+	// 									картой схем*/
 
+	function ComandCard(){ // Описание командной карты
 
-	/*for (let i = 0; i < map.length; i++) {
-		for (let j = 0; j < map[j].length; j++) {
+		this.Element = null // Элемент карты между эл-ой, желе-ой, компь-ой или ог-ой
 
-			switch (inputMap[i][j]) {
-				case 0:
-					break;
-				default:
-					break;
-			}
+		this.State = null // Состояние карты ("в руке", в командной строке, утилизирована)
 
-		}
-	}*/
+	}
+
 
 	this.Start = function(){
 
-		
+
 
 
 	}
