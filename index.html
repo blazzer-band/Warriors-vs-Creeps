@@ -6,9 +6,10 @@
 		#game-map {
 			width: 600px;
 			height: 300px;
+
 		}
 		#game-map, tr, td {
-			border: 1px solid black;
+			border-collapse: collapse;
 		}
 		#main {
 			display: flex;
@@ -18,8 +19,30 @@
 			border: 1px solid black;
 			margin: 0 auto;
 		}
+		#footer {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			width: 900px;
+			height: 200px;
+			border: 1px solid black;
+			margin: 0 auto;
+			margin-top: 10px;
+		}
 		#trackers {
 			width: 140px;
+		}
+		#clock, #x-card, #card-field {
+			border: 1px solid aquamarine;
+		}
+		#clock {
+			width: 140px;
+		}
+		#card-field {
+			width: 600px;
+		}
+		#x-card {
+			width: 160px;
 		}
 		#chat {
 			width: 160px;
@@ -51,6 +74,15 @@
 
 			margin: 0 auto;
 			border: 1px double aqua;
+		}
+		.g {
+			background-image: url("models/grass.jpg");
+		}
+		#o1 {
+			background-image: url("models/oil.jpg");
+		}
+		#o2 {
+			background-image: url("models/oil.jpg");
 		}
 	</style>
 </head>
@@ -91,7 +123,7 @@
 					<td class="g"></td>
 					<td class="g"></td>
 					<td class="g"></td>
-					<td class="o"></td>
+					<td class="o" id="o1"></td>
 					<td class="r"></td>
 					<td class="g"></td>
 					<td class="r"></td>
@@ -105,7 +137,7 @@
 					<td class="g"></td>
 					<td class="g"></td>
 					<td class="g"></td>
-					<td class="o"></td>
+					<td class="o" id="o2"></td>
 					<td class="g"></td>
 					<td class="g"></td>
 					<td class="g"></td>
