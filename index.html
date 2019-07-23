@@ -7,100 +7,65 @@
 			width: 600px;
 			height: 300px;
 		}
-		#game-map, .card, tr, td {
+		#game-map, tr, td {
 			border: 1px solid black;
 		}
-		.bar {
-			width: 1000px;
-			height: 150px;
+		#main {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			width: 900px;
+			border: 1px solid black;
+			margin: 0 auto;
 		}
-		#kills, #power-points, #hp-bomb {
-			border: 1px double black;
+		#trackers {
+			width: 140px;
 		}
-		#kills {
-			width: 250px;
-			height: 50px;
+		#chat {
+			width: 160px;
 		}
-		#power-points, #hp-bomb {
-			width: 400px;
+		#kill-tracker {
+			display: flex;
+			flex-direction: row;
+			width: 140px;
+			justify-content: center;
+			padding-top: 30px;
+			margin: 0 auto;
 		}
-		#hp-bomb {
-			height: 50px;
+		.flex-item {
+			width: 60px;
+			height: 60px;
+			padding: 2px;
+			border: 1px solid red;
 		}
-		#power-points {
-			height: 100px;
+		#bomb-tracker {
+			padding-top: 20px;
+		}
+		#flex-bomb {
+			display: flex;
+			width: 120px;
+			height: 120px;
+			flex-direction: row;
+			justify-content: end;
+			padding: 5px;
+
+			margin: 0 auto;
+			border: 1px double aqua;
 		}
 	</style>
 </head>
 <body>
 
 <div id="content">
-	<div id="header">
-		<div id="card-distribution">
-			<table class="bar card">
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-		</div>
-	</div>
+	<div id="header"></div>
 	<div id="main">
 		<div id="trackers">
 			<div id="kill-tracker">
-				<table id="kills">
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
-				<table id="power-points">
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
+				<div class="flex-item"></div>
+				<div class="flex-item"></div>
 			</div>
 			<div id="bomb-tracker">
-				<table id="hp-bomb">
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
+				<div id="flex-bomb"></div>
 			</div>
 		</div>
 		<div id="map">
