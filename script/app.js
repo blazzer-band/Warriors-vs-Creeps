@@ -2,9 +2,12 @@
 
 function Game(content) {
 	
-	const tileType = {grass:0, base:1, runes:2, target:3, oil:4}
-	const unitType = {hero:0, creep:1, bomb:2}
-	const cardType = {electro:0, iron:1, computer:2, fire:3}
+	const tileType = {Grass:0, Base:1, Runes:2, Target:3, Oil:4}
+	const unitType = {Hero:0, Creep:1, Bomb:2}
+	const cardType = {Electro:0, Iron:1, Computer:2, Fire:3}
+	const phaseType = {WarriorsSelect:0, WarriorsProgram:1, WarriorsAction:2, CreepsMove:3, CreepsSpawn:4, CreepsAttack:5}
+	const userType = {Human:0, Bot:1, UserAgent:2}
+	let seedRandom = 0 // Общее случайное число, получать его от хоста
 
 	const inputMap = [ // Ландшафт
 		[1, 0, 0, 0, 0, 2,  2, 0, 0, 0, 0, 0],
@@ -69,10 +72,43 @@ function Game(content) {
 
 
 	}
+	// Подключение пользователей
+	//let users = 
+
+	// Инициализация
+	let random = new Math.seedrandom(seedRandom)
+	let map = new MapObject(inputMap)
+	// Отрисовка карты и сброс интерфейса
+	//ResetGame()
+	//DrawMap(inputMap)
+
+	// Глобальный цикл стадий
+	let phase = phaseType.WarriorSelect
 
 	
-	let map = new MapObject(inputMap)
+
+
+	while (false) {
+
+		// WarriorsSelect
+		/*for (let user of ) {
+			
+		};*/
+
+
+
+
+
+	}
+
 
 	this.Start = function(){}
 
+}
+
+
+
+
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
 }
