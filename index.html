@@ -1,11 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Игра</title>
+	<title>Warriors vs Creeps</title>
+	<style>
+		table {
+			width: 600px;
+			height: 300px;
+		}
+		table, tr, td {
+			border: 1px solid black;
+		}
+	</style>
 </head>
 <body>
 
-<div id="content"></div>
+<div id="content">
+	<div id="header">
+		<div id="card-distribution"></div>
+	</div>
+	<div id="main">
+		<div id="trackers">
+			<div id="kill-tracker"></div>
+			<div id="bomb-tracker"></div>
+		</div>
+		<div id="map">
+			<table>
+				<tr>
+					<td class="b"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="r"></td>
+					<td class="r"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+				</tr>
+				<tr>
+					<td class="b"></td>
+					<td class="b"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="o"></td>
+					<td class="r"></td>
+					<td class="g"></td>
+					<td class="r"></td>
+					<td class="r"></td>
+					<td class="g"></td>
+				</tr>
+				<tr>
+					<td class="b"></td>
+					<td class="b"></td>
+					<td class="b"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="o"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+				</tr>
+				<tr>
+					<td class="b"></td>
+					<td class="b"></td>
+					<td class="b"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="r"></td>
+					<td class="g"></td>
+					<td class="t"></td>
+					<td class="g"></td>
+					<td class="r"></td>
+				</tr>
+				<tr>
+					<td class="b"></td>
+					<td class="b"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="r"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="r"></td>
+					<td class="g"></td>
+				</tr>
+				<tr>
+					<td class="b"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="r"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+					<td class="g"></td>
+				</tr>
+			</table>
+		</div>
+		<div id="chat"></div>
+	</div>
+	<div id="footer">
+		<div id="clock"></div>
+		<div id="card-field"></div>
+		<div id="x-card"></div>
+	</div>
+</div>
 
 
 <script src="script/app.js" type="text/javascript" charset="utf-8"></script>
