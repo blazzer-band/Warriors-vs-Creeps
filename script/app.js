@@ -69,19 +69,9 @@ function Game(content) {
 
 
 	}
+
+	
 	let map = new MapObject(inputMap)
-
-	// this.Type = null; /* Тип карты между картой схем, командной картой и
-	// 									картой схем*/
-
-	function ComandCard(){ // Описание командной карты
-
-		this.Element = null // Элемент карты между эл-ой, желе-ой, компь-ой или ог-ой
-
-		this.State = null // Состояние карты ("в руке", в командной строке, утилизирована)
-
-	}
-
 
 	this.Start = function(){}
 
