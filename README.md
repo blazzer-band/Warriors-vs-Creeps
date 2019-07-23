@@ -1,4 +1,4 @@
-# Warriors vs Crips [Mission: Bomb Keepers]
+# Warriors vs Creeps [Mission: Bomb Keepers]
 # Игра по типу "Mechs vs Minions (LoL)"
 
 # Идея
