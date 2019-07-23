@@ -58,7 +58,6 @@ function Game(content) {
 
 	}
 
-<<<<<<< HEAD
 	// this.Type = null; /* Тип карты между картой схем, командной картой и
 	// 									картой схем*/
 
@@ -71,24 +70,6 @@ function Game(content) {
 	}
 
 
-=======
->>>>>>> 0fbbc79a3ce28925d2c2c93009b03ab8cde28ff5
-	this.Start = function(){
-
-
-
-
-	}
-<<<<<<< HEAD
-
-
-
-
-
-
-
+	this.Start = function(){}
 
 }
-=======
-}
->>>>>>> 0fbbc79a3ce28925d2c2c93009b03ab8cde28ff5
