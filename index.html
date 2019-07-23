@@ -3,12 +3,32 @@
 <head>
 	<title>Warriors vs Creeps</title>
 	<style>
-		table {
+		#game-map {
 			width: 600px;
 			height: 300px;
 		}
-		table, tr, td {
+		#game-map, .card, tr, td {
 			border: 1px solid black;
+		}
+		.bar {
+			width: 1000px;
+			height: 150px;
+		}
+		#kills, #power-points, #hp-bomb {
+			border: 1px double black;
+		}
+		#kills {
+			width: 250px;
+			height: 50px;
+		}
+		#power-points, #hp-bomb {
+			width: 400px;
+		}
+		#hp-bomb {
+			height: 50px;
+		}
+		#power-points {
+			height: 100px;
 		}
 	</style>
 </head>
@@ -16,15 +36,75 @@
 
 <div id="content">
 	<div id="header">
-		<div id="card-distribution"></div>
+		<div id="card-distribution">
+			<table class="bar card">
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<div id="main">
 		<div id="trackers">
-			<div id="kill-tracker"></div>
-			<div id="bomb-tracker"></div>
+			<div id="kill-tracker">
+				<table id="kills">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+				<table id="power-points">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+			<div id="bomb-tracker">
+				<table id="hp-bomb">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 		<div id="map">
-			<table>
+			<table id="game-map">
 				<tr>
 					<td class="b"></td>
 					<td class="g"></td>
