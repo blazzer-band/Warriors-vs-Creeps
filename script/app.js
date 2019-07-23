@@ -4,6 +4,7 @@ function Game(content) {
 	
 	const tileType = {grass:0, base:1, runes:2, target:3, oil:4}
 	const unitType = {hero:0, creep:1, bomb:2}
+	const cardType = {electro:0, iron:1, computer:2, fire:3}
 
 	const inputMap = [ // Ландшафт
 		[1, 0, 0, 0, 0, 2,  2, 0, 0, 0, 0, 0],
@@ -13,7 +14,6 @@ function Game(content) {
 		[1, 1, 0, 0, 0, 0,  0, 2, 0, 0, 2, 0],
 		[1, 0, 0, 0, 0, 2,  0, 0, 0, 0, 0, 0]
 	]
-
 
 	function MapObject(inputMap){ // Структура данных для работы с полем игры
 
@@ -36,11 +36,23 @@ function Game(content) {
 		// инициализация
 
 		this.size = {x:inputMap[0].length, y:inputMap.length}
-		this.map = {}
+		this.map = []
+		this.typesCells = []
+
+		for(let i in tileType){
+			this.typesCells.push([])
+		}
 
 		for (let i = 0; i < inputMap.length; i++) {
-			for (var j = 0; j < map[i].length; j++) {
-				map[i][j]
+			this.map.push([])
+			for (let j = 0; j < inputMap[i].length; j++) {
+				let cell = new Cell()
+				cell.x = j
+				cell.y = i
+				cell.type = inputMap[i][j]
+
+				this.map[i][j] = cell
+				this.typesCells[cell.type].push(cell)
 			}
 		}
 
@@ -50,13 +62,14 @@ function Game(content) {
 			return this.map[x][y]
 		}
 
-		// Возвращает все объекты клетки типа type (array[])
+		// Возвращает все объекты клетки типа type (new array[Cells])
 		this.GetAll = function(type){
-
+			return this.typesCells[tileType[type]]
 		}
 
 
 	}
+	let map = new MapObject(inputMap)
 
 	// this.Type = null; /* Тип карты между картой схем, командной картой и
 	// 									картой схем*/
