@@ -1,7 +1,9 @@
 "use strict"
 
 function Game(content) {
-	// id : {0: grass, 1: base, 2: runes, 3: target, 4: oil}
+	
+	const tileType = {grass:0, base:1, runes:2, target:3, oil:4}
+	const unitType = {hero:0, creep:1, bomb:2}
 
 	const inputMap = [ // Ландшафт
 		[1, 0, 0, 0, 0, 2,  2, 0, 0, 0, 0, 0],
@@ -34,11 +36,13 @@ function Game(content) {
 		// инициализация
 
 		this.size = {x:inputMap[0].length, y:inputMap.length}
-		this.map = []
+		this.map = {}
 
-		/*for (l i = 0; i < Things.length; i++) {
-			Things[i]
-		};*/
+		for (let i = 0; i < inputMap.length; i++) {
+			for (var j = 0; j < map[i].length; j++) {
+				map[i][j]
+			}
+		}
 
 
 		// Возвращает объект клетки(Cell) по координатам (x, y)
@@ -54,6 +58,7 @@ function Game(content) {
 
 	}
 
+<<<<<<< HEAD
 	// this.Type = null; /* Тип карты между картой схем, командной картой и
 	// 									картой схем*/
 
@@ -66,12 +71,15 @@ function Game(content) {
 	}
 
 
+=======
+>>>>>>> 0fbbc79a3ce28925d2c2c93009b03ab8cde28ff5
 	this.Start = function(){
 
 
 
 
 	}
+<<<<<<< HEAD
 
 
 
@@ -81,3 +89,6 @@ function Game(content) {
 
 
 }
+=======
+}
+>>>>>>> 0fbbc79a3ce28925d2c2c93009b03ab8cde28ff5
