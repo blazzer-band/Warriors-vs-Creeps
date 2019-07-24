@@ -109,6 +109,22 @@ function Game() {
 			graph.InitUnit(runeCell)
 		}
 
+		let heroes = this.map.GetAllCells(tileType.Base)
+
+		for (let heroCell of heroes) {
+			if(random() >= 0.5) continue;
+			let hero = new Unit()
+			hero.type = unitType.Hero
+
+			heroCell.SetUnit(hero)
+
+			graph.InitUnit(heroCell)
+		}
+		
+		
+
+		//TEST
+
 
 	}
 	// Функции стадий

@@ -49,7 +49,7 @@ function Render() {
 
 	// передвинуть юнита из in в out
 	this.MoveUnit = function(cellIn, cellOut){
-
+		
 	}
 
 	// нарисовать юнита который есть в ячейке
