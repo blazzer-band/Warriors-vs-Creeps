@@ -36,9 +36,11 @@ function Render() {
 				}
 			}
 		}
-	}
 
+        let img = new Image(120, 120);
+        img.src = "models/tmp files/man-with-sword-and-shield.svg";
+        map.children[0].children[1].children[1].appendChild(img);
 
-	
+    }
 
 }
