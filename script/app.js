@@ -1,6 +1,6 @@
 "use strict"
 
-const tileType = {Grass:0, Base:1, Runes:2, Target:3/*, Oil:4*/}
+const tileType = {Grass:0, Base:1, Runes:2, Target:3}
 const unitType = {Hero:0, Creep:1, Bomb:2}
 const cardType = {Electro:0, Iron:1, Computer:2, Fire:3}
 const phaseType = {WarriorsSelect:0, WarriorsProgram:1, WarriorsAction:2, CreepsMove:3, CreepsSpawn:4, CreepsAttack:5}
@@ -21,11 +21,11 @@ function Game() {
 
 	function Unit(){
 		this.type = null
-		this.directionVector = {x:0, y:1}
+		this.rotation = 0 // 1: 90, 2: 180, 3: -90(270)
 
-		this.Rotate = function(angle){ // 0: 90, 1: 180, 2: -90(270)
-
-
+		this.Rotate = function(angle){  // 1: 90, 2: 180, 3: -90(270)
+			this.rotation += angle
+			this.rotation %= 4
 		}
 
 	}
