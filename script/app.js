@@ -79,9 +79,17 @@ function Game() {
 		}
 
 		// Возвращает все объекты клетки типа unitType (new Unit[])
-		this.GetAllUnits = function(type){
-			let retArray = [] 
-			//return this.typesCells[tileType[type]]
+		this.GetAllCellHasUnits = function(type){
+			let retArray = []
+			for (let row of this.map){
+				for (let cell of row){
+					if(cell.HasUnit() && cell.unit.type === type){
+						retArray.push(cell)
+					}
+				}
+			}
+
+
 		}
 
 	}
@@ -120,8 +128,10 @@ function Game() {
 
 			graph.InitUnit(heroCell)
 		}
-		
-		
+
+
+		this.map.GetAllCellHasUnits( unitType.Hero);
+
 
 		//TEST
 
