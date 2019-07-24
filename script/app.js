@@ -24,7 +24,7 @@ function Game() {
 
 	}
 
-	
+
 
 	function MapObject(inputMap){ // Структура данных для работы с полем игры
 
@@ -75,16 +75,12 @@ function Game() {
 
 		// Возвращает все объекты клетки типа tileType (new Cell[])
 		this.GetAllCells = function(type){
-			return this.typesCells[tileType[type]]
-		}
-
-		// Возвращает все объекты клетки типа tileType (new Cell[])
-		this.GetAllUnitsInRadius = function(type){
-			return this.typesCells[tileType[type]]
+			return this.typesCells[type]
 		}
 
 		// Возвращает все объекты клетки типа unitType (new Unit[])
 		this.GetAllUnits = function(type){
+			let retArray = [] 
 			//return this.typesCells[tileType[type]]
 		}
 
@@ -102,8 +98,16 @@ function Game() {
 	let phase = phaseType.WarriorSelect
 
 	// users: AbstractAgent[] array - инициализированные обьекты пользователей
-	this.Start = function(users){
+	this.Start = function(){
 		
+		let runes = this.map.GetAllCells(tileType.Runes)
+
+		for (let runeCell of runes) { // Генерация монстров
+			let monster = new Unit();
+			monster.type = unitType.Creep
+			runeCell.SetUnit(monster)
+			graph.InitUnit(runeCell)
+		}
 
 
 	}
