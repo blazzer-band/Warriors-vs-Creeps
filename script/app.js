@@ -1,6 +1,6 @@
 "use strict"
 
-const tileType = {Grass:0, Base:1, Runes:2, Target:3, Oil:4}
+const tileType = {Grass:0, Base:1, Runes:2, Target:3/*, Oil:4*/}
 const unitType = {Hero:0, Creep:1, Bomb:2}
 const cardType = {Electro:0, Iron:1, Computer:2, Fire:3}
 const phaseType = {WarriorsSelect:0, WarriorsProgram:1, WarriorsAction:2, CreepsMove:3, CreepsSpawn:4, CreepsAttack:5}
@@ -12,8 +12,8 @@ function Game() {
 
 	const inputMap = [ // Ландшафт
 		[1, 0, 0, 0, 0, 2,  2, 0, 0, 0, 0, 0],
-		[1, 1, 0, 0, 0, 0,  4, 2, 0, 2, 2, 0],
-		[1, 1, 1, 0, 0, 0,  4, 0, 0, 0, 0, 0],
+		[1, 1, 0, 0, 0, 0,  0, 2, 0, 2, 2, 0],
+		[1, 1, 1, 0, 0, 0,  0, 0, 0, 0, 0, 0],
 		[1, 1, 1, 0, 0, 0,  0, 2, 0, 3, 0, 2],
 		[1, 1, 0, 0, 0, 0,  0, 2, 0, 0, 2, 0],
 		[1, 0, 0, 0, 0, 2,  0, 0, 0, 0, 0, 0]
@@ -71,11 +71,15 @@ function Game() {
 			return this.typesCells[tileType[type]]
 		}
 
+		// Возвращает все объекты клетки типа tileType (new Cell[])
+		this.GetAllUnitsInRadius = function(type){
+			return this.typesCells[tileType[type]]
+		}
+
 		// Возвращает все объекты клетки типа unitType (new Unit[])
 		this.GetAllUnits = function(type){
 			//return this.typesCells[tileType[type]]
 		}
-
 
 	}
 
@@ -86,12 +90,54 @@ function Game() {
 	// Глобальный цикл стадий
 	let phase = phaseType.WarriorSelect
 
-	// users: UserAbstract[] array
+	// users: AbstractAgent[] array - инициализированные обьекты пользователей
 	this.Start = function(users){
-		
 		
 
 
 	}
+	// Функции стадий
+
+	function WarriorsSelect(){ // Выбор карт
+		shakeArray(users, random)
+
+
+
+	}
+
+
+
+	function User(){
+		this.agent = null // Класс с функциями запроса ввода и вывода от этого пользователя
+		this.isHost = null
+
+	}
+
+
+
+
+	// Карта с определенным эффектом
+	function Card(){
+		this.id = null
+
+	}
+
+
+
+
 }
+
+
+function getRandomInt(random, min, max) {
+  return Math.floor(random() * (max - min)) + min
+}
+
+
+function shakeArray(a, random){
+	arr.sort(function (a, b) {
+  		return random() - 0.5
+	})
+	return arr
+}
+
 
