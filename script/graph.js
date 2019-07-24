@@ -2,6 +2,7 @@
 function Render() {
 
 
+    let map = document.getElementById("game-map");
 
 	this.RenderMap = function(inputMap){
     	let map = document.getElementById("game-map");
@@ -29,16 +30,8 @@ function Render() {
 					img.src = "tmp_models/blue.jpg";
 				}
 				map.children[0].children[i].children[j].appendChild(img);
-				if (tmp === 2) {
-					let image = new Image(120, 120);
-					image.src = "models/tmp files/enemy_icon.svg";
-					map.children[0].children[i].children[j].appendChild(image);
-				}
 			}
 		}
-		let img = new Image(120, 120);
-        img.src = "models/tmp files/man-with-sword-and-shield.svg";
-        map.children[0].children[1].children[1].appendChild(img);
 	}
 
 	
@@ -49,11 +42,26 @@ function Render() {
 
 	// передвинуть юнита из in в out
 	this.MoveUnit = function(cellIn, cellOut){
-		
+
+
 	}
 
 	// нарисовать юнита который есть в ячейке
 	this.InitUnit = function(cell){
+
+        let img = new Image(120, 120);
+	    switch (cell.unit.type) {
+            case 0:
+                img.src = "models/tmp files/man-with-sword-and-shield.svg";
+                map.children[0].children[cell.y].children[cell.x].appendChild(img);
+                break;
+            case 1:
+                img.src = "models/tmp files/enemy_icon.svg";
+                map.children[0].children[cell.y].children[cell.x].appendChild(img);
+                break;
+            case 2:
+                break;
+        }
 
 	}
 	
