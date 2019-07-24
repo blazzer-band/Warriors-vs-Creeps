@@ -11,69 +11,59 @@
 		#game-map, tr, td {
 			border-collapse: collapse;
 		}
-		#main {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			width: 900px;
-			border: 1px solid black;
-			margin: 0 auto;
-		}
-		#footer {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			width: 900px;
-			height: 200px;
-			border: 1px solid black;
-			margin: 0 auto;
-			margin-top: 10px;
-		}
-		#trackers {
-			width: 140px;
-		}
-		#clock, #x-card, #card-field {
-			border: 1px solid aquamarine;
-		}
-		#clock {
-			width: 140px;
-		}
-		#card-field {
-			width: 600px;
-		}
-		#x-card {
-			width: 160px;
-		}
-		#chat {
-			width: 160px;
-		}
-		#kill-tracker {
-			display: flex;
-			flex-direction: row;
-			width: 140px;
-			justify-content: center;
-			padding-top: 30px;
-			margin: 0 auto;
-		}
-		.flex-item {
-			width: 60px;
-			height: 60px;
-			padding: 2px;
-			border: 1px solid red;
-		}
-		#bomb-tracker {
-			padding-top: 20px;
-		}
-		#flex-bomb {
-			display: flex;
-			width: 120px;
-			height: 120px;
-			flex-direction: row;
-			justify-content: end;
-			padding: 5px;
 
-			margin: 0 auto;
-			border: 1px double aqua;
+		#content {
+			display: grid;
+			grid-template-rows: 1fr 300px 200px;
+			grid-row-gap: 1em;
+		}
+
+		#main, #footer {
+			display: grid;
+			grid-template-columns: 1.4fr 600px 1.6fr;
+			grid-column-gap: 1em;
+		}
+
+		#card-field {
+			background-color: darkslateblue;
+		}
+
+		#trackers {
+			display: grid;
+			grid-template-rows: 34% 60%;
+			grid-row-gap: 1em;
+		}
+
+		#kill-tracker {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-column-gap: 1em;
+		}
+
+		#kills, #points {
+			background-color: crimson;
+		}
+
+		#bomb-tracker {
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-gap: 2em;
+		}
+
+		#hp-bomb {
+			background-color: darkviolet;
+		}
+
+		#chat {
+			background-color: cadetblue;
+		}
+
+		#clock {
+			background-color: lightsalmon;
+		}
+
+		#x-card {
+			background-color: goldenrod;
 		}
 
 		.g {
@@ -94,7 +84,7 @@
 		.t {
 			background-image: url("tmp_models/blue.jpg");
 		}
-		
+
 	</style>
 </head>
 <body>
@@ -104,11 +94,11 @@
 	<div id="main">
 		<div id="trackers">
 			<div id="kill-tracker">
-				<div class="flex-item"></div>
-				<div class="flex-item"></div>
+				<div id="kills"></div>
+				<div id="points"></div>
 			</div>
 			<div id="bomb-tracker">
-				<div id="flex-bomb"></div>
+				<div id="hp-bomb"></div>
 			</div>
 		</div>
 		<div id="map">
