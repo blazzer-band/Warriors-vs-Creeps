@@ -19,6 +19,13 @@ function Game() {
 		[1, 0, 0, 0, 0, 2,  0, 0, 0, 0, 0, 0]
 	]
 
+	function Unit(){
+		this.type = null
+
+	}
+
+	
+
 	function MapObject(inputMap){ // Структура данных для работы с полем игры
 
 		function Cell(){
@@ -125,6 +132,8 @@ function Game() {
 		this.id = null
 
 	}
+
+
 
 
 

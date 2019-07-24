@@ -38,7 +38,20 @@ function Render() {
 		}
 	}
 
+	// Unit 
+	// cellOut.HasUnit тип получать cellOut.unit.type - тип юнита
+	// const unitType = {Hero:0, Creep:1, Bomb:2} - юнит
+	// cellOut.x cellOut.y - координаты
 
+	// передвинуть юнита из in в out
+	this.MoveUnit = function(cellIn, cellOut){
+
+	}
+
+	// нарисовать юнита который есть в ячейке
+	this.InitUnit = function(cell){
+
+	}
 	
 
 }
