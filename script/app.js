@@ -89,7 +89,7 @@ function Game() {
 
 
 	var graph = new Render()
-	graph.RenderMap(inputMap);
+	graph.RenderMap(map);
 
 	// Глобальный цикл стадий
 	let phase = phaseType.WarriorSelect
