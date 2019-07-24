@@ -53,20 +53,23 @@ function Render() {
         let element2 = map.children[0].children[cellOut.y].children[cellOut.x];
 
         let from_x = element1.offsetLeft;
-        let from_y = element1.offsetTop;
+        let from_y = element1.offsetParent.offsetTop;
 
         let to_x = element2.offsetLeft;
-        let to_y = element2.offsetTop;
+        let to_y = element2.offsetParent.offsetTop;
 
         let el = document.createElement("img");
+        map.appendChild(el)
         el.style.position = "absolute";
-        el.style.top = from_y.toString() + "px";
-        el.style.left = from_x.toString() + "px";
-        el.src = units[cellIn.unit.type];
-        el.style.transition = "transform 0.5s linear";
-        el.style.transform = "translateX(-110px)";
-        el.style.top = to_y.toString() + "px";
-        el.style.left = to_x.toString() + "px";
+        //el.style.top = from_y + "px";
+        //el.style.left = from_x + "px";
+        el.src = units[cellOut.unit.type];
+        //el.style.transition = "top 1s linear";
+        el.style.transition = "left 1s linear";
+
+       // el.style.transform = "translateX(-110px)";
+        el.style.top = to_y + "px";
+        el.style.left = to_x + "px";
     }
 
     // нарисовать юнита который есть в ячейке

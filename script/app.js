@@ -137,8 +137,6 @@ function Game() {
 			heroCell.SetUnit(hero)
 
 			graph.InitUnit(heroCell)
-			//test
-			graph.MoveUnit(heroCell, heroCell);
 		}
 
 
@@ -147,50 +145,60 @@ function Game() {
 		//TEST
 
 
-			let creeps = this.map.GetAllCellHasUnits(unitType.Creep);
-			console.log(creeps);
-			let mapsClone = this.map;
-			setTimeout(function () {
-				for (let creepCellFrom of creeps){
-					let creep = creepCellFrom.unit;
-					let creepCellTo = mapsClone.Get(creepCellFrom.x - 1, creepCellFrom.y);
-					if (creepCellTo.HasUnit() === true) continue;
-					creepCellFrom.unit = null;
+		
+		
+		let mapsClone = this.map;
 
-					console.log(creep);
-					//let creepCellTo = new Cell();
-					//if (creepCellTo.HasUnit() !== null){
+		function go() {
+			let creeps = mapsClone.GetAllCellHasUnits(unitType.Creep);
+			for (let creepCellFrom of creeps){
+				let creep = creepCellFrom.unit;
+				let creepCellTo = mapsClone.Get(creepCellFrom.y, creepCellFrom.x - 1);
+				if (creepCellTo.HasUnit() === true) continue;
+				creepCellFrom.unit = null;
+
+				console.log(creep);
+				//let creepCellTo = new Cell();
+				//if (creepCellTo.HasUnit() !== null){
 
 
 
-					// 	if (random() >= 0.25) { //GoLeft;
-					// 		creepCellTo.x--;
-					// 	}
-					// 	else if (random() >= 0.25){ //GoRight
-					// 		creepCellTo.x++;
-					// 	}
-					// 	else if (random() >= 0.50){ //GoUp
-					// 		creepCellTo.y++
-					// 	}
-					// 	else if (random() >= 0.75){ //GoRight
-					// 		creepCellTo.x;
-					// 		creepCellTo.y--;
-					// 	}
-					// }
+				// 	if (random() >= 0.25) { //GoLeft;
+				// 		creepCellTo.x--;
+				// 	}
+				// 	else if (random() >= 0.25){ //GoRight
+				// 		creepCellTo.x++;
+				// 	}
+				// 	else if (random() >= 0.50){ //GoUp
+				// 		creepCellTo.y++
+				// 	}
+				// 	else if (random() >= 0.75){ //GoRight
+				// 		creepCellTo.x;
+				// 		creepCellTo.y--;
+				// 	}
+				// }
 
-					creepCellTo.SetUnit(creep);
-					console.log(creepCellTo);
-					graph.MoveUnit(creepCellFrom, creepCellTo);
-					//creepCellFrom.type = null;
+				creepCellTo.SetUnit(creep);
+				console.log(creepCellTo);
+				graph.MoveUnit(creepCellFrom, creepCellTo);
+				//creepCellFrom.type = null;
 
-					//creepCellFrom.DeleteUnit();
+				//creepCellFrom.DeleteUnit();
 
 				//}
+
+
 		}
-			}, 1000);
+		setTimeout(go, 1000)
+	}
+
+		setTimeout(go, 1000)
 
 	//Render();
 	// Функции стадий
+	}
+
+
 
 	function WarriorsSelect(){ // Выбор карт
 		shakeArray(users, random)
