@@ -11,9 +11,14 @@
 		#game-map, tr, td {
 			border-collapse: collapse;
 		}
-		td image {
-			width: 100%;
-			height: 100%;
+		td img {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		td {
+			position: relative;
 		}
 
 		#content {
@@ -135,19 +140,6 @@
             margin-left: 15%;
         }
 
-		.g {
-			background-image: url("tmp_models/green.jpg");
-		}
-		.b {
-			background-image: url("tmp_models/gray.jpeg");
-		}
-		.r {
-			background-image: url("tmp_models/yellow.jpg");
-		}
-		.t {
-			background-image: url("tmp_models/blue.jpg");
-		}
-
 		#lobby, #welcome, #room {
 			width: 80%;
 			height: 80%;
@@ -222,90 +214,9 @@
 		</div>
 		<div id="map">
 			<table id="game-map">
-				<tr>
-					<td class="b"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="r"></td>
-					<td class="r"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-				</tr>
-				<tr>
-					<td class="b"></td>
-					<td class="b"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="r"></td>
-					<td class="g"></td>
-					<td class="r"></td>
-					<td class="r"></td>
-					<td class="g"></td>
-				</tr>
-				<tr>
-					<td class="b"></td>
-					<td class="b"></td>
-					<td class="b"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-				</tr>
-				<tr>
-					<td class="b"></td>
-					<td class="b"></td>
-					<td class="b"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="r"></td>
-					<td class="g"></td>
-					<td class="t"></td>
-					<td class="g"></td>
-					<td class="r"></td>
-				</tr>
-				<tr>
-					<td class="b"></td>
-					<td class="b"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="r"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="r"></td>
-					<td class="g"></td>
-				</tr>
-				<tr>
-					<td class="b"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="r"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-					<td class="g"></td>
-				</tr>
+				<tbody>
+
+				</tbody>
 			</table>
 		</div>
 		<div id="chat"></div>
@@ -377,11 +288,43 @@
 
 <script type="text/javascript">
 	"use strict"
-	
+
 	let game = new Game(document.getElementById("content"));
 	game.Start();
 
-	
+	let map = document.getElementById("game-map");
+	let height = 6;
+	let width = 12;
+
+	for (let i = 0; i < height; i++) {
+		map.children[0].appendChild(document.createElement("tr"));
+		for (let j = 0; j < width; j++) {
+			map.children[0].lastChild.appendChild(document.createElement("td"));
+		}
+	}
+
+	for (let i = 0; i < height; i++) {
+		for (let j = 0; j < width; j++) {
+			let tmp = game.map.Get(i, j).type;
+			let img = new Image(120, 120);
+			if (tmp === 0) {
+				img.src = "tmp_models/green.jpg";
+			} else if (tmp === 1) {
+				img.src = "tmp_models/gray.jpeg";
+			} else if (tmp === 2) {
+				img.src = "tmp_models/yellow.jpg";
+			} else if (tmp === 3) {
+				img.src = "tmp_models/blue.jpg";
+			}
+			map.children[0].children[i].children[j].appendChild(img);
+			if (tmp === 2) {
+				let image = new Image(120, 120);
+				image.src = "models/tmp files/enemy_icon.svg";
+				map.children[0].children[i].children[j].appendChild(image);
+			}
+		}
+	}
+
 </script>
 
 </body>
