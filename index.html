@@ -203,20 +203,7 @@
 
 <script type="text/javascript">
 	"use strict"
-
-	/* Test sector */
-	var seed = Math.random();
-	console.log("Random generated seed:", seed);
-	// Pushing seed into the server for host
-	for (let k = 1; k <= 3; k++){
-		// Getting seed from host through server
-		var host_rng = new Math.seedrandom(seed);
-		console.log("Output random numbers for", k, "player");
-		for (let i = 0; i < 4; i++){
-			console.log(host_rng());
-		}
-	}
-
+	
 	let game = new Game(document.getElementById("content"));
 	game.Start();
 </script>
