@@ -88,8 +88,7 @@ function Game() {
 					}
 				}
 			}
-
-
+			return retArray;
 		}
 
 	}
@@ -107,7 +106,7 @@ function Game() {
 
 	// users: AbstractAgent[] array - инициализированные обьекты пользователей
 	this.Start = function(){
-		
+
 		let runes = this.map.GetAllCells(tileType.Runes)
 
 		for (let runeCell of runes) { // Генерация монстров
@@ -130,13 +129,56 @@ function Game() {
 		}
 
 
-		this.map.GetAllCellHasUnits( unitType.Hero);
+		//console.log(this.map.GetAllCellHasUnits( unitType.Hero));
+
 
 
 		//TEST
 
 
-	}
+			let creeps = this.map.GetAllCellHasUnits(unitType.Creep);
+			console.log(creeps);
+			let mapsClone = this.map;
+			setTimeout(function () {
+				for (let creepCellFrom of creeps){
+					let creep = creepCellFrom.unit;
+					let creepCellTo = mapsClone.Get(creepCellFrom.x - 1, creepCellFrom.y);
+					if (creepCellTo.HasUnit() === true) continue;
+					creepCellFrom.unit = null;
+
+					console.log(creep);
+					//let creepCellTo = new Cell();
+					//if (creepCellTo.HasUnit() !== null){
+
+
+
+					// 	if (random() >= 0.25) { //GoLeft;
+					// 		creepCellTo.x--;
+					// 	}
+					// 	else if (random() >= 0.25){ //GoRight
+					// 		creepCellTo.x++;
+					// 	}
+					// 	else if (random() >= 0.50){ //GoUp
+					// 		creepCellTo.y++
+					// 	}
+					// 	else if (random() >= 0.75){ //GoRight
+					// 		creepCellTo.x;
+					// 		creepCellTo.y--;
+					// 	}
+					// }
+
+					creepCellTo.SetUnit(creep);
+					console.log(creepCellTo);
+					graph.MoveUnit(creepCellFrom, creepCellTo);
+					//creepCellFrom.type = null;
+
+					//creepCellFrom.DeleteUnit();
+
+				//}
+		}
+			}, 1000);
+
+	//Render();
 	// Функции стадий
 
 	function WarriorsSelect(){ // Выбор карт
@@ -182,5 +224,4 @@ function shakeArray(a, random){
 	})
 	return arr
 }
-
-
+}
