@@ -1,6 +1,6 @@
 "use strict"
 
-const tileType = {Grass:0, Base:1, Runes:2, Target:3/*, Oil:4*/}
+const tileType = {Grass:0, Base:1, Runes:2, Target:3}
 const unitType = {Hero:0, Creep:1, Bomb:2}
 const cardType = {Electro:0, Iron:1, Computer:2, Fire:3}
 const phaseType = {WarriorsSelect:0, WarriorsProgram:1, WarriorsAction:2, CreepsMove:3, CreepsSpawn:4, CreepsAttack:5}
@@ -21,6 +21,12 @@ function Game() {
 
 	function Unit(){
 		this.type = null
+		this.rotation = 0 // 1: 90, 2: 180, 3: -90(270)
+
+		this.Rotate = function(angle){  // 1: 90, 2: 180, 3: -90(270)
+			this.rotation += angle
+			this.rotation %= 4
+		}
 
 	}
 
@@ -88,8 +94,17 @@ function Game() {
 					}
 				}
 			}
+<<<<<<< HEAD
 			return retArray;
+=======
 		}
+
+		this.MoveVector = function(cellFrom, vector){
+
+>>>>>>> 582825d6761c17bab7cc673c3003b4fa0cecb959
+		}
+
+		
 
 	}
 
@@ -126,11 +141,18 @@ function Game() {
 			heroCell.SetUnit(hero)
 
 			graph.InitUnit(heroCell)
+			//test
+			graph.MoveUnit(heroCell, heroCell);
 		}
 
 
+<<<<<<< HEAD
 		//console.log(this.map.GetAllCellHasUnits( unitType.Hero));
 
+=======
+
+		this.map.GetAllCellHasUnits( unitType.Hero);
+>>>>>>> 582825d6761c17bab7cc673c3003b4fa0cecb959
 
 
 		//TEST
@@ -224,4 +246,15 @@ function shakeArray(a, random){
 	})
 	return arr
 }
+<<<<<<< HEAD
+=======
+
+// Поворачивает вектор на определенный угол
+function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
+	for (var i = 0; i < a; i++) {
+		let c = a.x
+		a.x = a.y
+		a.y = -c
+	}
+>>>>>>> 582825d6761c17bab7cc673c3003b4fa0cecb959
 }
