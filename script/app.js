@@ -6,6 +6,7 @@ const cardType = {Electro:0, Iron:1, Computer:2, Fire:3}
 const phaseType = {WarriorsSelect:0, WarriorsProgram:1, WarriorsAction:2, CreepsMove:3, CreepsSpawn:4, CreepsAttack:5}
 const userType = {Human:0, Bot:1, UserAgent:2}
 
+
 function Game() {
 
 	let seedRandom = 0 // Общее случайное число, получать его от хоста
@@ -97,20 +98,15 @@ function Game() {
 			return retArray;
 		}
 
-		this.MoveVector = function(cellFrom, vector){
-		}
-
-		
-
 	}
 
 	// Инициализация
 	let random = new Math.seedrandom(seedRandom)
-	this.map = new MapObject(inputMap)
+	let map = new MapObject(inputMap)
 
 
-	var graph = new Render()
-	graph.RenderMap(this.map);
+	let graph = new Render()
+	graph.RenderMap(map);
 
 	// Глобальный цикл стадий
 	let phase = phaseType.WarriorSelect
@@ -118,7 +114,7 @@ function Game() {
 	// users: AbstractAgent[] array - инициализированные обьекты пользователей
 	this.Start = function(){
 
-		let runes = this.map.GetAllCells(tileType.Runes)
+		let runes = map.GetAllCells(tileType.Runes)
 
 		for (let runeCell of runes) { // Генерация монстров
 			let monster = new Unit();
@@ -127,7 +123,7 @@ function Game() {
 			graph.InitUnit(runeCell)
 		}
 
-		let heroes = this.map.GetAllCells(tileType.Base)
+		let heroes = map.GetAllCells(tileType.Base)
 
 		for (let heroCell of heroes) {
 			if(random() >= 0.5) continue;
@@ -139,62 +135,21 @@ function Game() {
 			graph.InitUnit(heroCell)
 		}
 
-
-
-
 		//TEST
-
-
-		
-		
-		let mapsClone = this.map;
-
+		go()
 		function go() {
-			let creeps = mapsClone.GetAllCellHasUnits(unitType.Creep);
+			let creeps = map.GetAllCellHasUnits(unitType.Creep);
 			for (let creepCellFrom of creeps){
 				let creep = creepCellFrom.unit;
-				let creepCellTo = mapsClone.Get(creepCellFrom.y, creepCellFrom.x - 1);
+				let creepCellTo = map.Get(creepCellFrom.y, creepCellFrom.x - 1);
 				if (creepCellTo.HasUnit() === true) continue;
 				creepCellFrom.unit = null;
-
-				console.log(creep);
-				//let creepCellTo = new Cell();
-				//if (creepCellTo.HasUnit() !== null){
-
-
-
-				// 	if (random() >= 0.25) { //GoLeft;
-				// 		creepCellTo.x--;
-				// 	}
-				// 	else if (random() >= 0.25){ //GoRight
-				// 		creepCellTo.x++;
-				// 	}
-				// 	else if (random() >= 0.50){ //GoUp
-				// 		creepCellTo.y++
-				// 	}
-				// 	else if (random() >= 0.75){ //GoRight
-				// 		creepCellTo.x;
-				// 		creepCellTo.y--;
-				// 	}
-				// }
-
 				creepCellTo.SetUnit(creep);
-				console.log(creepCellTo);
 				graph.MoveUnit(creepCellFrom, creepCellTo);
-				//creepCellFrom.type = null;
-
-				//creepCellFrom.DeleteUnit();
-
-				//}
-
-
+			}
+			setTimeout(go, 1000)
 		}
-		setTimeout(go, 1000)
-	}
 
-		setTimeout(go, 1000)
-
-	//Render();
 	// Функции стадий
 	}
 
@@ -202,9 +157,6 @@ function Game() {
 
 	function WarriorsSelect(){ // Выбор карт
 		shakeArray(users, random)
-
-
-
 	}
 
 
