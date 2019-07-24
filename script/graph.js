@@ -59,7 +59,6 @@ function Render() {
         let to_y = toElem.parentElement.offsetTop;
 
         let el = fromElem.lastChild
-        
 
         el.style.zIndex = '9';
         el.style.transition = "transform 1s";
@@ -67,14 +66,10 @@ function Render() {
         el.style.transform += 'translateX('+ (to_x-from_x) +'px)';
         
 
-        
-
         setTimeout(function(){
         	toElem.appendChild(el)
         	el.style.transform = 'translateY(0px)';
         	el.style.transform += 'translateX(0px)';
-
-
         }, 1000)
 
 

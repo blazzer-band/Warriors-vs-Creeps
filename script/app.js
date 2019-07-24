@@ -142,7 +142,7 @@ function Game() {
 			for (let creepCellFrom of creeps){
 				let creep = creepCellFrom.unit;
 				let creepCellTo = map.Get(creepCellFrom.y, creepCellFrom.x - 1);
-				if (creepCellTo.HasUnit() === true) continue;
+				if (creepCellTo == null || creepCellTo.HasUnit() === true) continue;
 				creepCellFrom.unit = null;
 				creepCellTo.SetUnit(creep);
 				graph.MoveUnit(creepCellFrom, creepCellTo);
