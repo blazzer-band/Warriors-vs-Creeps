@@ -21,6 +21,12 @@ function Game() {
 
 	function Unit(){
 		this.type = null
+		this.directionVector = {x:0, y:1}
+
+		this.Rotate = function(angle){ // 0: 90, 1: 180, 2: -90(270)
+
+
+		}
 
 	}
 
@@ -88,9 +94,13 @@ function Game() {
 					}
 				}
 			}
+		}
 
+		this.MoveVector = function(cellFrom, vector){
 
 		}
+
+		
 
 	}
 
@@ -183,4 +193,11 @@ function shakeArray(a, random){
 	return arr
 }
 
-
+// Поворачивает вектор на определенный угол
+function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
+	for (var i = 0; i < a; i++) {
+		let c = a.x
+		a.x = a.y
+		a.y = -c
+	}
+}
