@@ -94,14 +94,10 @@ function Game() {
 					}
 				}
 			}
-<<<<<<< HEAD
 			return retArray;
-=======
 		}
 
 		this.MoveVector = function(cellFrom, vector){
-
->>>>>>> 582825d6761c17bab7cc673c3003b4fa0cecb959
 		}
 
 		
@@ -146,13 +142,6 @@ function Game() {
 		}
 
 
-<<<<<<< HEAD
-		//console.log(this.map.GetAllCellHasUnits( unitType.Hero));
-
-=======
-
-		this.map.GetAllCellHasUnits( unitType.Hero);
->>>>>>> 582825d6761c17bab7cc673c3003b4fa0cecb959
 
 
 		//TEST
@@ -246,8 +235,6 @@ function shakeArray(a, random){
 	})
 	return arr
 }
-<<<<<<< HEAD
-=======
 
 // Поворачивает вектор на определенный угол
 function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
@@ -256,5 +243,4 @@ function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
 		a.x = a.y
 		a.y = -c
 	}
->>>>>>> 582825d6761c17bab7cc673c3003b4fa0cecb959
 }
