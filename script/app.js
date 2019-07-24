@@ -137,7 +137,10 @@ function Game() {
 			heroCell.SetUnit(hero)
 
 			graph.InitUnit(heroCell)
+			//test
+			graph.MoveUnit(heroCell, heroCell);
 		}
+
 
 
 		this.map.GetAllCellHasUnits( unitType.Hero);
