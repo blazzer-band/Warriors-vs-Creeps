@@ -12,19 +12,29 @@
 
 	/* Test sector */
 	var seed = Math.random();
-	console.log("Random generated seed:", seed);
+	let players_number = [];
 	// Pushing seed into the server for host
-	for (let k = 1; k <= 3; k++){
+	for (let k = 0; k < 3; k++){
+		players_number.push([]);
 		// Getting seed from host through server
 		var host_rng = new Math.seedrandom(seed);
-		console.log("Output random numbers for", k, "player");
-		for (let i = 0; i < 4; i++){
-			console.log(host_rng());
+		for (let i = 0; i < 10; i++){
+			players_number[k].push(host_rng());
 		}
 	}
 
-	let game = new Game(document.getElementById("content"));
-	game.Start();
+	for (let i = 1; i < 3; i++){
+		for (let j = 0; j < 10; j++){
+			if (players_number[0][j] !== players_number[i][j]){
+				console.log("Error!");
+			}
+		}
+	}
+
+	console.log("OK!");
+
+	// let game = new Game(document.getElementById("content"));
+	// game.Start();
 </script>
 
 </body>
