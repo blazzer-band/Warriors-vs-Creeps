@@ -85,11 +85,11 @@ function Game() {
 
 	// Инициализация
 	let random = new Math.seedrandom(seedRandom)
-	let map = new MapObject(inputMap)
+	this.map = new MapObject(inputMap)
 
 
-	var graph = new Render()
-	graph.RenderMap(map);
+	//var graph = new Render()
+	//graph.RenderMap(inputMap);
 
 	// Глобальный цикл стадий
 	let phase = phaseType.WarriorSelect
