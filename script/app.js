@@ -86,9 +86,10 @@ function Game() {
 	// Глобальный цикл стадий
 	let phase = phaseType.WarriorSelect
 
+	// users: UserAbstract[] array
 	this.Start = function(users){
-
-
+		
+		
 
 
 	}

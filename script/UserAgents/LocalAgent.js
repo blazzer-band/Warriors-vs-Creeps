@@ -1,7 +1,7 @@
 "use strict"
 // пользователь получающий события через из граф интерфейса игры
 
-function User{
+function LocalAgent(){
 	let type = null
 	let isHost = null
 	let id = null

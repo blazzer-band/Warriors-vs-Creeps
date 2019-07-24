@@ -1,7 +1,7 @@
 "use strict"
 // бот, автоматически действующий как игрок
 
-function User{
+function BotAgent(){
 	let type = null
 	let isHost = null
 	let id = null

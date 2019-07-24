@@ -1,7 +1,7 @@
 "use strict"
 // пользователь получающий события через интернет
 
-function User{
+function NetworkAgent(){
 	let type = null
 	let isHost = null
 	let id = null
