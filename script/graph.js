@@ -94,15 +94,30 @@ function Render() {
     this.StopSelect = function(){
 
     }
-
+    let timerId = null;
     // Запуск таймера отсчета с intSecond до 0
     this.startTimer = function(intSecond){
+      let realSecond = intSecond;
+      let timer = document.getElementById("timer");
+      timerId = setInterval(function(){
+        let seconds = realSecond % 60;
+        let minutes = (realSecond / 60) | 0;
+        if (realSecond < 0 ){
+          clearInterval(timerId);
+          timerId = null;
+          return;
+        }
+        timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
+        realSecond--;
+      }, 1000);
+    };
 
-    }
+    this.startTimer(10);
+
     this.StopTimer = function(){
-
+      if (timerId !== null){
+        clearInterval(timerId);
+        timerId = null;
+      }
     }
-
-
-
 }
