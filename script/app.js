@@ -19,9 +19,9 @@ function Game() {
 		}
 
 		// возвращает текущего пользователя закончившего ход
-		SelectCards(count, cards, callback){
+		SelectCards(count, cards, isThis, callback){
 
-			this.agent.SelectCards(count, cards, function(sels){
+			this.agent.SelectCards(count, cards, isThis, function(sels){
 				hand.push(sels)
 				callback(this)
 			})
@@ -187,22 +187,37 @@ function Game() {
 
 	// Функции стадий
 	function WarriorsSelect(){ // 1. Выбор карт
-
-		let counterReady = 0; // Пользователь выбирающий карту
-
-		shakeArray(users, random)
 		phase = phaseType.WarriorSelect
 
+		shakeArray(users, random)
+		
+		let selectionCards = []
+		let isFirstRound = roundCounter === 0
 
-		/*for (let user of users) {
-			if(roundCounter === 0){
-				user.SelectCards(2, cardsDeck,)
-			}
-			
-		}*/
+		for (var i = 0; i < (isFirstRound ? 10 : 5); i++) {
+			selectionCards.push(cardsDeck.pop())
+		}
+		 
 
-		// Ждать всех игроков
-		function Select(){}
+		let userId = 0; // Пользователь выбирающий карту
+
+		// Выбирать по очереди
+		(function Select(userId){
+
+			/*u.SelectCards(isFirstRound ? 2 : 1, selectionCards, u === users[userId] , function(){
+
+				if(userId + 1 < users.length) {
+					Select(userId + 1)
+				}
+				else{
+
+				}
+			})*/
+
+
+		}(userId))
+
+
 
 
 	}

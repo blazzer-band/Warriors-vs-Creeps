@@ -105,6 +105,13 @@ function Render() {
 
     }
 
+    // Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
+    // id с нуля (0)
+    this.ReDrawCardStacks = function(stacks){
+    	// Очистить стеки и нарисовать новые
+
+    }
+
 
 
 }
