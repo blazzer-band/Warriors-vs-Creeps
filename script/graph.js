@@ -99,9 +99,36 @@ function Render() {
     this.startTimer = function(intSecond){
 
     }
+
     this.StopTimer = function(){
 
     }
+
+    // Обновить карты в руке рука не активна(перемещать карты нельзя)
+    this.setHand = function(cards){
+
+    }
+
+    // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
+    // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
+    // а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
+    this.programming = function(callback){
+
+    }
+
+
+    // cards - Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
+    this.setStacks = function(cards){
+
+    }
+
+
+    // callback принимает список выбранных ячеек
+    // cells array - массив
+    this.SelectCells = function(cellsArray, callback){
+
+    }
+
 
 
 

@@ -19,12 +19,16 @@ function Game() {
 		}
 
 		// возвращает текущего пользователя закончившего ход
-		SelectCards(count, cards, isThis, callback){
+		SelectCards(count, cards, callback){ // Запрос пользователю выбрать x карт
 
-			this.agent.SelectCards(count, cards, isThis, function(sels){
-				hand.push(sels)
-				callback(this)
-			})
+			if(callback !== undefined)
+				this.agent.SelectCards(count, cards, function(sels){
+					hand.push(sels)
+					callback(this)
+				})
+			else{
+				render.SelectCards(cards)
+			}
 			
 		}
 	}
@@ -197,14 +201,17 @@ function Game() {
 		for (var i = 0; i < (isFirstRound ? 10 : 5); i++) {
 			selectionCards.push(cardsDeck.pop())
 		}
-		 
 
-		let userId = 0; // Пользователь выбирающий карту
-
+		Select(0)
 		// Выбирать по очереди
-		(function Select(userId){
+		function Select(userId){
 
-			/*u.SelectCards(isFirstRound ? 2 : 1, selectionCards, u === users[userId] , function(){
+			// Всем отправить отрисовку
+			// Выбирающему с коллбеком
+
+			
+
+			/*u.SelectCards(isFirstRound ? 2 : 1, selectionCards, u === users[userId], function(){
 
 				if(userId + 1 < users.length) {
 					Select(userId + 1)
@@ -215,7 +222,7 @@ function Game() {
 			})*/
 
 
-		}(userId))
+		}
 
 
 
