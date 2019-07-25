@@ -122,6 +122,9 @@ function Render() {
                 if (arrayIdSelectedCards.length === count) {
                     let btn = document.getElementsByClassName("ok-choose");
                     btn[0].style.visibility = "visible";
+                } else {
+                    let btn = document.getElementsByClassName("ok-choose");
+                    btn[0].style.visibility = "hidden";
                 }
             };
             board.children[i].appendChild(img);
