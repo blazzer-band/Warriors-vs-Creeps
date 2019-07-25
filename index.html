@@ -1,206 +1,296 @@
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		white-space: nowrap;
+	}
+	#game-map {
+		display: table;
+		width: 800px;
+		height: 400px;
+	}
+	#game-map, tr, td {
+		border-collapse: collapse;
+	}
+	td img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	td {
+		position: relative;
+	}
+
+	#content {
+		display: block;
+		width: 1150px;
+		margin: 0 auto;
+	}
+
+	#main {
+		margin-top: 1em;
+		display: block;
+		width: 1150px;
+		height: 400px;
+	}
+
+	#map {
+		display: inline-block;
+		width: 800px;
+		height: 400px;
+	}
+
+	#trackers {
+		vertical-align: top;
+		align-content: center;
+		height: 400px;
+		display: inline-block;
+	}
+
+	#kill-tracker #bomb-tracker #clock {
+		margin-block: 1em;
+		display: block;
+		width: 120px;
+	}
+
+	#kills {
+		height: 127px;
+		width: 120px;
+
+		background-color: crimson;
+	}
+
+	#bomb-tracker {
+		margin-top: 0.5em;
+	}
+
+	#hp-bomb {
+		height: 127px;
+		width: 120px;
+		background-color: violet;
+	}
+
+	#clock {
+		margin-top: 0.5em;
+		background-color: lightsalmon;
+		height: 130px;
+	}
+
+	#pic-clock {
+		display: block;
+		margin: 0 auto;
+		height: 66px;
+		width: 66px;
+		background-image: url("models/tmp files/platform.svg");
+	}
+
+	#timer {
+		height: 40px;
+		text-align: center;
+		font-style: normal;
+		font-size: 48px;
+	}
+
+	#chat {
+		display: inline-block;
+		width: 220px;
+		height: 400px;
+
+		background-color: cadetblue;
+	}
+
+	#footer {
+		display: block;
+		margin-top: 0.5em;
+		width: 1150px;
+		height: 200px;
+	}
+
+	#hand {
+		display: inline-block;
+		background-color: bisque;
+		width: 60px;
+		height: 200px;
+	}
+
+	#card-field {
+		vertical-align: top;
+		display: inline-block;
+		background-color: darkslateblue;
+		height: 200px;
+		width: 900px;
+		z-index: 1;
+	}
+
+	#user-icon {
+		vertical-align: top;
+		z-index: 2;
+		display: inline-block;
+		background-image: url("models/tmp files/platform.svg");
+		width: 66px;
+		height: 66px;
+	}
+
+	#number-1-icon, #number-2-icon, #number-3-icon, #number-4-icon, #number-5-icon, #number-6-icon{
+		/* vertical-align: bottom; */
+		position: absolute;
+		left: 35px;
+		bottom: -25px;
+		width: 50px;
+		height: 50px;
+		z-index: 6;
+
+	}
+
+	#number-1-icon{
+		background-image: url("models/numbers/one_number.svg");
+	}
+
+	#number-2-icon{
+		background-image: url("models/numbers/two_number.svg");
+	}
+
+	#number-3-icon{
+		background-image: url("models/numbers/three_number.svg");
+	}
+
+	#number-4-icon{
+		background-image: url("models/numbers/four_number.svg");
+	}
+
+	#number-5-icon{
+		background-image: url("models/numbers/five_number.svg");
+	}
+
+	#number-6-icon{
+		background-image: url("models/numbers/six_number.svg");
+	}
+
+	#card-1, #card-2, #card-3, #card-4, #card-5, #card-6 {
+		display: inline-block;
+		position: relative;
+		background-color: red;
+		margin: 0 0 10 10;
+		/* margin-top: 0.5em;
+		margin-bottom: 0.5em;
+		height: 90%; */
+		height: 200px;
+		width: 125px;
+		z-index: 2;
+	}
+
+	/* #card-6 {
+		margin-right: 0.5em;
+	}
+
+	#card-1-1, #card-2-1, #card-3-1, #card-4-1, #card-5-1, #card-6-1 {
+		position: relative;
+		float: top;
+		height: 80%;
+		background-color: gold;
+	}
+
+	#card-1-2, #card-2-2, #card-3-2, #card-4-2, #card-5-2, #card-6-2 {
+		position: relative;
+		float: top;
+		bottom: 70%;
+		height: 80%;
+		background-color: orangered;
+	}
+
+	#card-1-3, #card-2-3, #card-3-3, #card-4-3, #card-5-3, #card-6-3 {
+		position: relative;
+		float: top;
+		bottom: 140%;
+		height: 80%;
+		background-color: darkorange;
+	}
+
+	#x-card {
+		background-color: goldenrod;
+	}
+
+	#xxx-card {
+		height: 140px;
+		width: 70%;
+		background-color: yellow;
+		margin: 10%;
+		margin-left: 15%;
+	} */
+
+	#footer_footer{
+		height:20px;
+		width:1150px;
+		background-color: aqua;
+	}
+
+	#lobby, #welcome, #room {
+		width: 80%;
+		height: 80%;
+		text-align: center;
+		padding: 0;
+		border: 3px double black;
+		border-radius: 10px;
+		color: antiquewhite;
+		background-color: aquamarine;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+
+	#welcome {
+		display: none;
+	}
+
+	#x-welcome {
+		margin-top: 17%;
+		text-align: center;
+		font-size: 80px;
+		font-style: normal;
+		height: 60%;
+		color: orangered;
+	}
+
+	#welcome-play {
+		background-color: gold;
+		border: 1px solid black;
+		font-weight: bold;
+		border-radius: 5%;
+		margin-left: 40%;
+		margin-right: 40%;
+		margin-bottom: 10%;
+		height: 30%;
+		text-align: center;
+		font-size: 230%;
+	}
+
+	#lobby {
+		display: none;
+	}
+
+	#room {
+		display: none;
+	}
+
+	#game-map tbody tr {
+		position: relative;
+	}
+
+</style>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Warriors vs Creeps</title>
-	<style>
-		#game-map {
-			width: 100%;
-			height: 100%;
-
-		}
-		#game-map, tr, td {
-			border-collapse: collapse;
-		}
-		td img {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-    		height: 100%;		
-    	}
-
-		td {
-			position: relative;
-		}
-
-		#content {
-			display: grid;
-			grid-template-rows: 1fr 30fr 10fr;
-			grid-row-gap: 1em;
-		}
-
-		#main {
-			display: grid;
-			grid-template-columns: 1fr 5fr 1fr;
-			grid-column-gap: 1em;
-		}
-
-        #footer {
-            display: grid;
-            grid-template-columns: 0.3fr 15fr 3fr 0.3fr;
-            grid-column-gap: 1em;
-        }
-
-		#card-field {
-            display: grid;
-            grid-template-columns: 0.3fr repeat(6, 1fr);
-            grid-column-gap: 0.5em;
-			background-color: darkslateblue;
-            height: 100%;
-		}
-
-        #card-1, #card-2, #card-3, #card-4, #card-5, #card-6 {
-            background-color: bisque;
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-            height: 90%;
-        }
-
-        #card-6 {
-            margin-right: 0.5em;
-        }
-
-        #card-1-1, #card-2-1, #card-3-1, #card-4-1, #card-5-1, #card-6-1 {
-            position: relative;
-            float: top;
-            height: 80%;
-            background-color: gold;
-        }
-
-        #card-1-2, #card-2-2, #card-3-2, #card-4-2, #card-5-2, #card-6-2 {
-            position: relative;
-            float: top;
-            bottom: 70%;
-            height: 80%;
-            background-color: orangered;
-        }
-
-        #card-1-3, #card-2-3, #card-3-3, #card-4-3, #card-5-3, #card-6-3 {
-            position: relative;
-            float: top;
-            bottom: 140%;
-            height: 80%;
-            background-color: darkorange;
-        }
-
-		#trackers {
-			display: grid;
-			grid-template-rows: repeat(3, 1fr);
-			grid-row-gap: 1em;
-		}
-
-		#kill-tracker {
-			display: grid;
-			grid-template-columns: 1fr;
-			grid-column-gap: 0.5em;
-		}
-
-		#kills {
-			background-color: crimson;
-		}
-
-		#bomb-tracker {
-			display: grid;
-			grid-template-columns: 1fr;
-			grid-gap: 2em;
-		}
-
-		#hp-bomb {
-			background-color: darkviolet;
-		}
-
-		#chat {
-			background-color: cadetblue;
-		}
-
-		#clock {
-			background-color: lightsalmon;
-		}
-
-        #pic-clock {
-            background-image: url("tmp_models/black.jpg");
-            background-size: 50%;
-            height: 70%;
-            width: auto;
-        }
-
-        #timer {
-            text-align: center;
-            font-size: 200%;
-            font-style: normal;
-        }
-
-		#x-card {
-			background-color: goldenrod;
-		}
-
-        #xxx-card {
-            height: 140px;
-            width: 70%;
-            background-color: yellow;
-            margin: 10%;
-            margin-left: 15%;
-        }
-
-		#lobby, #welcome, #room {
-			width: 80%;
-			height: 80%;
-			text-align: center;
-			padding: 0;
-			border: 3px double black;
-			border-radius: 10px;
-			color: antiquewhite;
-			background-color: aquamarine;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			margin: auto;
-		}
-
-		#welcome {
-			display: none;
-			grid-template-rows: 10fr 1fr;
-			grid-row-gap: 2em;
-		}
-
-		#x-welcome {
-			margin-top: 17%;
-			text-align: center;
-			font-size: 80px;
-			font-style: normal;
-			height: 60%;
-			color: orangered;
-		}
-
-		#welcome-play {
-			background-color: gold;
-			border: 1px solid black;
-			font-weight: bold;
-			border-radius: 5%;
-			margin-left: 40%;
-			margin-right: 40%;
-			margin-bottom: 10%;
-			height: 30%;
-			text-align: center;
-			font-size: 230%;
-		}
-
-		#lobby {
-			display: none;
-		}
-
-		#room {
-			display: none;
-		}
-
-	</style>
 </head>
 <body>
 
 <div id="content">
-	<div id="header"></div>
 	<div id="main">
 		<div id="trackers">
 			<div id="kill-tracker">
@@ -224,44 +314,51 @@
 		<div id="chat"></div>
 	</div>
 	<div id="footer">
-		<div></div>
+		<div id="hand"></div>
 		<div id="card-field">
-            <div></div>
+            <div id="user-icon"></div>
             <div id="card-1">
                 <div id="card-1-1"></div>
                 <div id="card-1-2"></div>
                 <div id="card-1-3"></div>
+								<div id="number-1-icon"></div>
             </div>
             <div id="card-2">
                 <div id="card-2-1"></div>
                 <div id="card-2-2"></div>
                 <div id="card-2-3"></div>
+								<div id="number-2-icon"></div>
             </div>
             <div id="card-3">
                 <div id="card-3-1"></div>
                 <div id="card-3-2"></div>
                 <div id="card-3-3"></div>
+								<div id="number-3-icon"></div>
             </div>
             <div id="card-4">
                 <div id="card-4-1"></div>
                 <div id="card-4-2"></div>
                 <div id="card-4-3"></div>
+								<div id="number-4-icon"></div>
             </div>
             <div id="card-5">
                 <div id="card-5-1"></div>
                 <div id="card-5-2"></div>
                 <div id="card-5-3"></div>
+								<div id="number-5-icon"></div>
             </div>
             <div id="card-6">
                 <div id="card-6-1"></div>
                 <div id="card-6-2"></div>
                 <div id="card-6-3"></div>
+								<div id="number-6-icon"></div>
             </div>
         </div>
 		<div id="x-card">
             <div id="xxx-card"></div>
         </div>
-		<div></div>
+		<div id="footer_footer">
+		</div>
 	</div>
 </div>
 

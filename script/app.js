@@ -176,9 +176,6 @@ function Game() {
 
 
 
-	// 8 копий каждой в колоде
-
-
 	// Функции стадий
 	function WarriorsSelect(){ // 1. Выбор карт
 
