@@ -193,7 +193,7 @@ function Game() {
 		}
 
 		// Ждать всех игроков
-		function Select()
+		function Select(){}
 
 
 	}
