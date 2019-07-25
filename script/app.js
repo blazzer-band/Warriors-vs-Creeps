@@ -33,8 +33,8 @@ function Game() {
 			
 		}
 
-		programming(){
-
+		programming(callback){
+			callback()
 		}
 
 	}
@@ -127,6 +127,7 @@ function Game() {
 
 		// Возвращает объект клетки(Cell) по координатам (x, y)
 		this.get = function(x, y){
+			if(x>=this.map.length || y>=this.map[0].length) return null
 			return this.map[x][y]
 		}
 
@@ -140,12 +141,29 @@ function Game() {
 			let retArray = []
 			for (let row of this.map){
 				for (let cell of row){
-					if(cell.HasUnit() && cell.unit.type === type){
+					if(cell.hasUnit() && cell.unit.type === type){
 						retArray.push(cell)
 					}
 				}
 			}
 			return retArray;
+		}
+
+		// Перемещает, если не может, возвращает null иначе клетку в которую переместил
+		this.moveUnitFromCellToCoords = function(cellFrom, x, y){
+			let cellTo = this.get(x, y)
+			if(cellTo === null) return null;
+			if(cellTo.hasUnit()) return null;
+			cellTo.unit = cellFrom.unit
+			cellFrom.unit = null
+			return cellTo
+		}
+		// Перемещает, если не может, возвращает null иначе юнита которого переместил
+		this.moveUnitFromCellToCell = function(cellFrom, cellTo){
+			if(cellTo.HasUnit()) return null;
+			cellTo.unit = cellFrom.unit
+			cellFrom.unit = null
+			return cellTo.unit
 		}
 
 	}
@@ -204,6 +222,8 @@ function Game() {
 
 
 	// Функции стадий
+
+	///// Ассинхронный цикл. Начало 
 	function chooseСards(){ // 1. Выбор карт
 		let isFirstRound = roundCounter === 0
 
@@ -259,16 +279,50 @@ function Game() {
 
 			})
 		}
-
-
 	}
 
 	function warriorsAct(){
 
 
+		creepsMoveAct()
+	}
+
+	function creepsMoveAct(){ // Все делают шаг к бомбе
+
+		let creepsCells = map.getAllCellHasUnits(unitType.Creep)
+		let bombCells = map.getAllCellHasUnits(unitType.Bomb)
+
+		for (let cellFrom of creepsCells) {
+			let next = getNextCellFromAToB(cellFrom, bombCells[0]);
+			let to = map.moveUnitFromCellToCoords(cellFrom, next.x, next.y)
+
+			if(to !== null) render.moveUnit(cellFrom, to)
+		}
+
+		setTimeout(function(){
+			creepsSpawnAct()
+		}, 1500)
 	}
 
 
+	function creepsSpawnAct(){
+		let runesFree = map.getAllCellsByType(tileType.Runes).filter(cell => !cell.hasUnit())
+		for(let spawnCell of runesFree){
+			render.initUnit(spawnCell.setUnit(new Unit(unitType.Creep)))
+		}
+
+		creepsAttackAct()
+	}
+
+
+	function creepsAttackAct(){
+
+
+
+
+		chooseСards()
+	} 
+	///// Ассинхронный цикл. Конец 
 
 
 
@@ -308,4 +362,26 @@ function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
 		a.x = a.y
 		a.y = -c
 	}
+}
+
+
+
+
+//a, b - {x:X, y:Y}
+function getNextCellFromAToB(a, b){
+	const vectorFromAToB = (a, b) => ({x:b.x-a.x, y:b.y-a.y})
+	const vectorMultiple = (a, v) => ({x: a.x * v, y:a.y * v})
+	const vectorAdd = (a, b)=>({x:b.x+a.x, y:b.y+a.y})
+	const vectorRound = a => ({x: Math.round(a.x), y: Math.round(a.y)})
+	const vectorLen = a => Math.sqrt(a.x*a.x+a.y*a.y)
+
+	let v = vectorFromAToB(a, b)
+	let l = vectorLen(v)
+
+	let c = vectorMultiple(a, 1/l)
+	c = vectorRound(c)
+
+	if(c.x !== 0 && c.y !== 0) c.x = 0;
+
+	return vectorAdd(a, c);
 }

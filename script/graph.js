@@ -101,7 +101,9 @@ function Render() {
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
     //cards = array of int card id
     this.selectCards = function(cards, count, callback){
+
         let board = document.getElementById("choose-board");
+        board.innerHTML = '';
         board.style.visibility = "visible";
         let arrayIdSelectedCards = [];
         for (let i = 0; i < cards.length; i++) {
@@ -191,8 +193,8 @@ function Render() {
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
     // а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
-    this.programming = function(callback){
-        
+    this.programming = function(handCards, callback){
+
     }
 
 
