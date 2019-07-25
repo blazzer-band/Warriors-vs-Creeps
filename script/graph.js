@@ -42,7 +42,7 @@ function Render() {
     const units = {
         0 : "models/tmp files/man-with-sword-and-shield.svg",
         1 : "models/tmp files/enemy_icon.svg",
-        2 : "models/tmp files/bomb_icon.svg"
+        2 : "models/tmp files/naval_mine.png"
     };
 
     // передвинуть юнита из in в out
@@ -63,7 +63,7 @@ function Render() {
         el.style.transition = "transform 1s";
         el.style.transform = 'translateY('+ (to_y-from_y) +'px)';
         el.style.transform += 'translateX('+ (to_x-from_x) +'px)';
-        
+
 
         setTimeout(function(){
         	toElem.appendChild(el)
@@ -81,8 +81,8 @@ function Render() {
         img.src = units[cell.unit.type];
         map.children[0].children[cell.y].children[cell.x].appendChild(img);
 	}
-	
 
-    
+
+
 
 }
