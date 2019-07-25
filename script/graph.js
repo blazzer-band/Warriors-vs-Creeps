@@ -84,7 +84,8 @@ function Render() {
 
     // count - количество возвращаемых карт
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
-    this.SelectCards = function(card, count, isThis, callback){
+    //cards = array of int card id
+    this.SelectCards = function(cards, count, isThis, callback){
     	arrayIdSelectedCards = []
     	callback(arrayIdSelectedCards)
     }
@@ -98,7 +99,7 @@ function Render() {
     this.startTimer = function(intSecond){
 
     }
-    this.StopTimer = function(intSecond){
+    this.StopTimer = function(){
 
     }
 
