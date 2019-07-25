@@ -1,12 +1,15 @@
 "use strict"
 // бот, автоматически действующий как игрок
 
-function BotAgent(){
-	let type = null
-	let isHost = null
-	let id = null
+class BotAgent extends AbstractAgent{
 
-
+	constructor(){
+		super();
+	}
+	
+	selectCards(cards, count, callback){
+		callback([0,1])
+	}
 
 
 

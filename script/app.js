@@ -10,9 +10,8 @@ const userType = {Human:0, Bot:1, UserAgent:2}
 function Game() {
 
 	class User{
-		constructor(id, isHost){
+		constructor(isHost){
 			this.isHost = isHost
-			this.id = id
 			this.hand = [] // Карты в руке, int id типы карт
 			this.stacks = [] // Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
 			this.agent = null
@@ -25,7 +24,9 @@ function Game() {
 				let user = this
 
 				this.agent.selectCards(cards, count, function(sels){
-					user.hand.push(sels)
+					for (let i in sels) {
+						user.hand.push(cards[sels[i]])
+					}
 					callback(sels)
 				})
 			}
@@ -40,13 +41,21 @@ function Game() {
 
 
 	let users = [] // Пользователи
+	this.getUsers = users
 	{
 		let testUserAgent = new LocalAgent()
-		let testUser = new User(0, true)
+		let testUser = new User(true)
 		testUser.agent = testUserAgent
-
 		users.push(testUser)
 	}
+	{
+		let testUserAgent = new BotAgent()
+		let testUser = new User(false)
+		testUser.agent = testUserAgent
+		users.push(testUser)
+	}
+
+
 
 
 	let seedRandom = Math.random() // Общее случайное число, получать его от хоста
@@ -150,6 +159,7 @@ function Game() {
 	let roundCounter = 0; // Увеличивать на 1 в конце спауна мобов
 	const render = new Render()
 	this.getRender = render
+	this.getRandom = random
 	render.renderMap(map);
 
 
@@ -216,7 +226,11 @@ function Game() {
 
 			users[userId].selectCards(1 + isFirstRound, selectionCards, function(selectedCards){
 
-				selectionCards = selectionCards.filter(cardId => !selectedCards.includes(cardId))
+				//selectionCards = selectionCards.filter(cardId => !selectedCards.includes(cardId))
+
+				for(var i in selectedCards){
+					selectionCards.splice(selectedCards[i], 1);
+				}
 
 				if(userId + 1 < users.length){
 					select(userId + 1);
