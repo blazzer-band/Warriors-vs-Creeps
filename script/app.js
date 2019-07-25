@@ -127,8 +127,8 @@ function Game() {
 
 		// Возвращает объект клетки(Cell) по координатам (x, y)
 		this.get = function(x, y){
-			if(x>=this.map.length || y>=this.map[0].length) return null
-			return this.map[x][y]
+			if(y >= this.map.length || x >= this.map[0].length) return null
+			return this.map[y][x]
 		}
 
 		// Возвращает все объекты клетки типа tileType (new Cell[])
@@ -378,7 +378,7 @@ function getNextCellFromAToB(a, b){
 	let v = vectorFromAToB(a, b)
 	let l = vectorLen(v)
 
-	let c = vectorMultiple(a, 1/l)
+	let c = vectorMultiple(v, 1/l)
 	c = vectorRound(c)
 
 	if(c.x !== 0 && c.y !== 0) c.x = 0;

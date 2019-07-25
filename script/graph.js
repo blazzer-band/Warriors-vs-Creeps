@@ -18,7 +18,7 @@ function Render() {
 		for (let i = 0; i < height; i++) {
 
             for (let j = 0; j < width; j++) {
-                let tmp = inputMap.get(i, j).type;
+                let tmp = inputMap.get(j, i).type;
                 let img = new Image();
                 if (tmp === 0) {
                     img.src = "tmp_models/green.jpg";
