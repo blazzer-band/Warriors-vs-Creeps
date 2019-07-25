@@ -118,7 +118,6 @@ function Render() {
                     arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== e.currentTarget.cardId);
                     e.currentTarget.style.border = "0";
                 }
-                console.log(arrayIdSelectedCards);
                 if (arrayIdSelectedCards.length === count) {
                     let btn = document.getElementsByClassName("ok-choose");
                     btn[0].style.visibility = "visible";
@@ -133,11 +132,8 @@ function Render() {
         board.children[cards.length].className = "ok-choose";
         board.children[cards.length].textContent = "OK";
         board.children[cards.length].onclick = function () {
-            console.log("onclick!");
-            //board.StopSelect();
             if (callback !== undefined) {
                 callback(arrayIdSelectedCards);
-                console.log("OK!");
             }
         }
     }
@@ -146,6 +142,8 @@ function Render() {
     this.stopSelect = function(){
         let board = document.getElementById("choose-board");
         board.style.visibility = "hidden";
+        let btn = document.getElementsByClassName("ok-choose");
+        btn[0].style.visibility = "hidden";
 
     }
     let timerId = null;

@@ -8,7 +8,12 @@ class LocalAgent extends AbstractAgent{
 	}
 	
 	selectCards(cards, count, callback){
-		game.getRender.selectCards(cards, count, callback)
+		game.getRender.selectCards(cards, count, function(callb) {
+			
+			game.getRender.stopSelect()
+
+			callback(callb)
+		})
 	}
 
 
