@@ -82,8 +82,6 @@ function Render() {
         map.children[0].children[cell.y].children[cell.x].appendChild(img);
 	}
 
-<<<<<<< HEAD
-=======
     // count - количество возвращаемых карт
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
     this.SelectCards = function(card, count, isThis, callback){
@@ -95,9 +93,6 @@ function Render() {
     this.StopSelect = function(){
 
     }
-
-
->>>>>>> 259a3ac33164f3294f0099d9b9e60ff574c94eff
 
 
 
