@@ -139,13 +139,23 @@ function Game() {
 		go()
 		function go() {
 			let creeps = map.GetAllCellHasUnits(unitType.Creep);
-			for (let creepCellFrom of creeps){
+			let heroes = map.GetAllCellHasUnits(unitType.Hero);
+			for (let creepCellFrom of creeps) {
 				let creep = creepCellFrom.unit;
 				let creepCellTo = map.Get(creepCellFrom.y, creepCellFrom.x - 1);
 				if (creepCellTo == null || creepCellTo.HasUnit() === true) continue;
 				creepCellFrom.unit = null;
 				creepCellTo.SetUnit(creep);
 				graph.MoveUnit(creepCellFrom, creepCellTo);
+			}
+			for (let heroCellFrom of heroes) {
+				let hero = heroCellFrom.unit;
+				let heroCellTo = map.Get(heroCellFrom.y, heroCellFrom.x + 1);
+				if (heroCellTo == null || heroCellTo.HasUnit() === true)
+					continue;
+				heroCellFrom.unit = null;
+				heroCellTo.SetUnit(hero);
+				graph.MoveUnit(heroCellFrom, heroCellTo);
 			}
 			setTimeout(go, 1000)
 		}
