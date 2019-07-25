@@ -173,8 +173,19 @@ function Render() {
 
     // Обновить карты в руке рука не активна(перемещать карты нельзя)
     this.setHand = function(cards){
-
+      let cardsCounter = document.getElementById("hand-counter");
+      cardsCounter.innerHTML = cards.count;
     }
+
+    // //TEST
+    // function Cards(){
+    //   this.count = null;
+    // }
+    //
+    // let myCards = new Cards();
+    // myCards.count = 2;
+    //
+    // this.setHand(myCards);
 
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
@@ -197,12 +208,6 @@ function Render() {
     }
 
 
-    // Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
-    // id с нуля (0)
-    this.ReDrawCardStacks = function(stacks){
-    	// Очистить стеки и нарисовать новые
-
-    }
 
 
 }

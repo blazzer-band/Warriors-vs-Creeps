@@ -132,7 +132,7 @@ td {
   font-size: 48px;
 }
 
-#kills, #hp-bomb, #timer{
+#kills, #hp-bomb, #timer, #hand-counter{
   font-family: sans-serif;
 }
 
@@ -156,6 +156,15 @@ td {
   background-color: #004777;
   width: 60px;
   height: 200px;
+}
+
+#hand-counter{
+  height: 40px;
+  text-align: center;
+  font-style: normal;
+  font-size: 70px;
+  position: relative;
+  top: 55px;
 }
 
 #card-field {
