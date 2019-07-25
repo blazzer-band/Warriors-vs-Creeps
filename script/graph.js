@@ -83,6 +83,18 @@ function Render() {
 	}
 	
 
-    
+    // count - количество возвращаемых карт
+    // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
+    this.SelectCards = function(card, count, isThis, callback){
+    	arrayIdSelectedCards = []
+    	callback(arrayIdSelectedCards)
+    }
+
+    // Скрыть окро выбора карт
+    this.StopSelect = function(){
+
+    }
+
+
 
 }
