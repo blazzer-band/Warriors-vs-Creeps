@@ -9,6 +9,37 @@ const userType = {Human:0, Bot:1, UserAgent:2}
 
 function Game() {
 
+	class User{
+		constructor(id, isHost){
+			this.isHost = isHost
+			this.id = id
+			this.hand = [] // Карты в руке, int id типы карт
+			this.stacks = [] // Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
+			this.agent = null
+		}
+
+		// возвращает текущего пользователя закончившего ход
+		SelectCards(count, cards, callback){
+
+			this.agent.SelectCards(count, cards, function(sels){
+				hand.push(sels)
+				callback(this)
+			})
+			
+		}
+	}
+
+
+	let users = [] // Пользователи
+	{
+		let testUserAgent = new LocalAgent(userType.Human)
+		let testUser = new User(0, true)
+		testUser.agent = testUserAgent
+
+		users.push(testUser)
+	}
+
+
 	let seedRandom = 0 // Общее случайное число, получать его от хоста
 
 	const inputMap = [ // Ландшафт
@@ -20,8 +51,8 @@ function Game() {
 		[1, 0, 0, 0, 0, 2,  0, 0, 0, 0, 0, 0]
 	]
 
-	function Unit(){
-		this.type = null
+	function Unit(type){
+		this.type = type
 		this.rotation = 0 // 1: 90, 2: 180, 3: -90(270)
 
 		this.Rotate = function(angle){  // 1: 90, 2: 180, 3: -90(270)
@@ -46,7 +77,7 @@ function Game() {
 			}
 
 			this.SetUnit = function(unit){
-				if(this.unit !== null) return;
+				if(this.unit !== null)  throw "unit has been planted";
 				this.unit = unit
 			}
 		}
@@ -81,7 +112,7 @@ function Game() {
 		}
 
 		// Возвращает все объекты клетки типа tileType (new Cell[])
-		this.GetAllCells = function(type){
+		this.GetAllCellsByType = function(type){
 			return this.typesCells[type]
 		}
 
@@ -104,94 +135,74 @@ function Game() {
 	let random = new Math.seedrandom(seedRandom)
 	let map = new MapObject(inputMap)
 
+	const cardsParams = cardsJSON; // Описания карт
 
-	let graph = new Render()
-	graph.RenderMap(map);
+	let roundCounter = 0; // Увеличивать на 1 в конце спауна мобов
+	const render = new Render()
+	render.RenderMap(map);
 
-	// Глобальный цикл стадий
-	let phase = phaseType.WarriorSelect
+
+	let phase = null// Текущая фаза
+
+	const cardClonesCount = 8
+	let cardsDeck = null // Колода карт по 8 карт 
+
+	
 
 	// users: AbstractAgent[] array - инициализированные обьекты пользователей
-	this.Start = function(){
-
-		let runes = map.GetAllCells(tileType.Runes)
-
-		for (let runeCell of runes) { // Генерация монстров
-			let monster = new Unit();
-			monster.type = unitType.Creep
-			runeCell.SetUnit(monster)
-			graph.InitUnit(runeCell)
-		}
-
-		let heroes = map.GetAllCells(tileType.Base)
-
-		for (let heroCell of heroes) {
-			if(random() >= 0.5) continue;
-			let hero = new Unit()
-			hero.type = unitType.Hero
-
-			heroCell.SetUnit(hero)
-
-			graph.InitUnit(heroCell)
-		}
-
-		//TEST
-		go()
-		function go() {
-			let creeps = map.GetAllCellHasUnits(unitType.Creep);
-			let heroes = map.GetAllCellHasUnits(unitType.Hero);
-			for (let creepCellFrom of creeps) {
-				let creep = creepCellFrom.unit;
-				let creepCellTo = map.Get(creepCellFrom.y, creepCellFrom.x - 1);
-				if (creepCellTo == null || creepCellTo.HasUnit() === true) continue;
-				creepCellFrom.unit = null;
-				creepCellTo.SetUnit(creep);
-
-				graph.MoveUnit(creepCellFrom, creepCellTo);
-			}
-
-			for (let heroCellFrom of heroes) {
-
-				let hero = heroCellFrom.unit;
-				let heroCellTo = map.Get(heroCellFrom.y, heroCellFrom.x + 1);
-				if (heroCellTo == null || heroCellTo.HasUnit() === true) {
-					continue;
-				}
-				heroCellFrom.unit = null;
-				heroCellTo.SetUnit(hero);
-				graph.MoveUnit(heroCellFrom, heroCellTo);
-			}
-
-			setTimeout(go, 1000);
-			setTimeout(gen, 1500);
-		}
-
-		function gen() {
-			let runes = map.GetAllCells(tileType.Runes);
-			for (let runeCell of runes) {
-				let monster = new Unit();
-				monster.type = unitType.Creep;
-				runeCell.SetUnit(monster);
-				graph.InitUnit(runeCell);
+	this.Start = function(users){
+		// Генерация колоды
+		cardsDeck = []
+		for (let card in cardsParams) {
+			for (let i = 0; i < cardClonesCount; i++) {
+				cardsDeck.push(card)
 			}
 		}
+		shakeArray(cardsDeck, random)
+
+		// Начальный спаун мобов на рунах
+		for(let spawnCell of map.GetAllCellsByType(tileType.Runes)){
+			if(spawnCell.HasUnit()) continue;
+			spawnCell.SetUnit(new Unit(unitType.Creep))
+			render.InitUnit(spawnCell)
+		}
+
+		
+
+
+		WarriorsSelect()
+	}
+
+
+
+
+	// 8 копий каждой в колоде
+
 
 	// Функции стадий
-	}
+	function WarriorsSelect(){ // 1. Выбор карт
 
+		let counterReady = 0; // Пользователь выбирающий карту
 
-
-	function WarriorsSelect(){ // Выбор карт
 		shakeArray(users, random)
+		phase = phaseType.WarriorSelect
+
+
+		for (let user of users) {
+			if(roundCounter === 0){
+				user.SelectCards(2, cardsDeck,)
+			}
+			
+		}
+
+		// Ждать всех игроков
+		function Select()
+
+
 	}
 
 
 
-	function User(){
-		this.agent = null // Класс с функциями запроса ввода и вывода от этого пользователя
-		this.isHost = null
-
-	}
 
 
 
@@ -216,10 +227,10 @@ function getRandomInt(random, min, max) {
 
 
 function shakeArray(a, random){
-	arr.sort(function (a, b) {
+	a.sort(function () {
   		return random() - 0.5
 	})
-	return arr
+	return a
 }
 
 // Поворачивает вектор на определенный угол

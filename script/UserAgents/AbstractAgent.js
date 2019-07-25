@@ -5,12 +5,17 @@
 
 // Этот класс отправляет запросы в GUI API graph.js
 
-function AbstractAgent(){
-	let type = null
-	let isHost = null
-	let id = null
+class AbstractAgent{
 
+	constructor(type){
+		this.type = type
+	}
 
+	// callback(cardsIds[])
+	SelectCards(count, cards, callback){
+
+		//return selectedIds = []
+	}
 
 
 
