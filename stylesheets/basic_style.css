@@ -102,11 +102,15 @@ td {
 }
 
 #pic-clock {
+  position: relative;
+  background-size: contain;
   display: block;
   margin: 0 auto;
+  top: 5px;
+  left: 0px;
   height: 66px;
   width: 66px;
-  background-image: url("../models/tmp files/platform.svg");
+  background-image: url("../models/tmp files/clock.png");
 }
 
 #timer {
