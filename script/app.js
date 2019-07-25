@@ -197,7 +197,8 @@ function Game() {
 		for (var i = 0; i < (isFirstRound ? 10 : 5); i++) {
 			selectionCards.push(cardsDeck.pop())
 		}
-		 
+
+		render.SelectCards(selectionCards, 2);
 
 		let userId = 0; // Пользователь выбирающий карту
 

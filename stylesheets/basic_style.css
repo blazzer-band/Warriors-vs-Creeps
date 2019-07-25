@@ -341,18 +341,32 @@ td {
   background-color: rgba(2,3,4,0.5)
 }
 
-.round-1-cards, .round-x-cards {
+.round-cards {
   margin-top: 2em;
-  margin-left: 0.12em;
+  margin-left: 0.33em;
   display: inline-block;
   width: 104px;
   height: 124px;
 }
 
-.round-1-cards img {
+.round-cards img {
   width: 100%;
 }
 
-.round-x-cards img {
-  width: 100%;
+.ok-choose {
+  visibility: hidden;
+  position: relative;
+  margin: 0 auto;
+  top: 25px;
+  right: 51.8%;
+  width: 50px;
+  height: 25px;
+  text-align: center;
+  background-color: #1d9e15;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  border: 1px solid #2bea3b;
+  border-radius: 7px;
+  color: #eff515;
 }
