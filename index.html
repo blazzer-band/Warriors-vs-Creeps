@@ -30,6 +30,7 @@
 	}
 
 	#main {
+		margin-top: 1em;
 		display: block;
 		width: 1150px;
 		height: 400px;
@@ -42,45 +43,62 @@
 	}
 
 	#trackers {
+		vertical-align: top;
+		align-content: center;
+		height: 400px;
 		display: inline-block;
-		width: 100px;
-		height: 2	00px;
 	}
 
-	#kill-tracker {
-
+	#kill-tracker #bomb-tracker #clock {
+		margin-block: 1em;
+		display: block;
+		width: 120px;
 	}
 
 	#kills {
+		height: 127px;
+		width: 120px;
+
 		background-color: crimson;
 	}
 
 	#bomb-tracker {
-
+		margin-top: 0.5em;
 	}
 
 	#hp-bomb {
-		background-color: darkviolet;
+		height: 127px;
+		width: 120px;
+		background-color: violet;
+	}
+
+	#clock {
+		margin-top: 0.5em;
+		background-color: lightsalmon;
+		height: 130px;
+	}
+
+	#pic-clock {
+		display: block;
+		margin: 0 auto;
+		height: 66px;
+		width: 66px;
+		background-image: url("models/tmp files/platform.svg");
+	}
+
+	#timer {
+		height: 40px;
+		text-align: center;
+		font-style: normal;
+		font-size: 48px;
 	}
 
 	#chat {
 		display: inline-block;
-		width: 240px;
+		width: 220px;
 		height: 400px;
+
 		background-color: cadetblue;
-	}
-
-	#clock {
-		background-color: lightsalmon;
-	}
-
-	#pic-clock {
-
-	}
-
-	#timer {
-		text-align: center;
-		font-style: normal;
 	}
 
 	#footer {

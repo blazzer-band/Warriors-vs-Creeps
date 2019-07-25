@@ -163,7 +163,6 @@ function Game() {
 			}
 
 			setTimeout(go, 1000);
-			setTimeout(gen, 1500);
 		}
 
 		function gen() {

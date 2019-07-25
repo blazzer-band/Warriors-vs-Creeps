@@ -10,7 +10,6 @@ function Render() {
         let height = 6;
         let width = 12;
 		for (let i = 0; i < height; i++) {
-
             map.children[0].appendChild(document.createElement("tr"));
             for (let j = 0; j < width; j++) {
                 map.children[0].lastChild.appendChild(document.createElement("td"));
