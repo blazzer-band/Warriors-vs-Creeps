@@ -2,6 +2,7 @@
 	* {
 		margin: 0;
 		padding: 0;
+		white-space: nowrap;
 	}
 	#game-map {
 		display: table;
@@ -103,32 +104,81 @@
 
 	#footer {
 		display: block;
-		width: 1150ps;
+		margin-top: 0.5em;
+		width: 1150px;
+		height: 200px;
 	}
 
 	#hand {
 		display: inline-block;
 		background-color: bisque;
-		width: 100px;
-		height: 300px;
+		width: 60px;
+		height: 200px;
 	}
 
 	#card-field {
+		vertical-align: top;
 		display: inline-block;
 		background-color: darkslateblue;
-		height: 300px;
-		width: 850px;
+		height: 200px;
+		width: 900px;
 		z-index: 1;
+	}
+
+	#user-icon {
+		vertical-align: top;
+		z-index: 2;
+		display: inline-block;
+		background-image: url("models/tmp files/platform.svg");
+		width: 66px;
+		height: 66px;
+	}
+
+	#number-1-icon, #number-2-icon, #number-3-icon, #number-4-icon, #number-5-icon, #number-6-icon{
+		/* vertical-align: bottom; */
+		position: absolute;
+		left: 35px;
+		bottom: -25px;
+		width: 50px;
+		height: 50px;
+		z-index: 6;
+
+	}
+
+	#number-1-icon{
+		background-image: url("models/numbers/one_number.svg");
+	}
+
+	#number-2-icon{
+		background-image: url("models/numbers/two_number.svg");
+	}
+
+	#number-3-icon{
+		background-image: url("models/numbers/three_number.svg");
+	}
+
+	#number-4-icon{
+		background-image: url("models/numbers/four_number.svg");
+	}
+
+	#number-5-icon{
+		background-image: url("models/numbers/five_number.svg");
+	}
+
+	#number-6-icon{
+		background-image: url("models/numbers/six_number.svg");
 	}
 
 	#card-1, #card-2, #card-3, #card-4, #card-5, #card-6 {
 		display: inline-block;
+		position: relative;
 		background-color: red;
+		margin: 0 0 10 10;
 		/* margin-top: 0.5em;
 		margin-bottom: 0.5em;
 		height: 90%; */
 		height: 200px;
-		width: 100px;
+		width: 125px;
 		z-index: 2;
 	}
 
@@ -170,6 +220,12 @@
 		margin: 10%;
 		margin-left: 15%;
 	} */
+
+	#footer_footer{
+		height:20px;
+		width:1150px;
+		background-color: aqua;
+	}
 
 	#lobby, #welcome, #room {
 		width: 80%;
@@ -265,36 +321,44 @@
                 <div id="card-1-1"></div>
                 <div id="card-1-2"></div>
                 <div id="card-1-3"></div>
+								<div id="number-1-icon"></div>
             </div>
             <div id="card-2">
                 <div id="card-2-1"></div>
                 <div id="card-2-2"></div>
                 <div id="card-2-3"></div>
+								<div id="number-2-icon"></div>
             </div>
             <div id="card-3">
                 <div id="card-3-1"></div>
                 <div id="card-3-2"></div>
                 <div id="card-3-3"></div>
+								<div id="number-3-icon"></div>
             </div>
             <div id="card-4">
                 <div id="card-4-1"></div>
                 <div id="card-4-2"></div>
                 <div id="card-4-3"></div>
+								<div id="number-4-icon"></div>
             </div>
             <div id="card-5">
                 <div id="card-5-1"></div>
                 <div id="card-5-2"></div>
                 <div id="card-5-3"></div>
+								<div id="number-5-icon"></div>
             </div>
             <div id="card-6">
                 <div id="card-6-1"></div>
                 <div id="card-6-2"></div>
                 <div id="card-6-3"></div>
+								<div id="number-6-icon"></div>
             </div>
         </div>
 		<div id="x-card">
             <div id="xxx-card"></div>
         </div>
+		<div id="footer_footer">
+		</div>
 	</div>
 </div>
 
