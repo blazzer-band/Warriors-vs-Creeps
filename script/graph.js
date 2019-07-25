@@ -94,6 +94,14 @@ function Render() {
 
     }
 
+    // Запуск таймера отсчета с intSecond до 0
+    this.startTimer = function(intSecond){
+
+    }
+    this.StopTimer = function(intSecond){
+
+    }
+
 
 
 }
