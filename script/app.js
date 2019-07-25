@@ -77,8 +77,9 @@ function Game() {
 			}
 
 			this.SetUnit = function(unit){
-				if(this.unit !== null)  throw "unit has been planted";
+				if(this.unit !== null) throw "unit has been planted";
 				this.unit = unit
+				return this
 			}
 		}
 
@@ -150,7 +151,7 @@ function Game() {
 	
 
 	// users: AbstractAgent[] array - инициализированные обьекты пользователей
-	this.Start = function(users){
+	this.Start = function(){
 		// Генерация колоды
 		cardsDeck = []
 		for (let card in cardsParams) {
@@ -167,8 +168,16 @@ function Game() {
 			render.InitUnit(spawnCell)
 		}
 
-		
+		// Спаун героев
+		let baseFree = map.GetAllCellsByType(tileType.Base).filter(cell => !cell.HasUnit())
+		shakeArray(baseFree, random)
 
+		for(let user in users){
+			render.InitUnit(baseFree.pop().SetUnit(new Unit(unitType.Hero)))
+		}
+		// Спаун бомбы
+		render.InitUnit(baseFree.pop().SetUnit(new Unit(unitType.Bomb)))
+		
 
 		WarriorsSelect()
 	}
@@ -185,12 +194,12 @@ function Game() {
 		phase = phaseType.WarriorSelect
 
 
-		for (let user of users) {
+		/*for (let user of users) {
 			if(roundCounter === 0){
 				user.SelectCards(2, cardsDeck,)
 			}
 			
-		}
+		}*/
 
 		// Ждать всех игроков
 		function Select(){}
