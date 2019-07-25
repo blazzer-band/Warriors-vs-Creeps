@@ -86,8 +86,10 @@ function Render() {
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
     //cards = array of int card id
     this.SelectCards = function(cards, count, isThis, callback){
-    	arrayIdSelectedCards = []
-    	callback(arrayIdSelectedCards)
+        let board = document.getElementById("choose-board");
+        board.style.visibility = "visible";
+    	arrayIdSelectedCards = [];
+    	callback(arrayIdSelectedCards);
     }
 
     // Скрыть окро выбора карт
