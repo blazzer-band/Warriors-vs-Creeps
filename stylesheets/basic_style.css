@@ -58,16 +58,15 @@ td {
 }
 
 #kill-tracker {
-  position: relative;
   height: 127px;
   width: 120px;
-  background-color: #C3F96B;
+  background-color: #F74747;
 }
 
 #skull-icon{
-  position: absolute;
-  margin-left: 23%;
+  position: relative;
   top: 5px;
+  margin: 0 auto;
   background-image: url("../models/tmp files/skull.png");
   background-size: contain;
   height: 66px;
@@ -76,9 +75,8 @@ td {
 }
 
 #kills {
-  position: absolute;
   height: 20px;
-  top: 65px;
+  margin: 0 auto;
   width: 100%;
   text-align: center;
   font-style: normal;
@@ -86,13 +84,28 @@ td {
 }
 
 #bomb-tracker {
+  height: 127px;
+  width: 120px;
+  background-color: #FF743D;
   margin-top: 0.5em;
 }
 
+#bomb-icon{
+  position: relative;
+  background-size: contain;
+  margin: 0 auto;
+  top: 5px;
+  left: 0px;
+  height: 66px;
+  width: 66px;
+  background-image: url("../models/tmp files/bomb_icon.png");
+}
+
 #hp-bomb {
-  height: 127px;
-  width: 120px;
-  background-color: #F74747;
+  height: 40px;
+  text-align: center;
+  font-style: normal;
+  font-size: 55px;
 }
 
 #clock {
@@ -104,7 +117,6 @@ td {
 #pic-clock {
   position: relative;
   background-size: contain;
-  display: block;
   margin: 0 auto;
   top: 5px;
   left: 0px;
@@ -118,6 +130,10 @@ td {
   text-align: center;
   font-style: normal;
   font-size: 48px;
+}
+
+#kills, #hp-bomb, #timer{
+  font-family: sans-serif;
 }
 
 #chat {
