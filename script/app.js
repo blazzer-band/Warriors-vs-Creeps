@@ -202,7 +202,7 @@ function Game() {
 			selectionCards.push(cardsDeck.pop())
 		}
 
-		//render.SelectCards(selectionCards, 2);
+		render.SelectCards(selectionCards, 2);
 
 		//let userId = 0; // Пользователь выбирающий карту
 
