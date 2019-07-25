@@ -149,7 +149,7 @@ function Game() {
 
 	let phase = null// Текущая фаза
 
-	const cardClonesCount = 8
+	const cardsCount = 96
 	let cardsDeck = null // Колода карт по 8 карт 
 
 	
@@ -159,17 +159,16 @@ function Game() {
 		// Генерация колоды
 		cardsDeck = []
 		for (let card in cardsParams) {
-			for (let i = 0; i < cardClonesCount; i++) {
+			for (let i = 0; i < (cardsCount/cardsParams.length)|0; i++) {
 				cardsDeck.push(card)
 			}
 		}
 		shakeArray(cardsDeck, random)
 
 		// Начальный спаун мобов на рунах
-		for(let spawnCell of map.GetAllCellsByType(tileType.Runes)){
-			if(spawnCell.HasUnit()) continue;
-			spawnCell.SetUnit(new Unit(unitType.Creep))
-			render.InitUnit(spawnCell)
+		let runesFree = map.GetAllCellsByType(tileType.Runes).filter(cell => !cell.HasUnit())
+		for(let spawnCell of runesFree){
+			render.InitUnit(spawnCell.SetUnit(new Unit(unitType.Creep)))
 		}
 
 		// Спаун героев
@@ -183,14 +182,14 @@ function Game() {
 		render.InitUnit(baseFree.pop().SetUnit(new Unit(unitType.Bomb)))
 		
 
-		WarriorsSelect()
+		warriorsSelect()
 	}
 
 
 
 
 	// Функции стадий
-	function WarriorsSelect(){ // 1. Выбор карт
+	function warriorsSelect(){ // 1. Выбор карт
 		phase = phaseType.WarriorSelect
 
 		shakeArray(users, random)
@@ -208,7 +207,7 @@ function Game() {
 
 		Select(0)
 		// Выбирать по очереди
-		function Select(userId){
+		function select(userId){
 
 			// Всем отправить отрисовку
 			// Выбирающему с коллбеком

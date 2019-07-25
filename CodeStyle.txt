@@ -3,6 +3,7 @@
 функций - создатьРеку (глагол)
 классов - НовыйКласс (существительное)
 константы - НОВАЯ_КОНСТАНТА (существительное)
+перечисляемые типы - colorType ("Type" В конце)
 
 функции для которых вызывается конструктор (например new Func()), именуются как Классы (НовыйКласс)
 
@@ -12,3 +13,17 @@ variables - camelCase
 functions - selectFunction
 class - NewClass
 consts - NEW_CONST
+enums - colorType
+
+
+examples:
+
+	enumType = {First:0, Second:1, Third:2}
+
+	class NewClass{}
+
+	function NewClass(){}
+
+	variable = new NewClass()
+
+	const COLORS = "green"
