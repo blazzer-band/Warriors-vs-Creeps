@@ -23,9 +23,9 @@ function Render() {
                 if (tmp === 0) {
                     img.src = "tmp_models/green.jpg";
                 } else if (tmp === 1) {
-					img.src = "tmp_models/gray.jpeg";
+					img.src = "models/stone_tex.png";
 				} else if (tmp === 2) {
-					img.src = "tmp_models/yellow.jpg";
+					img.src = "models/platform_tex.png";
 				} else if (tmp === 3) {
 					img.src = "tmp_models/blue.jpg";
 				}
@@ -41,7 +41,7 @@ function Render() {
 
     const units = {
         0 : "models/tmp files/man-with-sword-and-shield.svg",
-        1 : "models/tmp files/enemy_icon.svg",
+        1 : "models/monster.png",
         2 : "models/tmp files/naval_mine.png"
     };
 
