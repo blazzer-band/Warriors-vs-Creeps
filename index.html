@@ -1,190 +1,206 @@
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	#game-map {
+		display: table;
+		width: 800px;
+		height: 400px;
+	}
+	#game-map, tr, td {
+		border-collapse: collapse;
+	}
+	td img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	td {
+		position: relative;
+	}
+
+	#content {
+		display: block;
+		width: 1150px;
+		margin: 0 auto;
+	}
+
+	#main {
+		display: block;
+		width: 1150px;
+		height: 400px;
+	}
+
+	#map {
+		display: inline-block;
+		width: 800px;
+		height: 400px;
+	}
+
+	#trackers {
+		display: inline-block;
+		width: 100px;
+		height: 400px;
+	}
+
+	#kill-tracker {
+
+	}
+
+	#kills {
+		background-color: crimson;
+	}
+
+	#bomb-tracker {
+
+	}
+
+	#hp-bomb {
+		background-color: darkviolet;
+	}
+
+	#chat {
+		display: inline-block;
+		width: 240px;
+		height: 400px;
+		background-color: cadetblue;
+	}
+
+	#clock {
+		background-color: lightsalmon;
+	}
+
+	#pic-clock {
+
+	}
+
+	#timer {
+		text-align: center;
+		font-style: normal;
+	}
+
+
+
+	#footer {
+		display: none;
+	}
+
+	#card-field {
+
+		background-color: darkslateblue;
+		height: 100%;
+	}
+
+	#card-1, #card-2, #card-3, #card-4, #card-5, #card-6 {
+		background-color: bisque;
+		margin-top: 0.5em;
+		margin-bottom: 0.5em;
+		height: 90%;
+	}
+
+	#card-6 {
+		margin-right: 0.5em;
+	}
+
+	#card-1-1, #card-2-1, #card-3-1, #card-4-1, #card-5-1, #card-6-1 {
+		position: relative;
+		float: top;
+		height: 80%;
+		background-color: gold;
+	}
+
+	#card-1-2, #card-2-2, #card-3-2, #card-4-2, #card-5-2, #card-6-2 {
+		position: relative;
+		float: top;
+		bottom: 70%;
+		height: 80%;
+		background-color: orangered;
+	}
+
+	#card-1-3, #card-2-3, #card-3-3, #card-4-3, #card-5-3, #card-6-3 {
+		position: relative;
+		float: top;
+		bottom: 140%;
+		height: 80%;
+		background-color: darkorange;
+	}
+
+	#x-card {
+		background-color: goldenrod;
+	}
+
+	#xxx-card {
+		height: 140px;
+		width: 70%;
+		background-color: yellow;
+		margin: 10%;
+		margin-left: 15%;
+	}
+
+	#lobby, #welcome, #room {
+		width: 80%;
+		height: 80%;
+		text-align: center;
+		padding: 0;
+		border: 3px double black;
+		border-radius: 10px;
+		color: antiquewhite;
+		background-color: aquamarine;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+
+	#welcome {
+		display: none;
+	}
+
+	#x-welcome {
+		margin-top: 17%;
+		text-align: center;
+		font-size: 80px;
+		font-style: normal;
+		height: 60%;
+		color: orangered;
+	}
+
+	#welcome-play {
+		background-color: gold;
+		border: 1px solid black;
+		font-weight: bold;
+		border-radius: 5%;
+		margin-left: 40%;
+		margin-right: 40%;
+		margin-bottom: 10%;
+		height: 30%;
+		text-align: center;
+		font-size: 230%;
+	}
+
+	#lobby {
+		display: none;
+	}
+
+	#room {
+		display: none;
+	}
+
+	#game-map tbody tr {
+		position: relative;
+	}
+
+</style>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Warriors vs Creeps</title>
-	<style>
-		#game-map {
-			width: 800px;
-			height: 400px;
-		}
-		#game-map, tr, td {
-			border-collapse: collapse;
-		}
-		td img {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-    		height: 100%;		
-    	}
-
-		td {
-			position: relative;
-		}
-
-		#content {
-			display: block;
-			width: 1150px;
-			margin: 0 auto;
-		}
-
-		#main {
-			display: inline-block;
-		}
-
-        #footer {
-			display: inline-block;
-        }
-
-		#card-field {
-
-			background-color: darkslateblue;
-            height: 100%;
-		}
-
-        #card-1, #card-2, #card-3, #card-4, #card-5, #card-6 {
-            background-color: bisque;
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-            height: 90%;
-        }
-
-        #card-6 {
-            margin-right: 0.5em;
-        }
-
-        #card-1-1, #card-2-1, #card-3-1, #card-4-1, #card-5-1, #card-6-1 {
-            position: relative;
-            float: top;
-            height: 80%;
-            background-color: gold;
-        }
-
-        #card-1-2, #card-2-2, #card-3-2, #card-4-2, #card-5-2, #card-6-2 {
-            position: relative;
-            float: top;
-            bottom: 70%;
-            height: 80%;
-            background-color: orangered;
-        }
-
-        #card-1-3, #card-2-3, #card-3-3, #card-4-3, #card-5-3, #card-6-3 {
-            position: relative;
-            float: top;
-            bottom: 140%;
-            height: 80%;
-            background-color: darkorange;
-        }
-
-		#trackers {
-
-		}
-
-		#kill-tracker {
-
-		}
-
-		#kills {
-			background-color: crimson;
-		}
-
-		#bomb-tracker {
-
-		}
-
-		#hp-bomb {
-			background-color: darkviolet;
-		}
-
-		#chat {
-			background-color: cadetblue;
-		}
-
-		#clock {
-			background-color: lightsalmon;
-		}
-
-        #pic-clock {
-            background-image: url("tmp_models/black.jpg");
-            background-size: 50%;
-            height: 70%;
-            width: auto;
-        }
-
-        #timer {
-            text-align: center;
-            font-size: 200%;
-            font-style: normal;
-        }
-
-		#x-card {
-			background-color: goldenrod;
-		}
-
-        #xxx-card {
-            height: 140px;
-            width: 70%;
-            background-color: yellow;
-            margin: 10%;
-            margin-left: 15%;
-        }
-
-		#lobby, #welcome, #room {
-			width: 80%;
-			height: 80%;
-			text-align: center;
-			padding: 0;
-			border: 3px double black;
-			border-radius: 10px;
-			color: antiquewhite;
-			background-color: aquamarine;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			margin: auto;
-		}
-
-		#welcome {
-			display: none;
-		}
-
-		#x-welcome {
-			margin-top: 17%;
-			text-align: center;
-			font-size: 80px;
-			font-style: normal;
-			height: 60%;
-			color: orangered;
-		}
-
-		#welcome-play {
-			background-color: gold;
-			border: 1px solid black;
-			font-weight: bold;
-			border-radius: 5%;
-			margin-left: 40%;
-			margin-right: 40%;
-			margin-bottom: 10%;
-			height: 30%;
-			text-align: center;
-			font-size: 230%;
-		}
-
-		#lobby {
-			display: none;
-		}
-
-		#room {
-			display: none;
-		}
-
-		#game-map tbody tr {
-			position: relative;
-		}
-
-	</style>
 </head>
 <body>
 
