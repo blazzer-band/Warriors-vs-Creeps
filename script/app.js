@@ -19,24 +19,29 @@ function Game() {
 		}
 
 		// возвращает текущего пользователя закончившего ход
-		SelectCards(count, cards, callback){ // Запрос пользователю выбрать x карт
+		selectCards(count, cards, callback){ // Запрос пользователю выбрать x карт
 
-			if(callback !== undefined)
-				this.agent.SelectCards(count, cards, function(sels){
-					hand.push(sels)
-					callback(this)
+			if(callback !== undefined){
+				let user = this
+
+				this.agent.selectCards(cards, count, function(sels){
+					user.hand.push(sels)
+					callback(sels)
 				})
-			else{
-				render.SelectCards(cards)
 			}
 			
 		}
+
+		programming(){
+
+		}
+
 	}
 
 
 	let users = [] // Пользователи
 	{
-		let testUserAgent = new LocalAgent(userType.Human)
+		let testUserAgent = new LocalAgent()
 		let testUser = new User(0, true)
 		testUser.agent = testUserAgent
 
@@ -59,7 +64,7 @@ function Game() {
 		this.type = type
 		this.rotation = 0 // 1: 90, 2: 180, 3: -90(270)
 
-		this.Rotate = function(angle){  // 1: 90, 2: 180, 3: -90(270)
+		this.rotate = function(angle){  // 1: 90, 2: 180, 3: -90(270)
 			this.rotation += angle
 			this.rotation %= 4
 		}
@@ -76,11 +81,11 @@ function Game() {
 			this.type = null
 			this.unit = null
 
-			this.HasUnit = function(){
+			this.hasUnit = function(){
 				return this.unit !== null
 			}
 
-			this.SetUnit = function(unit){
+			this.setUnit = function(unit){
 				if(this.unit !== null) throw "unit has been planted";
 				this.unit = unit
 				return this
@@ -112,17 +117,17 @@ function Game() {
 
 
 		// Возвращает объект клетки(Cell) по координатам (x, y)
-		this.Get = function(x, y){
+		this.get = function(x, y){
 			return this.map[x][y]
 		}
 
 		// Возвращает все объекты клетки типа tileType (new Cell[])
-		this.GetAllCellsByType = function(type){
+		this.getAllCellsByType = function(type){
 			return this.typesCells[type]
 		}
 
 		// Возвращает все объекты клетки типа unitType (new Unit[])
-		this.GetAllCellHasUnits = function(type){
+		this.getAllCellHasUnits = function(type){
 			let retArray = []
 			for (let row of this.map){
 				for (let cell of row){
@@ -144,10 +149,10 @@ function Game() {
 
 	let roundCounter = 0; // Увеличивать на 1 в конце спауна мобов
 	const render = new Render()
-	render.RenderMap(map);
+	this.getRender = render
+	render.renderMap(map);
 
 
-	let phase = null// Текущая фаза
 
 	const cardsCount = 96
 	let cardsDeck = null // Колода карт по 8 карт 
@@ -155,7 +160,7 @@ function Game() {
 	
 
 	// users: AbstractAgent[] array - инициализированные обьекты пользователей
-	this.Start = function(){
+	this.start = function(){
 		// Генерация колоды
 		cardsDeck = []
 		for (let card in cardsParams) {
@@ -166,83 +171,89 @@ function Game() {
 		shakeArray(cardsDeck, random)
 
 		// Начальный спаун мобов на рунах
-		let runesFree = map.GetAllCellsByType(tileType.Runes).filter(cell => !cell.HasUnit())
+		let runesFree = map.getAllCellsByType(tileType.Runes).filter(cell => !cell.hasUnit())
 		for(let spawnCell of runesFree){
-			render.InitUnit(spawnCell.SetUnit(new Unit(unitType.Creep)))
+			render.initUnit(spawnCell.setUnit(new Unit(unitType.Creep)))
 		}
 
 		// Спаун героев
-		let baseFree = map.GetAllCellsByType(tileType.Base).filter(cell => !cell.HasUnit())
+		let baseFree = map.getAllCellsByType(tileType.Base).filter(cell => !cell.hasUnit())
 		shakeArray(baseFree, random)
 
 		for(let user in users){
-			render.InitUnit(baseFree.pop().SetUnit(new Unit(unitType.Hero)))
+			render.initUnit(baseFree.pop().setUnit(new Unit(unitType.Hero)))
 		}
 		// Спаун бомбы
-		render.InitUnit(baseFree.pop().SetUnit(new Unit(unitType.Bomb)))
+		render.initUnit(baseFree.pop().setUnit(new Unit(unitType.Bomb)))
 		
 
-		warriorsSelect()
+		chooseСards();
 	}
 
 
 
 
 	// Функции стадий
-	function warriorsSelect(){ // 1. Выбор карт
-		phase = phaseType.WarriorSelect
-
-		shakeArray(users, random)
-		
-		let selectionCards = []
+	function chooseСards(){ // 1. Выбор карт
 		let isFirstRound = roundCounter === 0
 
+		
+		shakeArray(users, random)
+		
+		//Подготовить 10 или 5 карт
+		let selectionCards = []
 		for (var i = 0; i < (isFirstRound ? 10 : 5); i++) {
 			selectionCards.push(cardsDeck.pop())
 		}
 
-		render.SelectCards(selectionCards, 2);
 
 		//let userId = 0; // Пользователь выбирающий карту
 
-		Select(0)
+		
 		// Выбирать по очереди
-		function select(userId){
+		(function select(userId = 0){
+			// Предоставить выбор пользователю users[userId]
 
-			// Всем отправить отрисовку
-			// Выбирающему с коллбеком
+			users[userId].selectCards(1 + isFirstRound, selectionCards, function(selectedCards){
 
-			
+				selectionCards = selectionCards.filter(cardId => !selectedCards.includes(cardId))
 
-			/*u.SelectCards(isFirstRound ? 2 : 1, selectionCards, u === users[userId], function(){
-
-				if(userId + 1 < users.length) {
-					Select(userId + 1)
+				if(userId + 1 < users.length){
+					select(userId + 1);
 				}
 				else{
-
+					programmingAct()
 				}
-			})*/
+			})
+
+		})()
+
+	}
 
 
+	function programmingAct(){
+		let countUsers = 0
+
+		for (let user of users) {
+			user.programming(function(){
+
+				countUsers++;
+
+				if(countUsers === users.length){
+					warriorsAct()
+				}
+
+			})
 		}
 
 
+	}
+
+	function warriorsAct(){
 
 
 	}
 
-
-
-
-
-
-
-	// Карта с определенным эффектом
-	function Card(){
-		this.id = null
-
-	}
 
 
 
@@ -251,6 +262,18 @@ function Game() {
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+//////////////// Функции Расширения
 
 function getRandomInt(random, min, max) {
   return Math.floor(random() * (max - min)) + min

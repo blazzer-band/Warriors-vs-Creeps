@@ -4,7 +4,7 @@ function Render() {
 
     let map = document.getElementById("game-map");
 
-	this.RenderMap = function(inputMap){
+	this.renderMap = function(inputMap){
 
         let map = document.getElementById("game-map");
         let height = 6;
@@ -18,7 +18,7 @@ function Render() {
 		for (let i = 0; i < height; i++) {
 
             for (let j = 0; j < width; j++) {
-                let tmp = inputMap.Get(i, j).type;
+                let tmp = inputMap.get(i, j).type;
                 let img = new Image();
                 if (tmp === 0) {
                     img.src = "tmp_models/green.jpg";
@@ -46,7 +46,7 @@ function Render() {
     };
 
     // передвинуть юнита из in в out
-    this.MoveUnit = function(cellFrom, cellTo) {
+    this.moveUnit = function(cellFrom, cellTo) {
 
         let fromElem = map.children[0].children[cellFrom.y].children[cellFrom.x];
         let toElem = map.children[0].children[cellTo.y].children[cellTo.x];
@@ -75,7 +75,7 @@ function Render() {
     }
 
     // нарисовать юнита который есть в ячейке
-    this.InitUnit = function(cell) {
+    this.initUnit = function(cell) {
 
 	    let img = new Image(120, 120);
         img.src = units[cell.unit.type];
@@ -100,7 +100,7 @@ function Render() {
     // count - количество возвращаемых карт
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
     //cards = array of int card id
-    this.SelectCards = function(cards, count, callback){
+    this.selectCards = function(cards, count, callback){
         let board = document.getElementById("choose-board");
         board.style.visibility = "visible";
         let arrayIdSelectedCards = [];
@@ -143,7 +143,7 @@ function Render() {
     }
 
     // Скрыть окро выбора карт
-    this.StopSelect = function(){
+    this.stopSelect = function(){
         let board = document.getElementById("choose-board");
         board.style.visibility = "hidden";
 
@@ -167,7 +167,7 @@ function Render() {
     };
 
 
-    this.StopTimer = function(){
+    this.stopTimer = function(){
       if (timerId !== null){
         clearInterval(timerId);
         timerId = null;
@@ -206,7 +206,7 @@ function Render() {
 
     // callback принимает список выбранных ячеек
     // cells array - массив
-    this.SelectCells = function(cellsArray, callback){
+    this.selectCells = function(cellsArray, callback){
 
     }
 

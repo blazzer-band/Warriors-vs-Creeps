@@ -3,6 +3,14 @@
 
 class LocalAgent extends AbstractAgent{
 
+	constructor(){
+		super();
+	}
 	
+	selectCards(cards, count, callback){
+		game.getRender.selectCards(cards, count, callback)
+	}
+
+
 
 }

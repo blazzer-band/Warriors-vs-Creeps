@@ -7,9 +7,9 @@
 
 class AbstractAgent{
 
-	constructor(type){
-		this.type = type
+	constructor(){
 	}
+
 
 	// callback(cardsIds[])
 	selectCards(cards, count, callback){
