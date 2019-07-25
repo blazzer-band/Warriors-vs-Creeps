@@ -1,20 +1,8 @@
 "use strict"
-// пользователь получающий события через из граф интерфейса игры
+// пользователь получающий события через из ядра
 
-function LocalAgent(){
+class LocalAgent extends AbstractAgent{
+
 	
-	let type = null
-	let isHost = null
-	let id = null
-	let debuf = []
-	let stacks = []
-
-	this.getActiveStacks = function(){
-
-	}
-
-
-
-
 
 }
