@@ -12,9 +12,11 @@ class AbstractAgent{
 	}
 
 	// callback(cardsIds[])
-	SelectCards(count, cards, callback){
-
-		//return selectedIds = []
+	SelectCards(cards, count, callback){
+		
+		
+		
+		
 	}
 
 
