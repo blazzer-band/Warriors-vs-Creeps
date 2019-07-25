@@ -57,11 +57,32 @@ td {
   width: 120px;
 }
 
-#kills {
+#kill-tracker {
+  position: relative;
   height: 127px;
   width: 120px;
+  background-color: #C3F96B;
+}
 
-  background-color: crimson;
+#skull-icon{
+  position: absolute;
+  margin-left: 23%;
+  top: 5px;
+  background-image: url("../models/tmp files/skull.png");
+  background-size: contain;
+  height: 66px;
+  width: 66px;
+  background-repeat: no-repeat;
+}
+
+#kills {
+  position: absolute;
+  height: 20px;
+  top: 65px;
+  width: 100%;
+  text-align: center;
+  font-style: normal;
+  font-size: 55px;
 }
 
 #bomb-tracker {
@@ -71,12 +92,12 @@ td {
 #hp-bomb {
   height: 127px;
   width: 120px;
-  background-color: violet;
+  background-color: #F74747;
 }
 
 #clock {
   margin-top: 0.5em;
-  background-color: lightsalmon;
+  background-color: #FFE7AF;
   height: 130px;
 }
 
@@ -100,7 +121,7 @@ td {
   width: 220px;
   height: 400px;
 
-  background-color: cadetblue;
+  background-color: #BBECED;
 }
 
 #footer {
@@ -112,7 +133,7 @@ td {
 
 #hand {
   display: inline-block;
-  background-color: bisque;
+  background-color: #004777;
   width: 60px;
   height: 200px;
 }
@@ -120,7 +141,7 @@ td {
 #card-field {
   vertical-align: top;
   display: inline-block;
-  background-color: darkslateblue;
+  background-color: #A30000;
   height: 200px;
   width: 900px;
   z-index: 1;
@@ -173,7 +194,7 @@ td {
 #card-1, #card-2, #card-3, #card-4, #card-5, #card-6 {
   display: inline-block;
   position: relative;
-  background-color: red;
+  background-color: #FF7700;
   margin: 0 0 10 10;
   /* margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -225,7 +246,7 @@ td {
 #footer_footer{
   height:20px;
   width:1150px;
-  background-color: aqua;
+  background-color: #2CEAA3;
 }
 
 #lobby, #welcome, #room {
