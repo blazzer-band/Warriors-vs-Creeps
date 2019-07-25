@@ -2,12 +2,17 @@
 // пользователь получающий события через интернет
 // Связан с таким-же классом на другом пк
 
-function NetworkAgent(){
-	let type = null
-	let isHost = null
-	let id = null
+class NetworkAgent extends AbstractAgent{
 
+	constructor(){
+		super();
+	}
+	
+	selectCards(cards, count, callback){
+		game.getRender.selectCards(cards)
 
+		// Ждать изменения в Firebase, затем вернуть callback
+	}
 
 
 

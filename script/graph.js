@@ -113,7 +113,7 @@ function Render() {
             img.onclick = function(e) {
                 if (arrayIdSelectedCards.length !== count && e.currentTarget.style.border !== "2px solid gold") {
                     e.currentTarget.style.border = "2px solid gold";
-                    arrayIdSelectedCards.push(e.currentTarget.cardId);
+                    arrayIdSelectedCards.push(e.currentTarget.cardId|0);
                 } else if (e.currentTarget.style.border === "2px solid gold") {
                     arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== e.currentTarget.cardId);
                     e.currentTarget.style.border = "0";
@@ -192,7 +192,7 @@ function Render() {
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
     // а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
     this.programming = function(callback){
-
+        
     }
 
 

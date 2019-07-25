@@ -24,8 +24,8 @@ function Game() {
 				let user = this
 
 				this.agent.selectCards(cards, count, function(sels){
-					for (let i in sels) {
-						user.hand.push(cards[sels[i]])
+					for (let i of sels) {
+						user.hand.push(cards[i]|0)
 					}
 					callback(sels)
 				})
