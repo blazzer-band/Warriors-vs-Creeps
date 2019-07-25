@@ -161,10 +161,13 @@ td {
 #card-field {
   vertical-align: top;
   display: inline-block;
-  background-color: #A30000;
+  background-image: url("../models/card_field_texture.png");
+  background-size: 30%;
+  background-color: #2F9915;
   height: 200px;
   width: 900px;
   z-index: 1;
+  /* #A30000; */
 }
 
 #user-icon {
@@ -214,14 +217,16 @@ td {
 #card-1, #card-2, #card-3, #card-4, #card-5, #card-6 {
   display: inline-block;
   position: relative;
-  background-color: #FF7700;
+  background-color: rgba(255, 255, 255, 0.4);
   margin: 0 0 10 10;
+  /* rgba(255, 119, 00, 0.5); */
   /* margin-top: 0.5em;
   margin-bottom: 0.5em;
   height: 90%; */
   height: 200px;
   width: 125px;
   z-index: 2;
+  /* #FF7700; */
 }
 
 /* #card-6 {

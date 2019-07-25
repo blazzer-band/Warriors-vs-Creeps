@@ -23,9 +23,9 @@ function Render() {
                 if (tmp === 0) {
                     img.src = "tmp_models/green.jpg";
                 } else if (tmp === 1) {
-					img.src = "tmp_models/gray.jpeg";
+					img.src = "models/stone_tex.png";
 				} else if (tmp === 2) {
-					img.src = "tmp_models/yellow.jpg";
+					img.src = "models/platform_tex.png";
 				} else if (tmp === 3) {
 					img.src = "tmp_models/blue.jpg";
 				}
@@ -41,7 +41,7 @@ function Render() {
 
     const units = {
         0 : "models/tmp files/man-with-sword-and-shield.svg",
-        1 : "models/tmp files/enemy_icon.svg",
+        1 : "models/monster.png",
         2 : "models/tmp files/naval_mine.png"
     };
 
@@ -86,10 +86,8 @@ function Render() {
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
     //cards = array of int card id
     this.SelectCards = function(cards, count, isThis, callback){
-        let board = document.getElementById("choose-board");
-        board.style.visibility = "visible";
-    	arrayIdSelectedCards = [];
-    	callback(arrayIdSelectedCards);
+    	arrayIdSelectedCards = []
+    	callback(arrayIdSelectedCards)
     }
 
     // Скрыть окро выбора карт
@@ -102,13 +100,6 @@ function Render() {
 
     }
     this.StopTimer = function(){
-
-    }
-
-    // Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
-    // id с нуля (0)
-    this.ReDrawCardStacks = function(stacks){
-    	// Очистить стеки и нарисовать новые
 
     }
 
