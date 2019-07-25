@@ -12,12 +12,24 @@ class AbstractAgent{
 	}
 
 	// callback(cardsIds[])
-	SelectCards(cards, count, callback){
-		
-		
+	selectCards(cards, count, callback){
 		
 		
 	}
+
+
+	programming(callback){
+
+
+	}
+
+
+	SelectCells(cellsArray, callback){
+
+
+	}
+
+
 
 
 
