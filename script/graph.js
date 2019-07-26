@@ -14,6 +14,23 @@ function Render() {
     let numbersStacks = [];
 
     const TILES_IMG = ["tmp_models/green.jpg", "models/stone_tex.png", "models/platform_tex.png", "tmp_models/blue.jpg"]
+
+    // count - количество возвращаемых карт
+    let selectStack = function (e) {
+        let stack = e.currentTarget;
+        let nameClassStack = stack.children[stack.childElementCount - 1].className;
+        let col = templateStacks[nameClassStack];
+        for (let i = 0; i < 3; i++) {
+            if (arrayStacks[col][i] === null) {
+                arrayStacks[col][i] = activeElement;
+                stack.children[i].appendChild(activeElement);
+                numbersStacks.push(col);
+                break;
+            }
+        }
+
+    };
+
 	this.renderMap = function(inputMap){
         let height = 6;
         let width = 12;
@@ -32,12 +49,17 @@ function Render() {
                 map.children[0].children[i].children[j].appendChild(img);
             }
         }
-    }
+
+		let stack = document.getElementsByClassName("stack");
+		for (let i = 0; i < stack.length; i++)
+		    stack[i].onclick = selectStack;
+    };
+
+
 	// Unit
 	// cellTo.HasUnit тип получать cellTo.unit.type - тип юнита
 	// const unitType = {Hero:0, Creep:1, Bomb:2} - юнит
 	// cellTo.x cellTo.y - координаты
-
 
     const UNIT_IMGS = ["models/tmp files/man-with-sword-and-shield.svg", "models/monster.png", "models/tmp files/naval_mine.png"];
 
@@ -92,9 +114,8 @@ function Render() {
         "src/cards/card11.jpg",
         "src/cards/card12.jpg"
     ];
-
-    // count - количество возвращаемых карт
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
+
     //cards = array of int card id
     this.selectCards = function(cards, count, callback){
 
@@ -151,6 +172,7 @@ function Render() {
         }
     }
 
+
     // Скрыть окро выбора карт
     this.stopSelect = function(){
         let board = document.getElementById("choose-board");
@@ -159,7 +181,6 @@ function Render() {
         btn[0].style.display = "none";
 
     }
-
 
     {
         let timerId = null;
@@ -212,14 +233,14 @@ function Render() {
         img.className = "hand-card"
         img.src = CARD_IMGS[cards[i]];
         img.cardId = cards[i];
-        img.onclick = "selectHandCard(e)";
+        img.onclick = selectHandCard;
         img.isActive = false;
         cardBoard.appendChild(img);
       }
        cardBoard.style.display = "block";
     };
 
-    this.selectHandCard = function (e) {
+    let selectHandCard = function (e) {
         e.currentTarget.style.border = "2px solid gold";
         e.currentTarget.isActive = true;
         activeElement = e.currentTarget;
@@ -232,21 +253,6 @@ function Render() {
         "number-4-icon" : 3,
         "number-5-icon" : 4,
         "number-6-icon" : 5
-    };
-
-    this.selectStack = function (e) {
-        let stack = e.currentTarget;
-        let nameClassStack = stack.children[stack.childElementCount - 1].className;
-        let col = templateStacks[nameClassStack];
-        for (let i = 0; i < 3; i++) {
-            if (arrayStacks[col][i] === null) {
-                arrayStacks[col][i] = activeElement;
-                stack.children[i].appendChild(activeElement);
-                numbersStacks.push(col);
-                break;
-            }
-        }
-
     };
 
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
