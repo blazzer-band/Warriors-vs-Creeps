@@ -183,7 +183,7 @@ function Game() {
 
 
 
-	const cardsCount = 96
+	const cardsCount = 4
 	let cardsDeck = null // Колода карт по 8 карт 
 
 	
@@ -227,6 +227,7 @@ function Game() {
 
 	function lose(){
 		render.defeat()
+		render.showMessage("Вы проиграли, позорно!")
 	}
 
 	///// Ассинхронный цикл. Начало 

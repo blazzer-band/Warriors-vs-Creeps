@@ -265,7 +265,7 @@ function Render() {
     //Окно, отображающее поражение для текущей сессии
     this.defeat = function(){
       let defeatBlock = document.getElementById("win-or-defeat");
-      console.log(defeatBlock);
+      defeatBlock.style.display = 'block'
       defeatBlock.src = "src/lose.mp4";
       defeatBlock.muted = "";
       defeatBlock.play();
