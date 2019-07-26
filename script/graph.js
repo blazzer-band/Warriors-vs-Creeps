@@ -156,32 +156,36 @@ function Render() {
         btn[0].style.visibility = "hidden";
 
     }
-    let timerId = null;
-    // Запуск таймера отсчета с intSecond до 0
-    this.startTimer = function(intSecond){
-      let realSecond = intSecond;
-      let timer = document.getElementById("timer");
-      timerId = setInterval(function(){
-        let seconds = realSecond % 60;
-        let minutes = (realSecond / 60) | 0;
-        if (realSecond < 0 ){
-          clearInterval(timerId);
-          timerId = null;
-          return;
+
+
+    {
+        let timerId = null;
+        // Запуск таймера отсчета с intSecond до 0
+        this.startTimer = function(intSecond){
+          let realSecond = intSecond;
+          let timer = document.getElementById("timer");
+          timerId = setInterval(function(){
+            let seconds = realSecond % 60;
+            let minutes = (realSecond / 60) | 0;
+            if (realSecond < 0 ){
+              clearInterval(timerId);
+              timerId = null;
+              return;
+            }
+            timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
+            realSecond--;
+          }, 1000);
         }
-        timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
-        realSecond--;
-      }, 1000);
-    };
 
 
-    this.stopTimer = function(){
-      if (timerId !== null){
-        let timer = document.getElementById("timer");
-        timer.innerHTML = "00:00";
-        clearInterval(timerId);
-        timerId = null;
-      }
+        this.stopTimer = function(){
+          if (timerId !== null){
+            let timer = document.getElementById("timer");
+            timer.innerHTML = "0:00";
+            clearInterval(timerId);
+            timerId = null;
+          }
+        }
     }
 
     // Обновить карты в руке рука не активна(перемещать карты нельзя)
