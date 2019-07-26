@@ -164,7 +164,8 @@ function Render() {
         this.startTimer = function(intSecond){
           let realSecond = intSecond;
           let timer = document.getElementById("timer");
-          timerId = setInterval(function(){
+          
+          function updateTimer(){
             let seconds = realSecond % 60;
             let minutes = (realSecond / 60) | 0;
             if (realSecond < 0 ){
@@ -174,7 +175,10 @@ function Render() {
             }
             timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
             realSecond--;
-          }, 1000);
+          }
+
+          updateTimer()
+          timerId = setInterval(updateTimer, 1000);
         }
 
 
