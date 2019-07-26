@@ -184,7 +184,33 @@ function Render() {
     this.setHand = function(cards){
       let cardsCounter = document.getElementById("hand-counter");
       cardsCounter.innerHTML = cards.length;
+      let cardBoard = document.getElementById("hand-board");
+      let boardWidth = cards.length * 130;
+      cardBoard.style.width = boardWidth + "px";
+      console.log(cards);
+      for (let i = 0; i < cards.length; i++){
+        cardBoard.appendChild(document.createElement("div"));
+        cardBoard.children[i].className = "hand-card";
+        let img = new Image();
+        img.src = CARD_IMGS[i];
+        img.cardId = i;
+        board.children[i].appendChild(img);
+      }
+
+      // cardBoard.style.visibility = "hidden";
+      console.log(cardBoard);
     }
+
+    //TEST
+    // function Cards(){
+    //   this.count = null;
+    // }
+    //
+    // let myCards = new Cards();
+    // myCards.count = 2;
+    //
+    // this.setHand(myCards);
+
 
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
@@ -216,7 +242,7 @@ function Render() {
                     //возврат номера стэка
                     let numberStack = 1;
                     let stack = document.getElementById("card-" + numberStack);
-                    //перемещаем в слот стэка картинку 
+                    //перемещаем в слот стэка картинку
                     //или же это делаем в setStacks
                     //stack.children[j].appendChild(document.createElement(img));
                     controlArray.pop();

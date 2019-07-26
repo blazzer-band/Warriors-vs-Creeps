@@ -167,6 +167,15 @@ td {
   top: 55px;
 }
 
+#hand-board{
+  position: relative;
+  height: 200px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: rgba(2,3,4,0.5);
+  top: -50px;
+}
+
 #card-field {
   vertical-align: top;
   display: inline-block;
