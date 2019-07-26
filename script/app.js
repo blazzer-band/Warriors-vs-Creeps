@@ -224,6 +224,11 @@ function Game() {
 
 	// Функции стадий
 
+
+	function lose(){
+		render.defeat()
+	}
+
 	///// Ассинхронный цикл. Начало 
 	function chooseСards(){ // 1. Выбор карт
 		let isFirstRound = roundCounter === 0
@@ -234,9 +239,11 @@ function Game() {
 		//Подготовить 10 или 5 карт
 		let selectionCards = []
 		let countCards = isFirstRound ? 10 : 5;
- 		for (var i = 0; i < countCards; i++) {
+ 		for (var i = 0; i < countCards && cardsDeck.length > 0; i++) {
 			selectionCards.push(cardsDeck.pop())
 		}
+
+		let countCard = 1 + isFirstRound;
 
 
 		//let userId = 0; // Пользователь выбирающий карту
@@ -245,8 +252,15 @@ function Game() {
 		// Выбирать по очереди
 		(function select(userId = 0){
 			// Предоставить выбор пользователю users[userId]
+			let count = Math.min(countCard, selectionCards.length)
 
-			users[userId].selectCards(1 + isFirstRound, selectionCards, function(selectedCards){
+			if(count === 0) {
+				lose()
+				return
+			}
+
+
+			users[userId].selectCards(count, selectionCards, function(selectedCards){
 
 				//selectionCards = selectionCards.filter(cardId => !selectedCards.includes(cardId))
 
