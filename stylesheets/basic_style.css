@@ -211,8 +211,7 @@ td {
 
 .hand-card{
   display: block;
-  width: 201px;
-  height: 200px;
+  width: 100%;
 
 }
 

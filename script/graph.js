@@ -227,7 +227,7 @@ function Render() {
       for (let i = 0; i < cards.length; i++){
         // cardBoard.appendChild(document.createElement("div"));
         // cardBoard.children[i].className = "hand-card";
-        let img = new Image(201, 200);
+        let img = new Image();
         img.className = "hand-card"
         img.src = CARD_IMGS[cards[i]];
         img.cardId = cards[i];
