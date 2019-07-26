@@ -217,19 +217,17 @@ function Render() {
     }
 
     // Обновить карты в руке рука не активна(перемещать карты нельзя)
-    this.setHand = function(cards){
-
+    this.setHand = function(cards){;
       let cardsCounter = document.getElementById("hand-counter");
-      cardsCounter.innerHTML = cards.length;
+      cardsCounter.innerHTML = "Hand:"+cards.length;
       let cardBoard = document.getElementById("hand-board");
+	  cardBoard.style.display = "flex";
       cardBoard.innerHTML = "";
-      let boardWidth = cards.length * 130;
-      cardBoard.style.width = boardWidth + "px";
       console.log(cards);
       for (let i = 0; i < cards.length; i++){
         // cardBoard.appendChild(document.createElement("div"));
         // cardBoard.children[i].className = "hand-card";
-        let img = new Image(125, 200);
+        let img = new Image(201, 200);
         img.className = "hand-card"
         img.src = CARD_IMGS[cards[i]];
         img.cardId = cards[i];
@@ -237,8 +235,9 @@ function Render() {
         img.isActive = false;
         cardBoard.appendChild(img);
       }
-       cardBoard.style.display = "block";
-    };
+	  cardBoard.style.display = "flex";
+    }
+
 
     let selectHandCard = function (e) {
         e.currentTarget.style.border = "2px solid gold";

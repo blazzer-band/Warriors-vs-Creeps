@@ -4,15 +4,20 @@
   margin: 0;
   padding: 0;
   white-space: nowrap;
+  user-select: none;
+  -webkit-user-drag: none;
 }
+
 #game-map {
   display: table;
   width: 800px;
   height: 400px;
 }
+
 #game-map, tr, td {
   border-collapse: collapse;
 }
+
 td img {
   position: absolute;
   top: 0;
@@ -31,11 +36,18 @@ td {
   margin: 0 auto;
 }
 
+#left-block{
+	margin-top: 1em;
+    display: inline-block;
+    width: 930px;
+    /* height: 400px; */
+}
+
 #main {
-  margin-top: 1em;
-  display: block;
-  width: 1150px;
-  height: 400px;
+	/* margin-top: 1em;
+    display: block;
+    width: 930px;
+    height: 400px; */
 }
 
 #map {
@@ -137,13 +149,26 @@ td {
   font-family: sans-serif;
 }
 
-#chat {
+/* #chat {
   display: inline-block;
   width: 220px;
   height: 400px;
 
   background-color: #BBECED;
+} */
+
+#hand-content{
+	margin-top: 1em;
+	position: absolute;
+    /* left: 1000px; */
+    display: inline-block;
+
+    /* width: 220px; */
+    height: 610px;
+	width: 220px;
+    background-color: #BBECED;
 }
+
 
 #footer {
   display: block;
@@ -153,38 +178,44 @@ td {
 }
 
 #hand {
-  display: inline-block;
+  /* display: inline-block;
   background-color: #004777;
   width: 60px;
-  height: 200px;
+  height: 200px; */
 }
 
 #hand-counter{
-  height: 40px;
+  /* height: 40px; */
   text-align: center;
   font-style: normal;
-  font-size: 70px;
-  position: relative;
-  top: 55px;
+  font-size: 60px;
+  position: absolute;
+  top: 550px;
+  /* left: 90px; */
+  /* top: 55px; */
 }
 
 #hand-board{
-  display: none;
-  position: relative;
-  height: 200px;
+  display: flex;
+  position: absolute;
+  justify-content: space-around;
+  width: 220px;
+  height: 550px;
   border: 1px solid black;
   border-radius: 5px;
-  background-color: rgba(2,3,4,0.5);
-  top: -244px;
-  left: 130px;
+  /* background-color: rgba(2,3,4,0.5); */
+  /* background-color: black; */
+  /* top: 500px; */
+  /* left: 130px; */
   z-index: 10;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 .hand-card{
-  display: inline-block;
-  width: 125px;
+  display: block;
+  width: 201px;
   height: 200px;
-  margin-left: 0.33em;
 
 }
 
@@ -216,8 +247,9 @@ td {
   z-index: 2;
   display: inline-block;
   background-image: url("../models/tmp files/platform.svg");
-  width: 66px;
-  height: 66px;
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
 }
 
 #number-1-icon, #number-2-icon, #number-3-icon, #number-4-icon, #number-5-icon, #number-6-icon{
@@ -367,7 +399,7 @@ td {
 
 #choose-board,  #message{
   display: none;
-  top: -500px;
+  top: -650px;
   position: relative;
   margin: 0 auto;
   height: 200px;

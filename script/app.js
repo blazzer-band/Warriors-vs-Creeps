@@ -31,7 +31,7 @@ function Game() {
 					callback(sels)
 				})
 			}
-			
+
 		}
 
 		programming(callback){
@@ -190,10 +190,9 @@ function Game() {
 
 
 	const cardsCount = 30;
+	let cardsDeck = null // Колода карт по 8 карт
 
-	let cardsDeck = null // Колода карт по 8 карт 
 
-	
 
 	// users: AbstractAgent[] array - инициализированные обьекты пользователей
 	this.start = function(){
@@ -221,7 +220,7 @@ function Game() {
 		}
 		// Спаун бомбы
 		render.initUnit(baseFree.pop().setUnit(new Unit(unitType.Bomb)))
-		
+
 
 		chooseСards();
 	}
@@ -237,13 +236,13 @@ function Game() {
 		render.showMessage("YOU LOSE")
 	}
 
-	///// Ассинхронный цикл. Начало 
+	///// Ассинхронный цикл. Начало
 	function chooseСards(){ // 1. Выбор карт
 		let isFirstRound = roundCounter === 0
 
-		
+
 		shakeArray(users, random)
-		
+
 		//Подготовить 10 или 5 карт
 		let selectionCards = []
 		let countCards = isFirstRound ? 10 : 5;
@@ -253,16 +252,15 @@ function Game() {
 
 		let countCard = 1 + isFirstRound;
 
-		
 		// Выбирать по очереди
 		(function select(userId = 0){
 			// Предоставить выбор пользователю users[userId]
 			let count = Math.min(countCard, selectionCards.length)
-
-			if(count === 0) {
-				lose()
-				return
-			}
+			count = 3;
+			// if(count === 0) {
+			// 	lose()
+			// 	return
+			// }
 
 
 			users[userId].selectCards(count, selectionCards, function(selectedCards){
@@ -362,8 +360,8 @@ function Game() {
 
 		roundCounter++;
 		chooseСards()
-	} 
-	///// Ассинхронный цикл. Конец 
+	}
+	///// Ассинхронный цикл. Конец
 
 
 
