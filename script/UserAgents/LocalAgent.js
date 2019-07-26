@@ -10,11 +10,15 @@ class LocalAgent extends AbstractAgent{
 	
 	// И отправить кроме этого в FireBase
 	selectCards(cards, count, callback){
-		let timerSecs = 60
+		let timerSecs = 4
 		game.getRender.startTimer(timerSecs)
 
 		let timeout = setTimeout(function(){
-			endSelect([0,1])
+			let out = []
+			for (var i = 0; i < count; i++) {
+				out.push(i)
+			}
+			endSelect(out)
 		}, timerSecs*1000)
 
 
