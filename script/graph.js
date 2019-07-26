@@ -139,9 +139,9 @@ function Render() {
     // Скрыть окро выбора карт
     this.stopSelect = function(){
         let board = document.getElementById("choose-board");
-        board.style.visibility = "hidden";
+        board.style.display = "none";
         let btn = document.getElementsByClassName("ok-choose");
-        btn[0].style.visibility = "hidden";
+        btn[0].style.display = "none";
 
     }
 
