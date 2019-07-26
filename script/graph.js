@@ -96,6 +96,10 @@ function Render() {
         let arrayIdSelectedCards = [];
         desk.appendChild(document.createElement("div"));
         desk.children[0].style.display = "block";
+        let index_board = 110;
+        desk.style.width = (index_board * cards.length) + "px";
+        //let pixels = 53.5 * (10 - cards.length);
+        //desk.children[0].style.marginLeft = "" + pixels + "px";
         board = desk.children[0];
         board.className = "desk-card";
         for (let i = 0; i < cards.length; i++) {
