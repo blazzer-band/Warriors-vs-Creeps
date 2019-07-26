@@ -96,6 +96,10 @@ function Render() {
         let arrayIdSelectedCards = [];
         desk.appendChild(document.createElement("div"));
         desk.children[0].style.display = "block";
+        let index_board = 110;
+        desk.style.width = (index_board * cards.length) + "px";
+        //let pixels = 53.5 * (10 - cards.length);
+        //desk.children[0].style.marginLeft = "" + pixels + "px";
         board = desk.children[0];
         board.className = "desk-card";
         for (let i = 0; i < cards.length; i++) {
@@ -203,19 +207,69 @@ function Render() {
        cardBoard.style.display = "block";
     }
 
+    //think about 6 x 3 array
+    let arrayFullStacks = [];
+    let arrayTransformHand = [];
+    //function for click on stacks
+    this.selectStack = function (e) {
+        let idStack = e.currentTarget.stackId;
+        let orderIdCard = -1;
+        let arrayHandCards = document.getElementsByClassName("hand-card");
+        for (let card of arrayHandCards) {
+            if (card.isActive) {
+                orderIdCard = card.orderId;
+                let img = new Image();
+                img.src = card.src;
+                card.innerHTML = '';
+                img.style.width = "100%";
+                e.currentTarget.appendChild(document.createElement(img));
+                //size hand
+                let sizeHand = document.getElementById("hand-counter").textContent;
+                //обращаемся по стэку и изменяем массив, если на какой-то стэк-уровень заполнен, то
+                //проходимся по всему стэку, ищем свободное место
+                //не находим -- выводим ошибку, просим перевыбрать или автоматически удаляем верхний элемент
+                //в стэке размера 3 и ставим наверх нашу карту, если все одной стихии
+                if (arrayTransformHand.length === (sizeHand * 1))
+                    e.currentTarget.setStacks(arrayFullStacks); //array 6 x 3
+            }
+        }
+    };
+
+    //function for click on handCard
+    this.selectHandCard = function (e) {
+        let sizeHand = document.getElementById("hand-counter").textContent;
+        let cards = document.getElementsByClassName("hand-card"); //class hand cards
+        let realSize = 0;
+        for (let card of cards) {
+            if (!card.isActive) {
+                realSize++;
+            }
+        }
+        if (!e.currentTarget.isActive && realSize === (sizeHand * 1)) {
+            e.currentTarget.style.border = "2px solid green";
+            e.currentTarget.isActive = true;
+        }
+    };
+
+
 
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
     // а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
     this.programming = function(handCards, callback) {
-        //commit
+        let numbersStacks = [];
+        while (arrayHandCards.length !== 0) {
+            //1. selectHandCard
+            //2. selectStack
+            //3. numbersStacks.push(numberStack);
         }
-    }
+        callback(numbersStacks);
+    };
 
 
     // cards - Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
     this.setStacks = function(cards){
-
+        // заполняем стэки по массиву
     }
 
 
