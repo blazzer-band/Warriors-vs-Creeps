@@ -11,6 +11,10 @@ class BotAgent extends AbstractAgent{
 		callback([0,1])
 	}
 
+	setHand(cardIds){
+		console.log("Бот говорит что взял в руку карты:")
+		console.log(cardIds)
+	}
 
 
 }

@@ -22,13 +22,16 @@ class LocalAgent extends AbstractAgent{
 
 		function endSelect(callb){
 			game.getRender.stopSelect()
-			game.getRender.setHand(callb)
 			game.getRender.stopTimer()
 			clearTimeout(timeout)
 
 			callback(callb)
 		}
 
+	}
+
+	setHand(cardIds){
+		game.getRender.setHand(cardIds)
 	}
 
 

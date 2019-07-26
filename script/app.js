@@ -27,6 +27,7 @@ function Game() {
 					for (let i of sels) {
 						user.hand.push(cards[i]|0)
 					}
+					user.agent.setHand(user.hand)
 					callback(sels)
 				})
 			}
