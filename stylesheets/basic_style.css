@@ -1,5 +1,3 @@
-/* Здесь будут базовые(для компютеров) стили */
-
 * {
   margin: 0;
   padding: 0;
@@ -37,17 +35,17 @@ td {
 }
 
 #left-block{
-	margin-top: 1em;
-    display: inline-block;
-    width: 930px;
-    /* height: 400px; */
+  margin-top: 1em;
+  display: inline-block;
+  width: 930px;
+  /* height: 400px; */
 }
 
 #main {
-	/* margin-top: 1em;
-    display: block;
-    width: 930px;
-    height: 400px; */
+  /* margin-top: 1em;
+  display: block;
+  width: 930px;
+  height: 400px; */
 }
 
 #map {
@@ -153,20 +151,19 @@ td {
   display: inline-block;
   width: 220px;
   height: 400px;
-
   background-color: #BBECED;
 } */
 
 #hand-content{
-	margin-top: 1em;
-	position: absolute;
-    /* left: 1000px; */
-    display: inline-block;
+  margin-top: 1em;
+  position: absolute;
+  /* left: 1000px; */
+  display: inline-block;
 
-    /* width: 220px; */
-    height: 610px;
-	width: 220px;
-    background-color: #BBECED;
+  /* width: 220px; */
+  height: 610px;
+  width: 220px;
+  background-color: #BBECED;
 }
 
 
@@ -300,14 +297,12 @@ td {
 /* #card-6 {
   margin-right: 0.5em;
 }
-
 #card-1-1, #card-2-1, #card-3-1, #card-4-1, #card-5-1, #card-6-1 {
   position: relative;
   float: top;
   height: 80%;
   background-color: gold;
 }
-
 #card-1-2, #card-2-2, #card-3-2, #card-4-2, #card-5-2, #card-6-2 {
   position: relative;
   float: top;
@@ -315,7 +310,6 @@ td {
   height: 80%;
   background-color: orangered;
 }
-
 #card-1-3, #card-2-3, #card-3-3, #card-4-3, #card-5-3, #card-6-3 {
   position: relative;
   float: top;
@@ -323,11 +317,9 @@ td {
   height: 80%;
   background-color: darkorange;
 }
-
 #x-card {
   background-color: goldenrod;
 }
-
 #xxx-card {
   height: 140px;
   width: 70%;
