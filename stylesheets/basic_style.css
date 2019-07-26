@@ -39,7 +39,6 @@ td {
 }
 
 #map {
-  position: relative;
   display: inline-block;
   width: 800px;
   height: 400px;
@@ -169,34 +168,12 @@ td {
 }
 
 #hand-board{
-  display: none;
   position: relative;
   height: 200px;
   border: 1px solid black;
   border-radius: 5px;
   background-color: rgba(2,3,4,0.5);
-  top: -244px;
-  left: 130px;
-  z-index: 10;
-}
-
-.hand-card{
-  display: inline-block;
-  width: 125px;
-  height: 200px;
-  margin-left: 0.33em;
-
-}
-
-#current-card {
-  visibility: hidden;
-  position: relative;
-  height: 200px;
-  border: 1px solid black;
-  border-radius: 5px;
-  background-color: rgba(2,3,4,0.5);
-  top: -41px;
-  width: 120px;
+  top: -50px;
 }
 
 #card-field {
@@ -370,8 +347,8 @@ td {
   position: relative;
 }
 
-#choose-board,  #message{
-  display: none;
+#choose-board {
+  visibility: hidden;
   top: -500px;
   position: relative;
   margin: 0 auto;
@@ -380,13 +357,7 @@ td {
   border: 1px solid black;
   border-radius: 5px;
   background-color: rgba(2,3,4,0.5);
-  z-index: 12;
-}
-
-#message {
-  font-size: 130pt;
-  color: white;
-  text-align: center;
+  z-index: 90000;
 }
 
 .desk-card {
@@ -430,15 +401,6 @@ td {
   margin-top: 0.4em;
 }
 
-#win-or-defeat{
-  position: absolute;
-  display: none;
-  margin: 0 auto;
-  /* visibility: hidden; */
-  width: 100%;
-  height: 100%;
-  background-color: rgba(2,3,4,0.5);
-  top: 0px;
-  left: 0px;
-  z-index: 11;
+body {
+  height: 650px;
 }
