@@ -177,6 +177,8 @@ function Render() {
 
     this.stopTimer = function(){
       if (timerId !== null){
+        let timer = document.getElementById("timer");
+        timer.innerHTML = "00:00";
         clearInterval(timerId);
         timerId = null;
       }
