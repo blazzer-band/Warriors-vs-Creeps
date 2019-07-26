@@ -184,7 +184,6 @@ function Game() {
 
 
 	const cardsCount = 96
-	const cardsCount = 4//96
 	let cardsDeck = null // Колода карт по 8 карт 
 
 	
