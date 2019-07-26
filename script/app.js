@@ -35,8 +35,22 @@ function Game() {
 		}
 
 		programming(callback){
-			callback()
+			// Заполнить стеки из руки
+
+			/*this.agent.programming(this.hand, function(){
+				callback()
+			})
+			*/
+			for (var i = 0; i < 6; i++) {
+				this.stacks.push([])
+			}
+			this.stacks[0].push(0) // Добавить тестовую карту с id 0
+
+
 		}
+
+
+
 
 	}
 
@@ -159,13 +173,6 @@ function Game() {
 			cellFrom.unit = null
 			return cellTo
 		}
-		// Перемещает, если не может, возвращает null иначе юнита которого переместил
-		this.moveUnitFromCellToCell = function(cellFrom, cellTo){
-			if(cellTo.HasUnit()) return null;
-			cellTo.unit = cellFrom.unit
-			cellFrom.unit = null
-			return cellTo.unit
-		}
 
 	}
 
@@ -182,8 +189,7 @@ function Game() {
 	render.renderMap(map);
 
 
-
-	const cardsCount = 4
+	const cardsCount = 30;
 	let cardsDeck = null // Колода карт по 8 карт
 
 
@@ -227,7 +233,7 @@ function Game() {
 
 	function lose(){
 		render.defeat()
-		render.showMessage("Вы проиграли, позорно!")
+		render.showMessage("YOU LOSE")
 	}
 
 	///// Ассинхронный цикл. Начало
@@ -245,10 +251,6 @@ function Game() {
 		}
 
 		let countCard = 1 + isFirstRound;
-
-
-		//let userId = 0; // Пользователь выбирающий карту
-
 
 		// Выбирать по очереди
 		(function select(userId = 0){
@@ -287,21 +289,42 @@ function Game() {
 
 		for (let user of users) {
 			user.programming(function(){
-
 				countUsers++;
-
 				if(countUsers === users.length){
-					warriorsAct()
+					warriorsAct();
 				}
 
 			})
 		}
 	}
 
+
+
 	function warriorsAct(){
+		// В порядке
+		// Исполняется карта, верхняя в первом стеке
 
 
-		creepsMoveAct()
+		(function act(userId = 0){
+
+
+
+
+
+
+
+
+
+			
+			if(userId + 1 < users.length){
+				act(userId + 1);
+			}
+			else{
+				creepsMoveAct()
+			}
+		})()
+
+
 	}
 
 	function creepsMoveAct(){ // Все делают шаг к бомбе
@@ -335,9 +358,7 @@ function Game() {
 	function creepsAttackAct(){
 
 
-
 		roundCounter++;
-
 		chooseСards()
 	}
 	///// Ассинхронный цикл. Конец

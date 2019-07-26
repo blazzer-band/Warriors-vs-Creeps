@@ -3,9 +3,34 @@ function Render() {
 
 
     let map = document.getElementById("game-map");
-
+    let activeElement = null;
+    let arrayStacks = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]];
+    let numbersStacks = [];
 
     const TILES_IMG = ["tmp_models/green.jpg", "models/stone_tex.png", "models/platform_tex.png", "tmp_models/blue.jpg"]
+
+    // count - количество возвращаемых карт
+    let selectStack = function (e) {
+        let stack = e.currentTarget;
+        let nameClassStack = stack.children[stack.childElementCount - 1].className;
+        let col = templateStacks[nameClassStack];
+        for (let i = 0; i < 3; i++) {
+            if (arrayStacks[col][i] === null) {
+                arrayStacks[col][i] = activeElement;
+                stack.children[i].appendChild(activeElement);
+                numbersStacks.push(col);
+                break;
+            }
+        }
+
+    };
+
 	this.renderMap = function(inputMap){
         let height = 6;
         let width = 12;
@@ -24,12 +49,17 @@ function Render() {
                 map.children[0].children[i].children[j].appendChild(img);
             }
         }
-    }
+
+		let stack = document.getElementsByClassName("stack");
+		for (let i = 0; i < stack.length; i++)
+		    stack[i].onclick = selectStack;
+    };
+
+
 	// Unit
 	// cellTo.HasUnit тип получать cellTo.unit.type - тип юнита
 	// const unitType = {Hero:0, Creep:1, Bomb:2} - юнит
 	// cellTo.x cellTo.y - координаты
-
 
     const UNIT_IMGS = ["models/tmp files/man-with-sword-and-shield.svg", "models/monster.png", "models/tmp files/naval_mine.png"];
 
@@ -84,11 +114,13 @@ function Render() {
         "src/cards/card11.jpg",
         "src/cards/card12.jpg"
     ];
-
-    // count - количество возвращаемых карт
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
+
     //cards = array of int card id
     this.selectCards = function(cards, count, callback){
+
+        for (let i = 0; i < numbersStacks.length; i++)
+            numbersStacks.pop();
 
         let desk = document.getElementById("choose-board");
         desk.innerHTML = '';
@@ -96,6 +128,10 @@ function Render() {
         let arrayIdSelectedCards = [];
         desk.appendChild(document.createElement("div"));
         desk.children[0].style.display = "block";
+        let index_board = 110;
+        desk.style.width = (index_board * cards.length) + "px";
+        //let pixels = 53.5 * (10 - cards.length);
+        //desk.children[0].style.marginLeft = "" + pixels + "px";
         board = desk.children[0];
         board.className = "desk-card";
         for (let i = 0; i < cards.length; i++) {
@@ -136,6 +172,7 @@ function Render() {
         }
     }
 
+
     // Скрыть окро выбора карт
     this.stopSelect = function(){
         let board = document.getElementById("choose-board");
@@ -144,7 +181,6 @@ function Render() {
         btn[0].style.display = "none";
 
     }
-
 
     {
         let timerId = null;
@@ -195,61 +231,41 @@ function Render() {
         img.className = "hand-card"
         img.src = CARD_IMGS[cards[i]];
         img.cardId = cards[i];
+        img.onclick = selectHandCard;
+        img.isActive = false;
         cardBoard.appendChild(img);
       }
 	  cardBoard.style.display = "flex";
     }
 
 
+    let selectHandCard = function (e) {
+        e.currentTarget.style.border = "2px solid gold";
+        e.currentTarget.isActive = true;
+        activeElement = e.currentTarget;
+    };
+
+    const templateStacks = {
+        "number-1-icon" : 0,
+        "number-2-icon" : 1,
+        "number-3-icon" : 2,
+        "number-4-icon" : 3,
+        "number-5-icon" : 4,
+        "number-6-icon" : 5
+    };
+
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
     // а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
     this.programming = function(handCards, callback) {
-        let hand = document.getElementById("hand");
-        hand.innerHTML = '';
-        hand.appendChild(document.createElement("div"));
-        let numbersStacks = [];
-        for (let i = 0; i < handCards.length; i++) {
-            hand.children[0].appendChild(document.createElement("div"));
-            hand.children[0].children[i].className = "hand-cards";
-            let img = new Image();
-            img.src = CARD_IMGS[handCards[i]];
-            img.cardId = handCards[i];
-            img.orderId = i;
-            //свойство активности
-            img.isActive = false;
-            numbersStacks.push(null);
-            let controlArray = [];
-            controlArray.push(null);
-            img.onclick = function(e) {
-                if (controlArray.length === handCards.length && e.currentTarget.style.border !== "2px solid green") {
-                    e.currentTarget.style.border = "2px solid green";
-                    e.currentTarget.isActive = true;
-                    //onclick на ячейки стэков
-                    //пока не нажмёт, ничего не делать, просто так и остаётся активным
-                    //проверка на свойство активности
-                    //возврат номера стэка
-                    let numberStack = 1;
-                    let stack = document.getElementById("card-" + numberStack);
-                    //перемещаем в слот стэка картинку
-                    //или же это делаем в setStacks
-                    //stack.children[j].appendChild(document.createElement(img));
-                    controlArray.pop();
-                    numbersStacks[e.currentTarget.orderId] = numberStack;
-                    //stack.setStacks()
-                    if (controlArray.length === 0)
-                    	callback(numbersStacks);
-                }
-
-            };
-            hand.children[0].children[i].appendChild(document.createElement(img));
-        }
-    }
+        if (handCards.length === numbersStacks.length)
+            callback(numbersStacks);
+    };
 
 
     // cards - Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
     this.setStacks = function(cards){
-
+        // заполняем стэки по массиву
     }
 
 

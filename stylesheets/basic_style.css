@@ -263,43 +263,38 @@ td {
 
 }
 
-#number-1-icon{
+.number-1-icon{
   background-image: url("../models/numbers/one_number.svg");
 }
 
-#number-2-icon{
+.number-2-icon{
   background-image: url("../models/numbers/two_number.svg");
 }
 
-#number-3-icon{
+.number-3-icon{
   background-image: url("../models/numbers/three_number.svg");
 }
 
-#number-4-icon{
+.number-4-icon{
   background-image: url("../models/numbers/four_number.svg");
 }
 
-#number-5-icon{
+.number-5-icon{
   background-image: url("../models/numbers/five_number.svg");
 }
 
-#number-6-icon{
+.number-6-icon{
   background-image: url("../models/numbers/six_number.svg");
 }
 
-#card-1, #card-2, #card-3, #card-4, #card-5, #card-6 {
+.stack {
   display: inline-block;
   position: relative;
   background-color: rgba(255, 255, 255, 0.4);
-  margin: 0 0 10 10;
-  /* rgba(255, 119, 00, 0.5); */
-  /* margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  height: 90%; */
+  margin: 1px;
   height: 200px;
   width: 125px;
   z-index: 2;
-  /* #FF7700; */
 }
 
 /* #card-6 {
