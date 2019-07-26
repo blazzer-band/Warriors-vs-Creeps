@@ -96,10 +96,6 @@ function Render() {
         let arrayIdSelectedCards = [];
         desk.appendChild(document.createElement("div"));
         desk.children[0].style.display = "block";
-        let index_board = 110;
-        desk.style.width = (index_board * cards.length) + "px";
-        //let pixels = 53.5 * (10 - cards.length);
-        //desk.children[0].style.marginLeft = "" + pixels + "px";
         board = desk.children[0];
         board.className = "desk-card";
         for (let i = 0; i < cards.length; i++) {
@@ -196,24 +192,13 @@ function Render() {
         cardBoard.appendChild(document.createElement("div"));
         cardBoard.children[i].className = "hand-card";
         let img = new Image();
-        img.src = CARD_IMGS[i];
-        img.cardId = i;
+        img.src = CARD_IMGS[cards[i]];
+        img.cardId = cards[i];
         board.children[i].appendChild(img);
       }
 
       // cardBoard.style.visibility = "hidden";
-      console.log(cardBoard);
     }
-
-    //TEST
-    // function Cards(){
-    //   this.count = null;
-    // }
-    //
-    // let myCards = new Cards();
-    // myCards.count = 2;
-    //
-    // this.setHand(myCards);
 
 
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
