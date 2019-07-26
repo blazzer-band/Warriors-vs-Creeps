@@ -13,17 +13,19 @@ class LocalAgent extends AbstractAgent{
 		let timerSecs = 60
 		game.getRender.startTimer(timerSecs)
 
-		setTimeout(function(){
+		let timeout = setTimeout(function(){
 			endSelect([0,1])
 		}, timerSecs*1000)
 
 
 		game.getRender.selectCards(cards, count, endSelect)
-		
+
 		function endSelect(callb){
 			game.getRender.stopSelect()
 			game.getRender.setHand(callb)
 			game.getRender.stopTimer()
+			clearTimeout(timeout)
+
 			callback(callb)
 		}
 
