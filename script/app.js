@@ -232,7 +232,8 @@ function Game() {
 		
 		//Подготовить 10 или 5 карт
 		let selectionCards = []
-		for (var i = 0; i < (isFirstRound ? 10 : 5); i++) {
+		let countCards = isFirstRound ? 10 : 5;
+ 		for (var i = 0; i < countCards; i++) {
 			selectionCards.push(cardsDeck.pop())
 		}
 
@@ -319,6 +320,7 @@ function Game() {
 
 
 
+		roundCounter++;
 
 		chooseСards()
 	} 
