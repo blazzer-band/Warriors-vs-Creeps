@@ -203,8 +203,8 @@ td {
   height: 550px;
   border: 1px solid black;
   border-radius: 5px;
-  background-color: rgba(2,3,4,0.5);
-  background-color: black;
+  /* background-color: rgba(2,3,4,0.5); */
+  /* background-color: black; */
   /* top: 500px; */
   /* left: 130px; */
   z-index: 10;
@@ -214,7 +214,7 @@ td {
 
 .hand-card{
   display: block;
-  width: 220px;
+  width: 201px;
   height: 200px;
 
 }
