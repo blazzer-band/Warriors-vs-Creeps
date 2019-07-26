@@ -1,8 +1,9 @@
 # Warriors vs Creeps [Mission: Bomb Keepers]
 # Игра по типу "Mechs vs Minions (LoL)"
 
-### [Играть](https://blazzer-band.github.io/Warriors-vs-Creeps/index.html)
-### Подробное описание игры доступно на [Wiki](https://github.com/blazzer-band/Warriors-vs-Creeps/wiki)
+
+  - ###  Подробное описание игры доступно на [Wiki](https://github.com/blazzer-band/Warriors-vs-Creeps/wiki)
+  - ###  Также вы можете [поиграть](https://blazzer-band.github.io/Warriors-vs-Creeps/index.html) в нашу игру онлайн
 
 # Идея
 Вам предстоит играть за одного из четырёх хранителей бомбы определённых стихий (огонь, металл, компьютеры, электричество). Ваша задача - доставить бомбу до пункта ремонта, не дав крипам (противникам) уничтожить её. 
