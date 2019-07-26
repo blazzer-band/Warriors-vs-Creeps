@@ -39,6 +39,7 @@ td {
 }
 
 #map {
+  position: relative;
   display: inline-block;
   width: 800px;
   height: 400px;
@@ -369,8 +370,8 @@ td {
   position: relative;
 }
 
-#choose-board {
-  visibility: hidden;
+#choose-board,  #message{
+  display: none;
   top: -500px;
   position: relative;
   margin: 0 auto;
@@ -379,7 +380,13 @@ td {
   border: 1px solid black;
   border-radius: 5px;
   background-color: rgba(2,3,4,0.5);
-  z-index: 90000;
+  z-index: 12;
+}
+
+#message {
+  font-size: 130pt;
+  color: white;
+  text-align: center;
 }
 
 .desk-card {
@@ -421,4 +428,17 @@ td {
 .desk button {
   margin-left: 47.5%;
   margin-top: 0.4em;
+}
+
+#win-or-defeat{
+  position: absolute;
+  display: none;
+  margin: 0 auto;
+  /* visibility: hidden; */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(2,3,4,0.5);
+  top: 0px;
+  left: 0px;
+  z-index: 11;
 }

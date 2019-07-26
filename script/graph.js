@@ -92,7 +92,7 @@ function Render() {
 
         let desk = document.getElementById("choose-board");
         desk.innerHTML = '';
-        desk.style.visibility = "visible";
+        desk.style.display = "block";
         let arrayIdSelectedCards = [];
         desk.appendChild(document.createElement("div"));
         desk.children[0].style.display = "block";
@@ -114,10 +114,10 @@ function Render() {
                 }
                 if (arrayIdSelectedCards.length === count) {
                     let btn = document.getElementsByClassName("ok-choose");
-                    btn[0].style.visibility = "visible";
+                    btn[0].style.display = "block";
                 } else {
                     let btn = document.getElementsByClassName("ok-choose");
-                    btn[0].style.visibility = "hidden";
+                    btn[0].style.display = "none";
                 }
             };
             board.children[i].appendChild(img);
@@ -262,7 +262,27 @@ function Render() {
 
     }
 
+    //Окно, отображающее поражение для текущей сессии
+    this.defeat = function(){
+      let defeatBlock = document.getElementById("win-or-defeat");
+      console.log(defeatBlock);
+      defeatBlock.src = "src/lose.mp4";
+      defeatBlock.muted = "";
+      defeatBlock.play();
+    };
 
+    // Высветить сообщение поверх всего
+    this.showMessage = function(text, color) { // make enum
+      let messageBlock = document.getElementById("message");
+      messageBlock.style.display = "block";
+      //messageBlock.style.background = "red"; //rgba(2,3,4,0.5);
+      messageBlock.innerHTML = text;
+    };
 
+    // Скрыть сообщение
+    this.hideMessge = function(){
+      let messageBlock = document.getElementById("message");
+      messageBlock.style.display = "none";
+    };
 
 }
