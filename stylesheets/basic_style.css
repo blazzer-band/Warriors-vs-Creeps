@@ -364,7 +364,7 @@ td {
 }
 
 .ok-choose {
-  visibility: visible;
+  visibility: hidden;
   position: relative;
   margin: 0 auto;
   width: 50px;
