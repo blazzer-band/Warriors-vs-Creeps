@@ -182,22 +182,25 @@ function Render() {
 
     // Обновить карты в руке рука не активна(перемещать карты нельзя)
     this.setHand = function(cards){
+
       let cardsCounter = document.getElementById("hand-counter");
       cardsCounter.innerHTML = cards.length;
       let cardBoard = document.getElementById("hand-board");
+      cardBoard.innerHTML = "";
       let boardWidth = cards.length * 130;
       cardBoard.style.width = boardWidth + "px";
       console.log(cards);
       for (let i = 0; i < cards.length; i++){
-        cardBoard.appendChild(document.createElement("div"));
-        cardBoard.children[i].className = "hand-card";
-        let img = new Image();
+        // cardBoard.appendChild(document.createElement("div"));
+        // cardBoard.children[i].className = "hand-card";
+        let img = new Image(125, 200);
+        img.className = "hand-card"
         img.src = CARD_IMGS[cards[i]];
         img.cardId = cards[i];
-        board.children[i].appendChild(img);
+        cardBoard.appendChild(img);
       }
 
-      // cardBoard.style.visibility = "hidden";
+       cardBoard.style.display = "block";
     }
 
 

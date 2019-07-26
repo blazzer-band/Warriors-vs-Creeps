@@ -168,12 +168,34 @@ td {
 }
 
 #hand-board{
+  display: none;
   position: relative;
   height: 200px;
   border: 1px solid black;
   border-radius: 5px;
   background-color: rgba(2,3,4,0.5);
-  top: -50px;
+  top: -244px;
+  left: 130px;
+  z-index: 10;
+}
+
+.hand-card{
+  display: inline-block;
+  width: 125px;
+  height: 200px;
+  margin-left: 0.33em;
+
+}
+
+#current-card {
+  visibility: hidden;
+  position: relative;
+  height: 200px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: rgba(2,3,4,0.5);
+  top: -41px;
+  width: 120px;
 }
 
 #card-field {
