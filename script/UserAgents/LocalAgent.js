@@ -39,5 +39,10 @@ class LocalAgent extends AbstractAgent{
 	}
 
 
+	programming(hands, callback){
+		game.getRender.programming(hands, callback)
+	}
+
+
 
 }
