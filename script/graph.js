@@ -3,7 +3,15 @@ function Render() {
 
 
     let map = document.getElementById("game-map");
-
+    let activeElement = null;
+    let arrayStacks = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]];
+    let numbersStacks = [];
 
     const TILES_IMG = ["tmp_models/green.jpg", "models/stone_tex.png", "models/platform_tex.png", "tmp_models/blue.jpg"]
 	this.renderMap = function(inputMap){
@@ -89,6 +97,9 @@ function Render() {
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
     //cards = array of int card id
     this.selectCards = function(cards, count, callback){
+
+        for (let i = 0; i < numbersStacks.length; i++)
+            numbersStacks.pop();
 
         let desk = document.getElementById("choose-board");
         desk.innerHTML = '';
@@ -201,69 +212,49 @@ function Render() {
         img.className = "hand-card"
         img.src = CARD_IMGS[cards[i]];
         img.cardId = cards[i];
+        img.onclick = "selectHandCard(e)";
+        img.isActive = false;
         cardBoard.appendChild(img);
       }
-
        cardBoard.style.display = "block";
-    }
-
-    //think about 6 x 3 array
-    let arrayFullStacks = [];
-    let arrayTransformHand = [];
-    //function for click on stacks
-    this.selectStack = function (e) {
-        let idStack = e.currentTarget.stackId;
-        let orderIdCard = -1;
-        let arrayHandCards = document.getElementsByClassName("hand-card");
-        for (let card of arrayHandCards) {
-            if (card.isActive) {
-                orderIdCard = card.orderId;
-                let img = new Image();
-                img.src = card.src;
-                card.innerHTML = '';
-                img.style.width = "100%";
-                e.currentTarget.appendChild(document.createElement(img));
-                //size hand
-                let sizeHand = document.getElementById("hand-counter").textContent;
-                //обращаемся по стэку и изменяем массив, если на какой-то стэк-уровень заполнен, то
-                //проходимся по всему стэку, ищем свободное место
-                //не находим -- выводим ошибку, просим перевыбрать или автоматически удаляем верхний элемент
-                //в стэке размера 3 и ставим наверх нашу карту, если все одной стихии
-                if (arrayTransformHand.length === (sizeHand * 1))
-                    e.currentTarget.setStacks(arrayFullStacks); //array 6 x 3
-            }
-        }
     };
 
-    //function for click on handCard
     this.selectHandCard = function (e) {
-        let sizeHand = document.getElementById("hand-counter").textContent;
-        let cards = document.getElementsByClassName("hand-card"); //class hand cards
-        let realSize = 0;
-        for (let card of cards) {
-            if (!card.isActive) {
-                realSize++;
-            }
-        }
-        if (!e.currentTarget.isActive && realSize === (sizeHand * 1)) {
-            e.currentTarget.style.border = "2px solid green";
-            e.currentTarget.isActive = true;
-        }
+        e.currentTarget.style.border = "2px solid gold";
+        e.currentTarget.isActive = true;
+        activeElement = e.currentTarget;
     };
 
+    const templateStacks = {
+        "number-1-icon" : 0,
+        "number-2-icon" : 1,
+        "number-3-icon" : 2,
+        "number-4-icon" : 3,
+        "number-5-icon" : 4,
+        "number-6-icon" : 5
+    };
 
+    this.selectStack = function (e) {
+        let stack = e.currentTarget;
+        let nameClassStack = stack.children[stack.childElementCount - 1].className;
+        let col = templateStacks[nameClassStack];
+        for (let i = 0; i < 3; i++) {
+            if (arrayStacks[col][i] === null) {
+                arrayStacks[col][i] = activeElement;
+                stack.children[i].appendChild(activeElement);
+                numbersStacks.push(col);
+                break;
+            }
+        }
+
+    };
 
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
     // а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
     this.programming = function(handCards, callback) {
-        let numbersStacks = [];
-        while (arrayHandCards.length !== 0) {
-            //1. selectHandCard
-            //2. selectStack
-            //3. numbersStacks.push(numberStack);
-        }
-        callback(numbersStacks);
+        if (handCards.length === numbersStacks.length)
+            callback(numbersStacks);
     };
 
 

@@ -159,13 +159,6 @@ function Game() {
 			cellFrom.unit = null
 			return cellTo
 		}
-		// Перемещает, если не может, возвращает null иначе юнита которого переместил
-		this.moveUnitFromCellToCell = function(cellFrom, cellTo){
-			if(cellTo.HasUnit()) return null;
-			cellTo.unit = cellFrom.unit
-			cellFrom.unit = null
-			return cellTo.unit
-		}
 
 	}
 
@@ -183,7 +176,7 @@ function Game() {
 
 
 
-	const cardsCount = 4
+	const cardsCount = 30;
 	let cardsDeck = null // Колода карт по 8 карт 
 
 	
@@ -227,7 +220,7 @@ function Game() {
 
 	function lose(){
 		render.defeat()
-		render.showMessage("Вы проиграли, позорно!")
+		render.showMessage("YOU LOSE")
 	}
 
 	///// Ассинхронный цикл. Начало 
