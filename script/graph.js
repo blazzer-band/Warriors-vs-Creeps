@@ -4,9 +4,9 @@ function Render() {
 
     let map = document.getElementById("game-map");
 
-	this.renderMap = function(inputMap){
 
-        let map = document.getElementById("game-map");
+    const TILES_IMG = ["tmp_models/green.jpg", "models/stone_tex.png", "models/platform_tex.png", "tmp_models/blue.jpg"]
+	this.renderMap = function(inputMap){
         let height = 6;
         let width = 12;
 		for (let i = 0; i < height; i++) {
@@ -20,15 +20,7 @@ function Render() {
             for (let j = 0; j < width; j++) {
                 let tmp = inputMap.get(j, i).type;
                 let img = new Image();
-                if (tmp === 0) {
-                    img.src = "tmp_models/green.jpg";
-                } else if (tmp === 1) {
-					img.src = "models/stone_tex.png";
-				} else if (tmp === 2) {
-					img.src = "models/platform_tex.png";
-				} else if (tmp === 3) {
-					img.src = "tmp_models/blue.jpg";
-				}
+                img.src = TILES_IMG[tmp];
                 map.children[0].children[i].children[j].appendChild(img);
             }
         }
@@ -39,11 +31,7 @@ function Render() {
 	// cellTo.x cellTo.y - координаты
 
 
-    const units = {
-        0 : "models/tmp files/man-with-sword-and-shield.svg",
-        1 : "models/monster.png",
-        2 : "models/tmp files/naval_mine.png"
-    };
+    const UNIT_IMGS = ["models/tmp files/man-with-sword-and-shield.svg", "models/monster.png", "models/tmp files/naval_mine.png"];
 
     // передвинуть юнита из in в out
     this.moveUnit = function(cellFrom, cellTo) {
@@ -78,11 +66,11 @@ function Render() {
     this.initUnit = function(cell) {
 
 	    let img = new Image(120, 120);
-        img.src = units[cell.unit.type];
+        img.src = UNIT_IMGS[cell.unit.type];
         map.children[0].children[cell.y].children[cell.x].appendChild(img);
 	}
 
-	const chooseCards = [
+	const CARD_IMGS = [
         "src/cards/card1.jpg",
         "src/cards/card2.jpg",
         "src/cards/card3.jpg",
@@ -114,7 +102,7 @@ function Render() {
             board.appendChild(document.createElement("div"));
             board.children[i].className = "round-cards";
             let img = new Image();
-            img.src = chooseCards[cards[i]];
+            img.src = CARD_IMGS[cards[i]];
             img.cardId = i;
             img.onclick = function(e) {
                 if (arrayIdSelectedCards.length !== count && e.currentTarget.style.border !== "2px solid gold") {
@@ -164,7 +152,7 @@ function Render() {
         this.startTimer = function(intSecond){
           let realSecond = intSecond;
           let timer = document.getElementById("timer");
-          
+
           function updateTimer(){
             let seconds = realSecond % 60;
             let minutes = (realSecond / 60) | 0;
@@ -198,16 +186,6 @@ function Render() {
       cardsCounter.innerHTML = cards.length;
     }
 
-    // //TEST
-    // function Cards(){
-    //   this.count = null;
-    // }
-    //
-    // let myCards = new Cards();
-    // myCards.count = 2;
-    //
-    // this.setHand(myCards);
-
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
     // а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
@@ -220,7 +198,7 @@ function Render() {
             hand.children[0].appendChild(document.createElement("div"));
             hand.children[0].children[i].className = "hand-cards";
             let img = new Image();
-            img.src = chooseCards[handCards[i]];
+            img.src = CARD_IMGS[handCards[i]];
             img.cardId = handCards[i];
             img.orderId = i;
             //свойство активности
