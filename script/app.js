@@ -2,9 +2,10 @@
 
 const tileType = {Grass:0, Base:1, Runes:2, Target:3}
 const unitType = {Hero:0, Creep:1, Bomb:2}
-const cardType = {Electro:0, Iron:1, Computer:2, Fire:3}
+const cardType = {Command:0, Damage:1}
 const phaseType = {WarriorsSelect:0, WarriorsProgram:1, WarriorsAction:2, CreepsMove:3, CreepsSpawn:4, CreepsAttack:5}
 const userType = {Human:0, Bot:1, UserAgent:2}
+const ramsType = {Hero: true, Creep: false, Bomb: true}
 
 
 function Game() {
@@ -256,11 +257,11 @@ function Game() {
 		(function select(userId = 0){
 			// Предоставить выбор пользователю users[userId]
 			let count = Math.min(countCard, selectionCards.length)
-			count = 3;
-			// if(count === 0) {
-			// 	lose()
-			// 	return
-			// }
+			
+			if(count === 0) {
+				lose()
+				return
+			}
 
 
 			users[userId].selectCards(count, selectionCards, function(selectedCards){
@@ -323,9 +324,35 @@ function Game() {
 				creepsMoveAct()
 			}
 		})()
+	}
+
+	function goRamming(startCell, endCell){ // таран до клетки
+
+		if(startCell.unit === unitType.Creep){
+			attackCell(startCell)
+		}
+
 
 
 	}
+
+	function attackCell(cell){ // удар по клетке
+		if(cell.unit === unitType.Creep) {
+			cell.unit = null
+			render.killUnit(cell)
+		}
+		else if(cell.unit === unitType.Hero){
+			playСard()
+		}
+	}
+
+
+	function playСard(){
+
+	}
+
+
+
 
 	function creepsMoveAct(){ // Все делают шаг к бомбе
 
