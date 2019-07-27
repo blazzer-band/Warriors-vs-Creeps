@@ -251,7 +251,7 @@ function Game() {
 			selectionCards.push(cardsDeck.pop())
 		}
 
-		let countCard = 1 + isFirstRound;
+		let countCard = 3 + isFirstRound;
 
 		
 		// Выбирать по очереди
