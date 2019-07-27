@@ -232,7 +232,7 @@ td {
   background-image: url("../models/card_field_texture.png");
   background-size: 30%;
   background-color: #2F9915;
-  height: 200px;
+  height: 184px;
   width: 900px;
   z-index: 1;
   /* #A30000; */
@@ -288,9 +288,38 @@ td {
   position: relative;
   background-color: rgba(255, 255, 255, 0.4);
   margin: 1px;
-  height: 200px;
+  height: 182px;
   width: 125px;
   z-index: 2;
+}
+
+.down-card {
+    position: relative;
+    float: top;
+}
+
+.middle-card {
+    position: relative;
+    float: top;
+    bottom: 74%;
+}
+
+.top-card {
+    position: relative;
+    float: top;
+    bottom: 148%;
+}
+
+.down-card img {
+    height: 85%;
+}
+
+.middle-card img {
+    height: 85%;
+}
+
+.top-card img {
+    height: 85%;
 }
 
 /* #card-6 {
