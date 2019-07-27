@@ -3,7 +3,6 @@
 const tileType = {Grass:0, Base:1, Runes:2, Target:3}
 const unitType = {Hero:0, Creep:1, Bomb:2}
 const cardType = {Command:0, Damage:1}
-const phaseType = {WarriorsSelect:0, WarriorsProgram:1, WarriorsAction:2, CreepsMove:3, CreepsSpawn:4, CreepsAttack:5}
 const userType = {Human:0, Bot:1, UserAgent:2}
 const ramsType = {Hero: true, Creep: false, Bomb: true}
 
@@ -59,14 +58,14 @@ function Game() {
 	let users = [] // Пользователи
 	this.getUsers = users
 	{
-		let testUserAgent = new LocalAgent()
-		let testUser = new User(true)
+		let testUserAgent = new BotAgent()
+		let testUser = new User(false)
 		testUser.agent = testUserAgent
 		users.push(testUser)
 	}
 	{
-		let testUserAgent = new BotAgent()
-		let testUser = new User(false)
+		let testUserAgent = new LocalAgent()
+		let testUser = new User(true)
 		testUser.agent = testUserAgent
 		users.push(testUser)
 	}
@@ -237,51 +236,42 @@ function Game() {
 		render.showMessage("YOU LOSE")
 	}
 
+
 	///// Ассинхронный цикл. Начало
 	function chooseСards(){ // 1. Выбор карт
 		let isFirstRound = roundCounter === 0
 
-
-		shakeArray(users, random)
-
 		//Подготовить 10 или 5 карт
 		let selectionCards = []
-		let countCards = isFirstRound ? 10 : 5;
- 		for (var i = 0; i < countCards && cardsDeck.length > 0; i++) {
+		
+		let countCards = isFirstRound ? 10 : 5; // TODO: добавить еще условие для core карт
+
+ 		for (let i = 0; i < countCards && cardsDeck.length > 0; i++) {
 			selectionCards.push(cardsDeck.pop())
 		}
 
-		let countCard = 1 + isFirstRound;
+		let countGived = 0
 
-		// Выбирать по очереди
-		(function select(userId = 0){
-			// Предоставить выбор пользователю users[userId]
-			let count = Math.min(countCard, selectionCards.length)
-			
-			if(count === 0) {
+		function select(userId = 0){
+			if(selectionCards.length === 0) {
 				lose()
 				return
 			}
 
+			users[userId].selectCards(1, selectionCards, function(selectedCards){
+				selectionCards.splice(selectedCards[0], 1);
 
-			users[userId].selectCards(count, selectionCards, function(selectedCards){
+				if(isFirstRound && countGived < users.length*2 || !isFirstRound && countGived < 4){
+					select((userId + 1) % users.length);
 
-				//selectionCards = selectionCards.filter(cardId => !selectedCards.includes(cardId))
-
-				for(var i in selectedCards){
-					selectionCards.splice(selectedCards[i], 1);
-				}
-
-				if(userId + 1 < users.length){
-					select(userId + 1);
 				}
 				else{
 					programmingAct()
 				}
 			})
 
-		})()
-
+		}
+		select()
 	}
 
 
@@ -302,23 +292,21 @@ function Game() {
 
 
 	function warriorsAct(){
-		// В порядке
-		// Исполняется карта, верхняя в первом стеке
-
+		// Исполняется карта, верхняя в каждом стеке в порядке игроков
 
 		(function act(userId = 0){
 
 
-
-
-
-
-
-
-
 			
 			if(userId + 1 < users.length){
-				act(userId + 1);
+
+				playСard(users[userId], card, function(){
+
+					act(userId + 1);
+				})
+
+
+				
 			}
 			else{
 				creepsMoveAct()
@@ -326,14 +314,23 @@ function Game() {
 		})()
 	}
 
-	function goRamming(startCell, endCell){ // таран до клетки
+	function goRamming(startCell, endCell){
+		// проверить есть ли позади или слева или справа бомба или герой
+		// если есть и расстояние до клетки > 1, предложить выбрать кого тащить и на какую клетку перейти
+		// затем изменить положение и отправить на анимацию
+		
+		//если есть впереди тот кого можно толкнуть, то суммарное количество существ,
+		//которые переместятся вместе с юнитом должно быть меньше количества очков движения
+		// например при 1 очке модно переместить только одного героя на 1 клетку
+		// при 2-х 2 героя на 1 клетку или 1 на 2
+		// при 3-х 3 героя на 1 клетку 2 на 2 или 1 на 3
+		// при четырех   
+
+
 
 		if(startCell.unit === unitType.Creep){
 			attackCell(startCell)
 		}
-
-
-
 	}
 
 	function attackCell(cell){ // удар по клетке
@@ -347,7 +344,7 @@ function Game() {
 	}
 
 
-	function playСard(){
+	function playСard(user, card, callback){ // исполнить карту
 
 	}
 
@@ -366,9 +363,8 @@ function Game() {
 			if(to !== null) render.moveUnit(cellFrom, to)
 		}
 
-		setTimeout(function(){
-			creepsSpawnAct()
-		}, 1500)
+
+		setTimeout(creepsSpawnAct, 1500)
 	}
 
 
@@ -385,7 +381,16 @@ function Game() {
 	function creepsAttackAct(){
 
 
+		finalAct()
+		
+
+	}
+
+
+	function finalAct(){
+		users.unshift(users.pop())
 		roundCounter++;
+
 		chooseСards()
 	}
 	///// Ассинхронный цикл. Конец
