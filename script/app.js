@@ -238,10 +238,9 @@ function Game() {
 
 
 	///// Ассинхронный цикл. Начало
-	function chooseСards(){ // 1. Выбор карт
+	function chooseСards(){
 		let isFirstRound = roundCounter === 0
 
-		//Подготовить 10 или 5 карт
 		let selectionCards = []
 		
 		let countCards = isFirstRound ? 10 : 5; // TODO: добавить еще условие для core карт
@@ -258,18 +257,21 @@ function Game() {
 				return
 			}
 
-			users[userId].selectCards(1, selectionCards, function(selectedCards){
-				selectionCards.splice(selectedCards[0], 1);
+			users[userId].selectCards( users.length === 1 ? (isFirstRound ? 2 : 4) : 1, selectionCards, function(selectedCards){
 
-				if(isFirstRound && countGived < users.length*2 || !isFirstRound && countGived < 4){
+				for (let i = 0; i < selectedCards.length; i++) {
+					selectionCards.splice(selectedCards[i], 1);
+				}
+
+				countGived += selectedCards.length;
+
+				if(isFirstRound && countGived < (users.length * 2) || !isFirstRound && countGived < 4){
 					select((userId + 1) % users.length);
-
 				}
 				else{
 					programmingAct()
 				}
 			})
-
 		}
 		select()
 	}
