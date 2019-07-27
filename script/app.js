@@ -13,7 +13,8 @@ function Game() {
 		constructor(isHost){
 			this.isHost = isHost
 			this.hand = [] // Карты в руке, int id типы карт
-			this.stacks = [[],[],[],[],[],[]] // Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
+			this.stacks = [[],[],[],[],[],[]] // подмассивы - стеки, верхняя карта - последняя
+			this.blockingStack = [null, null, null, null, null, null] // блокирующие карты
 			this.agent = null
 			this.myHero = null
 		}
@@ -53,8 +54,12 @@ function Game() {
 			for (var i = 0; i < 6; i++) {
 				this.stacks.push([])
 			}
-			this.stacks[0].push(0) // Добавить тестовую карту с id 0
+			this.stacks[0].push(0) // Добавить тестоввый сет
+			this.stacks[1].push(1) 
+			this.stacks[4].push(1) 
+			this.stacks[4].push(2) 
 			//
+			this.agent.setStacks(this.stacks)
 
 			setTimeout(callback, 1000)
 		}
@@ -97,6 +102,7 @@ function Game() {
 	function Unit(type){
 		this.type = type
 		this.rotation = 0 // 1: 90, 2: 180, 3: -90(270)
+		this.ownerUser = null
 
 		this.rotate = function(angle){  // 1: 90, 2: 180, 3: -90(270)
 			this.rotation += angle
@@ -152,7 +158,7 @@ function Game() {
 
 		// Возвращает объект клетки(Cell) по координатам (x, y)
 		this.get = function(x, y){
-			if(y >= this.map.length || x >= this.map[0].length) return null
+			if( y < 0 || x < 0 || y >= this.map.length || x >= this.map[y].length) return null
 			return this.map[y][x]
 		}
 
@@ -199,7 +205,7 @@ function Game() {
 	render.renderMap(map);
 
 
-	const cardsCount = 30;
+	const cardsCount = 96;
 	let cardsDeck = null // Колода карт по 8 карт
 	let bombHP = 7;
 
@@ -227,9 +233,10 @@ function Game() {
 		shakeArray(baseFree, random)
 
 		for(let user of users){
-			let hero = baseFree.pop().setUnit(new Unit(unitType.Hero))
-			user.myHero = hero
-			render.initUnit(hero)
+			let heroCell = baseFree.pop().setUnit(new Unit(unitType.Hero))
+			user.myHero = heroCell.unit
+			heroCell.unit.ownerUser = user
+			render.initUnit(heroCell)
 		}
 		// Спаун бомбы
 		render.initUnit(baseFree.pop().setUnit(new Unit(unitType.Bomb)))
@@ -237,12 +244,6 @@ function Game() {
 
 		chooseСards();
 	}
-
-
-
-
-	// Функции стадий
-
 
 	function lose(){
 		render.defeat()
@@ -290,7 +291,7 @@ function Game() {
 	}
 
 
-	function programmingAct(){
+	function programmingAct(){ // DONE!
 		let countUsers = 0
 
 		for (let user of users) {
@@ -309,67 +310,34 @@ function Game() {
 	function warriorsAct(){
 		// Исполняется карта, верхняя в каждом стеке в порядке игроков
 
-		(function act(userId = 0){
-
-
+		function act(userId = 0){
 			
 			if(userId + 1 < users.length){
-
-				/*playСard(users[userId], card, function(){
-
-					act(userId + 1);
-				})*/
 				act(userId + 1);
-
-
-				
 			}
 			else{
 				creepsMoveAct()
 			}
-		})()
+		}
+		act()
 	}
 
 	// Возвращает bool удалось перейти или нет
 	function goRamming(thisCell, endCell){
 		// толкать можно бесконечно много до упора
 		// проверить есть ли позади или слева или справа бомба или герой
-		// если есть и расстояние до клетки > 1, предложить выбрать кого тащить и на какую клетку перейти
-		// затем изменить положение и отправить на анимацию
+		// если есть и движение > 1 клетки, предложить выбрать кого тащить
 		
-		//если есть впереди тот кого можно толкнуть, то суммарное количество существ,
-		//которые переместятся вместе с юнитом должно быть меньше количества очков движения
-		// например при 1 очке модно переместить только одного героя на 1 клетку
-		// при 2-х 2 героя на 1 клетку или 1 на 2
-		// при 3-х 3 героя на 1 клетку 2 на 2 или 1 на 3
-		// при четырех   
-
-
+		// если тащит то расстояние движения уменьшается на 1
 
 		if(startCell.unit === unitType.Creep){
 			attackCell(startCell)
 		}
 	}
 
-	function attackCell(cell){ // удар по клетке
-		if(cell.unit === unitType.Creep) {
-			cell.unit = null
-			render.killUnit(cell)
-		}
-		else if(cell.unit === unitType.Hero){
-			playСard()
-		}
-	}
 
 
-	function playСard(user, card, callback){ // исполнить карту
-
-	}
-
-
-
-
-	function creepsMoveAct(){ // Все делают шаг к бомбе
+	function creepsMoveAct(){ // TODO: таранят бомбу или героя если они на пути
 
 		let creepsCells = map.getAllCellHasUnits(unitType.Creep)
 		let bombCells = map.getAllCellHasUnits(unitType.Bomb)
@@ -400,21 +368,57 @@ function Game() {
 		let bombs = map.getAllCellHasUnits(unitType.Bomb)
 		let heroCells = map.getAllCellHasUnits(unitType.Hero)
 
+		let sortHeroCells = []
 		for (let user of users) {
+			sortHeroCells.push(heroCells.find(cell => cell.unit === user.myHero))
+		}
+		let attackedCells = bombs.concat(sortHeroCells)
 
+		let attackEvent = []
+		const crossVectorsZone = [[-1,0],[1,0],[0,-1],[0,1]]
+
+		for (let cell of attackedCells) {
+			for(let vec of crossVectorsZone){
+				let creepCell = map.get(cell.x + vec[0], cell.y + vec[1])
+				if(creepCell !== null && creepCell.unit !== null && creepCell.unit.type === unitType.Creep){
+					attackEvent.push({attacking: creepCell, attacked: cell})
+				}
+			}
 		}
 
 
-		for (let i = -1; i < users.length; i++) {
-			
+
+		function attack(eventId = 0){
+			let atEv = attackEvent[eventId]
 
 
+			//atEv.attacking
+			//atEv.attacked
+
+			// TODO дописать атаку
+			//TEST
+			console.log(atEv.attacking)
+			console.log('напал на')
+			console.log(atEv.attacked)
+			//
+			lose()
+			return
+
+
+			if(eventId + 1 < attackEvent.length){
+				attack(eventId + 1)
+			}
+			else{
+				finalAct()
+			}
 
 		}
-
-		finalAct()
-		
-
+		if(attackEvent.length > 0){
+			attack()
+		}
+		else{
+			finalAct()
+		}
 	}
 
 
@@ -425,6 +429,7 @@ function Game() {
 		setTimeout(chooseСards, 500)
 	}
 	///// Ассинхронный цикл. Конец
+
 
 
 

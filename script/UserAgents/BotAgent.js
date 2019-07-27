@@ -21,4 +21,10 @@ class BotAgent extends AbstractAgent{
 	}
 
 
+	setStacks(stacks){
+		console.log("Бот говорит что его стеки выглядят так:")
+		console.log(stacks)
+	}
+
+
 }

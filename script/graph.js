@@ -229,7 +229,6 @@ function Render() {
 		let cardBoard = document.getElementById("hand-board");
 		cardBoard.style.display = "flex";
 		cardBoard.innerHTML = "";
-		console.log(cards);
 		for (let i = 0; i < cards.length; i++){
 			// cardBoard.appendChild(document.createElement("div"));
 			// cardBoard.children[i].className = "hand-card";
@@ -270,8 +269,10 @@ function Render() {
 
 
 	// cards - Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
-	this.setStacks = function(cards){
+	this.setStacks = function(stacks){
 		// заполняем стэки по массиву
+		console.log("Текущие стеки нас:")
+		console.log(stacks)
 	}
 
 
