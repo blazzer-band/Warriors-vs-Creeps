@@ -13,8 +13,9 @@ function Game() {
 		constructor(isHost){
 			this.isHost = isHost
 			this.hand = [] // Карты в руке, int id типы карт
-			this.stacks = [] // Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
+			this.stacks = [[],[],[],[],[],[]] // Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
 			this.agent = null
+			this.myHero = null
 		}
 
 		// возвращает текущего пользователя закончившего ход
@@ -36,17 +37,25 @@ function Game() {
 
 		programming(callback){
 			// Заполнить стеки из руки
+			let user = this
 
-			/*this.agent.programming(this.hand, function(){
+			/*this.agent.programming(this.hand, function(handToStacksId){
+
+				for (let i = 0; i < handToStacksId.length; i++) {
+					user.stacks[handToStacksId[i]].push(user.hand[i])
+				}
 				callback()
-			})
-			*/
+			})*/
+
+			
+			// TEST
 			for (var i = 0; i < 6; i++) {
 				this.stacks.push([])
 			}
 			this.stacks[0].push(0) // Добавить тестовую карту с id 0
+			//
 
-
+			setTimeout(callback, 1000)
 		}
 
 
@@ -215,8 +224,10 @@ function Game() {
 		let baseFree = map.getAllCellsByType(tileType.Base).filter(cell => !cell.hasUnit())
 		shakeArray(baseFree, random)
 
-		for(let user in users){
-			render.initUnit(baseFree.pop().setUnit(new Unit(unitType.Hero)))
+		for(let user of users){
+			let hero = baseFree.pop().setUnit(new Unit(unitType.Hero))
+			user.myHero = hero
+			render.initUnit(hero)
 		}
 		// Спаун бомбы
 		render.initUnit(baseFree.pop().setUnit(new Unit(unitType.Bomb)))
@@ -269,7 +280,7 @@ function Game() {
 					select((userId + 1) % users.length);
 				}
 				else{
-					programmingAct()
+					setTimeout(programmingAct, 0)
 				}
 			})
 		}
@@ -302,10 +313,11 @@ function Game() {
 			
 			if(userId + 1 < users.length){
 
-				playСard(users[userId], card, function(){
+				/*playСard(users[userId], card, function(){
 
 					act(userId + 1);
-				})
+				})*/
+				act(userId + 1);
 
 
 				
@@ -365,7 +377,6 @@ function Game() {
 			if(to !== null) render.moveUnit(cellFrom, to)
 		}
 
-
 		setTimeout(creepsSpawnAct, 1500)
 	}
 
@@ -382,6 +393,16 @@ function Game() {
 
 	function creepsAttackAct(){
 
+
+		for (let i = -1; i < users.length; i++) {
+			
+
+
+
+
+
+
+		}
 
 		finalAct()
 		
