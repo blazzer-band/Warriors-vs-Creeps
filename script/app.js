@@ -200,6 +200,7 @@ function Game() {
 
 	const cardsCount = 30;
 	let cardsDeck = null // Колода карт по 8 карт
+	let bombHP = 7;
 
 
 
@@ -377,7 +378,7 @@ function Game() {
 			if(to !== null) render.moveUnit(cellFrom, to)
 		}
 
-		setTimeout(creepsSpawnAct, 1500)
+		setTimeout(creepsSpawnAct, 500)
 	}
 
 
@@ -387,18 +388,22 @@ function Game() {
 			render.initUnit(spawnCell.setUnit(new Unit(unitType.Creep)))
 		}
 
-		creepsAttackAct()
+
+		setTimeout(creepsAttackAct, 500)
 	}
 
 
 	function creepsAttackAct(){
+		let bombs = map.getAllCellHasUnits(unitType.Bomb)
+		let heroCells = map.getAllCellHasUnits(unitType.Hero)
+
+		for (let user of users) {
+
+		}
 
 
 		for (let i = -1; i < users.length; i++) {
 			
-
-
-
 
 
 
@@ -414,7 +419,7 @@ function Game() {
 		users.unshift(users.pop())
 		roundCounter++;
 
-		chooseСards()
+		setTimeout(chooseСards, 500)
 	}
 	///// Ассинхронный цикл. Конец
 

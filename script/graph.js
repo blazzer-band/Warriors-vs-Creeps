@@ -65,7 +65,6 @@ function Render() {
 
 	// передвинуть юнита из in в out
 	this.moveUnit = function(cellFrom, cellTo) {
-
 		let fromElem = mapBody.children[cellFrom.y].children[cellFrom.x];
 		let toElem = mapBody.children[cellTo.y].children[cellTo.x];
 
@@ -76,28 +75,30 @@ function Render() {
 		let to_y = toElem.parentElement.offsetTop;
 
 		let el = fromElem.lastChild
-
-		el.style.zIndex = '9';
-		el.style.transition = "transform 1s";
-		el.style.transform = 'translateY('+ (to_y-from_y) +'px)';
-		el.style.transform += 'translateX('+ (to_x-from_x) +'px)';
-
+		toElem.appendChild(el)
+		el.style.zIndex = '2'
+		el.style.transition = "transform .4s";
+		el.style.transform = 'translateY('+ (from_y-to_y) +'px)';
+		el.style.transform += 'translateX('+ (from_x-to_x) +'px)';
 
 		setTimeout(function(){
-			toElem.appendChild(el)
 			el.style.transform = 'translateY(0px)';
 			el.style.transform += 'translateX(0px)';
-		}, 1000)
-
-
+		}, 0)
 	}
 
 	// нарисовать юнита который есть в ячейке
 	this.initUnit = function(cell) {
 
-		let img = new Image(120, 120);
+		let img = new Image();
 		img.src = UNIT_IMGS[cell.unit.type];
 		mapBody.children[cell.y].children[cell.x].appendChild(img);
+		img.style.transition = "transform .4s";
+		img.style.transform = 'scale(0)';
+		setTimeout(function(){
+			img.style.transform = 'scale(1)';
+		}, 0)
+
 	}
 
 	this.killUnit = function(cell){
@@ -191,56 +192,56 @@ function Render() {
 		let timerId = null;
 		// Запуск таймера отсчета с intSecond до 0
 		this.startTimer = function(intSecond){
-		  let realSecond = intSecond;
-		  let timer = document.getElementById("timer");
+			let realSecond = intSecond;
+			let timer = document.getElementById("timer");
 
-		  function updateTimer(){
-			let seconds = realSecond % 60;
-			let minutes = (realSecond / 60) | 0;
-			if (realSecond < 0 ){
-			  clearInterval(timerId);
-			  timerId = null;
-			  return;
+			function updateTimer(){
+				let seconds = realSecond % 60;
+				let minutes = (realSecond / 60) | 0;
+				if (realSecond < 0 ){
+					clearInterval(timerId);
+					timerId = null;
+					return;
+				}
+				timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
+				realSecond--;
 			}
-			timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
-			realSecond--;
-		  }
 
-		  updateTimer()
-		  timerId = setInterval(updateTimer, 1000);
+			updateTimer()
+			timerId = setInterval(updateTimer, 1000);
 		}
 
 
 		this.stopTimer = function(){
-		  if (timerId !== null){
-			let timer = document.getElementById("timer");
-			timer.innerHTML = "0:00";
-			clearInterval(timerId);
-			timerId = null;
-		  }
+			if (timerId !== null){
+				let timer = document.getElementById("timer");
+				timer.innerHTML = "0:00";
+				clearInterval(timerId);
+				timerId = null;
+			}
 		}
 	}
 
 	// Обновить карты в руке рука не активна(перемещать карты нельзя)
 	this.setHand = function(cards){;
-	  let cardsCounter = document.getElementById("hand-counter");
-	  cardsCounter.innerHTML = "Hand:"+cards.length;
-	  let cardBoard = document.getElementById("hand-board");
-	  cardBoard.style.display = "flex";
-	  cardBoard.innerHTML = "";
-	  console.log(cards);
-	  for (let i = 0; i < cards.length; i++){
-		// cardBoard.appendChild(document.createElement("div"));
-		// cardBoard.children[i].className = "hand-card";
-		let img = new Image();
-		img.className = "hand-card"
-		img.src = CARD_IMGS[cards[i]];
-		img.cardId = cards[i];
-		img.onclick = selectHandCard;
-		img.isActive = false;
-		cardBoard.appendChild(img);
-	  }
-	  cardBoard.style.display = "flex";
+		let cardsCounter = document.getElementById("hand-counter");
+		cardsCounter.innerHTML = "Hand:"+cards.length;
+		let cardBoard = document.getElementById("hand-board");
+		cardBoard.style.display = "flex";
+		cardBoard.innerHTML = "";
+		console.log(cards);
+		for (let i = 0; i < cards.length; i++){
+			// cardBoard.appendChild(document.createElement("div"));
+			// cardBoard.children[i].className = "hand-card";
+			let img = new Image();
+			img.className = "hand-card"
+			img.src = CARD_IMGS[cards[i]];
+			img.cardId = cards[i];
+			img.onclick = selectHandCard;
+			img.isActive = false;
+			cardBoard.appendChild(img);
+		}
+		cardBoard.style.display = "flex";
 	}
 
 
@@ -282,25 +283,25 @@ function Render() {
 
 	//Окно, отображающее поражение для текущей сессии
 	this.defeat = function(){
-	  let defeatBlock = document.getElementById("win-or-defeat");
-	  defeatBlock.style.display = 'block'
-	  defeatBlock.src = "src/lose.mp4";
-	  defeatBlock.muted = "";
-	  defeatBlock.play();
+		let defeatBlock = document.getElementById("win-or-defeat");
+		defeatBlock.style.display = 'block'
+		defeatBlock.src = "src/lose.mp4";
+		defeatBlock.muted = "";
+		//defeatBlock.play();
 	};
 
 	// Высветить сообщение поверх всего
 	this.showMessage = function(text, color) { // make enum
-	  let messageBlock = document.getElementById("message");
-	  messageBlock.style.display = "block";
-	  //messageBlock.style.background = "red"; //rgba(2,3,4,0.5);
-	  messageBlock.innerHTML = text;
+		let messageBlock = document.getElementById("message");
+		messageBlock.style.display = "block";
+		//messageBlock.style.background = "red"; //rgba(2,3,4,0.5);
+		messageBlock.innerHTML = text;
 	};
 
 	// Скрыть сообщение
 	this.hideMessge = function(){
-	  let messageBlock = document.getElementById("message");
-	  messageBlock.style.display = "none";
+		let messageBlock = document.getElementById("message");
+		messageBlock.style.display = "none";
 	};
 
 }
