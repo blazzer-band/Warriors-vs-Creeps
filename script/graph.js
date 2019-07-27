@@ -14,22 +14,89 @@ function Render() {
     let numbersStacks = [];
 
     const TILES_IMG = ["tmp_models/green.jpg", "models/stone_tex.png", "models/platform_tex.png", "tmp_models/blue.jpg"]
-
+    const CLASS_STACK = ["down-card", "middle-card", "top-card"];
+    const TEMPLATE_STACKS = {
+        "number-1-icon" : 0,
+        "number-2-icon" : 1,
+        "number-3-icon" : 2,
+        "number-4-icon" : 3,
+        "number-5-icon" : 4,
+        "number-6-icon" : 5
+    };
     // count - количество возвращаемых карт
     let selectStack = function (e) {
         let stack = e.currentTarget;
-        let nameClassStack = stack.children[stack.childElementCount - 1].className;
-        let col = templateStacks[nameClassStack];
+        let nameClassStack = stack.children[0].className;
+        let col = TEMPLATE_STACKS[nameClassStack];
         for (let i = 0; i < 3; i++) {
             if (arrayStacks[col][i] === null) {
-                arrayStacks[col][i] = activeElement;
-                stack.children[i].appendChild(activeElement);
-                numbersStacks.push(col);
-                break;
+                if (stack.typeStack === null) {
+                    stack.appendChild(document.createElement("div"));
+                    stack.children[1].className = CLASS_STACK[0];
+                    stack.typeStack = activeElement.typeCard;
+                    arrayStacks[col][i] = activeElement;
+                    activeElement.style.border = "0";
+                    stack.children[1].appendChild(activeElement);
+                    activeElement = null;
+                    numbersStacks.push(col);
+                    break;
+                } else if (stack.typeStack !== activeElement.typeCard) {
+                    stack.innerHTML = '';
+                    stack.appendChild(document.createElement("div"));
+                    stack.children[0].className = nameClassStack;
+                    stack.appendChild(document.createElement("div"));
+                    stack.children[1].className = CLASS_STACK[0];
+                    stack.typeStack = activeElement.typeCard;
+                    arrayStacks[col][i] = activeElement;
+                    activeElement.style.border = "0";
+                    stack.children[1].appendChild(activeElement);
+                    activeElement = null;
+                    numbersStacks.push(col);
+                    break;
+                } else if (stack.typeStack === activeElement.typeCard) {
+                    switch (stack.childElementCount) {
+                        case(2) :
+                            stack.appendChild(document.createElement("div"));
+                            stack.children[2].className = CLASS_STACK[1];
+                            arrayStacks[col][i] = activeElement;
+                            activeElement.style.border = "0";
+                            stack.children[2].appendChild(activeElement);
+                            activeElement = null;
+                            numbersStacks.push(col);
+                            break;
+                        case(3) :
+                            stack.appendChild(document.createElement("div"));
+                            stack.children[3].className = CLASS_STACK[2];
+                            arrayStacks[col][i] = activeElement;
+                            activeElement.style.border = "0";
+                            stack.children[3].appendChild(activeElement);
+                            activeElement = null;
+                            numbersStacks.push(col);
+                            break;
+                        case(4) :
+                            arrayStacks[col][i] = activeElement;
+                            activeElement.style.border = "0";
+                            stack.children[3].children[0] = activeElement;
+                            activeElement = null;
+                            numbersStacks.push(col);
+                            break;
+                    }
+                    break;
+                }
             }
         }
 
     };
+
+    let selectHandCard = function (e) {
+        if (activeElement === null || !activeElement.inStack) {
+            e.currentTarget.style.border = "2px solid gold";
+            e.currentTarget.isActive = true;
+            activeElement = e.currentTarget;
+            activeElement.inStack = false;
+        }
+    };
+
 
 	this.renderMap = function(inputMap){
         let height = 6;
@@ -51,10 +118,11 @@ function Render() {
         }
 
 		let stack = document.getElementsByClassName("stack");
-		for (let i = 0; i < stack.length; i++)
-		    stack[i].onclick = selectStack;
+		for (let i = 0; i < stack.length; i++) {
+            stack[i].onclick = selectStack;
+            stack[i].typeStack = null;
+        }
     };
-
 
 	// Unit
 	// cellTo.HasUnit тип получать cellTo.unit.type - тип юнита
@@ -99,8 +167,7 @@ function Render() {
         img.src = UNIT_IMGS[cell.unit.type];
         map.children[0].children[cell.y].children[cell.x].appendChild(img);
 	}
-
-	const CARD_IMGS = [
+    const CARD_IMGS = [
         "src/cards/card1.jpg",
         "src/cards/card2.jpg",
         "src/cards/card3.jpg",
@@ -114,7 +181,9 @@ function Render() {
         "src/cards/card11.jpg",
         "src/cards/card12.jpg"
     ];
+
     // isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
+
 
     //cards = array of int card id
     this.selectCards = function(cards, count, callback){
@@ -172,7 +241,6 @@ function Render() {
         }
     }
 
-
     // Скрыть окро выбора карт
     this.stopSelect = function(){
         let board = document.getElementById("choose-board");
@@ -216,20 +284,19 @@ function Render() {
         }
     }
 
-    // Обновить карты в руке рука не активна(перемещать карты нельзя)
-    this.setHand = function(cards){
 
+    // Обновить карты в руке рука не активна(перемещать карты нельзя)
+    this.setHand = function(cards){;
       let cardsCounter = document.getElementById("hand-counter");
-      cardsCounter.innerHTML = cards.length;
+      cardsCounter.innerHTML = "Hand:"+cards.length;
       let cardBoard = document.getElementById("hand-board");
+	  cardBoard.style.display = "flex";
       cardBoard.innerHTML = "";
-      let boardWidth = cards.length * 130;
-      cardBoard.style.width = boardWidth + "px";
       console.log(cards);
       for (let i = 0; i < cards.length; i++){
         // cardBoard.appendChild(document.createElement("div"));
         // cardBoard.children[i].className = "hand-card";
-        let img = new Image(125, 200);
+        let img = new Image(201, 200);
         img.className = "hand-card"
         img.src = CARD_IMGS[cards[i]];
         img.cardId = cards[i];
@@ -237,23 +304,8 @@ function Render() {
         img.isActive = false;
         cardBoard.appendChild(img);
       }
-       cardBoard.style.display = "block";
-    };
-
-    let selectHandCard = function (e) {
-        e.currentTarget.style.border = "2px solid gold";
-        e.currentTarget.isActive = true;
-        activeElement = e.currentTarget;
-    };
-
-    const templateStacks = {
-        "number-1-icon" : 0,
-        "number-2-icon" : 1,
-        "number-3-icon" : 2,
-        "number-4-icon" : 3,
-        "number-5-icon" : 4,
-        "number-6-icon" : 5
-    };
+	  cardBoard.style.display = "flex";
+    }
 
     // callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
     // например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
