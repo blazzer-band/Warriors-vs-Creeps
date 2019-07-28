@@ -247,8 +247,6 @@ function Render() {
 		desk.appendChild(document.createElement("div"));
 		desk.children[0].style.display = "block";
 		let index_board = 110;
-		//let pixels = 53.5 * (10 - cards.length);
-		//desk.children[0].style.marginLeft = "" + pixels + "px";
 		let board = desk.children[0];
 		board.className = "desk-card";
 		for (let i = 0; i < cards.length; i++) {
