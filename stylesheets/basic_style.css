@@ -534,3 +534,7 @@ div#trackers > div {
 .stack img:nth-child(3) {
   margin-top: -100%
 }
+.stack-content{
+  width:100%;
+  height:100%;
+}

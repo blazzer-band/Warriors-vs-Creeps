@@ -219,11 +219,10 @@ function Render() {
 	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
 	
 	let selectedHandCard = null;
-	let stacks = document.getElementsByClassName("stack")
-	let callbackArray = []
-	let programmingCallback = null
-
-	for (let stack of stacks) {
+	let callbackArray = null;
+	let programmingCallback = null;
+	
+	for (let stack of document.getElementsByClassName("stack-content")) {
 		stack.onclick = function(e){
 			if(selectedHandCard === null || e.currentTarget.children.length >= 3) 
 				return
@@ -238,8 +237,10 @@ function Render() {
 	}
 	
 	this.programming = function(handCards, callback) {
-		this.setHand(handCards)
+		callbackArray = []
+		selectedHandCard = null;
 		programmingCallback = callback
+		this.setHand(handCards)
 		let hand = document.getElementById("hand-board")
 		let i = 0;
 		for (let card of hand.children) {
