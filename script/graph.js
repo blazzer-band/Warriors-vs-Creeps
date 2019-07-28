@@ -248,7 +248,43 @@ function Render() {
 	
 
 
-	const higlightType = {Rotate: 0, Move: 1, Hook:3} 
+
+	
+	const higlightType = {Rotate: 0, Move: 1, Hook:3}
+
+	let selectAttackCells = function (cellsArray, countKills, callback) {
+		console.log(cellsArray);
+		console.log(countKills);
+	};
+
+	let selectMoveCells = function (cellsArray, callback) {
+		console.log(cellsArray);
+	};
+
+	let selectRotateCells = function (cellsArray, callback) {
+		console.log(cellsArray);
+	};
+
+	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
+	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
+	this.actionStack = function (i) {
+		let stacks = document.getElementsByClassName("stack");
+		let stack = stacks[i];
+		let actions = stack.jsonOptions;
+		let level = stack.level;
+		let functions = actions.levels[level];
+
+		let targetCount = functions.targetCount;
+		let move = functions.move;
+		let attack = functions.attack;
+		let rotate = functions.rotate;
+
+		if (move.length !== 0) selectMoveCells(move);
+		if (attack.length !== 0) selectAttackCells(move);
+		if (rotate.length !== 0) selectRotateCells(move);
+
+	};
+
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 	this.selectCells = function(cellsArray, callback){
