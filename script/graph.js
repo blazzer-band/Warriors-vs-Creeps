@@ -13,6 +13,7 @@ function Render() {
 		[null, null, null, null],
 		[null, null, null, null]];
 	let numbersStacks = [];
+	let programmingSession = false;
 
 	const TILES_IMG = ["src/tmp_models/green.jpg", "src/models/stone_tex.png", "src/models/platform_tex.png", "src/tmp_models/blue.jpg"]
 	const CLASS_STACK = ["down-card", "middle-card", "top-card"];
@@ -26,6 +27,7 @@ function Render() {
 	};
 	// count - количество возвращаемых карт
 	let selectStack = function (e) {
+		let handCounter = document.getElementById("hand-counter");
 		let stack = e.currentTarget;
 		if (stack.childElementCount === 0)
 			stack = stack.parentNode;
@@ -44,6 +46,11 @@ function Render() {
 					stack.children[1].appendChild(activeElement);
 					activeElement = null;
 					numbersStacks.push(col);
+					if (handCounter.textContent === "Hand:2") {
+						handCounter.textContent = "Hand:1";
+					} else if (handCounter.textContent === "Hand:1") {
+						handCounter.textContent = "Hand:0";
+					}
 					break;
 				} else if (stack.typeStack !== activeElement.typeCard) {
 					stack.innerHTML = '';
@@ -59,6 +66,11 @@ function Render() {
 					stack.children[1].appendChild(activeElement);
 					activeElement = null;
 					numbersStacks.push(col);
+					if (handCounter.textContent === "Hand:2") {
+						handCounter.textContent = "Hand:1";
+					} else if (handCounter.textContent === "Hand:1") {
+						handCounter.textContent = "Hand:0";
+					}
 					break;
 				} else if (stack.typeStack === activeElement.typeCard) {
 					switch (stack.childElementCount) {
@@ -72,6 +84,11 @@ function Render() {
 							stack.children[2].appendChild(activeElement);
 							activeElement = null;
 							numbersStacks.push(col);
+							if (handCounter.textContent === "Hand:2") {
+								handCounter.textContent = "Hand:1";
+							} else if (handCounter.textContent === "Hand:1") {
+								handCounter.textContent = "Hand:0";
+							}
 							break;
 						case(3) :
 							stack.appendChild(document.createElement("div"));
@@ -83,6 +100,11 @@ function Render() {
 							stack.children[3].appendChild(activeElement);
 							activeElement = null;
 							numbersStacks.push(col);
+							if (handCounter.textContent === "Hand:2") {
+								handCounter.textContent = "Hand:1";
+							} else if (handCounter.textContent === "Hand:1") {
+								handCounter.textContent = "Hand:0";
+							}
 							break;
 						case(4) :
 							arrayStacks[col][i] = activeElement;
@@ -94,6 +116,11 @@ function Render() {
 							//stack.children[3].children[0] = activeElement;
 							activeElement = null;
 							numbersStacks.push(col);
+							if (handCounter.textContent === "Hand:2") {
+								handCounter.textContent = "Hand:1";
+							} else if (handCounter.textContent === "Hand:1") {
+								handCounter.textContent = "Hand:0";
+							}
 							break;
 					}
 					break;
@@ -109,6 +136,11 @@ function Render() {
 					//stack.children[3].children[0] = activeElement;
 					activeElement = null;
 					numbersStacks.push(col);
+					if (handCounter.textContent === "Hand:2") {
+						handCounter.textContent = "Hand:1";
+					} else if (handCounter.textContent === "Hand:1") {
+						handCounter.textContent = "Hand:0";
+					}
 					break;
 				} else {
 					stack.innerHTML = '';
@@ -124,6 +156,11 @@ function Render() {
 					stack.children[1].appendChild(activeElement);
 					activeElement = null;
 					numbersStacks.push(col);
+					if (handCounter.textContent === "Hand:2") {
+						handCounter.textContent = "Hand:1";
+					} else if (handCounter.textContent === "Hand:1") {
+						handCounter.textContent = "Hand:0";
+					}
 				}
 			}
 		}
@@ -131,7 +168,7 @@ function Render() {
 	};
 
 	let selectHandCard = function (e) {
-		if (activeElement === null && !e.currentTarget.inStack) {
+		if (programmingSession && activeElement === null && !e.currentTarget.inStack) {
 			e.currentTarget.style.border = "2px solid gold";
 			e.currentTarget.isActive = true;
 			activeElement = e.currentTarget;
@@ -186,9 +223,9 @@ function Render() {
 		let to_x = toElem.offsetLeft;
 		let to_y = toElem.parentElement.offsetTop;
 
-		let el = fromElem.lastChild
-		toElem.appendChild(el)
-		el.style.zIndex = '2'
+		let el = fromElem.lastChild;
+		toElem.appendChild(el);
+		el.style.zIndex = '2';
 		el.style.transition = "transform .4s";
 		el.style.transform = 'translateY('+ (from_y-to_y) +'px)';
 		el.style.transform += 'translateX('+ (from_x-to_x) +'px)';
@@ -197,7 +234,7 @@ function Render() {
 			el.style.transform = 'translateY(0px)';
 			el.style.transform += 'translateX(0px)';
 		}, 0)
-	}
+	};
 
 	// нарисовать юнита который есть в ячейке
 	this.initUnit = function(cell) {
@@ -209,13 +246,13 @@ function Render() {
 		img.style.transform = 'scale(0)';
 		setTimeout(function(){
 			img.style.transform = 'scale(1)';
-		}, 0)
+		}, 0);
 
-	}
+	};
 
-	this.killUnit = function(cell){
+	this.killUnit = function(cell) {
 		mapBody.children[cell.y].children[cell.x].innerHTML = ''
-	}
+	};
 
 
 	const CARD_IMGS = [
@@ -236,6 +273,7 @@ function Render() {
 
 	//cards = array of int card id
 	this.selectCards = function(cards, count, callback){
+		programmingSession = false;
 
 		for (let i = 0; i < numbersStacks.length; i++)
 			numbersStacks.pop();
@@ -246,7 +284,6 @@ function Render() {
 		let arrayIdSelectedCards = [];
 		desk.appendChild(document.createElement("div"));
 		desk.children[0].style.display = "block";
-		let index_board = 110;
 		let board = desk.children[0];
 		board.className = "desk-card";
 		for (let i = 0; i < cards.length; i++) {
@@ -285,7 +322,7 @@ function Render() {
 				callback(arrayIdSelectedCards);
 			}
 		}
-	}
+	};
 
 
 	// Скрыть окро выбора карт
@@ -294,8 +331,9 @@ function Render() {
 		board.style.display = "none";
 		let btn = document.getElementsByClassName("ok-choose");
 		btn[0].style.display = "none";
+		programmingSession = true;
 
-	}
+	};
 
 	{
 		let timerId = null;
@@ -332,7 +370,7 @@ function Render() {
 	}
 
 	// Обновить карты в руке рука не активна(перемещать карты нельзя)
-	this.setHand = function(cards){
+	this.setHand = function(cards) {
 		let cardsCounter = document.getElementById("hand-counter");
 		cardsCounter.innerHTML = "Hand:"+cards.length;
 		let cardBoard = document.getElementById("hand-board");
@@ -342,7 +380,7 @@ function Render() {
 			// cardBoard.appendChild(document.createElement("div"));
 			// cardBoard.children[i].className = "hand-card";
 			let img = new Image();
-			img.className = "hand-card"
+			img.className = "hand-card";
 			img.src = CARD_IMGS[cards[i]];
 			img.cardId = cards[i];
 			img.onclick = selectHandCard;
@@ -350,13 +388,15 @@ function Render() {
 			cardBoard.appendChild(img);
 		}
 		cardBoard.style.display = "flex";
-	}
+	};
 
 	// callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
 	// например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
 	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
 	this.programming = function(handCards, callback) {
-		callback(numbersStacks);
+		let handCounter = document.getElementById("hand-counter");
+		if (handCounter.textContent === "Hand:0")
+			callback(numbersStacks);
 	};
 
 
