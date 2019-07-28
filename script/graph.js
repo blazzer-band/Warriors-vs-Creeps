@@ -27,6 +27,7 @@ function Render() {
 		"number-6-icon" : 5
 	};
 
+	let programmingCallb = null
 	let selectStack = function (e) {
 		if (forbidStack || activeElement === null) {
 			console.log("Don't click this");
@@ -55,6 +56,7 @@ function Render() {
 						} else if (handCounter.textContent === "1") {
 							handCounter.textContent = "0";
 							forbidStack = true;
+							programmingCallb(numbersStacks)
 						}
 						break;
 					} else if (stack.typeStack !== activeElement.typeCard) {
@@ -75,6 +77,7 @@ function Render() {
 							handCounter.textContent = "1";
 						} else if (handCounter.textContent === "1") {
 							handCounter.textContent = "0";
+							programmingCallb(numbersStacks)
 							forbidStack = true;
 						}
 						break;
@@ -94,6 +97,7 @@ function Render() {
 									handCounter.textContent = "1";
 								} else if (handCounter.textContent === "1") {
 									handCounter.textContent = "0";
+									programmingCallb(numbersStacks)
 									forbidStack = true;
 								}
 								break;
@@ -111,6 +115,7 @@ function Render() {
 									handCounter.textContent = "1";
 								} else if (handCounter.textContent === "1") {
 									handCounter.textContent = "0";
+									programmingCallb(numbersStacks)
 									forbidStack = true;
 								}
 								break;
@@ -128,6 +133,7 @@ function Render() {
 									handCounter.textContent = "1";
 								} else if (handCounter.textContent === "1") {
 									handCounter.textContent = "0";
+									programmingCallb(numbersStacks)
 									forbidStack = true;
 								}
 								break;
@@ -149,6 +155,7 @@ function Render() {
 							handCounter.textContent = "1";
 						} else if (handCounter.textContent === "1") {
 							handCounter.textContent = "0";
+							programmingCallb(numbersStacks)
 							forbidStack = true;
 						}
 						break;
@@ -170,6 +177,7 @@ function Render() {
 							handCounter.textContent = "1";
 						} else if (handCounter.textContent === "1") {
 							handCounter.textContent = "0";
+							programmingCallb(numbersStacks)
 							forbidStack = true;
 						}
 					}
@@ -414,10 +422,9 @@ function Render() {
 	// callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
 	// например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
 	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
+	
 	this.programming = function(handCards, callback) {
-		let handCounter = document.getElementById("hand-counter");
-		if (handCounter.textContent === "0")
-			callback(handCards);
+		programmingCallb = callback
 	};
 
 
