@@ -292,7 +292,7 @@ function Render() {
 
 		let desk = document.getElementById("choose-board");
 		desk.innerHTML = '';
-		desk.style.display = "block";
+		desk.style.display = "inline-block";
 
 		let deskBoard = desk
 		deskBoard.style.opacity = '0';
