@@ -280,7 +280,15 @@ function Render() {
 
 		let desk = document.getElementById("choose-board");
 		desk.innerHTML = '';
-		desk.style.display = "inline-block";
+		desk.style.display = "block";
+
+		let deskBoard = desk
+		deskBoard.style.opacity = '0';
+		deskBoard.style.transition = "opacity .4s";
+		setTimeout(function(){
+			deskBoard.style.opacity = '1';
+		}, 0)
+
 		let arrayIdSelectedCards = [];
 
 		desk.appendChild(document.createElement("div"));
@@ -332,13 +340,9 @@ function Render() {
 
 	// Скрыть окро выбора карт
 	this.stopSelect = function(){
-		let board = document.getElementById("choose-board");
-		board.style.display = "none";
-		let btn = document.getElementsByClassName("ok-choose");
-		btn[0].style.display = "none";
+		document.getElementById("choose-board").style.display = "none";
 		programmingSession = true;
-
-	};
+	}
 
 	{
 		let timerId = null;
