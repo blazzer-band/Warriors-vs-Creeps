@@ -232,7 +232,7 @@ td {
   background-image: url("../models/card_field_texture.png");
   background-size: 30%;
   background-color: #2F9915;
-  height: 200px;
+  height: 184px;
   width: 900px;
   z-index: 1;
   /* #A30000; */
@@ -248,7 +248,7 @@ td {
   background-repeat: no-repeat;
 }
 
-#number-1-icon, #number-2-icon, #number-3-icon, #number-4-icon, #number-5-icon, #number-6-icon{
+.number-1-icon, .number-2-icon, .number-3-icon, .number-4-icon, .number-5-icon, .number-6-icon{
   /* vertical-align: bottom; */
   position: absolute;
   left: 35px;
@@ -288,9 +288,38 @@ td {
   position: relative;
   background-color: rgba(255, 255, 255, 0.4);
   margin: 1px;
-  height: 200px;
+  height: 182px;
   width: 125px;
   z-index: 2;
+}
+
+.down-card {
+  position: relative;
+  float: top;
+}
+
+.middle-card {
+  position: relative;
+  float: top;
+  bottom: 74%;
+}
+
+.top-card {
+  position: relative;
+  float: top;
+  bottom: 148%;
+}
+
+.down-card img {
+  height: 85%;
+}
+
+.middle-card img {
+  height: 85%;
+}
+
+.top-card img {
+  height: 85%;
 }
 
 /* #card-6 {
