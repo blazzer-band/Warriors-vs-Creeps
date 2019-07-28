@@ -110,7 +110,7 @@ function Render() {
 					e.currentTarget.select = 'true'
 					arrayIdSelectedCards.push(e.currentTarget.tempSelectId|0);
 				} else if (e.currentTarget.select === 'true') {
-					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== e.currentTarget.cardId);
+					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== e.currentTarget.tempSelectId);
 					e.currentTarget.classList.remove("selected-card");
 					e.currentTarget.select = 'false'
 				}
@@ -189,6 +189,19 @@ function Render() {
 		}
 	}
 
+	// cards - Массив 6x3 карт в стеках [ [down, center, top], ... ] int id типы карт
+	this.setStacks = function(stacks){
+		let i = 0
+		for (let cardIds of stacks) {
+			stackElems[i].innerHTML = ''
+			for(cardId of cardIds){
+				stackElems[i].append(getNewCardElem(cardId))
+			}
+			i++
+		}
+	}
+
+
 	function getNewCardElem(i){
 		let img = new Image();
 		img.src = "src/cards/card"+((i|0)+1)+".jpg";
@@ -201,38 +214,26 @@ function Render() {
 	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
 
 	
-	let selectedHandCard = null;
-	let callbackArray = null;
-	let programmingCallback = null;
-	const stackElems = document.getElementsByClassName("stack-content")
+	
 
+	const stackElems = document.getElementsByClassName("stack-content")
 	{
 		let i = 0
 		for (let stack of stackElems) {
 			stack.stackId = i++
 			stack.onclick = function(e){
-				if(selectedHandCard === null || e.currentTarget.children.length >= 3) 
-					return
-				selectedHandCard.onclick = null
-
-				selectedHandCard.style.outline = ''
-				callbackArray[selectedHandCard.idInList] = e.currentTarget.stackId
-				e.currentTarget.append(selectedHandCard)
-				selectedHandCard = null
-				cardsCounter.innerHTML = handBoard.children.length;
-				if(handBoard.children.length === 0) programmingCallback(callbackArray)
+				if(selectedHandCard !== null) 
+					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId)
 			}
 		}
-	}	
-	this.programming = function(handCards, callback) {
-		callbackArray = []
-		for (let i = 0; i < handCards.length; i++) {
-			callbackArray.push(-1)
-		}
-
+	}
+	let selectedHandCard = null;
+	let programmingCallback = null;
+	// Выывать callback при клике на стек-колоду, т.к текущий вариант не позволяет понять порядок добавления
+	// callback принимает номер карты в руке и номер стека
+	this.programming = function(callback) {
 		selectedHandCard = null;
 		programmingCallback = callback
-		this.setHand(handCards)
 		let i = 0;
 		for (let card of handBoard.children) {
 			card.idInList = i++;
@@ -244,33 +245,13 @@ function Render() {
 		}
 	}
 
-
-	// cards - Массив 6x3 карт в стеках [ [down, center, top], ... ] int id типы карт
-	this.setStacks = function(stacks){
-		let i = 0
-		for (let cardIds of stacks) {
-			stackElems[i].innerHTML = ''
-			for(cardId of cardIds){
-				stackElems[i].append(getNewCardElem(cardId))
-			}
-			i++
-		}
-
-
-	}
-
-
-
 	
+
+
 	const higlightType = {Rotate: 0, Move: 1, Hook:3} 
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 	this.selectCells = function(cellsArray, callback){
-
-
-		/*function(){
-
-		}*/
 
 	}
 

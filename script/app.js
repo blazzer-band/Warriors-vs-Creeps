@@ -14,7 +14,6 @@ function Game() {
 			this.isHost = isHost;
 			this.hand = []; // Карты в руке, int id типы карт
 			this.stacks = [[],[],[],[],[],[]]; // подмассивы - стеки, верхняя карта - последняя
-			this.blockingStack = [null, null, null, null, null, null]; // блокирующие карты
 			this.agent = null;
 			this.myHero = null;
 		}
@@ -37,40 +36,57 @@ function Game() {
 		}
 
 		programming(callback) {
+			// callback - вызвать при завершении работы с этим пользователем
+			let outCallback = callback;
 			// Заполнить стеки из руки
 			let user = this;
+			user.agent.setStacks(user.stacks);
+			user.agent.setHand(user.hand);
 
-			this.agent.programming(this.hand, function(handToStacksId){
+			// Обновить данные
+			function request(){
+				
 
-				for (let i = 0; i < handToStacksId.length; i++) {
-					if(handToStacksId[i] === -1) continue;
-					user.stacks[handToStacksId[i]].push(user.hand[i])
-				}
-				user.agent.setStacks(user.stacks);
-				user.hand = []
-				callback()
+				user.agent.programming(function(cardPosInHand, stackId){
 
-			})
-			
 
-			/*
-			// TEST
-			for (let i = 0; i < 6; i++) {
-				this.stacks.push([]);
+
+					if(stackId === -1){// TODO: запросить применить эффекты карты если она УТИЛИЗИРУЕТСЯ 
+						// Утилизация для ремонта. Утилизация огненных или металлических карт позволяет вам освободить слот от повреждения на выбор
+						
+						// Утилизация электрических или компьютерных карт для перепрограммирования - свап 2-х активных стеков на выбор
+
+						// Либо ничего не делать
+						// (здесь может быть ассинхронная штука)
+
+						user.hand.splice(cardPosInHand, 1)
+					}
+					// добавить проверки что:
+					// нельзя ложить карту на поврежденный слот
+					// нужно удалять стек если на него легла карта другого типа
+
+					else if(user.stacks[stackId].length < 3 ){ // не больше 3 коммандных карт в слоте
+						user.stacks[stackId].push(user.hand[cardPosInHand])
+						user.hand.splice(cardPosInHand, 1)
+					}
+					else{ // карту не удалось положить на стек, ничего не менять в слотах, но можно отправить сообщение
+
+					}
+
+					user.agent.setStacks(user.stacks);
+					user.agent.setHand(user.hand);
+
+					if(user.hand.length > 0){
+						request() // Защита от переполнения стека
+					}
+					else{
+						outCallback()
+					}
+
+				})
 			}
-			this.stacks[0].push(0); // Добавить тестоввый сет
-			this.stacks[1].push(1);
-			this.stacks[4].push(1);
-			this.stacks[4].push(2);
-			//
-			this.agent.setStacks(this.stacks);
-
-			setTimeout(callback, 1000);*/
+			request()
 		}
-
-
-
-
 	}
 
 

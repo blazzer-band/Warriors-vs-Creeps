@@ -39,8 +39,8 @@ class LocalAgent extends AbstractAgent{
 	}
 
 
-	programming(hands, callback){
-		game.getRender.programming(hands, callback)
+	programming(callback){
+		game.getRender.programming(callback)
 	}
 
 	setStacks(stacks){
