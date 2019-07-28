@@ -257,7 +257,7 @@ function Render() {
 			img.src = CARD_IMGS[cards[i]];
 			img.cardId = i;
 			img.onclick = function(e) {
-				if (arrayIdSelectedCards.length !== count && e.currentTarget.style.outline !== "2px solid gold") {
+				if (arrayIdSelectedCards.length !== count && e.currentTarget.select !== 'true') {
 					e.currentTarget.style.outline = "2px solid gold";
 					e.currentTarget.select = 'true'
 					arrayIdSelectedCards.push(e.currentTarget.cardId|0);
