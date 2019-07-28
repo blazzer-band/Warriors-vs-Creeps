@@ -218,14 +218,6 @@ td {
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
-  /* overflow: hidden; */
-}
-
-.hand-card{
-  display: block;
-  /* margin-top: -100%; */
-  /* position: absolute; */
-  width: 100%;
 }
 
 #current-card {
@@ -537,4 +529,8 @@ div#trackers > div {
 .stack-content{
   width:100%;
   height:100%;
+}
+.stack-content > img, #hand-board > img{
+  width: 100%;
+  display: block;
 }

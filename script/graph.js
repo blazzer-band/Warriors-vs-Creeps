@@ -75,23 +75,7 @@ function Render() {
 
 	this.killUnit = function(cell) {
 		mapBody.children[cell.y].children[cell.x].innerHTML = ''
-	};
-
-
-	const CARD_IMGS = [
-		"src/cards/card1.jpg",
-		"src/cards/card2.jpg",
-		"src/cards/card3.jpg",
-		"src/cards/card4.jpg",
-		"src/cards/card5.jpg",
-		"src/cards/card6.jpg",
-		"src/cards/card7.jpg",
-		"src/cards/card8.jpg",
-		"src/cards/card9.jpg",
-		"src/cards/card10.jpg",
-		"src/cards/card11.jpg",
-		"src/cards/card12.jpg"
-	];
+	}
 	// isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
 
 	//cards = array of int card id
@@ -118,9 +102,7 @@ function Render() {
 		for (let i = 0; i < cards.length; i++) {
 			board.appendChild(document.createElement("div"));
 			board.children[i].className = "round-cards";
-			let img = new Image();
-			img.src = CARD_IMGS[cards[i]];
-			img.cardId = i;
+			let img = getNewCardElem(i)
 			img.onclick = function(e) {
 				if (arrayIdSelectedCards.length !== count && e.currentTarget.select !== 'true') {
 					e.currentTarget.classList.add("selected-card");
@@ -199,19 +181,20 @@ function Render() {
 	
 	const cardsCounter = document.getElementById("hand-counter");
 
-	// Обновить карты в руке рука не активна(перемещать карты нельзя)
 	this.setHand = function(cards) {
 		cardsCounter.innerHTML = cards.length;
 		handBoard.innerHTML = "";
 		for (let i = 0; i < cards.length; i++){
-			let img = new Image();
-			img.className = "hand-card";
-			img.src = CARD_IMGS[cards[i]];
-			img.cardId = cards[i];
-			handBoard.appendChild(img);
+			handBoard.appendChild(getNewCardElem(cards[i]));
 		}
-		handBoard.style.display = "flex";
-	};
+	}
+
+	function getNewCardElem(i){
+		let img = new Image();
+		img.src = "src/cards/card"+(i+1)+".jpg";
+		img.cardId = i;
+		return img
+	}
 
 	// callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
 	// например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
@@ -221,8 +204,10 @@ function Render() {
 	let selectedHandCard = null;
 	let callbackArray = null;
 	let programmingCallback = null;
+	const stackElems = document.getElementsByClassName("stack-content")
 
-	for (let stack of document.getElementsByClassName("stack-content")) {
+
+	for (let stack of stackElems) {
 		stack.onclick = function(e){
 			if(selectedHandCard === null || e.currentTarget.children.length >= 3) 
 				return
@@ -255,11 +240,18 @@ function Render() {
 	}
 
 
-	// cards - Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт
+	// cards - Массив 6x3 карт в стеках [ [down, center, top], ... ] int id типы карт
 	this.setStacks = function(stacks){
-		// заполняем стэки по массиву
-		console.log("Текущие стеки нас:")
-		console.log(stacks)
+		let i = 0
+		for (let cardIds of stacks) {
+			stackElems[i].innerHTML = ''
+			for(cardId of cardIds){
+				stackElems[i].append(getNewCardElem(cardId))
+			}
+			i++
+		}
+
+
 	}
 
 
