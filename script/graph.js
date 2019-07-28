@@ -14,6 +14,7 @@ function Render() {
 		[null, null, null, null]];
 	let numbersStacks = [];
 	let programmingSession = false;
+	let forbidStack = false;
 
 	const TILES_IMG = ["src/tmp_models/green.jpg", "src/models/stone_tex.png", "src/models/platform_tex.png", "src/tmp_models/blue.jpg"]
 	const CLASS_STACK = ["down-card", "middle-card", "top-card"];
@@ -27,148 +28,159 @@ function Render() {
 	};
 	// count - количество возвращаемых карт
 	let selectStack = function (e) {
-		let handCounter = document.getElementById("hand-counter");
-		let stack = e.currentTarget;
-		if (stack.childElementCount === 0)
-			stack = stack.parentNode;
-		let nameClassStack = stack.children[0].className;
-		let col = TEMPLATE_STACKS[nameClassStack];
-		for (let i = 0; i < 3; i++) {
-			if (arrayStacks[col][i] === null) {
-				if (stack.typeStack === null) {
-					stack.appendChild(document.createElement("div"));
-					stack.children[1].className = CLASS_STACK[0];
-					stack.typeStack = activeElement.typeCard;
-					arrayStacks[col][i] = activeElement;
-					activeElement.style.border = "0";
-					activeElement.onclick = selectStack;
-					activeElement.inStack = true;
-					stack.children[1].appendChild(activeElement);
-					activeElement = null;
-					numbersStacks.push(col);
-					if (handCounter.textContent === "Hand:2") {
-						handCounter.textContent = "Hand:1";
-					} else if (handCounter.textContent === "Hand:1") {
-						handCounter.textContent = "Hand:0";
+		if (forbidStack || activeElement === null) {
+			console.log("Don't click this");
+		} else {
+			let handCounter = document.getElementById("hand-counter");
+			let stack = e.currentTarget;
+			if (stack.childElementCount === 0)
+				stack = stack.parentNode;
+			let nameClassStack = stack.children[0].className;
+			let col = TEMPLATE_STACKS[nameClassStack];
+			for (let i = 0; i < 3; i++) {
+				if (arrayStacks[col][i] === null) {
+					if (stack.typeStack === null) {
+						stack.appendChild(document.createElement("div"));
+						stack.children[1].className = CLASS_STACK[0];
+						stack.typeStack = activeElement.typeCard;
+						arrayStacks[col][i] = activeElement;
+						activeElement.style.border = "0";
+						activeElement.onclick = selectStack;
+						activeElement.inStack = true;
+						stack.children[1].appendChild(activeElement);
+						activeElement = null;
+						numbersStacks.push(col);
+						if (handCounter.textContent === "Hand:2") {
+							handCounter.textContent = "Hand:1";
+						} else if (handCounter.textContent === "Hand:1") {
+							handCounter.textContent = "Hand:0";
+							forbidStack = true;
+						}
+						break;
+					} else if (stack.typeStack !== activeElement.typeCard) {
+						stack.innerHTML = '';
+						stack.appendChild(document.createElement("div"));
+						stack.children[0].className = nameClassStack;
+						stack.appendChild(document.createElement("div"));
+						stack.children[1].className = CLASS_STACK[0];
+						stack.typeStack = activeElement.typeCard;
+						arrayStacks[col][i] = activeElement;
+						activeElement.style.border = "0";
+						activeElement.onclick = selectStack;
+						activeElement.inStack = true;
+						stack.children[1].appendChild(activeElement);
+						activeElement = null;
+						numbersStacks.push(col);
+						if (handCounter.textContent === "Hand:2") {
+							handCounter.textContent = "Hand:1";
+						} else if (handCounter.textContent === "Hand:1") {
+							handCounter.textContent = "Hand:0";
+							forbidStack = true;
+						}
+						break;
+					} else if (stack.typeStack === activeElement.typeCard) {
+						switch (stack.childElementCount) {
+							case(2) :
+								stack.appendChild(document.createElement("div"));
+								stack.children[2].className = CLASS_STACK[1];
+								arrayStacks[col][i] = activeElement;
+								activeElement.style.border = "0";
+								activeElement.onclick = selectStack;
+								activeElement.inStack = true;
+								stack.children[2].appendChild(activeElement);
+								activeElement = null;
+								numbersStacks.push(col);
+								if (handCounter.textContent === "Hand:2") {
+									handCounter.textContent = "Hand:1";
+								} else if (handCounter.textContent === "Hand:1") {
+									handCounter.textContent = "Hand:0";
+									forbidStack = true;
+								}
+								break;
+							case(3) :
+								stack.appendChild(document.createElement("div"));
+								stack.children[3].className = CLASS_STACK[2];
+								arrayStacks[col][i] = activeElement;
+								activeElement.style.border = "0";
+								activeElement.onclick = selectStack;
+								activeElement.inStack = true;
+								stack.children[3].appendChild(activeElement);
+								activeElement = null;
+								numbersStacks.push(col);
+								if (handCounter.textContent === "Hand:2") {
+									handCounter.textContent = "Hand:1";
+								} else if (handCounter.textContent === "Hand:1") {
+									handCounter.textContent = "Hand:0";
+									forbidStack = true;
+								}
+								break;
+							case(4) :
+								arrayStacks[col][i] = activeElement;
+								activeElement.style.border = "0";
+								activeElement.onclick = selectStack;
+								activeElement.inStack = true;
+								stack.children[3].innerHTML = '';
+								stack.children[3].appendChild(activeElement);
+								//stack.children[3].children[0] = activeElement;
+								activeElement = null;
+								numbersStacks.push(col);
+								if (handCounter.textContent === "Hand:2") {
+									handCounter.textContent = "Hand:1";
+								} else if (handCounter.textContent === "Hand:1") {
+									handCounter.textContent = "Hand:0";
+									forbidStack = true;
+								}
+								break;
+						}
+						break;
 					}
-					break;
-				} else if (stack.typeStack !== activeElement.typeCard) {
-					stack.innerHTML = '';
-					stack.appendChild(document.createElement("div"));
-					stack.children[0].className = nameClassStack;
-					stack.appendChild(document.createElement("div"));
-					stack.children[1].className = CLASS_STACK[0];
-					stack.typeStack = activeElement.typeCard;
-					arrayStacks[col][i] = activeElement;
-					activeElement.style.border = "0";
-					activeElement.onclick = selectStack;
-					activeElement.inStack = true;
-					stack.children[1].appendChild(activeElement);
-					activeElement = null;
-					numbersStacks.push(col);
-					if (handCounter.textContent === "Hand:2") {
-						handCounter.textContent = "Hand:1";
-					} else if (handCounter.textContent === "Hand:1") {
-						handCounter.textContent = "Hand:0";
-					}
-					break;
-				} else if (stack.typeStack === activeElement.typeCard) {
-					switch (stack.childElementCount) {
-						case(2) :
-							stack.appendChild(document.createElement("div"));
-							stack.children[2].className = CLASS_STACK[1];
-							arrayStacks[col][i] = activeElement;
-							activeElement.style.border = "0";
-							activeElement.onclick = selectStack;
-							activeElement.inStack = true;
-							stack.children[2].appendChild(activeElement);
-							activeElement = null;
-							numbersStacks.push(col);
-							if (handCounter.textContent === "Hand:2") {
-								handCounter.textContent = "Hand:1";
-							} else if (handCounter.textContent === "Hand:1") {
-								handCounter.textContent = "Hand:0";
-							}
-							break;
-						case(3) :
-							stack.appendChild(document.createElement("div"));
-							stack.children[3].className = CLASS_STACK[2];
-							arrayStacks[col][i] = activeElement;
-							activeElement.style.border = "0";
-							activeElement.onclick = selectStack;
-							activeElement.inStack = true;
-							stack.children[3].appendChild(activeElement);
-							activeElement = null;
-							numbersStacks.push(col);
-							if (handCounter.textContent === "Hand:2") {
-								handCounter.textContent = "Hand:1";
-							} else if (handCounter.textContent === "Hand:1") {
-								handCounter.textContent = "Hand:0";
-							}
-							break;
-						case(4) :
-							arrayStacks[col][i] = activeElement;
-							activeElement.style.border = "0";
-							activeElement.onclick = selectStack;
-							activeElement.inStack = true;
-							stack.children[3].innerHTML = '';
-							stack.children[3].appendChild(activeElement);
-							//stack.children[3].children[0] = activeElement;
-							activeElement = null;
-							numbersStacks.push(col);
-							if (handCounter.textContent === "Hand:2") {
-								handCounter.textContent = "Hand:1";
-							} else if (handCounter.textContent === "Hand:1") {
-								handCounter.textContent = "Hand:0";
-							}
-							break;
-					}
-					break;
-				}
-			} else if (i === 2 && arrayStacks[col][i] !== null) {
-				if (arrayStacks[col][i].typeCard === activeElement.typeCard) {
-					arrayStacks[col][i] = activeElement;
-					activeElement.style.border = "0";
-					activeElement.onclick = selectStack;
-					activeElement.inStack = true;
-					stack.children[3].innerHTML = '';
-					stack.children[3].appendChild(activeElement);
-					//stack.children[3].children[0] = activeElement;
-					activeElement = null;
-					numbersStacks.push(col);
-					if (handCounter.textContent === "Hand:2") {
-						handCounter.textContent = "Hand:1";
-					} else if (handCounter.textContent === "Hand:1") {
-						handCounter.textContent = "Hand:0";
-					}
-					break;
-				} else {
-					stack.innerHTML = '';
-					stack.appendChild(document.createElement("div"));
-					stack.children[0].className = nameClassStack;
-					stack.appendChild(document.createElement("div"));
-					stack.children[1].className = CLASS_STACK[0];
-					stack.typeStack = activeElement.typeCard;
-					arrayStacks[col][i] = activeElement;
-					activeElement.style.border = "0";
-					activeElement.onclick = selectStack;
-					activeElement.inStack = true;
-					stack.children[1].appendChild(activeElement);
-					activeElement = null;
-					numbersStacks.push(col);
-					if (handCounter.textContent === "Hand:2") {
-						handCounter.textContent = "Hand:1";
-					} else if (handCounter.textContent === "Hand:1") {
-						handCounter.textContent = "Hand:0";
+				} else if (i === 2 && arrayStacks[col][i] !== null) {
+					if (arrayStacks[col][i].typeCard === activeElement.typeCard) {
+						arrayStacks[col][i] = activeElement;
+						activeElement.style.border = "0";
+						activeElement.onclick = selectStack;
+						activeElement.inStack = true;
+						stack.children[3].innerHTML = '';
+						stack.children[3].appendChild(activeElement);
+						//stack.children[3].children[0] = activeElement;
+						activeElement = null;
+						numbersStacks.push(col);
+						if (handCounter.textContent === "Hand:2") {
+							handCounter.textContent = "Hand:1";
+						} else if (handCounter.textContent === "Hand:1") {
+							handCounter.textContent = "Hand:0";
+							forbidStack = true;
+						}
+						break;
+					} else {
+						stack.innerHTML = '';
+						stack.appendChild(document.createElement("div"));
+						stack.children[0].className = nameClassStack;
+						stack.appendChild(document.createElement("div"));
+						stack.children[1].className = CLASS_STACK[0];
+						stack.typeStack = activeElement.typeCard;
+						arrayStacks[col][i] = activeElement;
+						activeElement.style.border = "0";
+						activeElement.onclick = selectStack;
+						activeElement.inStack = true;
+						stack.children[1].appendChild(activeElement);
+						activeElement = null;
+						numbersStacks.push(col);
+						if (handCounter.textContent === "Hand:2") {
+							handCounter.textContent = "Hand:1";
+						} else if (handCounter.textContent === "Hand:1") {
+							handCounter.textContent = "Hand:0";
+							forbidStack = true;
+						}
 					}
 				}
 			}
 		}
-
 	};
 
 	let selectHandCard = function (e) {
 		if (programmingSession && activeElement === null && !e.currentTarget.inStack) {
+			forbidStack = false;
 			e.currentTarget.style.border = "2px solid gold";
 			e.currentTarget.isActive = true;
 			activeElement = e.currentTarget;
