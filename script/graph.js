@@ -244,6 +244,7 @@ function Render() {
 		desk.innerHTML = '';
 		desk.style.display = "inline-block";
 		let arrayIdSelectedCards = [];
+
 		desk.appendChild(document.createElement("div"));
 		desk.children[0].style.display = "block";
 		let index_board = 110;
@@ -256,19 +257,22 @@ function Render() {
 			img.src = CARD_IMGS[cards[i]];
 			img.cardId = i;
 			img.onclick = function(e) {
-				if (arrayIdSelectedCards.length !== count && e.currentTarget.style.border !== "2px solid gold") {
-					e.currentTarget.style.border = "2px solid gold";
+				if (arrayIdSelectedCards.length !== count && e.currentTarget.style.outline !== "2px solid gold") {
+					e.currentTarget.style.outline = "2px solid gold";
+					e.currentTarget.select = 'true'
 					arrayIdSelectedCards.push(e.currentTarget.cardId|0);
-				} else if (e.currentTarget.style.border === "2px solid gold") {
+				} else if (e.currentTarget.select === 'true') {
 					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== e.currentTarget.cardId);
-					e.currentTarget.style.border = "0";
+					e.currentTarget.style.outline = "0";
+					e.currentTarget.select = 'false'
 				}
 				if (arrayIdSelectedCards.length === count) {
 					let btn = document.getElementsByClassName("ok-choose");
-					btn[0].style.display = "block";
+					//btn[0].style.visibility = "visible";
+					btn[0].classList.remove("noActive")
 				} else {
 					let btn = document.getElementsByClassName("ok-choose");
-					btn[0].style.display = "none";
+					btn[0].classList.add("noActive")
 				}
 			};
 			board.children[i].appendChild(img);
@@ -278,10 +282,11 @@ function Render() {
 		desk = desk.children[1];
 		desk.className = "desk";
 		desk.appendChild(document.createElement("button"));
-		desk.children[0].className = "ok-choose";
+		desk.children[0].classList.add("ok-choose");
+		desk.children[0].classList.add("noActive")
 		desk.children[0].textContent = "OK";
-		desk.children[0].onclick = function () {
-			if (callback !== undefined) {
+		desk.children[0].onclick = function (e) {
+			if (callback !== undefined && !e.currentTarget.classList.contains("noActive")) {
 				callback(arrayIdSelectedCards);
 			}
 		}
@@ -396,5 +401,13 @@ function Render() {
 		let messageBlock = document.getElementById("message");
 		messageBlock.style.display = "none";
 	};
+
+	this.updateBombCounter = function(newVal){
+		document.getElementById('hp-bomb').innerHTML = newVal
+	}
+	this.updateKillsCounter = function(newVal){
+		document.getElementById('kills').innerHTML = newVal
+	}
+
 
 }

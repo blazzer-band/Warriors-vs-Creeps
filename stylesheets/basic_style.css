@@ -422,6 +422,7 @@ td {
   border-radius: 12px;
   background-color: rgba(2,3,4,0.5);
   z-index: 12;
+  box-shadow: 0 0 24px 30px rgba(0,0,0,0.5);
 }
 
 #message {
@@ -444,25 +445,38 @@ td {
 
 .round-cards img {
   width: 100%;
+  /* box-shadow: 0 0 24px 30px rgba(0,0,0,0.5); */
+  /* z-index: 2; */
 }
 
 .ok-choose {
-  display: none;
+  /* display: none; */
+  /* visibility: hidden; */
+  display: block;
   position: relative;
   text-align: center;
-  background-color: #00000026;
+  background-color: #ffffff00;
   font-family: sans-serif;
   font-weight: 600;
   font-size: 15pt;
-  border: 1px solid #44d84c;
+  border: 1px solid #91e696;
   border-radius: 10px;
-  color: #98fb67;
+  color: #60ea7f;
   padding: 1px 10px;
-  margin: 0 auto 12px;
+  margin: 10px auto 0px auto;
+  cursor: pointer;
+}
+
+.noActive{
+  
+color: #5f8468;
+  
+border: 1px solid #606d61;
+  
+cursor: auto;
 }
 
 .desk-card {
-  padding:20px
 }
 
 .desk button {}
