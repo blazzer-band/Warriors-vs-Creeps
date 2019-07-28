@@ -26,5 +26,13 @@ class BotAgent extends AbstractAgent{
 		console.log(stacks)
 	}
 
+	programming(hands, callback){
+		let out = []
+		for (let i = 0; i < hands.length; i++) {
+			out.push(-1)
+		}
+		callback(out)
+	}
+
 
 }

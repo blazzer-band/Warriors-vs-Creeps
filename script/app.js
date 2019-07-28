@@ -43,6 +43,7 @@ function Game() {
 			this.agent.programming(this.hand, function(handToStacksId){
 
 				for (let i = 0; i < handToStacksId.length; i++) {
+					if(handToStacksId[i] === -1) continue;
 					user.stacks[handToStacksId[i]].push(user.hand[i])
 				}
 				callback()
@@ -296,7 +297,6 @@ function Game() {
 				if (countUsers === users.length) {
 					warriorsAct();
 				}
-
 			})
 		}
 	}

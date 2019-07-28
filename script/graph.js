@@ -358,8 +358,7 @@ function Render() {
 	// например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
 	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
 	this.programming = function(handCards, callback) {
-		if (handCards.length === numbersStacks.length)
-			callback(numbersStacks);
+		callback(numbersStacks);
 	};
 
 
