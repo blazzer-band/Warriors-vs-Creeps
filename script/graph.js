@@ -26,7 +26,7 @@ function Render() {
 		"number-5-icon" : 4,
 		"number-6-icon" : 5
 	};
-	// count - количество возвращаемых карт
+
 	let selectStack = function (e) {
 		if (forbidStack || activeElement === null) {
 			console.log("Don't click this");
@@ -50,10 +50,10 @@ function Render() {
 						stack.children[1].appendChild(activeElement);
 						activeElement = null;
 						numbersStacks.push(col);
-						if (handCounter.textContent === "Hand:2") {
-							handCounter.textContent = "Hand:1";
-						} else if (handCounter.textContent === "Hand:1") {
-							handCounter.textContent = "Hand:0";
+						if (handCounter.textContent === "2") {
+							handCounter.textContent = "1";
+						} else if (handCounter.textContent === "1") {
+							handCounter.textContent = "0";
 							forbidStack = true;
 						}
 						break;
@@ -71,10 +71,10 @@ function Render() {
 						stack.children[1].appendChild(activeElement);
 						activeElement = null;
 						numbersStacks.push(col);
-						if (handCounter.textContent === "Hand:2") {
-							handCounter.textContent = "Hand:1";
-						} else if (handCounter.textContent === "Hand:1") {
-							handCounter.textContent = "Hand:0";
+						if (handCounter.textContent === "2") {
+							handCounter.textContent = "1";
+						} else if (handCounter.textContent === "1") {
+							handCounter.textContent = "0";
 							forbidStack = true;
 						}
 						break;
@@ -90,10 +90,10 @@ function Render() {
 								stack.children[2].appendChild(activeElement);
 								activeElement = null;
 								numbersStacks.push(col);
-								if (handCounter.textContent === "Hand:2") {
-									handCounter.textContent = "Hand:1";
-								} else if (handCounter.textContent === "Hand:1") {
-									handCounter.textContent = "Hand:0";
+								if (handCounter.textContent === "2") {
+									handCounter.textContent = "1";
+								} else if (handCounter.textContent === "1") {
+									handCounter.textContent = "0";
 									forbidStack = true;
 								}
 								break;
@@ -107,10 +107,10 @@ function Render() {
 								stack.children[3].appendChild(activeElement);
 								activeElement = null;
 								numbersStacks.push(col);
-								if (handCounter.textContent === "Hand:2") {
-									handCounter.textContent = "Hand:1";
-								} else if (handCounter.textContent === "Hand:1") {
-									handCounter.textContent = "Hand:0";
+								if (handCounter.textContent === "2") {
+									handCounter.textContent = "1";
+								} else if (handCounter.textContent === "1") {
+									handCounter.textContent = "0";
 									forbidStack = true;
 								}
 								break;
@@ -124,10 +124,10 @@ function Render() {
 								//stack.children[3].children[0] = activeElement;
 								activeElement = null;
 								numbersStacks.push(col);
-								if (handCounter.textContent === "Hand:2") {
-									handCounter.textContent = "Hand:1";
-								} else if (handCounter.textContent === "Hand:1") {
-									handCounter.textContent = "Hand:0";
+								if (handCounter.textContent === "2") {
+									handCounter.textContent = "1";
+								} else if (handCounter.textContent === "1") {
+									handCounter.textContent = "0";
 									forbidStack = true;
 								}
 								break;
@@ -145,10 +145,10 @@ function Render() {
 						//stack.children[3].children[0] = activeElement;
 						activeElement = null;
 						numbersStacks.push(col);
-						if (handCounter.textContent === "Hand:2") {
-							handCounter.textContent = "Hand:1";
-						} else if (handCounter.textContent === "Hand:1") {
-							handCounter.textContent = "Hand:0";
+						if (handCounter.textContent === "2") {
+							handCounter.textContent = "1";
+						} else if (handCounter.textContent === "1") {
+							handCounter.textContent = "0";
 							forbidStack = true;
 						}
 						break;
@@ -166,10 +166,10 @@ function Render() {
 						stack.children[1].appendChild(activeElement);
 						activeElement = null;
 						numbersStacks.push(col);
-						if (handCounter.textContent === "Hand:2") {
-							handCounter.textContent = "Hand:1";
-						} else if (handCounter.textContent === "Hand:1") {
-							handCounter.textContent = "Hand:0";
+						if (handCounter.textContent === "2") {
+							handCounter.textContent = "1";
+						} else if (handCounter.textContent === "1") {
+							handCounter.textContent = "0";
 							forbidStack = true;
 						}
 					}
@@ -284,7 +284,7 @@ function Render() {
 	// isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
 
 	//cards = array of int card id
-	this.selectCards = function(cards, count, callback){
+	this.selectCards = function(cards, count, callback) {
 		programmingSession = false;
 
 		for (let i = 0; i < numbersStacks.length; i++)
@@ -415,9 +415,9 @@ function Render() {
 	// например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
 	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
 	this.programming = function(handCards, callback) {
-		/*let handCounter = document.getElementById("hand-counter");
-		if (handCounter.textContent === "Hand:0")*/
-			callback(numbersStacks);
+		let handCounter = document.getElementById("hand-counter");
+		if (handCounter.textContent === "0")
+			callback(handCards);
 	};
 
 
