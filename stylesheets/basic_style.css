@@ -149,7 +149,7 @@ td {
   font-size: 48px;
 }
 
-#kills, #hp-bomb, #timer, #hand-counter{
+#kills, #hp-bomb, #timer, .hand-counter{
   font-family: sans-serif;
 }
 
@@ -183,7 +183,7 @@ td {
   height: 200px; */
 }
 
-#hand-counter{
+.hand-counter{
   text-align: center;
   font-size: 50px;
   position: absolute;
@@ -228,7 +228,7 @@ td {
   background-color: #53a25e;
   height: 184px;
   width: 900px;
-  border-radius: 12px;
+  border-radius: 12px 12px 12px 0;
   z-index: 1;
   /* #A30000; */
 }
@@ -237,9 +237,11 @@ td {
   vertical-align: top;
   z-index: 2;
   display: inline-block;
-  background-image: url("../src/models/tmp files/platform.svg");
-  width: 100px;
-  height: 100px;
+  background-image: url("../favicon.png");
+  background-size: cover;
+  margin: 6px;
+  width: 80px;
+  height: 80px;
   background-repeat: no-repeat;
 }
 
@@ -247,11 +249,10 @@ td {
   /* vertical-align: bottom; */
   position: absolute;
   left: 35px;
-  bottom: -25px;
+  bottom: -24px;
   width: 50px;
   height: 50px;
   z-index: 6;
-
 }
 
 .number-1-icon{
@@ -354,8 +355,7 @@ td {
 #footer_footer{
   height:20px;
   width:1150px;
-  background-color: #2CEAA3;
-  border-radius: 12px  0 12px 12px;
+  border-radius: 0  0 12px 12px;
 }
 
 #lobby, #welcome, #room {

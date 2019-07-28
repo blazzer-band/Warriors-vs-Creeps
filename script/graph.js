@@ -381,7 +381,7 @@ function Render() {
 	// Обновить карты в руке рука не активна(перемещать карты нельзя)
 	this.setHand = function(cards) {
 		let cardsCounter = document.getElementById("hand-counter");
-		cardsCounter.innerHTML = "Hand:"+cards.length;
+		cardsCounter.innerHTML = cards.length;
 		let cardBoard = document.getElementById("hand-board");
 		cardBoard.style.display = "flex";
 		cardBoard.innerHTML = "";
