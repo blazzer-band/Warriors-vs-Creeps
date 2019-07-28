@@ -40,16 +40,16 @@ function Game() {
 			// Заполнить стеки из руки
 			let user = this
 
-			/*this.agent.programming(this.hand, function(handToStacksId){
+			this.agent.programming(this.hand, function(handToStacksId){
 
 				for (let i = 0; i < handToStacksId.length; i++) {
 					user.stacks[handToStacksId[i]].push(user.hand[i])
 				}
 				callback()
-			})*/
+			})
 			user.hand = []
 
-			
+			/*
 			// TEST
 			for (var i = 0; i < 6; i++) {
 				this.stacks.push([])
@@ -61,7 +61,7 @@ function Game() {
 			//
 			this.agent.setStacks(this.stacks)
 
-			setTimeout(callback, 1000)
+			setTimeout(callback, 1000)*/
 		}
 
 

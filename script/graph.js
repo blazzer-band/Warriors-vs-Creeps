@@ -242,12 +242,11 @@ function Render() {
 
 		let desk = document.getElementById("choose-board");
 		desk.innerHTML = '';
-		desk.style.display = "block";
+		desk.style.display = "inline-block";
 		let arrayIdSelectedCards = [];
 		desk.appendChild(document.createElement("div"));
 		desk.children[0].style.display = "block";
 		let index_board = 110;
-		desk.style.width = (index_board * cards.length) + "px";
 		//let pixels = 53.5 * (10 - cards.length);
 		//desk.children[0].style.marginLeft = "" + pixels + "px";
 		let board = desk.children[0];
