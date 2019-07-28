@@ -3,200 +3,8 @@ function Render() {
 
 
 	let mapBody = document.getElementById("game-map").children[0];
-	let activeElement = null;
-	let mit = 8;
-	let arrayStacks = [
-		[null, null, null, null],
-		[null, null, null, null],
-		[null, null, null, null],
-		[null, null, null, null],
-		[null, null, null, null],
-		[null, null, null, null]];
-	let numbersStacks = [];
-	let programmingSession = false;
-	let forbidStack = false;
 
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
-	const CLASS_STACK = ["down-card", "middle-card", "top-card"];
-	const TEMPLATE_STACKS = {
-		"number-1-icon" : 0,
-		"number-2-icon" : 1,
-		"number-3-icon" : 2,
-		"number-4-icon" : 3,
-		"number-5-icon" : 4,
-		"number-6-icon" : 5
-	};
-
-	let programmingCallb = null
-	let selectStack = function (e) {
-		if (forbidStack || activeElement === null) {
-			console.log("Don't click this");
-		} else {
-			let handCounter = document.getElementById("hand-counter");
-			let stack = e.currentTarget;
-			if (stack.childElementCount === 0)
-				stack = stack.parentNode;
-			let nameClassStack = stack.children[0].className;
-			let col = TEMPLATE_STACKS[nameClassStack];
-			for (let i = 0; i < 3; i++) {
-				if (arrayStacks[col][i] === null) {
-					if (stack.typeStack === null) {
-						stack.appendChild(document.createElement("div"));
-						stack.children[1].className = CLASS_STACK[0];
-						stack.typeStack = activeElement.typeCard;
-						arrayStacks[col][i] = activeElement;
-						activeElement.style.border = "0";
-						activeElement.onclick = selectStack;
-						activeElement.inStack = true;
-						stack.children[1].appendChild(activeElement);
-						activeElement = null;
-						numbersStacks.push(col);
-						if (handCounter.textContent === "2") {
-							handCounter.textContent = "1";
-						} else if (handCounter.textContent === "1") {
-							handCounter.textContent = "0";
-							forbidStack = true;
-							programmingCallb(numbersStacks)
-						}
-						break;
-					} else if (stack.typeStack !== activeElement.typeCard) {
-						stack.innerHTML = '';
-						stack.appendChild(document.createElement("div"));
-						stack.children[0].className = nameClassStack;
-						stack.appendChild(document.createElement("div"));
-						stack.children[1].className = CLASS_STACK[0];
-						stack.typeStack = activeElement.typeCard;
-						arrayStacks[col][i] = activeElement;
-						activeElement.style.border = "0";
-						activeElement.onclick = selectStack;
-						activeElement.inStack = true;
-						stack.children[1].appendChild(activeElement);
-						activeElement = null;
-						numbersStacks.push(col);
-						if (handCounter.textContent === "2") {
-							handCounter.textContent = "1";
-						} else if (handCounter.textContent === "1") {
-							handCounter.textContent = "0";
-							programmingCallb(numbersStacks)
-							forbidStack = true;
-						}
-						break;
-					} else if (stack.typeStack === activeElement.typeCard) {
-						switch (stack.childElementCount) {
-							case(2) :
-								stack.appendChild(document.createElement("div"));
-								stack.children[2].className = CLASS_STACK[1];
-								arrayStacks[col][i] = activeElement;
-								activeElement.style.border = "0";
-								activeElement.onclick = selectStack;
-								activeElement.inStack = true;
-								stack.children[2].appendChild(activeElement);
-								activeElement = null;
-								numbersStacks.push(col);
-								if (handCounter.textContent === "2") {
-									handCounter.textContent = "1";
-								} else if (handCounter.textContent === "1") {
-									handCounter.textContent = "0";
-									programmingCallb(numbersStacks)
-									forbidStack = true;
-								}
-								break;
-							case(3) :
-								stack.appendChild(document.createElement("div"));
-								stack.children[3].className = CLASS_STACK[2];
-								arrayStacks[col][i] = activeElement;
-								activeElement.style.border = "0";
-								activeElement.onclick = selectStack;
-								activeElement.inStack = true;
-								stack.children[3].appendChild(activeElement);
-								activeElement = null;
-								numbersStacks.push(col);
-								if (handCounter.textContent === "2") {
-									handCounter.textContent = "1";
-								} else if (handCounter.textContent === "1") {
-									handCounter.textContent = "0";
-									programmingCallb(numbersStacks)
-									forbidStack = true;
-								}
-								break;
-							case(4) :
-								arrayStacks[col][i] = activeElement;
-								activeElement.style.border = "0";
-								activeElement.onclick = selectStack;
-								activeElement.inStack = true;
-								stack.children[3].innerHTML = '';
-								stack.children[3].appendChild(activeElement);
-								//stack.children[3].children[0] = activeElement;
-								activeElement = null;
-								numbersStacks.push(col);
-								if (handCounter.textContent === "2") {
-									handCounter.textContent = "1";
-								} else if (handCounter.textContent === "1") {
-									handCounter.textContent = "0";
-									programmingCallb(numbersStacks)
-									forbidStack = true;
-								}
-								break;
-						}
-						break;
-					}
-				} else if (i === 2 && arrayStacks[col][i] !== null) {
-					if (arrayStacks[col][i].typeCard === activeElement.typeCard) {
-						arrayStacks[col][i] = activeElement;
-						activeElement.style.border = "0";
-						activeElement.onclick = selectStack;
-						activeElement.inStack = true;
-						stack.children[3].innerHTML = '';
-						stack.children[3].appendChild(activeElement);
-						//stack.children[3].children[0] = activeElement;
-						activeElement = null;
-						numbersStacks.push(col);
-						if (handCounter.textContent === "2") {
-							handCounter.textContent = "1";
-						} else if (handCounter.textContent === "1") {
-							handCounter.textContent = "0";
-							programmingCallb(numbersStacks)
-							forbidStack = true;
-						}
-						break;
-					} else {
-						stack.innerHTML = '';
-						stack.appendChild(document.createElement("div"));
-						stack.children[0].className = nameClassStack;
-						stack.appendChild(document.createElement("div"));
-						stack.children[1].className = CLASS_STACK[0];
-						stack.typeStack = activeElement.typeCard;
-						arrayStacks[col][i] = activeElement;
-						activeElement.style.border = "0";
-						activeElement.onclick = selectStack;
-						activeElement.inStack = true;
-						stack.children[1].appendChild(activeElement);
-						activeElement = null;
-						numbersStacks.push(col);
-						if (handCounter.textContent === "2") {
-							handCounter.textContent = "1";
-						} else if (handCounter.textContent === "1") {
-							handCounter.textContent = "0";
-							programmingCallb(numbersStacks)
-							forbidStack = true;
-						}
-					}
-				}
-			}
-		}
-	};
-
-	let selectHandCard = function (e) {
-		if (programmingSession && activeElement === null && !e.currentTarget.inStack) {
-			forbidStack = false;
-			e.currentTarget.style.border = "2px solid gold";
-			e.currentTarget.isActive = true;
-			activeElement = e.currentTarget;
-			activeElement.inStack = false;
-			activeElement.typeCard = (mit % 2);
-			mit--;
-		}
-	};
 
 	this.renderMap = function(inputMap){
 		let height = 6;
@@ -215,12 +23,6 @@ function Render() {
 				img.src = TILES_IMG[tmp];
 				mapBody.children[i].children[j].appendChild(img);
 			}
-		}
-
-		let stack = document.getElementsByClassName("stack");
-		for (let i = 0; i < stack.length; i++) {
-			stack[i].onclick = selectStack;
-			stack[i].typeStack = null;
 		}
 	};
 
@@ -294,9 +96,6 @@ function Render() {
 	//cards = array of int card id
 	this.selectCards = function(cards, count, callback) {
 		programmingSession = false;
-
-		for (let i = 0; i < numbersStacks.length; i++)
-			numbersStacks.pop();
 
 		let desk = document.getElementById("choose-board");
 		desk.innerHTML = '';
@@ -406,14 +205,10 @@ function Render() {
 		cardBoard.style.display = "flex";
 		cardBoard.innerHTML = "";
 		for (let i = 0; i < cards.length; i++){
-			// cardBoard.appendChild(document.createElement("div"));
-			// cardBoard.children[i].className = "hand-card";
 			let img = new Image();
 			img.className = "hand-card";
 			img.src = CARD_IMGS[cards[i]];
 			img.cardId = cards[i];
-			img.onclick = selectHandCard;
-			img.isActive = false;
 			cardBoard.appendChild(img);
 		}
 		cardBoard.style.display = "flex";
@@ -423,9 +218,40 @@ function Render() {
 	// например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
 	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
 	
+	let selectedHandCard = null;
+	let stacks = document.getElementsByClassName("stack")
+	let callbackArray = []
+	let programmingCallback = null
+
+	for (let stack of stacks) {
+		stack.onclick = function(e){
+			if(selectedHandCard === null || e.currentTarget.children.length >= 3) 
+				return
+			selectedHandCard.onclick = null
+
+			selectedHandCard.style.outline = ''
+			callbackArray.push(selectedHandCard.idInList)
+			e.currentTarget.append(selectedHandCard)
+			selectedHandCard = null
+			if(document.getElementById("hand-board").children.length === 0) programmingCallback(callbackArray)
+		}
+	}
+	
 	this.programming = function(handCards, callback) {
-		programmingCallb = callback
-	};
+		this.setHand(handCards)
+		programmingCallback = callback
+		let hand = document.getElementById("hand-board")
+		let i = 0;
+		for (let card of hand.children) {
+			card.idInList = i++;
+			card.onclick = function(e){
+				if(selectedHandCard !== null) selectedHandCard.style.outline = ''
+				selectedHandCard = e.currentTarget;
+				selectedHandCard.style.outline = '2px solid yellow'
+				// TODO: и выделить выбранную карту
+			}
+		}
+	}
 
 
 	// cards - Массив 6x3 карт в стеках [ [top1,center1,down1], [top2,center2,down2], ... ] int id типы карт

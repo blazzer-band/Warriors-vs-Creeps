@@ -223,8 +223,9 @@ td {
 
 .hand-card{
   display: block;
+  /* margin-top: -100%; */
+  /* position: absolute; */
   width: 100%;
-
 }
 
 #current-card {
@@ -525,4 +526,11 @@ div#trackers > div {
 
 .selected-card{
   box-shadow: 0 0 3pt 2pt #4aff60;
+}
+
+.stack img:nth-child(2) {
+  margin-top: -100%
+}
+.stack img:nth-child(3) {
+  margin-top: -100%
 }
