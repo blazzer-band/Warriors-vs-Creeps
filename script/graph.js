@@ -14,7 +14,7 @@ function Render() {
 		[null, null, null, null]];
 	let numbersStacks = [];
 
-	const TILES_IMG = ["tmp_models/green.jpg", "models/stone_tex.png", "models/platform_tex.png", "tmp_models/blue.jpg"]
+	const TILES_IMG = ["src/tmp_models/green.jpg", "src/models/stone_tex.png", "src/models/platform_tex.png", "src/tmp_models/blue.jpg"]
 	const CLASS_STACK = ["down-card", "middle-card", "top-card"];
 	const TEMPLATE_STACKS = {
 		"number-1-icon" : 0,
@@ -173,7 +173,7 @@ function Render() {
 	// const unitType = {Hero:0, Creep:1, Bomb:2} - юнит
 	// cellTo.x cellTo.y - координаты
 
-	const UNIT_IMGS = ["models/tmp files/man-with-sword-and-shield.svg", "models/monster.png", "models/tmp files/naval_mine.png"];
+	const UNIT_IMGS = ["src/models/tmp files/man-with-sword-and-shield.svg", "src/models/monster.png", "src/models/tmp files/naval_mine.png"];
 
 	// передвинуть юнита из in в out
 	this.moveUnit = function(cellFrom, cellTo) {
@@ -250,7 +250,7 @@ function Render() {
 		desk.style.width = (index_board * cards.length) + "px";
 		//let pixels = 53.5 * (10 - cards.length);
 		//desk.children[0].style.marginLeft = "" + pixels + "px";
-		board = desk.children[0];
+		let board = desk.children[0];
 		board.className = "desk-card";
 		for (let i = 0; i < cards.length; i++) {
 			board.appendChild(document.createElement("div"));
@@ -335,7 +335,7 @@ function Render() {
 	}
 
 	// Обновить карты в руке рука не активна(перемещать карты нельзя)
-	this.setHand = function(cards){;
+	this.setHand = function(cards){
 		let cardsCounter = document.getElementById("hand-counter");
 		cardsCounter.innerHTML = "Hand:"+cards.length;
 		let cardBoard = document.getElementById("hand-board");

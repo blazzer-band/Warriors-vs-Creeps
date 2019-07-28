@@ -78,7 +78,7 @@ td {
   position: relative;
   top: 5px;
   margin: 0 auto;
-  background-image: url("../models/tmp files/skull.png");
+  background-image: url("../src/models/tmp files/skull.png");
   background-size: contain;
   height: 66px;
   width: 66px;
@@ -109,7 +109,7 @@ td {
   left: 0px;
   height: 66px;
   width: 66px;
-  background-image: url("../models/tmp files/bomb_icon.png");
+  background-image: url("../src/models/tmp files/bomb_icon.png");
 }
 
 #hp-bomb {
@@ -133,7 +133,7 @@ td {
   left: 0px;
   height: 66px;
   width: 66px;
-  background-image: url("../models/tmp files/clock.png");
+  background-image: url("../src/models/tmp files/clock.png");
 }
 
 #timer {
@@ -229,7 +229,7 @@ td {
 #card-field {
   vertical-align: top;
   display: inline-block;
-  background-image: url("../models/card_field_texture.png");
+  background-image: url("../src/models/card_field_texture.png");
   background-size: 30%;
   background-color: #2F9915;
   height: 184px;
@@ -242,7 +242,7 @@ td {
   vertical-align: top;
   z-index: 2;
   display: inline-block;
-  background-image: url("../models/tmp files/platform.svg");
+  background-image: url("../src/models/tmp files/platform.svg");
   width: 100px;
   height: 100px;
   background-repeat: no-repeat;
@@ -260,27 +260,27 @@ td {
 }
 
 .number-1-icon{
-  background-image: url("../models/numbers/one_number.svg");
+  background-image: url("../src/models/numbers/one_number.svg");
 }
 
 .number-2-icon{
-  background-image: url("../models/numbers/two_number.svg");
+  background-image: url("../src/models/numbers/two_number.svg");
 }
 
 .number-3-icon{
-  background-image: url("../models/numbers/three_number.svg");
+  background-image: url("../src/models/numbers/three_number.svg");
 }
 
 .number-4-icon{
-  background-image: url("../models/numbers/four_number.svg");
+  background-image: url("../src/models/numbers/four_number.svg");
 }
 
 .number-5-icon{
-  background-image: url("../models/numbers/five_number.svg");
+  background-image: url("../src/models/numbers/five_number.svg");
 }
 
 .number-6-icon{
-  background-image: url("../models/numbers/six_number.svg");
+  background-image: url("../src/models/numbers/six_number.svg");
 }
 
 .stack {
