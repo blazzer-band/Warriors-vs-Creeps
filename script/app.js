@@ -247,6 +247,7 @@ function Game() {
 		render.defeat();
 		render.showMessage("YOU LOSE");
 	}
+	this.lose = lose;
 
 
 	///// Ассинхронный цикл. Начало
