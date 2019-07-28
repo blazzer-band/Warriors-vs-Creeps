@@ -38,7 +38,6 @@ function Game() {
 		programming(callback) {
 			// callback - вызвать при завершении работы с этим пользователем
 			let outCallback = callback;
-			// Заполнить стеки из руки
 			let user = this;
 			user.agent.setStacks(user.stacks);
 			user.agent.setHand(user.hand);
@@ -59,15 +58,15 @@ function Game() {
 						// Либо ничего не делать
 						// (здесь может быть ассинхронная штука)
 
-						user.hand.splice(cardPosInHand, 1)
+						user.hand.splice(cardPosInHand, 1);
 					}
 					// добавить проверки что:
 					// нельзя ложить карту на поврежденный слот
 					// нужно удалять стек если на него легла карта другого типа
 
 					else if(user.stacks[stackId].length < 3 ){ // не больше 3 коммандных карт в слоте
-						user.stacks[stackId].push(user.hand[cardPosInHand])
-						user.hand.splice(cardPosInHand, 1)
+						user.stacks[stackId].push(user.hand[cardPosInHand]);
+						user.hand.splice(cardPosInHand, 1);
 					}
 					else{ // карту не удалось положить на стек, ничего не менять в слотах, но можно отправить сообщение
 
@@ -77,15 +76,15 @@ function Game() {
 					user.agent.setHand(user.hand);
 
 					if(user.hand.length > 0){
-						request() // Защита от переполнения стека
+						request(); // Защита от переполнения стека
 					}
 					else{
-						outCallback()
+						outCallback();
 					}
 
 				})
 			}
-			request()
+			request();
 		}
 	}
 

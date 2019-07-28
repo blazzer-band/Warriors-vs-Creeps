@@ -4,6 +4,7 @@ function Render() {
 
 	const mapBody = document.getElementById("game-map").children[0];
 	const handBoard = document.getElementById("hand-board")
+	const stacksParent = document.getElementsByClassName("stack-content")
 
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
 
@@ -193,9 +194,9 @@ function Render() {
 	this.setStacks = function(stacks){
 		let i = 0
 		for (let cardIds of stacks) {
-			stackElems[i].innerHTML = ''
+			stacksParent[i].innerHTML = ''
 			for(cardId of cardIds){
-				stackElems[i].append(getNewCardElem(cardId))
+				stacksParent[i].append(getNewCardElem(cardId))
 			}
 			i++
 		}
@@ -216,10 +217,10 @@ function Render() {
 	
 	
 
-	const stackElems = document.getElementsByClassName("stack-content")
+	
 	{
 		let i = 0
-		for (let stack of stackElems) {
+		for (let stack of stacksParent) {
 			stack.stackId = i++
 			stack.onclick = function(e){
 				if(selectedHandCard !== null) 
@@ -229,7 +230,6 @@ function Render() {
 	}
 	let selectedHandCard = null;
 	let programmingCallback = null;
-	// Выывать callback при клике на стек-колоду, т.к текущий вариант не позволяет понять порядок добавления
 	// callback принимает номер карты в руке и номер стека
 	this.programming = function(callback) {
 		selectedHandCard = null;
