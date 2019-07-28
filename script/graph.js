@@ -4,7 +4,6 @@ function Render() {
 
 	let mapBody = document.getElementById("game-map").children[0];
 	let activeElement = null;
-	let mit = 8;
 	let arrayStacks = [
 		[null, null, null, null],
 		[null, null, null, null],
@@ -193,8 +192,7 @@ function Render() {
 			e.currentTarget.isActive = true;
 			activeElement = e.currentTarget;
 			activeElement.inStack = false;
-			activeElement.typeCard = (mit % 2);
-			mit--;
+			activeElement.typeCard = 0;
 		}
 	};
 
