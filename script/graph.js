@@ -2,7 +2,8 @@
 function Render() {
 
 
-	let mapBody = document.getElementById("game-map").children[0];
+	const mapBody = document.getElementById("game-map").children[0];
+	const handBoard = document.getElementById("hand-board")
 
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
 
@@ -196,32 +197,31 @@ function Render() {
 		}
 	}
 	
+	const cardsCounter = document.getElementById("hand-counter");
 
 	// Обновить карты в руке рука не активна(перемещать карты нельзя)
 	this.setHand = function(cards) {
-		let cardsCounter = document.getElementById("hand-counter");
 		cardsCounter.innerHTML = cards.length;
-		let cardBoard = document.getElementById("hand-board");
-		cardBoard.style.display = "flex";
-		cardBoard.innerHTML = "";
+		handBoard.innerHTML = "";
 		for (let i = 0; i < cards.length; i++){
 			let img = new Image();
 			img.className = "hand-card";
 			img.src = CARD_IMGS[cards[i]];
 			img.cardId = cards[i];
-			cardBoard.appendChild(img);
+			handBoard.appendChild(img);
 		}
-		cardBoard.style.display = "flex";
+		handBoard.style.display = "flex";
 	};
 
 	// callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
 	// например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
 	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
+
 	
 	let selectedHandCard = null;
 	let callbackArray = null;
 	let programmingCallback = null;
-	
+
 	for (let stack of document.getElementsByClassName("stack-content")) {
 		stack.onclick = function(e){
 			if(selectedHandCard === null || e.currentTarget.children.length >= 3) 
@@ -232,7 +232,8 @@ function Render() {
 			callbackArray.push(selectedHandCard.idInList)
 			e.currentTarget.append(selectedHandCard)
 			selectedHandCard = null
-			if(document.getElementById("hand-board").children.length === 0) programmingCallback(callbackArray)
+			cardsCounter.innerHTML = handBoard.children.length;
+			if(handBoard.children.length === 0) programmingCallback(callbackArray)
 		}
 	}
 	
@@ -241,9 +242,8 @@ function Render() {
 		selectedHandCard = null;
 		programmingCallback = callback
 		this.setHand(handCards)
-		let hand = document.getElementById("hand-board")
 		let i = 0;
-		for (let card of hand.children) {
+		for (let card of handBoard.children) {
 			card.idInList = i++;
 			card.onclick = function(e){
 				if(selectedHandCard !== null) selectedHandCard.style.outline = ''
