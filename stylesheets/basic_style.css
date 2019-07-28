@@ -197,10 +197,9 @@ td {
   justify-content: space-around;
   width: 220px;
   height: 550px;
-  border: 1px solid black;
-  border-radius: 5px;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .hand-card{
