@@ -92,12 +92,13 @@
 	<button onclick = "game.lose()">Проиграть</button>
 	<button onclick = "game.getRender.stopTimer()">Бесконечный таймер</button>
 	<button onclick = "">Проматать x ходов</button>
-	<button onclick = "document.getElementById('choose-board').style.display = 'none'">Скрыть всплывающее окно</button>
+	<button onclick = "{let a = document.getElementById('choose-board'); a.style.display = a.style.display === 'none' ? 'inline-block': 'none'}">Скрыть всплывающее окно</button>
 </div>
 
 <script src="script/cards.json" type="text/javascript"></script>
 <script src="script/seedrandom.min.js"></script>
 <script src="script/graph.js" type="text/javascript" charset="utf-8"></script>
+<script src="script/cardStaticFunctions.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/app.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/UserAgents/AbstractAgent.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/UserAgents/LocalAgent.js" type="text/javascript" charset="utf-8"></script>
