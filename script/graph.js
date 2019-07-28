@@ -102,12 +102,13 @@ function Render() {
 		for (let i = 0; i < cards.length; i++) {
 			board.appendChild(document.createElement("div"));
 			board.children[i].className = "round-cards";
-			let img = getNewCardElem(i)
+			let img = getNewCardElem(cards[i])
+			img.tempSelectId = i;
 			img.onclick = function(e) {
 				if (arrayIdSelectedCards.length !== count && e.currentTarget.select !== 'true') {
 					e.currentTarget.classList.add("selected-card");
 					e.currentTarget.select = 'true'
-					arrayIdSelectedCards.push(e.currentTarget.cardId|0);
+					arrayIdSelectedCards.push(e.currentTarget.tempSelectId|0);
 				} else if (e.currentTarget.select === 'true') {
 					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== e.currentTarget.cardId);
 					e.currentTarget.classList.remove("selected-card");
@@ -143,7 +144,6 @@ function Render() {
 	// Скрыть окро выбора карт
 	this.stopSelect = function(){
 		document.getElementById("choose-board").style.display = "none";
-		programmingSession = true;
 	}
 
 	
@@ -191,8 +191,8 @@ function Render() {
 
 	function getNewCardElem(i){
 		let img = new Image();
-		img.src = "src/cards/card"+(i+1)+".jpg";
-		img.cardId = i;
+		img.src = "src/cards/card"+((i|0)+1)+".jpg";
+		img.cardId = i|0;
 		return img
 	}
 
@@ -206,24 +206,30 @@ function Render() {
 	let programmingCallback = null;
 	const stackElems = document.getElementsByClassName("stack-content")
 
+	{
+		let i = 0
+		for (let stack of stackElems) {
+			stack.stackId = i++
+			stack.onclick = function(e){
+				if(selectedHandCard === null || e.currentTarget.children.length >= 3) 
+					return
+				selectedHandCard.onclick = null
 
-	for (let stack of stackElems) {
-		stack.onclick = function(e){
-			if(selectedHandCard === null || e.currentTarget.children.length >= 3) 
-				return
-			selectedHandCard.onclick = null
-
-			selectedHandCard.style.outline = ''
-			callbackArray.push(selectedHandCard.idInList)
-			e.currentTarget.append(selectedHandCard)
-			selectedHandCard = null
-			cardsCounter.innerHTML = handBoard.children.length;
-			if(handBoard.children.length === 0) programmingCallback(callbackArray)
+				selectedHandCard.style.outline = ''
+				callbackArray[selectedHandCard.idInList] = e.currentTarget.stackId
+				e.currentTarget.append(selectedHandCard)
+				selectedHandCard = null
+				cardsCounter.innerHTML = handBoard.children.length;
+				if(handBoard.children.length === 0) programmingCallback(callbackArray)
+			}
 		}
-	}
-	
+	}	
 	this.programming = function(handCards, callback) {
 		callbackArray = []
+		for (let i = 0; i < handCards.length; i++) {
+			callbackArray.push(-1)
+		}
+
 		selectedHandCard = null;
 		programmingCallback = callback
 		this.setHand(handCards)
@@ -234,7 +240,6 @@ function Render() {
 				if(selectedHandCard !== null) selectedHandCard.style.outline = ''
 				selectedHandCard = e.currentTarget;
 				selectedHandCard.style.outline = '2px solid yellow'
-				// TODO: и выделить выбранную карту
 			}
 		}
 	}

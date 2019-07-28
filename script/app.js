@@ -46,9 +46,12 @@ function Game() {
 					if(handToStacksId[i] === -1) continue;
 					user.stacks[handToStacksId[i]].push(user.hand[i])
 				}
+				user.agent.setStacks(user.stacks);
+				user.hand = []
 				callback()
+
 			})
-			user.hand = []
+			
 
 			/*
 			// TEST
@@ -244,8 +247,10 @@ function Game() {
 	};
 
 	function lose() {
+		render.stopSelect();
+		render.stopTimer();
 		render.defeat();
-		render.showMessage("YOU LOSE");
+		render.showMessage("Ты проиграл, позорно!");
 	}
 	this.lose = lose;
 
