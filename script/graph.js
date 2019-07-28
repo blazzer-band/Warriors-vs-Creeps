@@ -315,12 +315,12 @@ function Render() {
 			img.cardId = i;
 			img.onclick = function(e) {
 				if (arrayIdSelectedCards.length !== count && e.currentTarget.select !== 'true') {
-					e.currentTarget.style.outline = "2px solid gold";
+					e.currentTarget.classList.add("selected-card");
 					e.currentTarget.select = 'true'
 					arrayIdSelectedCards.push(e.currentTarget.cardId|0);
 				} else if (e.currentTarget.select === 'true') {
 					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== e.currentTarget.cardId);
-					e.currentTarget.style.outline = "0";
+					e.currentTarget.classList.remove("selected-card");
 					e.currentTarget.select = 'false'
 				}
 				if (arrayIdSelectedCards.length === count) {

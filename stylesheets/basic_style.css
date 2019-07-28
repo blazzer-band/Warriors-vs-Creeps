@@ -78,7 +78,7 @@ td {
 #kill-tracker {
   height: 127px;
   width: 120px;
-  background-color: #ec3c3c;
+  background-color: #ec453c;
 }
 
 #skull-icon{
@@ -104,7 +104,7 @@ td {
 #bomb-tracker {
   height: 127px;
   width: 120px;
-  background-color: #FF743D;
+  background-color: #72dc7f;
   margin-top: 0.5em;
 }
 
@@ -128,7 +128,7 @@ td {
 
 #clock {
   margin-top: 0.5em;
-  background-color: #FFE7AF;
+  background-color: #dcdacb;
   height: 130px;
 }
 
@@ -166,6 +166,8 @@ td {
   position: absolute;
   display: inline-block;
   height: 597px;
+  border-radius: 12px 12px 0 0;
+  /* overflow: hidden; */
   width: 220px;
 }
 
@@ -189,8 +191,9 @@ td {
   font-size: 50px;
   position: absolute;
   bottom: -15px;
-  color: #5f535e;
+  color: #34393d;
   width: 100%;
+  /* z-index: 900000; */
 }
 
 #hand-board{
@@ -202,6 +205,7 @@ td {
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
+  /* overflow: hidden; */
 }
 
 .hand-card{
@@ -226,10 +230,10 @@ td {
   display: inline-block;
   background-image: url("../src/models/card_field_texture.png");
   background-size: 30%;
-  background-color: #53a25e;
+  background-color: #5fa3ce;
   height: 184px;
-  width: 900px;
-  border-radius: 12px 12px 12px 0;
+  width: 99.3%;
+  border-radius: 12px 12px 0 0;
   z-index: 1;
   /* #A30000; */
 }
@@ -449,6 +453,9 @@ td {
 
 .round-cards img {
   width: 100%;
+  border-radius: 7px;
+  -moz-outline-radius: 2px;
+  -webkit-outline-radius: 2px;
   /* box-shadow: 0 0 24px 30px rgba(0,0,0,0.5); */
   /* z-index: 2; */
 }
@@ -498,8 +505,12 @@ cursor: auto;
   z-index: 11;
 }
 div#hand-content, #footer_footer {
-    background-color: #b7ead7;
+    background-color: #d0cdc7;
 }
 div#trackers > div {
     border-radius: 12px;
+}
+
+.selected-card{
+  box-shadow: 0 0 3pt 2pt #4aff60;
 }
