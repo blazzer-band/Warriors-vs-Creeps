@@ -13,6 +13,7 @@
   height: 400px;
   overflow: hidden;
   border-radius: 12px;
+  image-rendering: pixelated;
 }
 
 #game-map, tr, td {
@@ -416,6 +417,7 @@ td {
 #choose-board,  #message{
   display: none;
   align-self: center;
+  /* visibility: hidden; */
   top: 150px;
   left: 50%;
   transform: translateX(-50%);

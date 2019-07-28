@@ -16,7 +16,7 @@ function Render() {
 	let programmingSession = false;
 	let forbidStack = false;
 
-	const TILES_IMG = ["src/tmp_models/green.jpg", "src/models/stone_tex.png", "src/models/platform_tex.png", "src/tmp_models/blue.jpg"]
+	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
 	const CLASS_STACK = ["down-card", "middle-card", "top-card"];
 	const TEMPLATE_STACKS = {
 		"number-1-icon" : 0,
@@ -222,7 +222,7 @@ function Render() {
 	// const unitType = {Hero:0, Creep:1, Bomb:2} - юнит
 	// cellTo.x cellTo.y - координаты
 
-	const UNIT_IMGS = ["src/models/tmp files/man-with-sword-and-shield.svg", "src/models/monster.png", "src/models/tmp files/naval_mine.png"];
+	const UNIT_IMGS = ["src/models/hero.png", "src/models/monster.png", "src/models/bomb.png"];
 
 	// передвинуть юнита из in в out
 	this.moveUnit = function(cellFrom, cellTo) {
