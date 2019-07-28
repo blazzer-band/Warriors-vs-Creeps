@@ -1,10 +1,22 @@
 * {
+  image-rendering: auto;
   margin: 0;
   text-align: left;
   padding: 0;
   white-space: nowrap;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+html, body{
+    height: 100%;
+    background: url(../src/models/xccas.png) black;
+    background-blend-mode: luminosity;
+    image-rendering: pixelated;
+    background-size: 90px;
+}
+img{
+    image-rendering:;
 }
 
 #game-map {
@@ -25,6 +37,7 @@ td img {
   top: 0;
   left: 0;
   width: 100%;
+  image-rendering: pixelated;
   height: 100%;
 }
 
@@ -128,7 +141,7 @@ td {
 
 #clock {
   margin-top: 0.5em;
-  background-color: #dcdacb;
+  background-color: #efede3;
   height: 130px;
 }
 
@@ -191,7 +204,7 @@ td {
   font-size: 50px;
   position: absolute;
   bottom: -15px;
-  color: #34393d;
+  color: #d7d7d7;
   width: 100%;
   /* z-index: 900000; */
 }
@@ -230,7 +243,7 @@ td {
   display: inline-block;
   background-image: url("../src/models/card_field_texture.png");
   background-size: 30%;
-  background-color: #5fa3ce;
+  background-color: #8593ae;
   height: 184px;
   width: 99.3%;
   border-radius: 12px 12px 0 0;
@@ -453,10 +466,6 @@ td {
 .round-cards img {
   width: 100%;
   border-radius: 7px;
-  -moz-outline-radius: 2px;
-  -webkit-outline-radius: 2px;
-  /* box-shadow: 0 0 24px 30px rgba(0,0,0,0.5); */
-  /* z-index: 2; */
 }
 
 .ok-choose {
@@ -504,7 +513,11 @@ cursor: auto;
   z-index: 11;
 }
 div#hand-content, #footer_footer {
-    background-color: #d0cdc7;
+    background-color: #454545;
+    background: #414141;
+    background-size: 90px;
+    image-rendering: pixelated;
+    /* background-blend-mode: saturation; */
 }
 div#trackers > div {
     border-radius: 12px;
