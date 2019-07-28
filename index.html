@@ -97,6 +97,15 @@
 </div>
 <div id="room"></div>
 
+
+<div class="debug-tools" style="z-index: 999999999">
+	<button type="" disabled="">Выйграть</button>
+	<button onclick = "game.lose()">Проиграть</button>
+	<button onclick = "game.getRender.stopTimer()">Бесконечный таймер</button>
+	<button onclick = "">Проматать x ходов</button>
+	<button onclick = "document.getElementById('choose-board').style.display = 'none'">Скрыть всплывающее окно</button>
+</div>
+
 <script src="script/cards.json" type="text/javascript"></script>
 <script src="script/seedrandom.min.js"></script>
 <script src="script/graph.js" type="text/javascript" charset="utf-8"></script>

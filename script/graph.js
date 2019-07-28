@@ -356,39 +356,39 @@ function Render() {
 		programmingSession = true;
 	}
 
-	{
-		let timerId = null;
-		// Запуск таймера отсчета с intSecond до 0
-		this.startTimer = function(intSecond){
-			let realSecond = intSecond;
-			let timer = document.getElementById("timer");
+	
+	this.timerId = null;
+	// Запуск таймера отсчета с intSecond до 0
+	this.startTimer = function(intSecond){
+		let realSecond = intSecond;
+		let timer = document.getElementById("timer");
 
-			function updateTimer(){
-				let seconds = realSecond % 60;
-				let minutes = (realSecond / 60) | 0;
-				if (realSecond < 0 ){
-					clearInterval(timerId);
-					timerId = null;
-					return;
-				}
-				timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
-				realSecond--;
-			}
-
-			updateTimer()
-			timerId = setInterval(updateTimer, 1000);
-		}
-
-
-		this.stopTimer = function(){
-			if (timerId !== null){
-				let timer = document.getElementById("timer");
-				timer.innerHTML = "0:00";
+		function updateTimer(){
+			let seconds = realSecond % 60;
+			let minutes = (realSecond / 60) | 0;
+			if (realSecond < 0 ){
 				clearInterval(timerId);
 				timerId = null;
+				return;
 			}
+			timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
+			realSecond--;
+		}
+
+		updateTimer()
+		timerId = setInterval(updateTimer, 1000);
+	}
+
+
+	this.stopTimer = function(){
+		if (timerId !== null){
+			let timer = document.getElementById("timer");
+			timer.innerHTML = "0:00";
+			clearInterval(timerId);
+			timerId = null;
 		}
 	}
+	
 
 	// Обновить карты в руке рука не активна(перемещать карты нельзя)
 	this.setHand = function(cards) {
@@ -429,9 +429,17 @@ function Render() {
 	}
 
 
-	// callback принимает список выбранных ячеек
-	// cells array - массив
+
+	
+	const higlightType = {Rotate: 0, Move: 1, Hook:3} 
+	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
+	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 	this.selectCells = function(cellsArray, callback){
+
+
+		/*function(){
+
+		}*/
 
 	}
 
@@ -447,7 +455,7 @@ function Render() {
 	// Высветить сообщение поверх всего
 	this.showMessage = function(text, color) { // make enum
 		let messageBlock = document.getElementById("message");
-		messageBlock.style.display = "block";
+		messageBlock.style.display = "inline-block";
 		//messageBlock.style.background = "red"; //rgba(2,3,4,0.5);
 		messageBlock.innerHTML = text;
 	};
