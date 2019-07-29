@@ -67,12 +67,7 @@ function Game() {
 						}
 						user.stacks[stackId].push(user.hand[cardPosInHand]);
 						user.hand.splice(cardPosInHand, 1);
-					}
-					// добавить проверки что:
-					// нельзя ложить карту на поврежденный слот
-					// нужно удалять стек если на него легла карта другого типа
-
-					else {
+					} else {
 						user.stacks[stackId] = [user.hand[cardPosInHand]];
 						user.hand.splice(cardPosInHand, 1);
 					}
@@ -92,7 +87,6 @@ function Game() {
 			request();
 		}
 	}
-
 
 	let users = []; // Пользователи
 	this.getUsers = users;
@@ -337,8 +331,23 @@ function Game() {
 		// Исполняется карта, верхняя в каждом стеке в порядке игроков
 
 		function act(userId = 0) {
-			actionWarrior();
+			for (let stack of users[userId].stacks) {
+				let level = stack.length;
+				let tmp = [{x:0, y:3, highlight: 0},
+					{x:1, y:3, highlight: 0},
+					{x:2, y:3, highlight: 0},
+					{x:3, y:3, highlight: 0}];
+				if (level > 0)
+					game.getRender.selectCells(tmp);
+					//game.getRender.selectCells(cardsParams[stack[level - 1]].levels[level - 1].move);
+				/*
+				game.getRender.selectCells(stack[level - 1].move);
+				game.getRender.selectCells(stack[level - 1].rotate);
+				game.getRender.selectCells(stack[level - 1].attack);
+			 	*/
+			}
 			if (userId + 1 < users.length) {
+				actionWarrior();
 				act(userId + 1);
 			} else {
 				creepsMoveAct();
