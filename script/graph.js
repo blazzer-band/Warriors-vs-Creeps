@@ -185,32 +185,7 @@ function Render() {
 		for (let cardIds of stacks) {
 			stacksParent[i].innerHTML = '';
 			for(cardId of cardIds){
-				//if (stacksParent[i].stackType === DATA_CARDS[cardId]) {
-					stacksParent[i].stackType = DATA_CARDS[cardId];
-					stacksParent[i].append(getNewCardElem(cardId));
-					
-					//stacksParent[i].stackLevel = stacksParent[i].childElementCount;
-					//stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					////console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-					//console.log("LEVEL -> ", stacksParent[i].stackLevel);
-				/*} else if (stacksParent[i].stackLevel === 0){
-					stacksParent[i].append(getNewCardElem(cardId));
-					stacksParent[i].stackType = DATA_CARDS[cardId];
-					stacksParent[i].stackLevel++;
-					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-				} else if (stacksParent[i].stackLevel === 3 && stacksParent[i].stackType === DATA_CARDS[cardId]) {
-					stacksParent[i].children[2] = getNewCardElem(cardId);
-					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-				} else {
-					stacksParent[i].innerHTML = '';
-					stacksParent[i].append(getNewCardElem(cardId));
-					stacksParent[i].stackLevel++;
-					stacksParent[i].stackType = DATA_CARDS[cardId];
-					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-				}*/
+				stacksParent[i].append(getNewCardElem(cardId));
 			}
 			i++
 		}
@@ -254,49 +229,41 @@ function Render() {
 		}
 	};
 	
-	const higlightType = {Rotate: 0, Move: 1, Hook:3};
+	const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
 
-	let selectAttackCells = function (cellsArray, countKills, callback) {
-		console.log(cellsArray);
-		console.log(countKills);
-	};
-
-	let selectMoveCells = function (cellsArray, callback) {
-		console.log(cellsArray);
-	};
-
-	let selectRotateCells = function (cellsArray, callback) {
-		console.log(cellsArray);
-	};
-
-	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
+	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/, isSelected}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
-	this.actionStack = function (i) {
-		let stacks = document.getElementsByClassName("stack");
-		let stack = stacks[i];
-		let actions = stack.jsonOptions;
-		let level = stack.level;
-		let functions = actions.levels[level];
-
-		let targetCount = functions.targetCount;
-		let move = functions.move;
-		let attack = functions.attack;
-		let rotate = functions.rotate;
-
-		if (move.length !== 0) selectMoveCells(move);
-		if (attack.length !== 0) selectAttackCells(move);
-		if (rotate.length !== 0) selectRotateCells(move);
-
-	};
-
-	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
-	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
-	this.selectCells = function(cellsArray, callback){
-		let players = document.getElementsByClassName()
-		for (let i = 0; i < cellsArray.length; i++) {
-
+	this.selectCells = function (cellsArray, callback) {
+		let i = 0;
+		if (cellsArray.length === 0) {
+			callback([]);
 		}
-	}
+		for (let cell of cellsArray) {
+			let cellElement = mapBody.children[cell.y].children[cell.x];
+			switch (cell.highlight) {
+				case(0):
+					cellElement.classList.add("rotate-cell");
+					break;
+				case(1):
+					cellElement.classList.add("move-cell");
+					break;
+				case(2):
+					cellElement.classList.add("attack-cell");
+					break;
+				default:
+					cellElement.classList.add("help-cell");
+					break;
+			}
+			cellElement.idCell = i;
+			cellElement.onclick = function (e) {
+				callback(e.currentTarget.idCell);
+			};
+			i++;
+		}
+	};
+
+	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
+	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 
 	//Окно, отображающее поражение для текущей сессии
 	this.defeat = function(){

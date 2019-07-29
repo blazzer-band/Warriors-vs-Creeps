@@ -2,7 +2,6 @@
 
 const tileType = {Grass:0, Base:1, Runes:2, Target:3};
 const unitType = {Hero:0, Creep:1, Bomb:2};
-const cardType = {Command:0, Damage:1};
 const userType = {Human:0, Bot:1, UserAgent:2};
 const ramsType = {Hero: true, Creep: false, Bomb: true};
 
@@ -67,17 +66,17 @@ function Game() {
 						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
 
-					}
-					// добавить проверки что:
-					// нельзя ложить карту на поврежденный слот
-					// нужно удалять стек если на него легла карта другого типа
-
-					else if(user.stacks[stackId].length < 3 ){ // не больше 3 коммандных карт в слоте
+					} else if (user.stacks[stackId].length === 4) {
+						console.log("Don't push this");
+					} else if (user.stacks[stackId].length === 0 || cardsParams[user.stacks[stackId][0]].type === cardsParams[user.hand[cardPosInHand]].type) {
+						if (user.stacks[stackId].length === 3) {
+							user.stacks[stackId].pop();
+						}
 						user.stacks[stackId].push(user.hand[cardPosInHand]);
 						user.hand.splice(cardPosInHand, 1);
-					}
-					else{ // карту не удалось положить на стек, ничего не менять в слотах, но можно отправить сообщение
-
+					} else {
+						user.stacks[stackId] = [user.hand[cardPosInHand]];
+						user.hand.splice(cardPosInHand, 1);
 					}
 
 					user.agent.setStacks(user.stacks);
@@ -95,7 +94,6 @@ function Game() {
 			request();
 		}
 	}
-
 
 	let users = []; // Пользователи
 	this.getUsers = users;
@@ -340,8 +338,23 @@ function Game() {
 		// Исполняется карта, верхняя в каждом стеке в порядке игроков
 
 		function act(userId = 0) {
-			actionWarrior();
+			for (let stack of users[userId].stacks) {
+				let level = stack.length;
+				let tmp = [{x:0, y:3, highlight: 0},
+					{x:1, y:3, highlight: 0},
+					{x:2, y:3, highlight: 0},
+					{x:3, y:3, highlight: 0}];
+				if (level > 0)
+					game.getRender.selectCells(tmp);
+					//game.getRender.selectCells(cardsParams[stack[level - 1]].levels[level - 1].move);
+				/*
+				game.getRender.selectCells(stack[level - 1].move);
+				game.getRender.selectCells(stack[level - 1].rotate);
+				game.getRender.selectCells(stack[level - 1].attack);
+			 	*/
+			}
 			if (userId + 1 < users.length) {
+				actionWarrior();
 				act(userId + 1);
 			} else {
 				creepsMoveAct();

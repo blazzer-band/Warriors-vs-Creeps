@@ -16,7 +16,7 @@ html, body{
     background-size: 90px;
 }
 img{
-    image-rendering:;
+
 }
 
 #game-map {
@@ -533,4 +533,17 @@ div#trackers > div {
 .stack-content > img, #hand-board > img{
   width: 100%;
   display: block;
+}
+
+.move-cell {
+  outline: #4aff60 solid thick;
+}
+.attack-cell {
+  outline: #039be5 solid thick;
+}
+.rotate-cell {
+  outline: #aaa555 solid 3px;
+}
+.help-cell {
+  outline: #555aaa solid thick;
 }
