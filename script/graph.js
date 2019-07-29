@@ -185,32 +185,7 @@ function Render() {
 		for (let cardIds of stacks) {
 			stacksParent[i].innerHTML = '';
 			for(cardId of cardIds){
-				//if (stacksParent[i].stackType === DATA_CARDS[cardId]) {
-					stacksParent[i].stackType = DATA_CARDS[cardId];
-					stacksParent[i].append(getNewCardElem(cardId));
-					
-					//stacksParent[i].stackLevel = stacksParent[i].childElementCount;
-					//stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					////console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-					//console.log("LEVEL -> ", stacksParent[i].stackLevel);
-				/*} else if (stacksParent[i].stackLevel === 0){
-					stacksParent[i].append(getNewCardElem(cardId));
-					stacksParent[i].stackType = DATA_CARDS[cardId];
-					stacksParent[i].stackLevel++;
-					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-				} else if (stacksParent[i].stackLevel === 3 && stacksParent[i].stackType === DATA_CARDS[cardId]) {
-					stacksParent[i].children[2] = getNewCardElem(cardId);
-					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-				} else {
-					stacksParent[i].innerHTML = '';
-					stacksParent[i].append(getNewCardElem(cardId));
-					stacksParent[i].stackLevel++;
-					stacksParent[i].stackType = DATA_CARDS[cardId];
-					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-				}*/
+				stacksParent[i].append(getNewCardElem(cardId));
 			}
 			i++
 		}

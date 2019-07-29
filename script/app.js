@@ -2,7 +2,6 @@
 
 const tileType = {Grass:0, Base:1, Runes:2, Target:3};
 const unitType = {Hero:0, Creep:1, Bomb:2};
-const cardType = {Command:0, Damage:1};
 const userType = {Human:0, Bot:1, UserAgent:2};
 const ramsType = {Hero: true, Creep: false, Bomb: true};
 
@@ -60,17 +59,22 @@ function Game() {
 						//await Func()
 
 						user.hand.splice(cardPosInHand, 1);
+					} else if (user.stacks[stackId].length === 4) {
+						console.log("Don't push this");
+					} else if (user.stacks[stackId].length === 0 || cardsParams[user.stacks[stackId][0]].type === cardsParams[user.hand[cardPosInHand]].type) {
+						if (user.stacks[stackId].length === 3) {
+							user.stacks[stackId].pop();
+						}
+						user.stacks[stackId].push(user.hand[cardPosInHand]);
+						user.hand.splice(cardPosInHand, 1);
 					}
 					// добавить проверки что:
 					// нельзя ложить карту на поврежденный слот
 					// нужно удалять стек если на него легла карта другого типа
 
-					else if(user.stacks[stackId].length < 3 ){ // не больше 3 коммандных карт в слоте
-						user.stacks[stackId].push(user.hand[cardPosInHand]);
+					else {
+						user.stacks[stackId] = [user.hand[cardPosInHand]];
 						user.hand.splice(cardPosInHand, 1);
-					}
-					else{ // карту не удалось положить на стек, ничего не менять в слотах, но можно отправить сообщение
-
 					}
 
 					user.agent.setStacks(user.stacks);

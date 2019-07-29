@@ -1,8 +1,10 @@
+const cardType = {Fire:0, Computer:1, Metal:2, Electro:3, Deffect:4};
 const cardsJSON = [
 	{
 		name: "Fuel Tank",
 		// Эффект накладывается при взятии карты
-		effects: 0, // при желании. функция Сброс карты и аттаковать всех в радиусе 1 при получении урона
+		type: cardType.Fire,
+		effects: ["FuelTank"], // при желании. функция Сброс карты и аттаковать всех в радиусе 1 при получении урона
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -32,7 +34,8 @@ const cardsJSON = [
 	},
 	{
 		name: "Blaze",
-		effects: 0,
+		type: cardType.Fire,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 2,
@@ -56,7 +59,8 @@ const cardsJSON = [
 	},
 	{
 		name: "FlameSpitter",
-		effects: 0,
+		type: cardType.Fire,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -81,7 +85,8 @@ const cardsJSON = [
 	{
 		name: "Memory Core",
 		// +1 карта в раздачу, если ты первый игрок
-		effects: 1,
+		type: cardType.Computer,
+		effects: ["FuelTank"],
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -111,7 +116,8 @@ const cardsJSON = [
 	},
 	{
 		name: "Omni Stomp",
-		effects: 1,
+		type: cardType.Computer,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 2,
@@ -135,7 +141,8 @@ const cardsJSON = [
 	},
 	{
 		name: "Hexmatic Aimbot",
-		effects: 1,
+		type: cardType.Computer,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -167,7 +174,8 @@ const cardsJSON = [
 	{
 		name: "Scythe",
 		// Эффект накладывается при взятии карты
-		effects: 2, // при желании. функция Сброс карты и аттаковать всех в радиусе 1 при получении урона
+		type: cardType.Metal,
+		effects: [], // при желании. функция Сброс карты и аттаковать всех в радиусе 1 при получении урона
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -197,7 +205,8 @@ const cardsJSON = [
 	},
 	{
 		name: "Skewer",
-		effects: 2,
+		type: cardType.Metal,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 2,
@@ -221,7 +230,8 @@ const cardsJSON = [
 	},
 	{
 		name: "Ripsaw",
-		effects: 2,
+		type: cardType.Metal,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -245,8 +255,9 @@ const cardsJSON = [
 	},
 	{
 		name: "Cyclotron",
+		type: cardType.Electro,
 		// +1 карта в раздачу, если ты первый игрок
-		effects: 3,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -276,7 +287,8 @@ const cardsJSON = [
 	},
 	{
 		name: "Speed",
-		effects: 3,
+		type: cardType.Electro,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 2,
@@ -300,7 +312,8 @@ const cardsJSON = [
 	},
 	{
 		name: "Chain Lightning",
-		effects: 3,
+		type: cardType.Electro,
+		effects: [],
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
