@@ -33,9 +33,18 @@ function Game() {
 					user.agent.setHand(user.hand);
 					callback(sels);
 				})
-
 			}
+		}
 
+		chooseRotate(rotateArray){  // 1: 90,  2: 180, 3: 270(-90), 4:360
+			let user = this;
+			return new Promise(function(resolve, reject){
+				user.agent.chooseRotate(rotateArray, function(rotateId){
+
+					resolve(rotateId)
+
+				})
+			})
 		}
 
 		scrapRequest(type){
@@ -106,20 +115,8 @@ function Game() {
 		}
 	}
 
-	let users = []; // Пользователи
-	this.getUsers = users;
-	{
-		let testUserAgent = new BotAgent();
-		let testUser = new User(false);
-		testUser.agent = testUserAgent;
-		users.push(testUser);
-	}
-	{
-		let testUserAgent = new LocalAgent();
-		let testUser = new User(true);
-		testUser.agent = testUserAgent;
-		users.push(testUser);
-	}
+
+
 
 
 
@@ -244,9 +241,31 @@ function Game() {
 	let bombHP = 7;
 
 
-
+	let users = null; // Пользователи
 	// TODO: users: AbstractAgent[] array - инициализированные обьекты пользователей
-	this.start = function(){
+	this.start = function(newUsers){
+		users = newUsers ? newUsers : []
+
+		{ /// временная генерация поьзователей
+			let testUserAgent = new BotAgent();
+			let testUser = new User(false);
+			testUser.agent = testUserAgent;
+			users.push(testUser);
+		}
+		{
+			let testUserAgent = new LocalAgent();
+			let testUser = new User(true);
+			testUser.agent = testUserAgent;
+			users.push(testUser);
+
+			/// DEBUG
+			testUser.stacks[0] = [3, 3]
+			testUser.agent.setStacks(testUser.stacks);
+		}
+
+
+
+
 		// Генерация колоды
 		cardsDeck = [];
 		for (let card in cardsParams) {
@@ -276,6 +295,7 @@ function Game() {
 		render.initUnit(baseFree.pop().setUnit(new Unit(unitType.Bomb)));
 
 		chooseСards();
+		//warriorsAct()
 	};
 
 	function lose() {
@@ -326,7 +346,6 @@ function Game() {
 
 	function programmingAct() { // DONE!
 		let countUsers = 0;
-
 		for (let user of users) {
 			user.programming(function() {
 				countUsers++;
@@ -342,50 +361,69 @@ function Game() {
 	function warriorsAct() {
 		// Исполняется карта, верхняя в каждом стеке в порядке игроков
 
-		function act(userId = 0) {
+		async function go(userId = 0) {
+
+
+
 			for (let stack of users[userId].stacks) {
-				let level = stack.length;
-				let tmp = [{x:0, y:3, highlight: 1},
-					{x:1, y:3, highlight: 1},
-					{x:2, y:3, highlight: 1},
-					{x:3, y:3, highlight: 1}];
-				if (level > 0)
-					game.getRender.selectCells(tmp);
-					//game.getRender.selectCells(cardsParams[stack[level - 1]].levels[level - 1].move);
-				/*
-				game.getRender.selectCells(stack[level - 1].move);
-				game.getRender.selectCells(stack[level - 1].rotate);
-				game.getRender.selectCells(stack[level - 1].attack);
-			 	*/
+				if(stack.length === 0) continue;
+
+				await runStack(users[userId], stack)
 			}
+
+
+
+
 			if (userId + 1 < users.length) {
-				//actionWarrior();
-				act(userId + 1);
+				go(userId + 1);
 			} else {
-				creepsMoveAct();
+				setTimeout(creepsMoveAct, 0);
 			}
 		}
-		act();
-		//creepsMoveAct();
+		go()
 	}
 
-	// function actionWarrior() {
-	// 	let creepsCells = map.getAllCellHasUnits(unitType.Creep);
-	// 	let heroCells = map.getAllCellHasUnits(unitType.Hero);
-	//
-	// 	let i = 0;
-	// 	for (let cellFrom of heroCells) {
-	// 		let next = getNextCellFromAToB(cellFrom, creepsCells[i]);
-	// 		let to = map.moveUnitFromCellToCoords(cellFrom, next.x, next.y);
-	//
-	// 		if (to !== null) render.moveUnit(cellFrom, to);
-	// 		i = ((i * 7) + creepsCells.length) % creepsCells.length;
-	// 	}
-	// }
+	function runStack(user, stack){
+		let level = stack.length;
+		return new Promise(async function(resolve, reject){
+			let cardId = stack[level - 1];
+			let card = cardsParams[cardId].levels[level-1] // Свойства
+
+
+			// Rotate
+			if(card.rotate.length !== 0){
+				let rotateAngle = null
+				if(card.rotate.length > 1){
+					rotateAngle = await user.chooseRotate(card.rotate)
+				}
+				else{
+					rotateAngle = card.rotate[0]
+				}
+
+
+
+			}
+
+
+			//
+
+			// Move
+
+			resolve()
+			// Punch
+
+		})
+	}
+
+
+
+
 
 	// Возвращает bool удалось перейти или нет
 	function goRamming (thisCell, endCell) {
-		// толкать можно бесконечно много до упора
+		// толкать можно бесконечно много до упора только перед собой
+
+
 		// проверить есть ли позади или слева или справа бомба или герой
 		// если есть и движение > 1 клетки, предложить выбрать кого тащить
 		
@@ -487,7 +525,6 @@ function Game() {
 
 		setTimeout(chooseСards, 500);
 	}
-	///// Ассинхронный цикл. Конец
 
 }
 
@@ -508,7 +545,7 @@ function shakeArray(a, random) {
 	return a;
 }
 
-// Поворачивает вектор на определенный угол
+
 function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
 	for (let i = 0; i < a; i++) {
 		let c = a.x;
@@ -516,9 +553,6 @@ function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
 		a.y = -c;
 	}
 }
-
-
-
 
 //a, b - {x:X, y:Y}
 function getNextCellFromAToB(a, b){

@@ -31,5 +31,9 @@ class BotAgent extends AbstractAgent{
 		
 	}
 
+	chooseRotate(rotateArray, callback){
+		callback(0)
+	}
+
 
 }

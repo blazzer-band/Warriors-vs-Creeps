@@ -44,8 +44,12 @@ class LocalAgent extends AbstractAgent{
 	}
 
 	setStacks(stacks){
-
 		game.getRender.setStacks(stacks)
+	}
+
+
+	chooseRotate(rotateArray, callback){
+		game.getRender.chooseRotate(rotateArray, callback)
 	}
 
 

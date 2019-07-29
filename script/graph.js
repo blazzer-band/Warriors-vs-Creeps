@@ -294,4 +294,11 @@ function Render() {
 	}
 
 
+	this.chooseRotate = function(rotateArray, callback){ // callback(rotateIdInArray)
+
+		callback(prompt("Выберите вариант поворота вашего персонажа:" + rotateArray, "0")|0)
+
+	}
+
+
 }
