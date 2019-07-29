@@ -328,7 +328,7 @@ function Game() {
 		// Исполняется карта, верхняя в каждом стеке в порядке игроков
 
 		function act(userId = 0) {
-			//actionWarrior(userId);
+			actionWarrior();
 			if (userId + 1 < users.length) {
 				act(userId + 1);
 			} else {
@@ -338,6 +338,19 @@ function Game() {
 		act();
 	}
 
+	function actionWarrior() {
+		let creepsCells = map.getAllCellHasUnits(unitType.Creep);
+		let heroCells = map.getAllCellHasUnits(unitType.Hero);
+
+		let i = 0;
+		for (let cellFrom of heroCells) {
+			let next = getNextCellFromAToB(cellFrom, creepsCells[i]);
+			i = ((i * 7) + creepsCells.length) % creepsCells.length;
+			let to = map.moveUnitFromCellToCoords(cellFrom, next.x, next.y);
+
+			if (to !== null) render.moveUnit(cellFrom, to);
+		}
+	}
 	// function actionWarrior(userId) {
 	// 	for (let i = 0; i < stackCards.length; i++) {
 	// 		let power = stackCards[i].jsonOptions;
@@ -457,7 +470,7 @@ function Game() {
 			}
 
 		}
-		if (attackEvent.length > 0) {
+		if (attackEvent.length > 5) {
 			attack();
 		} else {
 			finalAct();
