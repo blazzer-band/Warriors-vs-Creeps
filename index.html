@@ -9,6 +9,29 @@
 </head>
 <body>
 
+	<div id="lobby">
+		<div id="welcome">
+			Добро пожаловать в Лобби!
+			<br>
+	        <button onclick="game.getRender.openRoomList()" id="Log-in" type="button" style="width: 300px; font-size: 30pt; height: 70px; text-align: center; font-family: sans-serif">Войти!</button>
+		</div>
+		<div id="rooms">
+			<div id="lobby-left-block">
+				<span id="title-list-rooms">Список комнат</span>
+				<div id="list-rooms"></div>
+				<button style="font-size: 23pt; text-align: center" type="button" name="button" id="create-room">Создать комнату</button>
+			</div>
+			<div id="lobby-right-block">
+				<span id="title-room-description">Описание</span>
+				<div id="room-description"></div>
+				<button style="font-size: 23pt; text-align: center" type="button" name="button" id="connect-room">Подключиться</button>
+			</div>
+		</div>
+		</div>
+		<div id="description"></div>
+	</div>
+	<div id="room"></div>
+
 <div id="content">
 	<div id="main-area">
 		<div id="left-block">
@@ -68,24 +91,6 @@
 
 	<div id="message"></div>
 </div>
-
-<div id="welcome">
-	<div id="x-welcome">Welcome</div>
-	<button id="welcome-play">Play</button>
-</div>
-<div id="lobby">
-	<div id="rooms">
-		<div id="title-lobby"></div>
-		<div id="list-rooms"></div>
-		<div id="btns-actions">
-			<div id="connect"></div>
-			<div id="create"></div>
-		</div>
-	</div>
-	<div id="description"></div>
-</div>
-<div id="room"></div>
-
 
 <div class="debug-tools" style="z-index: 999999999">
 	<button type="" disabled="">Выйграть</button>

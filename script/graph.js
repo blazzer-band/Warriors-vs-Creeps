@@ -138,7 +138,7 @@ function Render() {
 		document.getElementById("choose-board").style.display = "none";
 	};
 
-	
+
 	this.timerId = null;
 	this.startTimer = function(intSecond){
 		let realSecond = intSecond;
@@ -168,7 +168,7 @@ function Render() {
 			timerId = null;
 		}
 	};
-	
+
 	let cardsCounter = document.getElementById("hand-counter");
 
 	this.setHand = function(cards) {
@@ -223,13 +223,13 @@ function Render() {
 		console.log(img.jsonOptions);
 		return img
 	}
-	
+
 	{
 		let i = 0;
 		for (let stack of stacksParent) {
 			stack.stackId = i++;
 			stack.onclick = function(e){
-				if(selectedHandCard !== null) 
+				if(selectedHandCard !== null)
 					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId);
 			}
 		}
@@ -250,7 +250,7 @@ function Render() {
 			}
 		}
 	};
-	
+
 	const higlightType = {Rotate: 0, Move: 1, Hook:3};
 
 	let selectAttackCells = function (cellsArray, countKills, callback) {
@@ -317,6 +317,13 @@ function Render() {
 		let messageBlock = document.getElementById("message");
 		messageBlock.style.display = "none";
 	};
+
+	this.openRoomList = function(){
+		let welcome = document.getElementById("welcome");
+		welcome.style.display = "none";
+		let roomList = document.getElementById("rooms");
+		roomList.style.display = "block";
+	}
 
 	this.updateBombCounter = function(newVal){
 		document.getElementById('hp-bomb').innerHTML = newVal
