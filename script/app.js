@@ -470,7 +470,7 @@ function Game() {
 			}
 
 		}
-		if (attackEvent.length > 5) {
+		if (attackEvent.length > 0) {
 			attack();
 		} else {
 			finalAct();
