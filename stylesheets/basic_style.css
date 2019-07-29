@@ -535,15 +535,47 @@ div#trackers > div {
   display: block;
 }
 
-.move-cell {
-  outline: #4aff60 solid thick;
+.move-cell img {
+  outline: 5px solid #ecec56;
+  outline-offset: -5px;
+  /* position: relative; */
+  /* width: 100%; */
+  /* height: 100%; */
+  /* z-index: 5000; */
+  /* background: blue; */
 }
-.attack-cell {
-  outline: #039be5 solid thick;
+.attack-cell img {
+  outline: 5px solid #fff;
+  outline-offset: -5px;
 }
-.rotate-cell {
-  outline: #aaa555 solid 3px;
+.rotate-cell img {
+  outline: 5px solid #000;
+  outline-offset: -5px;
 }
-.help-cell {
-  outline: #555aaa solid thick;
+.help-cell img {
+  outline: 5px solid chartreuse;
+  outline-offset: -5px;
+}
+
+.escape {
+  display: inline-block;
+  height: 181px;
+  width: 35px;
+  margin-bottom: 1px;
+  margin-left: 1px;
+}
+
+.trash {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.4);
+  height: 90px;
+  width: 100%;
+  margin-bottom: 3px;
+  border-top-right-radius: 10px;
+}
+.effect {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.4);
+  height: 88px;
+  width: 100%;
 }

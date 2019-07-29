@@ -340,10 +340,10 @@ function Game() {
 		function act(userId = 0) {
 			for (let stack of users[userId].stacks) {
 				let level = stack.length;
-				let tmp = [{x:0, y:3, highlight: 0},
-					{x:1, y:3, highlight: 0},
-					{x:2, y:3, highlight: 0},
-					{x:3, y:3, highlight: 0}];
+				let tmp = [{x:0, y:3, highlight: 1},
+					{x:1, y:3, highlight: 1},
+					{x:2, y:3, highlight: 1},
+					{x:3, y:3, highlight: 1}];
 				if (level > 0)
 					game.getRender.selectCells(tmp);
 					//game.getRender.selectCells(cardsParams[stack[level - 1]].levels[level - 1].move);
@@ -354,7 +354,7 @@ function Game() {
 			 	*/
 			}
 			if (userId + 1 < users.length) {
-				actionWarrior();
+				//actionWarrior();
 				act(userId + 1);
 			} else {
 				creepsMoveAct();
@@ -363,19 +363,19 @@ function Game() {
 		act();
 	}
 
-	function actionWarrior() {
-		let creepsCells = map.getAllCellHasUnits(unitType.Creep);
-		let heroCells = map.getAllCellHasUnits(unitType.Hero);
-
-		let i = 0;
-		for (let cellFrom of heroCells) {
-			let next = getNextCellFromAToB(cellFrom, creepsCells[i]);
-			let to = map.moveUnitFromCellToCoords(cellFrom, next.x, next.y);
-
-			if (to !== null) render.moveUnit(cellFrom, to);
-			i = ((i * 7) + creepsCells.length) % creepsCells.length;
-		}
-	}
+	// function actionWarrior() {
+	// 	let creepsCells = map.getAllCellHasUnits(unitType.Creep);
+	// 	let heroCells = map.getAllCellHasUnits(unitType.Hero);
+	//
+	// 	let i = 0;
+	// 	for (let cellFrom of heroCells) {
+	// 		let next = getNextCellFromAToB(cellFrom, creepsCells[i]);
+	// 		let to = map.moveUnitFromCellToCoords(cellFrom, next.x, next.y);
+	//
+	// 		if (to !== null) render.moveUnit(cellFrom, to);
+	// 		i = ((i * 7) + creepsCells.length) % creepsCells.length;
+	// 	}
+	// }
 
 	// Возвращает bool удалось перейти или нет
 	function goRamming (thisCell, endCell) {
