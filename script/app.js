@@ -350,7 +350,7 @@ function Game() {
 			user.programming(function() {
 				countUsers++;
 				if (countUsers === users.length) {
-					warriorsAct();
+					setTimeout(warriorsAct, 100)
 				}
 			})
 		}
