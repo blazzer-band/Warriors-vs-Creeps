@@ -7,6 +7,9 @@ const userType = {Human:0, Bot:1, UserAgent:2};
 const ramsType = {Hero: true, Creep: false, Bomb: true};
 
 
+
+
+
 function Game() {
 
 	class User {
@@ -35,6 +38,15 @@ function Game() {
 
 		}
 
+		scrapRequest(cardType){
+			// Утилизация для ремонта. Утилизация огненных или металлических карт позволяет вам освободить слот от повреждения на выбор
+			// Утилизация электрических или компьютерных карт для перепрограммирования - свап 2-х активных стеков на выбор
+
+			return new Promise(function(resolve, reject){
+
+			})
+		}
+
 		programming(callback) {
 			// callback - вызвать при завершении работы с этим пользователем
 			let outCallback = callback;
@@ -46,20 +58,15 @@ function Game() {
 			function request(){
 				
 
-				user.agent.programming(function(cardPosInHand, stackId){
+				user.agent.programming(async function(cardPosInHand, stackId){
 
 
 
-					if(stackId === -1){// TODO: запросить применить эффекты карты если она УТИЛИЗИРУЕТСЯ 
-						// Утилизация для ремонта. Утилизация огненных или металлических карт позволяет вам освободить слот от повреждения на выбор
-						
-						// Утилизация электрических или компьютерных карт для перепрограммирования - свап 2-х активных стеков на выбор
+					if(stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ 
 
-						// Либо ничего не делать
-						// (здесь может быть ассинхронная штука)
-						//await Func()
-
+						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
+
 					}
 					// добавить проверки что:
 					// нельзя ложить карту на поврежденный слот
@@ -272,7 +279,7 @@ function Game() {
 
 
 
-	
+
 
 
 	///// Ассинхронный цикл. Начало
