@@ -1,10 +1,10 @@
-// здесь вызывается отрисовка карты
 function Render() {
 
 
 	const mapBody = document.getElementById("game-map").children[0];
 	const handBoard = document.getElementById("hand-board")
 	const stacksParent = document.getElementsByClassName("stack-content")
+	const DATA_CARDS = cardsJSON;
 
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
 
@@ -26,17 +26,14 @@ function Render() {
 				mapBody.children[i].children[j].appendChild(img);
 			}
 		}
+		for (let i = 0; i < 6; i++) {
+			stacksParent[i].stackLevel = 0;
+			stacksParent[i].stackType = null;
+		}
 	};
-
-
-	// Unit
-	// cellTo.HasUnit тип получать cellTo.unit.type - тип юнита
-	// const unitType = {Hero:0, Creep:1, Bomb:2} - юнит
-	// cellTo.x cellTo.y - координаты
 
 	const UNIT_IMGS = ["src/models/hero.png", "src/models/monster.png", "src/models/bomb.png"];
 
-	// передвинуть юнита из in в out
 	this.moveUnit = function(cellFrom, cellTo) {
 		let fromElem = mapBody.children[cellFrom.y].children[cellFrom.x];
 		let toElem = mapBody.children[cellTo.y].children[cellTo.x];
@@ -60,7 +57,6 @@ function Render() {
 		}, 0)
 	};
 
-	// нарисовать юнита который есть в ячейке
 	this.initUnit = function(cell) {
 
 		let img = new Image();
@@ -76,10 +72,8 @@ function Render() {
 
 	this.killUnit = function(cell) {
 		mapBody.children[cell.y].children[cell.x].innerHTML = ''
-	}
-	// isThis = true если выбирает текущий игрок, если false, то callback не вызывать!
+	};
 
-	//cards = array of int card id
 	this.selectCards = function(cards, count, callback) {
 		programmingSession = false;
 
@@ -117,7 +111,6 @@ function Render() {
 				}
 				if (arrayIdSelectedCards.length === count) {
 					let btn = document.getElementsByClassName("ok-choose");
-					//btn[0].style.visibility = "visible";
 					btn[0].classList.remove("noActive")
 				} else {
 					let btn = document.getElementsByClassName("ok-choose");
@@ -141,15 +134,12 @@ function Render() {
 		}
 	};
 
-
-	// Скрыть окро выбора карт
 	this.stopSelect = function(){
 		document.getElementById("choose-board").style.display = "none";
-	}
+	};
 
 	
 	this.timerId = null;
-	// Запуск таймера отсчета с intSecond до 0
 	this.startTimer = function(intSecond){
 		let realSecond = intSecond;
 		let timer = document.getElementById("timer");
@@ -166,10 +156,9 @@ function Render() {
 			realSecond--;
 		}
 
-		updateTimer()
+		updateTimer();
 		timerId = setInterval(updateTimer, 1000);
-	}
-
+	};
 
 	this.stopTimer = function(){
 		if (timerId !== null){
@@ -178,9 +167,9 @@ function Render() {
 			clearInterval(timerId);
 			timerId = null;
 		}
-	}
+	};
 	
-	const cardsCounter = document.getElementById("hand-counter");
+	let cardsCounter = document.getElementById("hand-counter");
 
 	this.setHand = function(cards) {
 		cardsCounter.innerHTML = cards.length;
@@ -188,43 +177,60 @@ function Render() {
 		for (let i = 0; i < cards.length; i++){
 			handBoard.appendChild(getNewCardElem(cards[i]));
 		}
-	}
+	};
 
 	// cards - Массив 6x3 карт в стеках [ [down, center, top], ... ] int id типы карт
 	this.setStacks = function(stacks){
-		let i = 0
+		let i = 0;
 		for (let cardIds of stacks) {
-			stacksParent[i].innerHTML = ''
+			stacksParent[i].innerHTML = '';
 			for(cardId of cardIds){
-				stacksParent[i].append(getNewCardElem(cardId))
+				//if (stacksParent[i].stackType === DATA_CARDS[cardId]) {
+					stacksParent[i].stackType = DATA_CARDS[cardId];
+					stacksParent[i].append(getNewCardElem(cardId));
+					stacksParent[i].stackLevel = stacksParent[i].childElementCount;
+					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
+					//console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
+					console.log("LEVEL -> ", stacksParent[i].stackLevel);
+				/*} else if (stacksParent[i].stackLevel === 0){
+					stacksParent[i].append(getNewCardElem(cardId));
+					stacksParent[i].stackType = DATA_CARDS[cardId];
+					stacksParent[i].stackLevel++;
+					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
+					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
+				} else if (stacksParent[i].stackLevel === 3 && stacksParent[i].stackType === DATA_CARDS[cardId]) {
+					stacksParent[i].children[2] = getNewCardElem(cardId);
+					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
+					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
+				} else {
+					stacksParent[i].innerHTML = '';
+					stacksParent[i].append(getNewCardElem(cardId));
+					stacksParent[i].stackLevel++;
+					stacksParent[i].stackType = DATA_CARDS[cardId];
+					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
+					console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
+				}*/
 			}
 			i++
 		}
-	}
-
+	};
 
 	function getNewCardElem(i){
 		let img = new Image();
 		img.src = "src/cards/card"+((i|0)+1)+".jpg";
 		img.cardId = i|0;
+		img.jsonOptions = DATA_CARDS[i|0];
+		console.log(img.jsonOptions);
 		return img
 	}
-
-	// callback(массив длиной - количество карт в руке, элемент массива - новое место карты i в стеке или -1 если карта выброшена)
-	// например при имеющихся картах [2, 3] мы ложим первую карту типа 2 в стек 4,
-	// а вторую карту типа 3 в стек 1, нужно вызвать callback([4,1]) // 4, 1 Номера стеков
-
-	
-	
-
 	
 	{
-		let i = 0
+		let i = 0;
 		for (let stack of stacksParent) {
-			stack.stackId = i++
+			stack.stackId = i++;
 			stack.onclick = function(e){
 				if(selectedHandCard !== null) 
-					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId)
+					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId);
 			}
 		}
 	}
@@ -233,24 +239,19 @@ function Render() {
 	// callback принимает номер карты в руке и номер стека
 	this.programming = function(callback) {
 		selectedHandCard = null;
-		programmingCallback = callback
+		programmingCallback = callback;
 		let i = 0;
 		for (let card of handBoard.children) {
 			card.idInList = i++;
 			card.onclick = function(e){
-				if(selectedHandCard !== null) selectedHandCard.style.outline = ''
+				if(selectedHandCard !== null) selectedHandCard.style.outline = '';
 				selectedHandCard = e.currentTarget;
-				selectedHandCard.style.outline = '2px solid yellow'
+				selectedHandCard.style.outline = '2px solid yellow';
 			}
 		}
-	}
-
+	};
 	
-
-
-
-	
-	const higlightType = {Rotate: 0, Move: 1, Hook:3}
+	const higlightType = {Rotate: 0, Move: 1, Hook:3};
 
 	let selectAttackCells = function (cellsArray, countKills, callback) {
 		console.log(cellsArray);

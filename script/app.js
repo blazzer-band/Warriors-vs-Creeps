@@ -345,10 +345,10 @@ function Game() {
 		let i = 0;
 		for (let cellFrom of heroCells) {
 			let next = getNextCellFromAToB(cellFrom, creepsCells[i]);
-			i = ((i * 7) + creepsCells.length) % creepsCells.length;
 			let to = map.moveUnitFromCellToCoords(cellFrom, next.x, next.y);
 
 			if (to !== null) render.moveUnit(cellFrom, to);
+			i = ((i * 7) + creepsCells.length) % creepsCells.length;
 		}
 	}
 	// function actionWarrior(userId) {

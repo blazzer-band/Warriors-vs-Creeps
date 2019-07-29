@@ -2,7 +2,7 @@ const cardsJSON = [
 	{
 		name: "Fuel Tank",
 		// Эффект накладывается при взятии карты
-		effects: ["FuelTank"], // при желании. функция Сброс карты и аттаковать всех в радиусе 1 при получении урона
+		effects: 0, // при желании. функция Сброс карты и аттаковать всех в радиусе 1 при получении урона
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -32,7 +32,7 @@ const cardsJSON = [
 	},
 	{
 		name: "Blaze",
-		effects: [],
+		effects: 0,
 		levels:[
 			{// 1 Уровень
 				targetCount: 2,
@@ -56,7 +56,7 @@ const cardsJSON = [
 	},
 	{
 		name: "FlameSpitter",
-		effects: [],
+		effects: 0,
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -81,7 +81,7 @@ const cardsJSON = [
 	{
 		name: "Memory Core",
 		// +1 карта в раздачу, если ты первый игрок
-		effects: ["MemoryCore"],
+		effects: 1,
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -111,7 +111,7 @@ const cardsJSON = [
 	},
 	{
 		name: "Omni Stomp",
-		effects: [],
+		effects: 1,
 		levels:[
 			{// 1 Уровень
 				targetCount: 2,
@@ -135,7 +135,7 @@ const cardsJSON = [
 	},
 	{
 		name: "Hexmatic Aimbot",
-		effects: [],
+		effects: 1,
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -167,7 +167,7 @@ const cardsJSON = [
 	{
 		name: "Scythe",
 		// Эффект накладывается при взятии карты
-		effects: ["FuelTank"], // при желании. функция Сброс карты и аттаковать всех в радиусе 1 при получении урона
+		effects: 2, // при желании. функция Сброс карты и аттаковать всех в радиусе 1 при получении урона
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -197,7 +197,7 @@ const cardsJSON = [
 	},
 	{
 		name: "Skewer",
-		effects: [],
+		effects: 2,
 		levels:[
 			{// 1 Уровень
 				targetCount: 2,
@@ -221,7 +221,7 @@ const cardsJSON = [
 	},
 	{
 		name: "Ripsaw",
-		effects: [],
+		effects: 2,
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -246,7 +246,7 @@ const cardsJSON = [
 	{
 		name: "Cyclotron",
 		// +1 карта в раздачу, если ты первый игрок
-		effects: ["MemoryCore"],
+		effects: 3,
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
@@ -276,7 +276,7 @@ const cardsJSON = [
 	},
 	{
 		name: "Speed",
-		effects: [],
+		effects: 3,
 		levels:[
 			{// 1 Уровень
 				targetCount: 2,
@@ -300,7 +300,7 @@ const cardsJSON = [
 	},
 	{
 		name: "Chain Lightning",
-		effects: [],
+		effects: 3,
 		levels:[
 			{// 1 Уровень
 				targetCount: 0,
