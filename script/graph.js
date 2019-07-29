@@ -4,6 +4,11 @@ function Render() {
 	const mapBody = document.getElementById("game-map").children[0];
 	const handBoard = document.getElementById("hand-board")
 	const stacksParent = document.getElementsByClassName("stack-content")
+	const chooseBoard = document.getElementById("choose-board")
+	const deskCard = document.getElementById("desk-card")
+	const okChoose = document.getElementById("ok-choose")
+
+
 	const DATA_CARDS = cardsJSON;
 
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
@@ -76,67 +81,51 @@ function Render() {
 
 	this.selectCards = function(cards, count, callback) {
 		programmingSession = false;
+		chooseBoard.classList.remove('noDisplay')
 
-		let desk = document.getElementById("choose-board");
-		desk.innerHTML = '';
-		desk.style.display = "inline-block";
-
-		let deskBoard = desk
-		deskBoard.style.opacity = '0';
-		deskBoard.style.transition = "opacity .4s";
+		chooseBoard.style.opacity = '0';
 		setTimeout(function(){
-			deskBoard.style.opacity = '1';
+			chooseBoard.style.opacity = '1';
 		}, 0)
-
 		let arrayIdSelectedCards = [];
 
-		desk.appendChild(document.createElement("div"));
-		desk.children[0].style.display = "block";
-		let board = desk.children[0];
-		board.className = "desk-card";
+		deskCard.innerHTML = '';
 		for (let i = 0; i < cards.length; i++) {
-			board.appendChild(document.createElement("div"));
-			board.children[i].className = "round-cards";
 			let img = getNewCardElem(cards[i])
+			img.className = "round-cards";
 			img.tempSelectId = i;
 			img.onclick = function(e) {
-				if (arrayIdSelectedCards.length !== count && e.currentTarget.select !== 'true') {
-					e.currentTarget.classList.add("selected-card");
-					e.currentTarget.select = 'true'
-					arrayIdSelectedCards.push(e.currentTarget.tempSelectId|0);
-				} else if (e.currentTarget.select === 'true') {
-					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== e.currentTarget.tempSelectId);
-					e.currentTarget.classList.remove("selected-card");
-					e.currentTarget.select = 'false'
+				let card = e.currentTarget;
+				if (arrayIdSelectedCards.length !== count) {
+					if(card.classList.contains('selected-card')){
+						card.classList.remove("selected-card");
+						arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== card.tempSelectId);
+					}
+					else{
+						card.classList.add("selected-card");
+						arrayIdSelectedCards.push(card.tempSelectId|0);
+					}
 				}
 				if (arrayIdSelectedCards.length === count) {
-					let btn = document.getElementsByClassName("ok-choose");
-					btn[0].classList.remove("noActive")
-				} else {
-					let btn = document.getElementsByClassName("ok-choose");
-					btn[0].classList.add("noActive")
+					okChoose.classList.remove("noActive")
+				} 
+				else {
+					okChoose.classList.add("noActive")
 				}
-			};
-			board.children[i].appendChild(img);
+			}
+			deskCard.appendChild(img)
 		}
-		desk.appendChild(document.createElement("div"));
-		desk.children[1].style.display = "block";
-		desk = desk.children[1];
-		desk.className = "desk";
-		desk.appendChild(document.createElement("button"));
-		desk.children[0].classList.add("ok-choose");
-		desk.children[0].classList.add("noActive")
-		desk.children[0].textContent = "OK";
-		desk.children[0].onclick = function (e) {
+		okChoose.classList.add("noActive")
+		okChoose.onclick = function (e) {
 			if (callback !== undefined && !e.currentTarget.classList.contains("noActive")) {
 				callback(arrayIdSelectedCards);
 			}
 		}
-	};
+	}
 
 	this.stopSelect = function(){
-		document.getElementById("choose-board").style.display = "none";
-	};
+		chooseBoard.classList.add('noDisplay')
+	}
 
 	
 	this.timerId = null;
@@ -155,7 +144,6 @@ function Render() {
 			timer.innerHTML = realSecond < 10 ? minutes+":0"+seconds :  minutes+":"+seconds;
 			realSecond--;
 		}
-
 		updateTimer();
 		timerId = setInterval(updateTimer, 1000);
 	};
@@ -196,7 +184,7 @@ function Render() {
 		img.src = "src/cards/card"+((i|0)+1)+".jpg";
 		img.cardId = i|0;
 		img.jsonOptions = DATA_CARDS[i|0];
-		console.log(img.jsonOptions);
+		//console.log(img.jsonOptions);
 		return img
 	}
 	
@@ -204,12 +192,12 @@ function Render() {
 		let i = 0;
 		for (let stack of stacksParent) {
 			stack.stackId = i++;
-			stack.onclick = function(e){
+			stack.addEventListener('click', function(e){
 				if(selectedHandCard !== null){
 					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId);
 					selectedHandCard = null;
 				}
-			}
+			})
 		}
 	}
 	let selectedHandCard = null;
@@ -233,7 +221,7 @@ function Render() {
 
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/, isSelected}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
-	this.selectCells = function (cellsArray, callback) {
+	this.selectCells = function(cellsArray, callback) {
 		let i = 0;
 		if (cellsArray.length === 0) {
 			callback([]);
@@ -250,7 +238,7 @@ function Render() {
 				case(2):
 					cellElement.classList.add("attack-cell");
 					break;
-				default:
+				case(3):
 					cellElement.classList.add("help-cell");
 					break;
 			}
@@ -262,6 +250,12 @@ function Render() {
 		}
 	};
 
+
+	// callback (StackIds[]) 
+	this.selectStack = function(selectablStacks, count, callback){
+
+	}
+
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 
@@ -272,25 +266,29 @@ function Render() {
 		defeatBlock.src = "src/lose.mp4";
 		defeatBlock.muted = "";
 		//defeatBlock.play();
-	};
+	}
 
-	// Высветить сообщение поверх всего
-	this.showMessage = function(text, color) { // make enum
-		let messageBlock = document.getElementById("message");
-		messageBlock.style.display = "inline-block";
-		//messageBlock.style.background = "red"; //rgba(2,3,4,0.5);
+
+	const messageBlock = document.getElementById("message");
+	let messageTimeout = null
+	this.showMessage = function(text) {
+		clearTimeout(messageTimeout)
+		messageTimeout = null
 		messageBlock.innerHTML = text;
-	};
+		messageBlock.classList.remove('noDisplay');
+		setTimeout(() => messageBlock.style.opacity = '1', 0)
+	}
 
-	// Скрыть сообщение
 	this.hideMessge = function(){
-		let messageBlock = document.getElementById("message");
-		messageBlock.style.display = "none";
-	};
+		messageBlock.style.opacity = '0'
+		if(messageTimeout === null) messageTimeout = setTimeout(() => {messageBlock.classList.add('noDisplay'); messageTimeout =  null}, 500)
+	}
+
 
 	this.updateBombCounter = function(newVal){
 		document.getElementById('hp-bomb').innerHTML = newVal
 	}
+
 	this.updateKillsCounter = function(newVal){
 		document.getElementById('kills').innerHTML = newVal
 	}

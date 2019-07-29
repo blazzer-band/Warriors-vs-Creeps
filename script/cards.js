@@ -1,4 +1,4 @@
-const cardType = {Fire:0, Computer:1, Metal:2, Electro:3, Deffect:4};
+const cardType = {Fire:0, Computer:1, Metal:2, Electro:3, Deffect:4}
 const cardsJSON = [
 	{
 		name: "Fuel Tank",

@@ -28,21 +28,32 @@ function Game() {
 
 				this.agent.selectCards(cards, count, function(sels) {
 					for (let i of sels) {
-						user.hand.push(cards[i]|0);
+						user.hand.push(cards[i]);
 					}
 					user.agent.setHand(user.hand);
 					callback(sels);
-				});
+				})
+
 			}
 
 		}
 
-		scrapRequest(cardType){
+		scrapRequest(type){
 			// Утилизация для ремонта. Утилизация огненных или металлических карт позволяет вам освободить слот от повреждения на выбор
 			// Утилизация электрических или компьютерных карт для перепрограммирования - свап 2-х активных стеков на выбор
-
+			let user = this;
 			return new Promise(function(resolve, reject){
+				//user
+				if(type === cardType.Fire || type === cardType.Metal){
 
+
+				}
+				else if(type === cardType.Fire || type === cardType.Metal){
+
+
+				}
+
+				resolve()
 			})
 		}
 
@@ -54,7 +65,7 @@ function Game() {
 			user.agent.setHand(user.hand);
 
 			// Обновить данные
-			function request(){
+			let request = function(){
 				
 
 				user.agent.programming(async function(cardPosInHand, stackId){
@@ -83,7 +94,7 @@ function Game() {
 					user.agent.setHand(user.hand);
 
 					if(user.hand.length > 0){
-						request(); // Защита от переполнения стека
+						setTimeout(request, 0);
 					}
 					else{
 						outCallback();
@@ -234,7 +245,7 @@ function Game() {
 
 
 
-	// users: AbstractAgent[] array - инициализированные обьекты пользователей
+	// TODO: users: AbstractAgent[] array - инициализированные обьекты пользователей
 	this.start = function(){
 		// Генерация колоды
 		cardsDeck = [];
@@ -275,12 +286,6 @@ function Game() {
 	}
 	this.lose = lose;
 
-
-
-
-
-
-	///// Ассинхронный цикл. Начало
 	function chooseСards() {
 		let isFirstRound = roundCounter === 0;
 
@@ -360,7 +365,8 @@ function Game() {
 				creepsMoveAct();
 			}
 		}
-		act();
+		//act();
+		creepsMoveAct();
 	}
 
 	function actionWarrior() {

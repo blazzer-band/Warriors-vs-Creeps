@@ -425,12 +425,12 @@ td {
 }
 
 #choose-board,  #message{
-  display: none;
+  display: inline-block;
   align-self: center;
-  /* visibility: hidden; */
   position: relative;
   margin: 0 auto;
   margin-top: -400px;
+  transition: opacity 0.4s ease 0s;
   border-radius: 12px;
   bottom: 300px;
   background-color: rgba(2,3,4,0.5);
@@ -442,10 +442,8 @@ td {
   font-size: 40pt;
   color: white;
   text-align: center;
-}
-
-.desk-card {
-
+  transition: opacity 0.4s ease 0s;
+  opacity: 0;
 }
 
 .round-cards {
@@ -461,7 +459,7 @@ td {
   border-radius: 7px;
 }
 
-.ok-choose {
+#ok-choose {
   /* display: none; */
   /* visibility: hidden; */
   display: block;
@@ -488,10 +486,6 @@ border: 1px solid #606d61;
 cursor: auto;
 }
 
-.desk-card {
-}
-
-.desk button {}
 
 #win-or-defeat{
   position: absolute;
@@ -546,4 +540,8 @@ div#trackers > div {
 }
 .help-cell {
   outline: #555aaa solid thick;
+}
+
+.noDisplay{
+  display: none !important;
 }
