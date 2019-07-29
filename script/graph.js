@@ -188,10 +188,11 @@ function Render() {
 				//if (stacksParent[i].stackType === DATA_CARDS[cardId]) {
 					stacksParent[i].stackType = DATA_CARDS[cardId];
 					stacksParent[i].append(getNewCardElem(cardId));
-					stacksParent[i].stackLevel = stacksParent[i].childElementCount;
-					stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
-					//console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
-					console.log("LEVEL -> ", stacksParent[i].stackLevel);
+					
+					//stacksParent[i].stackLevel = stacksParent[i].childElementCount;
+					//stacksParent[i].stackAction = stacksParent[i].lastElementChild.jsonOptions;
+					////console.log("ACTION -> ", stacksParent[i].stackAction.levels[stacksParent[i].stackLevel - 1]);
+					//console.log("LEVEL -> ", stacksParent[i].stackLevel);
 				/*} else if (stacksParent[i].stackLevel === 0){
 					stacksParent[i].append(getNewCardElem(cardId));
 					stacksParent[i].stackType = DATA_CARDS[cardId];
@@ -229,8 +230,10 @@ function Render() {
 		for (let stack of stacksParent) {
 			stack.stackId = i++;
 			stack.onclick = function(e){
-				if(selectedHandCard !== null) 
+				if(selectedHandCard !== null){
 					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId);
+					selectedHandCard = null;
+				}
 			}
 		}
 	}

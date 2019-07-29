@@ -57,6 +57,7 @@ function Game() {
 
 						// Либо ничего не делать
 						// (здесь может быть ассинхронная штука)
+						//await Func()
 
 						user.hand.splice(cardPosInHand, 1);
 					}
@@ -270,6 +271,10 @@ function Game() {
 	this.lose = lose;
 
 
+
+	
+
+
 	///// Ассинхронный цикл. Начало
 	function chooseСards() {
 		let isFirstRound = roundCounter === 0;
@@ -351,34 +356,6 @@ function Game() {
 			i = ((i * 7) + creepsCells.length) % creepsCells.length;
 		}
 	}
-	// function actionWarrior(userId) {
-	// 	for (let i = 0; i < stackCards.length; i++) {
-	// 		let power = stackCards[i].jsonOptions;
-	// 		let level = stackCards[i].level;
-	// 		let functions = power.levels[level];
-	//
-	// 		let targetCount = functions.targetCount;
-	// 		let move = functions.move;
-	// 		let attack = functions.attack;
-	// 		let rotate = functions.rotate;
-	//
-	// 		if (move.length !== 0) selectMoveCells(userId, move);
-	// 		if (attack.length !== 0) selectAttackCells(userId, attack, targetCount);
-	// 		if (rotate.length !== 0) selectRotateCells(userId, rotate);
-	// 	}
-	// }
-	//
-	// function selectMoveCells(userId, arrayMove, callback) {
-	//
-	// }
-	//
-	// function selectAttackCells (userId, arrayAttack, kills, callback) {
-	//
-	// }
-	//
-	// function selectRotateCells (userId, arrayRotate, callback) {
-	//
-	// }
 
 	// Возвращает bool удалось перейти или нет
 	function goRamming (thisCell, endCell) {
