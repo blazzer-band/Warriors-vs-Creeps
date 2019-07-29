@@ -328,7 +328,7 @@ function Game() {
 		// Исполняется карта, верхняя в каждом стеке в порядке игроков
 
 		function act(userId = 0) {
-			
+			//actionWarrior(userId);
 			if (userId + 1 < users.length) {
 				act(userId + 1);
 			} else {
@@ -337,6 +337,35 @@ function Game() {
 		}
 		act();
 	}
+
+	// function actionWarrior(userId) {
+	// 	for (let i = 0; i < stackCards.length; i++) {
+	// 		let power = stackCards[i].jsonOptions;
+	// 		let level = stackCards[i].level;
+	// 		let functions = power.levels[level];
+	//
+	// 		let targetCount = functions.targetCount;
+	// 		let move = functions.move;
+	// 		let attack = functions.attack;
+	// 		let rotate = functions.rotate;
+	//
+	// 		if (move.length !== 0) selectMoveCells(userId, move);
+	// 		if (attack.length !== 0) selectAttackCells(userId, attack, targetCount);
+	// 		if (rotate.length !== 0) selectRotateCells(userId, rotate);
+	// 	}
+	// }
+	//
+	// function selectMoveCells(userId, arrayMove, callback) {
+	//
+	// }
+	//
+	// function selectAttackCells (userId, arrayAttack, kills, callback) {
+	//
+	// }
+	//
+	// function selectRotateCells (userId, arrayRotate, callback) {
+	//
+	// }
 
 	// Возвращает bool удалось перейти или нет
 	function goRamming (thisCell, endCell) {

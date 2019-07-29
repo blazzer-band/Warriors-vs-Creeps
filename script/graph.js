@@ -288,7 +288,10 @@ function Render() {
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 	this.selectCells = function(cellsArray, callback){
+		let players = document.getElementsByClassName()
+		for (let i = 0; i < cellsArray.length; i++) {
 
+		}
 	}
 
 	//Окно, отображающее поражение для текущей сессии
