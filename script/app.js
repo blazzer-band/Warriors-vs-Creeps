@@ -365,8 +365,8 @@ function Game() {
 				creepsMoveAct();
 			}
 		}
-		//act();
-		creepsMoveAct();
+		act();
+		//creepsMoveAct();
 	}
 
 	// function actionWarrior() {
