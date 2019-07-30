@@ -413,14 +413,16 @@ function Game() {
 			let heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
 
 			if (card.move.length !== 0) {
+				let selVect = null
 				if(card.move.length === 1){ // card.move[i] - вектор до которого идти нужно до предела
-					vectorRotate(card.move[0], user.angle)
-					//await goRamming(thisCell, endCell)
+					selVect = card.move[0]
 				}
 				else{
-
+					
 				}
 
+				let v = vectorRotate(selVect, user.angle)
+				await goRamming(heroCell, heroCell.x + v.x, heroCell.y + v.y);
 			}
 
 
@@ -446,18 +448,24 @@ function Game() {
 
 
 	// Возвращает bool удалось перейти или нет
-	function goRamming (thisCell, endCell) {
+	function goRamming (thisCell, toX, toY) {
 		// толкать можно бесконечно много до упора только перед собой
+		let temp = Math.max(toX, toY)
+		let next = {x: thisCell.x + (toX/temp)|0, y: thisCell.y + (toX/temp)|0}
 
+
+		let tempCell = map.get(next.x, next.y)
+
+		if(tempCell === null) return false
 
 		// проверить есть ли позади или слева или справа бомба или герой
 		// если есть и движение > 1 клетки, предложить выбрать кого тащить
 		
 		// если тащит то расстояние движения уменьшается на 1
 
-		if (startCell.unit === unitType.Creep) {
-			attackCell(startCell);
-		}
+
+
+
 	}
 
 
