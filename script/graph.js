@@ -330,7 +330,7 @@ function Render() {
 		roomList.style.display = "none";
 		let roomBlock = document.getElementById("room");
 		roomBlock.style.display = "flex";
-		this.makePalette(1);
+		this.makePalette(4);
 	}
 
 	//Test
@@ -355,13 +355,13 @@ function Render() {
 				palette.children[j].style.marginTop = "1px";
 				palette.children[j].onclick = function(e) {graph.setColor(i, palette.children[j].style.backgroundColor)};
 			}
+			if (i !== 0){playersList.children[i].children[1].style.display = "none"}
 		}
 	}
 
 	this.showPalette = function(i){
 		let playersList = document.getElementById("players-list");
 		let palette = playersList.children[i].children[1].children[0].children[0];
-		console.log(palette);
 		if ((palette.style.display === "") || (palette.style.display === "none")){
 			palette.style.display = "block";
 		}

@@ -378,7 +378,7 @@ td {
   border: 3px double black;
   border-radius: 10px;
   color: antiquewhite;
-  background-color: aquamarine;
+  background-color: #00000052;
   top: -110px;
   bottom: 0;
   left: 0;
@@ -393,7 +393,7 @@ td {
   top: 250px;
   text-align: center;
   font-size: 75px;
-  color: orangered;
+  color: #ffffff;
 }
 
 #rooms{
@@ -514,11 +514,12 @@ td {
 }
 
 .player-spot{
-	width: auto;
-	height: 20px;
-	display: inline-block;
+	width: 100%;
+	height: 50px;
+	display: block;
 	font-family: sans-serif;
 	font-size: 25pt;
+	border-bottom: 1px solid black;
 }
 
 .current-color{
@@ -531,9 +532,15 @@ td {
 	background-color: white;
 }
 
-.player-spot, .player-spot-color{
+.player-spot, .player-spot-color {
 	position: relative;
 }
+
+/* .player-spot{
+	display: inline;
+	width: auto;
+	height: 100px;
+} */
 
 .palette{
 	display: none;

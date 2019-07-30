@@ -31,16 +31,37 @@
 			<div id="room-left-block">
 				<div id="players-list">
 					<div class="player-spot">
-					 	<span class="player-name">1. Patriach</span>
+					 	<span class="player-name">1. Hostname</span>
 						<span class="color-picker">
 							<div onclick="game.getRender.showPalette(0)" class="current-color">
 								<div class="palette"></div>
 							</div>
 						</span>
 					</div>
-					<div class="player-spot"></div>
-					<div class="player-spot"></div>
-					<div class="player-spot"></div>
+					<div class="player-spot">
+						<span class="player-name">2. Открыто</span>
+						<span class="color-picker">
+							<div onclick="game.getRender.showPalette(1)" class="current-color">
+								<div class="palette"></div>
+							</div>
+						</span>
+					</div>
+					 <div class="player-spot">
+						<span class="player-name">3. Открыто</span>
+						<span class="color-picker">
+							<div onclick="game.getRender.showPalette(2)" class="current-color">
+								<div class="palette"></div>
+							</div>
+						</span>
+					</div>
+					<div class="player-spot">
+						<span class="player-name">4. Открыто</span>
+						<span class="color-picker">
+							<div onclick="game.getRender.showPalette(3)" class="current-color">
+								<div class="palette"></div>
+							</div>
+						</span>
+					</div>
 				</div>
 				<div id="room-chat"></div>
 			</div>
@@ -121,6 +142,7 @@
 	<button onclick = "{let a = document.getElementById('choose-board'); a.style.display = a.style.display === 'none' ? 'inline-block': 'none'}">Скрыть всплывающее окно</button>
 </div>
 
+<script scr="script/lobby.js" type="text/javascript"></script>
 <script src="script/cards.json" type="text/javascript"></script>
 <script src="script/seedrandom.min.js"></script>
 <script src="script/graph.js" type="text/javascript" charset="utf-8"></script>
@@ -133,16 +155,6 @@
 
 <script type="text/javascript">
 "use strict"
-let game = new Game();
-
-let beginGame = function(){
-	let content = document.getElementById("content");
-	let lobby = document.getElementById("lobby");
-	lobby.style.display = "none";
-	content.style.display = "block";
-	game.start();
-}
-
 
 </script>
 
