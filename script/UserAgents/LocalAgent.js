@@ -30,6 +30,7 @@ class LocalAgent extends AbstractAgent{
 			clearTimeout(timeout)
 
 			callback(callb)
+			
 		}
 
 	}

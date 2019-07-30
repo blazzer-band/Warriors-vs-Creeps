@@ -96,16 +96,15 @@ function Render() {
 			img.tempSelectId = i;
 			img.onclick = function(e) {
 				let card = e.currentTarget;
-				if (arrayIdSelectedCards.length !== count) {
-					if(card.classList.contains('selected-card')){
-						card.classList.remove("selected-card");
-						arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== card.tempSelectId);
-					}
-					else{
-						card.classList.add("selected-card");
-						arrayIdSelectedCards.push(card.tempSelectId|0);
-					}
+				if(card.classList.contains('selected-card')){
+					card.classList.remove("selected-card");
+					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== card.tempSelectId);
 				}
+				else if (arrayIdSelectedCards.length !== count) {
+					card.classList.add("selected-card");
+					arrayIdSelectedCards.push(card.tempSelectId|0);
+				}
+
 				if (arrayIdSelectedCards.length === count) {
 					okChoose.classList.remove("noActive")
 				} 
@@ -285,7 +284,6 @@ function Render() {
 
 
 	this.chooseRotate = function(rotateArray, callback){ // callback(rotateIdInArray)
-
 		callback(prompt("Выберите вариант поворота вашего персонажа:" + rotateArray, "0")|0)
 
 	}

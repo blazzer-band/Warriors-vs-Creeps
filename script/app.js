@@ -259,7 +259,7 @@ function Game() {
 	this.start = function(newUsers){
 		users = newUsers ? newUsers : [];
 
-		{ /// временная генерация поьзователей
+		{ /// временная генерация пользователей
 			let testUserAgent = new BotAgent();
 			let testUser = new User(false);
 			testUser.agent = testUserAgent;
@@ -410,83 +410,30 @@ function Game() {
 				user.angle += card.rotate[rotateAngleId] % 4;
 			}
 
-
-			if (card.attack.length !== 0) {
-				let x = user.cell.x;
-				let y = user.cell.y;
-				let killCell = null;
-				let tmpArray = card.attack;
-				let rotate = user.rotate;
-				switch (rotate) {
-					case(0):
-						for (let point of tmpArray) {
-							point.x = x + point.x;
-							point.y = y - point.y;
-						}
-						killCell = await user.selectCells(tmpArray, 2);
-						break;
-					case(1):
-						for (let point of tmpArray) {
-							point.x = x + point.y;
-							point.y = y + point.x;
-						}
-						killCell = await user.selectCells(tmpArray, 2);
-						break;
-					case(2):
-						for (let point of tmpArray) {
-							point.x = x - point.x;
-							point.y = y + point.y;
-						}
-						killCell = await user.selectCells(tmpArray, 2);
-						break;
-					case(3):
-						for (let point of tmpArray) {
-							point.x = x - point.y;
-							point.y = y + point.x;
-						}
-						killCell = await user.selectCells(tmpArray, 2);
-						break;
-				}
-				map.moveUnitFromCellToCoords(killCell)
-			}
+			let heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
 
 			if (card.move.length !== 0) {
-				let x = user.cell.x;
-				let y = user.cell.y;
-				let moveAngle = null;
-				let tmpArray = card.move;
-				let rotate = user.rotate;
-				switch (rotate) {
-					case(0):
-						for (let point of tmpArray) {
-							point.x = x + point.x;
-							point.y = y - point.y;
-						}
-						moveAngle = await user.selectCells(tmpArray, 1);
-						break;
-					case(1):
-						for (let point of tmpArray) {
-							point.x = x + point.y;
-							point.y = y + point.x;
-						}
-						moveAngle = await user.selectCells(tmpArray, 1);
-						break;
-					case(2):
-						for (let point of tmpArray) {
-							point.x = x - point.x;
-							point.y = y + point.y;
-						}
-						moveAngle = await user.selectCells(tmpArray, 1);
-						break;
-					case(3):
-						for (let point of tmpArray) {
-							point.x = x - point.y;
-							point.y = y + point.x;
-						}
-						moveAngle = await user.selectCells(tmpArray, 1);
-						break;
+				if(card.move.length === 1){ // card.move[i] - вектор до которого идти нужно до предела
+					vectorRotate(card.move[0], user.angle)
+					//await goRamming(thisCell, endCell)
 				}
+				else{
+
+				}
+
 			}
+
+
+			/*if (card.attack.length !== 0) {
+				if(card.attack.length === 1){
+					
+				}
+				else{
+					
+				}
+
+			}*/
+
 
 			resolve();
 			// Punch
@@ -563,7 +510,7 @@ function Game() {
 				}
 			}
 		}
-
+		
 
 
 		function attack(eventId = 0) {
