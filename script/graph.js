@@ -218,30 +218,18 @@ function Render() {
 	};
 	
 	const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
+	const HIGHLIGHT_STYLE = ["rotate-cell", "move-cell", "attack-cell", "help-cell"];
 
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/, isSelected}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
-	this.selectCells = function(cellsArray, callback) {
+	this.selectCells = function(cellsArray, highlight, callback) {
 		let i = 0;
 		if (cellsArray.length === 0) {
 			callback([]);
 		}
 		for (let cell of cellsArray) {
 			let cellElement = mapBody.children[cell.y].children[cell.x];
-			switch (cell.highlight) {
-				case(0):
-					cellElement.classList.add("rotate-cell");
-					break;
-				case(1):
-					cellElement.classList.add("move-cell");
-					break;
-				case(2):
-					cellElement.classList.add("attack-cell");
-					break;
-				case(3):
-					cellElement.classList.add("help-cell");
-					break;
-			}
+			cellElement.classList.add(HIGHLIGHT_STYLE[highlight]);
 			cellElement.idCell = i;
 			cellElement.onclick = function (e) {
 				callback(e.currentTarget.idCell);
