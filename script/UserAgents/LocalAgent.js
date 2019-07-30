@@ -52,5 +52,7 @@ class LocalAgent extends AbstractAgent{
 		game.getRender.chooseRotate(rotateArray, callback)
 	}
 
-
+	selectCells(cellsArray, highlight, callback) {
+		game.getRender.selectCells(cellsArray, highlight, callback);
+	}
 }

@@ -18,6 +18,8 @@ function Game() {
 			this.stacks = [[],[],[],[],[],[]]; // подмассивы - стеки, верхняя карта - последняя
 			this.agent = null;
 			this.myHero = null;
+			this.cell = null;
+			this.rotate = 0;
 		}
 
 		// возвращает текущего пользователя закончившего ход
@@ -244,7 +246,7 @@ function Game() {
 	let users = null; // Пользователи
 	// TODO: users: AbstractAgent[] array - инициализированные обьекты пользователей
 	this.start = function(newUsers){
-		users = newUsers ? newUsers : []
+		users = newUsers ? newUsers : [];
 
 		{ /// временная генерация поьзователей
 			let testUserAgent = new BotAgent();
@@ -385,31 +387,97 @@ function Game() {
 
 	function runStack(user, stack){
 		let level = stack.length;
-		return new Promise(async function(resolve, reject){
+		return new Promise(async function(resolve, reject) {
 			let cardId = stack[level - 1];
-			let card = cardsParams[cardId].levels[level-1] // Свойства
+			let card = cardsParams[cardId].levels[level-1];
 
-
-			// Rotate
 			if(card.rotate.length !== 0){
-				let rotateAngle = null
+				let rotateAngle = null;
 				if(card.rotate.length > 1){
-					rotateAngle = await user.chooseRotate(card.rotate)
+					rotateAngle = await user.chooseRotate(card.rotate);
 				}
 				else{
-					rotateAngle = card.rotate[0]
+					rotateAngle = card.rotate[0];
 				}
-
-
-
 			}
 
+			if (card.attack.length !== 0) {
+				let x = user.cell.x;
+				let y = user.cell.y;
+				let attackAngle = null;
+				let tmpArray = card.attack;
+				let rotate = user.rotate;
+				switch (rotate) {
+					case(0):
+						for (let point of tmpArray) {
+							point.x = x + point.x;
+							point.y = y - point.y;
+						}
+						attackAngle = await user.selectCells(tmpArray, 2);
+						break;
+					case(1):
+						for (let point of tmpArray) {
+							point.x = x + point.y;
+							point.y = y + point.x;
+						}
+						attackAngle = await user.selectCells(tmpArray, 2);
+						break;
+					case(2):
+						for (let point of tmpArray) {
+							point.x = x - point.x;
+							point.y = y + point.y;
+						}
+						attackAngle = await user.selectCells(tmpArray, 2);
+						break;
+					case(3):
+						for (let point of tmpArray) {
+							point.x = x - point.y;
+							point.y = y + point.x;
+						}
+						attackAngle = await user.selectCells(tmpArray, 2);
+						break;
+				}
+			}
 
-			//
+			if (card.move.length !== 0) {
+				let x = user.cell.x;
+				let y = user.cell.y;
+				let moveAngle = null;
+				let tmpArray = card.move;
+				let rotate = user.rotate;
+				switch (rotate) {
+					case(0):
+						for (let point of tmpArray) {
+							point.x = x + point.x;
+							point.y = y - point.y;
+						}
+						moveAngle = await user.selectCells(tmpArray, 1);
+						break;
+					case(1):
+						for (let point of tmpArray) {
+							point.x = x + point.y;
+							point.y = y + point.x;
+						}
+						moveAngle = await user.selectCells(tmpArray, 1);
+						break;
+					case(2):
+						for (let point of tmpArray) {
+							point.x = x - point.x;
+							point.y = y + point.y;
+						}
+						moveAngle = await user.selectCells(tmpArray, 1);
+						break;
+					case(3):
+						for (let point of tmpArray) {
+							point.x = x - point.y;
+							point.y = y + point.x;
+						}
+						moveAngle = await user.selectCells(tmpArray, 1);
+						break;
+				}
+			}
 
-			// Move
-
-			resolve()
+			resolve();
 			// Punch
 
 		})
