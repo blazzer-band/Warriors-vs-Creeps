@@ -52,7 +52,7 @@ td {
   margin: 0 auto;
   /* align-content: center; */
   text-align: center;
-  display: block;
+  /* display: block; */
 }
 
 #left-block{
@@ -386,7 +386,7 @@ td {
   right: 0;
   margin: auto;
   z-index: 20;
-  display: none;
+  /* display: none; */
 }
 
 #welcome {

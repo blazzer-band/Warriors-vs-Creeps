@@ -174,22 +174,22 @@
 
 let lobby, game = null;
 
-game = new Game();
+/*game = new Game();
 game.start();
+*/
+document.getElementById("Log-in").onclick = function(){
+	let welcome = document.getElementById("welcome");
+	welcome.style.display = "none";
+	lobby = new RenderLobby();
+};
 
-// document.getElementById("Log-in").onclick = function(){
-// 	let welcome = document.getElementById("welcome");
-// 	welcome.style.display = "none";
-// 	lobby = new RenderLobby();
-// };
-//
-// document.getElementById("create-room").onclick = function(){
-// 	lobby.room
-// 	console.log(room);
-// 	lobby.createRoom()};
-// document.getElementById("connect-room").onclick = function(){
-// 	let room = new RenderRoom();
-// 	lobby.connectRoom()};
+document.getElementById("create-room").onclick = function(){
+	lobby.room
+	console.log(room);
+	lobby.createRoom()};
+document.getElementById("connect-room").onclick = function(){
+	let room = new RenderRoom();
+	lobby.connectRoom()};
 </script>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
