@@ -18,7 +18,7 @@ function Game() {
 			this.stacks = [[],[],[],[],[],[]]; // подмассивы - стеки, верхняя карта - последняя
 			this.agent = null;
 			this.myHero = null;
-			this.cell = null;
+			this.cell = {x:1, y:2};
 			this.rotate = 0;
 		}
 

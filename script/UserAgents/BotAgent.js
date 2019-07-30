@@ -32,8 +32,11 @@ class BotAgent extends AbstractAgent{
 	}
 
 	chooseRotate(rotateArray, callback){
-		callback(0)
+		callback(0);
 	}
 
+	selectCells(cellsArray, highlight, callback) {
+		callback(0);
+	}
 
 }

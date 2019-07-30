@@ -228,6 +228,8 @@ function Render() {
 			callback([]);
 		}
 		for (let cell of cellsArray) {
+			if (cell.x < 0 || cell.x > 11 || cell.y < 0 || cell.y > 5)
+				continue;
 			let cellElement = mapBody.children[cell.y].children[cell.x];
 			cellElement.classList.add(HIGHLIGHT_STYLE[highlight]);
 			cellElement.idCell = i;
