@@ -290,8 +290,8 @@ function Render() {
 
 	}
 
-	//orientation: 0 - ^,  1 - >, 2 - v, 3 - <   
-	this.updateCellRotate = function(orientation){
+	//orientation: 0 - ^,  1 - >, 2 - v, 3 - <  // pos: cell.x,  cell.y
+	this.updateCellRotate = function(cell, orientation){
 
 	}
 
