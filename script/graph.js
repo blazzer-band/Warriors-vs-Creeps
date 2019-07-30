@@ -217,7 +217,7 @@ function Render() {
 	};
 
 	
-	const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
+	//const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
 	const HIGHLIGHT_STYLE = ["rotate-cell", "move-cell", "attack-cell", "help-cell"];
 
 

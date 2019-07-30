@@ -4,7 +4,7 @@ const tileType = {Grass:0, Base:1, Runes:2, Target:3};
 const unitType = {Hero:0, Creep:1, Bomb:2};
 const userType = {Human:0, Bot:1, UserAgent:2};
 const ramsType = {Hero: true, Creep: false, Bomb: true};
-
+const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
 
 
 
@@ -114,16 +114,15 @@ function Game() {
 			request();
 		}
 
-		async selectCells(){
+		async selectCells(cellsArray, highlight){ //
 			let user = this;
 			return new Promise(function(resolve, reject){
-
-
-				resolve()
-
-
+				user.agent.selectCells(cellsArray, highlight, function(selSell){
+					resolve(selSell)
+				})
 			})
 		}
+
 
 
 	}
@@ -420,9 +419,11 @@ function Game() {
 				else{
 					
 				}
-
-				let v = vectorRotate(selVect, user.angle)
-				await goRamming(heroCell, heroCell.x + v.x, heroCell.y + v.y);
+				if(selVect !== null){
+					let v = vectorRotate(selVect, user.angle)
+					await goRamming(user, heroCell, heroCell.x + v.x, heroCell.y + v.y);
+				}
+				
 			}
 
 
@@ -448,23 +449,49 @@ function Game() {
 
 
 	// Возвращает bool удалось перейти или нет
-	function goRamming (thisCell, toX, toY) {
-		// толкать можно бесконечно много до упора только перед собой
-		let temp = Math.max(toX, toY)
-		let next = {x: thisCell.x + (toX/temp)|0, y: thisCell.y + (toX/temp)|0}
+	function goRamming(user, thisCell, toX, toY) {
+		return new Promise(async function(resolve, reject){
+			// толкать можно бесконечно много до упора только перед собой
+			resolve(); return;
+
+			let hookArray = []
+			let hookVecs = [vectorRotate({x:-1, y:0}, thisCell.unit.angle), vectorRotate({x:0, y:-1}, thisCell.unit.angle), vectorRotate({x:1, y:0}, thisCell.unit.angle)]
+			let hookSelect = null
+			for(hook of hookVecs){
+				let hookTemp = map.get(thisCell.x + hook.x, thisCell.y + hook.y)
+				if(hookTemp !== null && hookTemp.hasUnit() && (hookTemp.unit.type === unitType.Hero || hookTemp.unit.type === unitType.Bomb)){
+					hookArray.push(hookTemp)
+				}
+			}
+			if(hookArray.length !== 0 /*TODO: и сила больше 1*/){
+				hookSelect = await user.selectCells(hookArray, higlightType.Hook)
+			}
 
 
-		let tempCell = map.get(next.x, next.y)
-
-		if(tempCell === null) return false
-
-		// проверить есть ли позади или слева или справа бомба или герой
-		// если есть и движение > 1 клетки, предложить выбрать кого тащить
-		
-		// если тащит то расстояние движения уменьшается на 1
 
 
+			let temp = Math.max(toX, toY)
+			//let next = {x: thisCell.x + (toX/temp)|0, y: thisCell.y + (toX/temp)|0}
+			let tempCell = map.get(next.x, next.y)
 
+			if(tempCell === null) {
+				return false
+			}
+
+
+
+
+
+
+
+
+			// проверить есть ли позади или слева или справа бомба или герой
+			// если есть и движение > 1 клетки, предложить выбрать кого тащить
+			
+			// если тащит то расстояние движения уменьшается на 1
+
+
+		})
 
 	}
 
