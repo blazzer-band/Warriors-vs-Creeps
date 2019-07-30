@@ -5,7 +5,6 @@ function Render() {
 	const handBoard = document.getElementById("hand-board");
 	const stacksParent = document.getElementsByClassName("stack-content");
 	const DATA_CARDS = cardsJSON;
-	const COLORS = ["red", "blue", "aqua", "yellow", "black", "orange"];
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
 
 	this.renderMap = function(inputMap){
@@ -318,21 +317,6 @@ function Render() {
 		messageBlock.style.display = "none";
 	};
 
-	this.openRoomList = function(){
-		let welcome = document.getElementById("welcome");
-		welcome.style.display = "none";
-		let roomList = document.getElementById("rooms");
-		roomList.style.display = "block";
-	}
-
-	this.showRoom = function(){
-		let roomList = document.getElementById("rooms");
-		roomList.style.display = "none";
-		let roomBlock = document.getElementById("room");
-		roomBlock.style.display = "flex";
-		this.makePalette(4);
-	}
-
 	//Test
 	/// players -- массив игроков, состоящее из Никнейма и его ID
 	// let players = [{"Host", 0}, {"Bot", 1}];
@@ -340,41 +324,6 @@ function Render() {
 	// this.showPlayers = function(players){
 	//
 	// }(players)
-	let graph = this;
-	this.makePalette = function(count){ //count -- количетво игроков
-		let playersList = document.getElementById("players-list");
-		for (let i = 0; i < count; i++){
-			playersList.children[i].children[1].children[0].style.backgroundColor = COLORS[i];
-			let palette = playersList.children[i].children[1].children[0].children[0];
-			for (let j = 0; j < COLORS.length; j++){
-				palette.appendChild(document.createElement("div"));
-				palette.children[j].style.width = "20px";
-				palette.children[j].style.height = "20px";
-				palette.children[j].style.backgroundColor = COLORS[j];
-				palette.children[j].style.marginBottom = "1px";
-				palette.children[j].style.marginTop = "1px";
-				palette.children[j].onclick = function(e) {graph.setColor(i, palette.children[j].style.backgroundColor)};
-			}
-			if (i !== 0){playersList.children[i].children[1].style.display = "none"}
-		}
-	}
-
-	this.showPalette = function(i){
-		let playersList = document.getElementById("players-list");
-		let palette = playersList.children[i].children[1].children[0].children[0];
-		if ((palette.style.display === "") || (palette.style.display === "none")){
-			palette.style.display = "block";
-		}
-		else {
-			palette.style.display = "none";
-		}
-	}
-
-	this.setColor = function(playerSpot, color){
-		let playersList = document.getElementById("players-list");
-		let colorPicker = playersList.children[playerSpot].children[1].children[0];
-		colorPicker.style.backgroundColor = color;
-	}
 
 	this.updateBombCounter = function(newVal){
 		document.getElementById('hp-bomb').innerHTML = newVal

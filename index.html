@@ -9,22 +9,22 @@
 </head>
 <body>
 
-	<div id="lobby">
+<div id="lobby">
 		<div id="welcome">
 			Добро пожаловать в Лобби!
 			<br>
-	        <button onclick="game.getRender.openRoomList()" id="Log-in" type="button" style="width: 300px; font-size: 30pt; height: 70px; text-align: center; font-family: sans-serif">Войти!</button>
+	        <button id="Log-in" type="button" style="width: 300px; font-size: 30pt; height: 70px; text-align: center; font-family: sans-serif">Войти!</button>
 		</div>
 		<div id="rooms">
 			<div id="lobby-left-block">
 				<span id="title-list-rooms">Список комнат</span>
 				<div id="list-rooms"></div>
-				<button onclick="game.getRender.showRoom()" style="font-size: 23pt; text-align: center" type="button" name="button" id="create-room">Создать комнату</button>
+				<button  style="font-size: 23pt; text-align: center" type="button" name="button" id="create-room">Создать комнату</button>
 			</div>
 			<div id="lobby-right-block">
 				<span id="title-room-description">Описание</span>
 				<div id="room-description"></div>
-				<button onclick="game.getRender.showRoom()" style="font-size: 23pt; text-align: center" type="button" name="button" id="connect-room">Подключиться</button>
+				<button style="font-size: 23pt; text-align: center" type="button" name="button" id="connect-room">Подключиться</button>
 			</div>
 		</div>
 		<div id="room">
@@ -33,7 +33,7 @@
 					<div class="player-spot">
 					 	<span class="player-name">1. Hostname</span>
 						<span class="color-picker">
-							<div onclick="game.getRender.showPalette(0)" class="current-color">
+							<div class="current-color">
 								<div class="palette"></div>
 							</div>
 						</span>
@@ -41,7 +41,7 @@
 					<div class="player-spot">
 						<span class="player-name">2. Открыто</span>
 						<span class="color-picker">
-							<div onclick="game.getRender.showPalette(1)" class="current-color">
+							<div class="current-color">
 								<div class="palette"></div>
 							</div>
 						</span>
@@ -49,7 +49,7 @@
 					 <div class="player-spot">
 						<span class="player-name">3. Открыто</span>
 						<span class="color-picker">
-							<div onclick="game.getRender.showPalette(2)" class="current-color">
+							<div class="current-color">
 								<div class="palette"></div>
 							</div>
 						</span>
@@ -57,7 +57,7 @@
 					<div class="player-spot">
 						<span class="player-name">4. Открыто</span>
 						<span class="color-picker">
-							<div onclick="game.getRender.showPalette(3)" class="current-color">
+							<div class="current-color">
 								<div class="palette"></div>
 							</div>
 						</span>
@@ -68,7 +68,7 @@
 			<div id="room-right-block">
 				<div id="current-room-description">
 				</div>
-				<button onclick="beginGame()" id="play-game">Играть!</button>
+				<button id="play-game">Играть!</button>
 			</div>
 		</div>
 		</div>
@@ -142,7 +142,6 @@
 	<button onclick = "{let a = document.getElementById('choose-board'); a.style.display = a.style.display === 'none' ? 'inline-block': 'none'}">Скрыть всплывающее окно</button>
 </div>
 
-<script scr="script/lobby.js" type="text/javascript"></script>
 <script src="script/cards.json" type="text/javascript"></script>
 <script src="script/seedrandom.min.js"></script>
 <script src="script/graph.js" type="text/javascript" charset="utf-8"></script>
@@ -152,10 +151,29 @@
 <script src="script/UserAgents/LocalAgent.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/UserAgents/BotAgent.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/UserAgents/NetworkAgent.js" type="text/javascript" charset="utf-8"></script>
+<script src="script/render_lobby.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript">
 "use strict"
 
+let lobby, game = null;
+
+game = new Game();
+game.start();
+
+// document.getElementById("Log-in").onclick = function(){
+// 	let welcome = document.getElementById("welcome");
+// 	welcome.style.display = "none";
+// 	lobby = new RenderLobby();
+// };
+//
+// document.getElementById("create-room").onclick = function(){
+// 	lobby.room
+// 	console.log(room);
+// 	lobby.createRoom()};
+// document.getElementById("connect-room").onclick = function(){
+// 	let room = new RenderRoom();
+// 	lobby.connectRoom()};
 </script>
 
 </body>
