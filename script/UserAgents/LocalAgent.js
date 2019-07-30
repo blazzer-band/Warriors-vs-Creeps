@@ -30,6 +30,7 @@ class LocalAgent extends AbstractAgent{
 			clearTimeout(timeout)
 
 			callback(callb)
+			
 		}
 
 	}
@@ -44,9 +45,15 @@ class LocalAgent extends AbstractAgent{
 	}
 
 	setStacks(stacks){
-
 		game.getRender.setStacks(stacks)
 	}
 
 
+	chooseRotate(rotateArray, callback){
+		game.getRender.chooseRotate(rotateArray, callback)
+	}
+
+	selectCells(cellsArray, highlight, callback) {
+		game.getRender.selectCells(cellsArray, highlight, callback);
+	}
 }

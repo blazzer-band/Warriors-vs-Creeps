@@ -17,7 +17,7 @@ html, body{
     background-size: 90px;
 }
 img{
-    image-rendering:;
+
 }
 
 #game-map {
@@ -591,12 +591,12 @@ td {
 }
 
 #choose-board,  #message{
-  display: none;
+  display: inline-block;
   align-self: center;
-  /* visibility: hidden; */
   position: relative;
   margin: 0 auto;
   margin-top: -400px;
+  transition: opacity 0.4s ease 0s;
   border-radius: 12px;
   bottom: 300px;
   background-color: rgba(2,3,4,0.5);
@@ -608,10 +608,8 @@ td {
   font-size: 40pt;
   color: white;
   text-align: center;
-}
-
-.desk-card {
-
+  transition: opacity 0.4s ease 0s;
+  opacity: 0;
 }
 
 .round-cards {
@@ -627,7 +625,7 @@ td {
   border-radius: 7px;
 }
 
-.ok-choose {
+#ok-choose {
   /* display: none; */
   /* visibility: hidden; */
   display: block;
@@ -654,10 +652,6 @@ border: 1px solid #606d61;
 cursor: auto;
 }
 
-.desk-card {
-}
-
-.desk button {}
 
 
 
@@ -701,4 +695,55 @@ div#trackers > div {
 .stack-content > img, #hand-board > img{
   width: 100%;
   display: block;
+}
+
+
+.move-cell img {
+  outline: 5px solid #ecec56;
+  outline-offset: -5px;
+  /* position: relative; */
+  /* width: 100%; */
+  /* height: 100%; */
+  /* z-index: 5000; */
+  /* background: blue; */
+}
+.attack-cell img {
+  outline: 5px solid #fff;
+  outline-offset: -5px;
+}
+.rotate-cell img {
+  outline: 5px solid #000;
+  outline-offset: -5px;
+}
+
+
+.noDisplay{
+  display: none !important;
+}
+.help-cell img {
+  outline: 5px solid chartreuse;
+  outline-offset: -5px;
+}
+
+.escape {
+  display: inline-block;
+  height: 181px;
+  width: 35px;
+  margin-bottom: 1px;
+  margin-left: 1px;
+}
+
+.trash {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.4);
+  height: 90px;
+  width: 100%;
+  margin-bottom: 3px;
+  border-top-right-radius: 10px;
+}
+.effect {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.4);
+  height: 88px;
+  width: 100%;
 }

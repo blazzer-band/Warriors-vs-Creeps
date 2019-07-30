@@ -2,9 +2,11 @@
 
 const tileType = {Grass:0, Base:1, Runes:2, Target:3};
 const unitType = {Hero:0, Creep:1, Bomb:2};
-const cardType = {Command:0, Damage:1};
 const userType = {Human:0, Bot:1, UserAgent:2};
 const ramsType = {Hero: true, Creep: false, Bomb: true};
+
+
+
 
 
 function Game() {
@@ -26,13 +28,42 @@ function Game() {
 
 				this.agent.selectCards(cards, count, function(sels) {
 					for (let i of sels) {
-						user.hand.push(cards[i]|0);
+						user.hand.push(cards[i]);
 					}
 					user.agent.setHand(user.hand);
 					callback(sels);
-				});
+				})
 			}
+		}
 
+		chooseRotate(rotateArray){  // 1: 90,  2: 180, 3: 270(-90), 4:360
+			let user = this;
+			return new Promise(function(resolve, reject){
+				user.agent.chooseRotate(rotateArray, function(rotateId){
+
+					resolve(rotateId)
+
+				})
+			})
+		}
+
+		scrapRequest(type){
+			// Утилизация для ремонта. Утилизация огненных или металлических карт позволяет вам освободить слот от повреждения на выбор
+			// Утилизация электрических или компьютерных карт для перепрограммирования - свап 2-х активных стеков на выбор
+			let user = this;
+			return new Promise(function(resolve, reject){
+				//user
+				if(type === cardType.Fire || type === cardType.Metal){
+
+
+				}
+				else if(type === cardType.Fire || type === cardType.Metal){
+
+
+				}
+
+				resolve()
+			})
 		}
 
 		programming(callback) {
@@ -43,40 +74,36 @@ function Game() {
 			user.agent.setHand(user.hand);
 
 			// Обновить данные
-			function request(){
+			let request = function(){
 				
 
-				user.agent.programming(function(cardPosInHand, stackId){
+				user.agent.programming(async function(cardPosInHand, stackId){
 
 
 
-					if(stackId === -1){// TODO: запросить применить эффекты карты если она УТИЛИЗИРУЕТСЯ 
-						// Утилизация для ремонта. Утилизация огненных или металлических карт позволяет вам освободить слот от повреждения на выбор
-						
-						// Утилизация электрических или компьютерных карт для перепрограммирования - свап 2-х активных стеков на выбор
+					if(stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ 
 
-						// Либо ничего не делать
-						// (здесь может быть ассинхронная штука)
-
+						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
-					}
-					// добавить проверки что:
-					// нельзя ложить карту на поврежденный слот
-					// нужно удалять стек если на него легла карта другого типа
 
-					else if(user.stacks[stackId].length < 3 ){ // не больше 3 коммандных карт в слоте
+					} else if (user.stacks[stackId].length === 4) {
+						console.log("Don't push this");
+					} else if (user.stacks[stackId].length === 0 || cardsParams[user.stacks[stackId][0]].type === cardsParams[user.hand[cardPosInHand]].type) {
+						if (user.stacks[stackId].length === 3) {
+							user.stacks[stackId].pop();
+						}
 						user.stacks[stackId].push(user.hand[cardPosInHand]);
 						user.hand.splice(cardPosInHand, 1);
-					}
-					else{ // карту не удалось положить на стек, ничего не менять в слотах, но можно отправить сообщение
-
+					} else {
+						user.stacks[stackId] = [user.hand[cardPosInHand]];
+						user.hand.splice(cardPosInHand, 1);
 					}
 
 					user.agent.setStacks(user.stacks);
 					user.agent.setHand(user.hand);
 
 					if(user.hand.length > 0){
-						request(); // Защита от переполнения стека
+						setTimeout(request, 0);
 					}
 					else{
 						outCallback();
@@ -86,23 +113,23 @@ function Game() {
 			}
 			request();
 		}
+
+		async selectCells(){
+			let user = this;
+			return new Promise(function(resolve, reject){
+
+
+				resolve()
+
+
+			})
+		}
+
+
 	}
 
 
-	let users = []; // Пользователи
-	this.getUsers = users;
-	{
-		let testUserAgent = new BotAgent();
-		let testUser = new User(false);
-		testUser.agent = testUserAgent;
-		users.push(testUser);
-	}
-	{
-		let testUserAgent = new LocalAgent();
-		let testUser = new User(true);
-		testUser.agent = testUserAgent;
-		users.push(testUser);
-	}
+
 
 
 
@@ -227,9 +254,31 @@ function Game() {
 	let bombHP = 7;
 
 
+	let users = null; // Пользователи
+	// TODO: users: AbstractAgent[] array - инициализированные обьекты пользователей
+	this.start = function(newUsers){
+		users = newUsers ? newUsers : [];
 
-	// users: AbstractAgent[] array - инициализированные обьекты пользователей
-	this.start = function(){
+		{ /// временная генерация пользователей
+			let testUserAgent = new BotAgent();
+			let testUser = new User(false);
+			testUser.agent = testUserAgent;
+			users.push(testUser);
+		}
+		{
+			let testUserAgent = new LocalAgent();
+			let testUser = new User(true);
+			testUser.agent = testUserAgent;
+			users.push(testUser);
+
+			/// DEBUG
+			testUser.stacks[0] = [3, 3]
+			testUser.agent.setStacks(testUser.stacks);
+		}
+
+
+
+
 		// Генерация колоды
 		cardsDeck = [];
 		for (let card in cardsParams) {
@@ -259,6 +308,7 @@ function Game() {
 		render.initUnit(baseFree.pop().setUnit(new Unit(unitType.Bomb)));
 
 		chooseСards();
+		//warriorsAct()
 	};
 
 	function lose() {
@@ -269,8 +319,6 @@ function Game() {
 	}
 	this.lose = lose;
 
-
-	///// Ассинхронный цикл. Начало
 	function chooseСards() {
 		let isFirstRound = roundCounter === 0;
 
@@ -311,12 +359,11 @@ function Game() {
 
 	function programmingAct() { // DONE!
 		let countUsers = 0;
-
 		for (let user of users) {
 			user.programming(function() {
 				countUsers++;
 				if (countUsers === users.length) {
-					warriorsAct();
+					setTimeout(warriorsAct, 100)
 				}
 			})
 		}
@@ -327,62 +374,82 @@ function Game() {
 	function warriorsAct() {
 		// Исполняется карта, верхняя в каждом стеке в порядке игроков
 
-		function act(userId = 0) {
-			actionWarrior();
+		async function go(userId = 0) {
+
+
+
+			for (let stack of users[userId].stacks) {
+				if(stack.length === 0) continue;
+
+				await runStack(users[userId], stack)
+			}
+
+
+
+
 			if (userId + 1 < users.length) {
-				act(userId + 1);
+				go(userId + 1);
 			} else {
-				creepsMoveAct();
+				setTimeout(creepsMoveAct, 0);
 			}
 		}
-		act();
+		go()
 	}
 
-	function actionWarrior() {
-		let creepsCells = map.getAllCellHasUnits(unitType.Creep);
-		let heroCells = map.getAllCellHasUnits(unitType.Hero);
+	function runStack(user, stack){
+		let level = stack.length;
+		return new Promise(async function(resolve, reject) {
+			let cardId = stack[level - 1];
+			let card = cardsParams[cardId].levels[level-1];
 
-		let i = 0;
-		for (let cellFrom of heroCells) {
-			let next = getNextCellFromAToB(cellFrom, creepsCells[i]);
-			let to = map.moveUnitFromCellToCoords(cellFrom, next.x, next.y);
+			if(card.rotate.length !== 0){
+				let rotateAngleId = 0;
+				if(card.rotate.length > 1){
+					rotateAngleId = await user.chooseRotate(card.rotate);
+				}
+				user.angle += card.rotate[rotateAngleId] % 4;
+			}
 
-			if (to !== null) render.moveUnit(cellFrom, to);
-			i = ((i * 7) + creepsCells.length) % creepsCells.length;
-		}
+			let heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
+
+			if (card.move.length !== 0) {
+				if(card.move.length === 1){ // card.move[i] - вектор до которого идти нужно до предела
+					vectorRotate(card.move[0], user.angle)
+					//await goRamming(thisCell, endCell)
+				}
+				else{
+
+				}
+
+			}
+
+
+			/*if (card.attack.length !== 0) {
+				if(card.attack.length === 1){
+					
+				}
+				else{
+					
+				}
+
+			}*/
+
+
+			resolve();
+			// Punch
+
+		})
 	}
-	// function actionWarrior(userId) {
-	// 	for (let i = 0; i < stackCards.length; i++) {
-	// 		let power = stackCards[i].jsonOptions;
-	// 		let level = stackCards[i].level;
-	// 		let functions = power.levels[level];
-	//
-	// 		let targetCount = functions.targetCount;
-	// 		let move = functions.move;
-	// 		let attack = functions.attack;
-	// 		let rotate = functions.rotate;
-	//
-	// 		if (move.length !== 0) selectMoveCells(userId, move);
-	// 		if (attack.length !== 0) selectAttackCells(userId, attack, targetCount);
-	// 		if (rotate.length !== 0) selectRotateCells(userId, rotate);
-	// 	}
-	// }
-	//
-	// function selectMoveCells(userId, arrayMove, callback) {
-	//
-	// }
-	//
-	// function selectAttackCells (userId, arrayAttack, kills, callback) {
-	//
-	// }
-	//
-	// function selectRotateCells (userId, arrayRotate, callback) {
-	//
-	// }
+
+
+
+
 
 	// Возвращает bool удалось перейти или нет
 	function goRamming (thisCell, endCell) {
-		// толкать можно бесконечно много до упора
+		// толкать можно бесконечно много до упора только перед собой
+
+
 		// проверить есть ли позади или слева или справа бомба или герой
 		// если есть и движение > 1 клетки, предложить выбрать кого тащить
 		
@@ -443,7 +510,7 @@ function Game() {
 				}
 			}
 		}
-
+		
 
 
 		function attack(eventId = 0) {
@@ -484,7 +551,6 @@ function Game() {
 
 		setTimeout(chooseСards, 500);
 	}
-	///// Ассинхронный цикл. Конец
 
 }
 
@@ -505,7 +571,7 @@ function shakeArray(a, random) {
 	return a;
 }
 
-// Поворачивает вектор на определенный угол
+
 function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
 	for (let i = 0; i < a; i++) {
 		let c = a.x;
@@ -513,9 +579,6 @@ function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
 		a.y = -c;
 	}
 }
-
-
-
 
 //a, b - {x:X, y:Y}
 function getNextCellFromAToB(a, b){
