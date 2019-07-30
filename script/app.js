@@ -18,8 +18,6 @@ function Game() {
 			this.stacks = [[],[],[],[],[],[]]; // подмассивы - стеки, верхняя карта - последняя
 			this.agent = null;
 			this.myHero = null;
-			this.cell = {x:1, y:2};
-			this.rotate = 0;
 		}
 
 		// возвращает текущего пользователя закончившего ход
@@ -115,6 +113,19 @@ function Game() {
 			}
 			request();
 		}
+
+		async selectCells(){
+			let user = this;
+			return new Promise(function(resolve, reject){
+
+
+				resolve()
+
+
+			})
+		}
+
+
 	}
 
 
@@ -392,19 +403,18 @@ function Game() {
 			let card = cardsParams[cardId].levels[level-1];
 
 			if(card.rotate.length !== 0){
-				let rotateAngle = null;
+				let rotateAngleId = 0;
 				if(card.rotate.length > 1){
-					rotateAngle = await user.chooseRotate(card.rotate);
+					rotateAngleId = await user.chooseRotate(card.rotate);
 				}
-				else{
-					rotateAngle = card.rotate[0];
-				}
+				user.angle += card.rotate[rotateAngleId] % 4;
 			}
+
 
 			if (card.attack.length !== 0) {
 				let x = user.cell.x;
 				let y = user.cell.y;
-				let attackAngle = null;
+				let killCell = null;
 				let tmpArray = card.attack;
 				let rotate = user.rotate;
 				switch (rotate) {
@@ -413,30 +423,31 @@ function Game() {
 							point.x = x + point.x;
 							point.y = y - point.y;
 						}
-						attackAngle = await user.selectCells(tmpArray, 2);
+						killCell = await user.selectCells(tmpArray, 2);
 						break;
 					case(1):
 						for (let point of tmpArray) {
 							point.x = x + point.y;
 							point.y = y + point.x;
 						}
-						attackAngle = await user.selectCells(tmpArray, 2);
+						killCell = await user.selectCells(tmpArray, 2);
 						break;
 					case(2):
 						for (let point of tmpArray) {
 							point.x = x - point.x;
 							point.y = y + point.y;
 						}
-						attackAngle = await user.selectCells(tmpArray, 2);
+						killCell = await user.selectCells(tmpArray, 2);
 						break;
 					case(3):
 						for (let point of tmpArray) {
 							point.x = x - point.y;
 							point.y = y + point.x;
 						}
-						attackAngle = await user.selectCells(tmpArray, 2);
+						killCell = await user.selectCells(tmpArray, 2);
 						break;
 				}
+				map.moveUnitFromCellToCoords(killCell)
 			}
 
 			if (card.move.length !== 0) {
