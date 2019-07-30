@@ -469,6 +469,80 @@ td {
 	left: 60px;
 }
 
+#room{
+	position: relative;
+	width: 1200px;
+    height: 800px;
+	display: none;
+	background-color: green;
+}
+
+#room-left-block{
+	display: inline-block;
+	position: relative;
+	width: 800px;
+	height: 700px;
+	border: 1px solid black;
+}
+
+#room-right-block{
+	display: inline-block;
+	position: relative;
+	width: 300px;
+	height: 700px;
+	outline: red;
+	border: 1px solid black;
+}
+
+#players-list{
+	border: 1px solid black;
+	position: relative;
+	width: auto;
+	height: 300px;
+}
+
+
+#room-chat{
+	border: 1px solid black;
+	position: relative;
+	width: auto;
+	height: 350px;
+}
+
+#room-left-block, #room-right-block, #players-list, #room-chat{
+	margin: 1em 1em 1em;
+}
+
+.player-spot{
+	width: auto;
+	height: 20px;
+	display: inline-block;
+	font-family: sans-serif;
+	font-size: 25pt;
+}
+
+.current-color{
+	position: absolute;
+	top: 10px;
+	left: 400px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-color: white;
+}
+
+.player-spot, .player-spot-color{
+	position: relative;
+}
+
+.palette{
+	display: none;
+	position: relative;
+	top: 21px;
+	width: 20px;
+	height: 126px;
+	background-color: white;
+}
 
 /* #welcome, #room{}
 

@@ -19,18 +19,39 @@
 			<div id="lobby-left-block">
 				<span id="title-list-rooms">Список комнат</span>
 				<div id="list-rooms"></div>
-				<button style="font-size: 23pt; text-align: center" type="button" name="button" id="create-room">Создать комнату</button>
+				<button onclick="game.getRender.showRoom()" style="font-size: 23pt; text-align: center" type="button" name="button" id="create-room">Создать комнату</button>
 			</div>
 			<div id="lobby-right-block">
 				<span id="title-room-description">Описание</span>
 				<div id="room-description"></div>
-				<button style="font-size: 23pt; text-align: center" type="button" name="button" id="connect-room">Подключиться</button>
+				<button onclick="game.getRender.showRoom()" style="font-size: 23pt; text-align: center" type="button" name="button" id="connect-room">Подключиться</button>
+			</div>
+		</div>
+		<div id="room">
+			<div id="room-left-block">
+				<div id="players-list">
+					<div class="player-spot">
+					 	<span class="player-name">1. Patriach</span>
+						<span class="color-picker">
+							<div onclick="game.getRender.showPalette(0)" class="current-color">
+								<div class="palette"></div>
+							</div>
+						</span>
+					</div>
+					<div class="player-spot"></div>
+					<div class="player-spot"></div>
+					<div class="player-spot"></div>
+				</div>
+				<div id="room-chat"></div>
+			</div>
+			<div id="room-right-block">
+				<div id="current-room-description">
+				</div>
+				<button onclick="beginGame()" id="play-game">Играть!</button>
 			</div>
 		</div>
 		</div>
-		<div id="description"></div>
 	</div>
-	<div id="room"></div>
 
 <div id="content">
 	<div id="main-area">
@@ -112,9 +133,16 @@
 
 <script type="text/javascript">
 "use strict"
-
 let game = new Game();
-game.start();
+
+let beginGame = function(){
+	let content = document.getElementById("content");
+	let lobby = document.getElementById("lobby");
+	lobby.style.display = "none";
+	content.style.display = "block";
+	game.start();
+}
+
 
 </script>
 
