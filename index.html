@@ -9,6 +9,71 @@
 </head>
 <body>
 
+<div id="lobby">
+		<div id="welcome">
+			Добро пожаловать в Лобби!
+			<br>
+	        <button id="Log-in" type="button" style="width: 300px; font-size: 30pt; height: 70px; text-align: center; font-family: sans-serif">Войти!</button>
+		</div>
+		<div id="rooms">
+			<div id="lobby-left-block">
+				<span id="title-list-rooms">Список комнат</span>
+				<div id="list-rooms"></div>
+				<button  style="font-size: 23pt; text-align: center" type="button" name="button" id="create-room">Создать комнату</button>
+			</div>
+			<div id="lobby-right-block">
+				<span id="title-room-description">Описание</span>
+				<div id="room-description"></div>
+				<button style="font-size: 23pt; text-align: center" type="button" name="button" id="connect-room">Подключиться</button>
+			</div>
+		</div>
+		<div id="room">
+			<div id="room-left-block">
+				<div id="players-list">
+					<div class="player-spot">
+					 	<span class="player-name">1. Hostname</span>
+						<span class="color-picker">
+							<div class="current-color">
+								<div class="palette"></div>
+							</div>
+						</span>
+					</div>
+					<div class="player-spot">
+						<span class="player-name">2. Открыто</span>
+						<span class="color-picker">
+							<div class="current-color">
+								<div class="palette"></div>
+							</div>
+						</span>
+					</div>
+					 <div class="player-spot">
+						<span class="player-name">3. Открыто</span>
+						<span class="color-picker">
+							<div class="current-color">
+								<div class="palette"></div>
+							</div>
+						</span>
+					</div>
+					<div class="player-spot">
+						<span class="player-name">4. Открыто</span>
+						<span class="color-picker">
+							<div class="current-color">
+								<div class="palette"></div>
+							</div>
+						</span>
+					</div>
+				</div>
+				<div id="room-chat"></div>
+			</div>
+			<div id="room-right-block">
+				<div id="current-room-description">
+				</div>
+				<button id="play-game">Играть!</button>
+			</div>
+		</div>
+		</div>
+	</div>
+
 <div id="content">
 	<div id="main-area">
 		<div id="left-block">
@@ -82,24 +147,6 @@
 	<div id="message" class="noDisplay"></div>
 </div>
 
-<div id="welcome">
-	<div id="x-welcome">Welcome</div>
-	<button id="welcome-play">Play</button>
-</div>
-<div id="lobby">
-	<div id="rooms">
-		<div id="title-lobby"></div>
-		<div id="list-rooms"></div>
-		<div id="btns-actions">
-			<div id="connect"></div>
-			<div id="create"></div>
-		</div>
-	</div>
-	<div id="description"></div>
-</div>
-<div id="room"></div>
-
-
 <div class="debug-tools" style="z-index: 999999999">
 	<button type="" disabled="">Выйграть</button>
 	<button onclick = "game.lose()">Проиграть</button>
@@ -119,14 +166,30 @@
 <script src="script/UserAgents/LocalAgent.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/UserAgents/BotAgent.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/UserAgents/NetworkAgent.js" type="text/javascript" charset="utf-8"></script>
+<script src="script/render_lobby.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/cardClasses.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 "use strict"
 
-let game = new Game();
+let lobby, game = null;
+
+game = new Game();
 game.start();
 
+// document.getElementById("Log-in").onclick = function(){
+// 	let welcome = document.getElementById("welcome");
+// 	welcome.style.display = "none";
+// 	lobby = new RenderLobby();
+// };
+//
+// document.getElementById("create-room").onclick = function(){
+// 	lobby.room
+// 	console.log(room);
+// 	lobby.createRoom()};
+// document.getElementById("connect-room").onclick = function(){
+// 	let room = new RenderRoom();
+// 	lobby.connectRoom()};
 </script>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->

@@ -8,6 +8,7 @@
   -webkit-user-drag: none;
 }
 
+
 html, body{
     height: 100%;
     background: url(../src/models/xccas.png) black;
@@ -46,11 +47,12 @@ td {
 }
 
 #content {
-  /* display: inline-block; */
+  display: none;
   width: 1150px;
   margin: 0 auto;
   /* align-content: center; */
   text-align: center;
+  display: block;
 }
 
 #left-block{
@@ -163,7 +165,7 @@ td {
   font-size: 48px;
 }
 
-#kills, #hp-bomb, #timer, .hand-counter{
+#kills, #hp-bomb, #timer, .hand-counter, #connect-room, #create-coom{
   font-family: sans-serif;
 }
 
@@ -369,35 +371,203 @@ td {
   border-radius: 0  0 12px 12px;
 }
 
-#lobby, #welcome, #room {
-  width: 80%;
-  height: 80%;
+#lobby {
+  width: 1200px;
+  height: 800px;
   text-align: center;
   padding: 0;
   border: 3px double black;
   border-radius: 10px;
   color: antiquewhite;
-  background-color: aquamarine;
-  position: absolute;
-  top: 0;
+  background-color: #00000052;
+  top: -110px;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-}
-
-#welcome {
+  z-index: 20;
   display: none;
 }
 
-#x-welcome {
-  margin-top: 17%;
+#welcome {
+  display: block;
+  position: relative;
+  top: 250px;
   text-align: center;
-  font-size: 80px;
-  font-style: normal;
-  height: 60%;
-  color: orangered;
+  font-size: 75px;
+  color: #ffffff;
 }
+
+#rooms{
+	display: block;
+	position: relative;
+	display: none;
+	width: 1200px;
+	height: 800px;
+	text-align: center;
+	/* background-color: yellow; */
+}
+
+#title-list-rooms, #title-room-description{
+	font-family: sans-serif;
+	font-size: 50pt;
+	text-align: center;
+	color: #ffffff;
+	background-color: rgba(2,3,4,0.5);
+	display: block;
+}
+
+#title-room-description{
+	position: relative;
+	top: -200px;
+}
+
+#lobby-left-block, #lobby-right-block{
+	padding: 1em 1em 1em 1em
+}
+
+#lobby-left-block{
+	position: relative;
+	display: inline-block;
+	width: 600px;
+	height: 600px;
+	left: -40px;
+}
+
+#lobby-right-block{
+	position: relative;
+	display: inline-block;
+	width: 350px;
+	height: 600px;
+	top: -100px;
+}
+
+#list-rooms{
+	position: relative;
+	display: block;
+	background-color: black;
+	width: auto;
+	height: 600px;
+}
+
+#create-room{
+	position: relative;
+	width: 250px;
+	height: 55px;
+	top: 30px;
+	left: 175px;
+}
+
+#room-description{
+	position: relative;
+	width: auto;
+	height: 300px;
+	background-color: black;
+	top: -200px;
+}
+
+#connect-room{
+	position: relative;
+	width: 250px;
+	height: 55px;
+	left: 60px;
+	top: 130px;
+}
+
+#room{
+	position: relative;
+	width: 1200px;
+    height: 800px;
+	display: none;
+	/* background-color: green; */
+}
+
+#room-left-block{
+	display: inline-block;
+	position: relative;
+	width: 800px;
+	height: 700px;
+	border: 1px solid black;
+}
+
+#room-right-block{
+	display: inline-block;
+	position: relative;
+	width: 300px;
+	height: 700px;
+	outline: red;
+	border: 1px solid black;
+}
+
+#players-list{
+	border: 1px solid black;
+	position: relative;
+	width: auto;
+	height: 300px;
+}
+
+
+#room-chat{
+	border: 1px solid black;
+	position: relative;
+	width: auto;
+	height: 350px;
+}
+
+#room-left-block, #room-right-block, #players-list, #room-chat{
+	margin: 1em 1em 1em;
+}
+
+.player-spot{
+	width: 100%;
+	height: 50px;
+	display: block;
+	font-family: sans-serif;
+	font-size: 25pt;
+	border-bottom: 1px solid black;
+}
+
+.current-color{
+	position: absolute;
+	top: 10px;
+	left: 400px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-color: white;
+}
+
+.player-spot, .player-spot-color {
+	position: relative;
+}
+
+/* .player-spot{
+	display: inline;
+	width: auto;
+	height: 100px;
+} */
+
+.palette{
+	display: none;
+	position: relative;
+	top: 21px;
+	width: 20px;
+	height: 126px;
+	background-color: white;
+}
+
+#play-game{
+	width:150px;
+	height: 50px;
+	font-family: sans-serif;
+	text-align: center;
+	font-size: 30pt;
+	position: relative;
+	left: 70px;
+	top: 650px;
+}
+
+/* #welcome, #room{}
 
 #welcome-play {
   background-color: gold;
@@ -412,13 +582,9 @@ td {
   font-size: 230%;
 }
 
-#lobby {
-  display: none;
-}
-
 #room {
   display: none;
-}
+} */
 
 #game-map tbody tr {
   position: relative;
@@ -478,13 +644,15 @@ td {
 }
 
 .noActive{
-  
+
 color: #5f8468;
-  
+
 border: 1px solid #606d61;
-  
+
 cursor: auto;
 }
+
+
 
 
 #win-or-defeat{
@@ -528,6 +696,7 @@ div#trackers > div {
   width: 100%;
   display: block;
 }
+
 
 .move-cell img {
   outline: 5px solid #ecec56;

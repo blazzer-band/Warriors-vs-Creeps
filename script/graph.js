@@ -2,15 +2,14 @@ function Render() {
 
 
 	const mapBody = document.getElementById("game-map").children[0];
+
 	const handBoard = document.getElementById("hand-board")
 	const stacksParent = document.getElementsByClassName("stack-content")
 	const chooseBoard = document.getElementById("choose-board")
 	const deskCard = document.getElementById("desk-card")
 	const okChoose = document.getElementById("ok-choose")
 
-
 	const DATA_CARDS = cardsJSON;
-
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
 
 	this.renderMap = function(inputMap){
@@ -126,7 +125,7 @@ function Render() {
 		chooseBoard.classList.add('noDisplay')
 	}
 
-	
+
 	this.timerId = null;
 	this.startTimer = function(intSecond){
 		let realSecond = intSecond;
@@ -155,7 +154,7 @@ function Render() {
 			timerId = null;
 		}
 	};
-	
+
 	let cardsCounter = document.getElementById("hand-counter");
 
 	this.setHand = function(cards) {
@@ -186,11 +185,12 @@ function Render() {
 		//console.log(img.jsonOptions);
 		return img
 	}
-	
+
 	{
 		let i = 0;
 		for (let stack of stacksParent) {
 			stack.stackId = i++;
+
 			stack.addEventListener('click', function(e){
 				if(selectedHandCard !== null){
 					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId);
@@ -215,9 +215,11 @@ function Render() {
 			}
 		}
 	};
+
 	
 	const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
 	const HIGHLIGHT_STYLE = ["rotate-cell", "move-cell", "attack-cell", "help-cell"];
+
 
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/, isSelected}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
@@ -273,6 +275,14 @@ function Render() {
 		if(messageTimeout === null) messageTimeout = setTimeout(() => {messageBlock.classList.add('noDisplay'); messageTimeout =  null}, 500)
 	}
 
+
+	//Test
+	/// players -- массив игроков, состоящее из Никнейма и его ID
+	// let players = [{"Host", 0}, {"Bot", 1}];
+	//
+	// this.showPlayers = function(players){
+	//
+	// }(players)
 
 	this.updateBombCounter = function(newVal){
 		document.getElementById('hp-bomb').innerHTML = newVal
