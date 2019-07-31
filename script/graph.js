@@ -36,7 +36,7 @@ function Render() {
 		}
 	};
 
-	const UNIT_IMGS = ["src/models/hero.png", "src/models/monster.png", "src/models/bomb.png"];
+	const UNIT_IMGS = ["src/models/hero_right.png", "src/models/monster.png", "src/models/bomb.png", "src/models/hero_left.png", "src/models/hero_up.png", "src/models/hero_down.png"];
 
 	this.moveUnit = function(cellFrom, cellTo) {
 		let fromElem = mapBody.children[cellFrom.y].children[cellFrom.x];
@@ -106,7 +106,7 @@ function Render() {
 
 				if (arrayIdSelectedCards.length === count) {
 					okChoose.classList.remove("noActive")
-				} 
+				}
 				else {
 					okChoose.classList.add("noActive")
 				}
@@ -216,7 +216,7 @@ function Render() {
 		}
 	};
 
-	
+
 	//const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
 	const HIGHLIGHT_STYLE = ["rotate-cell", "move-cell", "attack-cell", "help-cell"];
 
@@ -242,7 +242,7 @@ function Render() {
 	};
 
 
-	// callback (StackIds[]) 
+	// callback (StackIds[])
 	this.selectStack = function(selectablStacks, count, callback){
 
 	}
@@ -300,7 +300,24 @@ function Render() {
 
 	//orientation: 0 - ^,  1 - >, 2 - v, 3 - <  // pos: cell.x,  cell.y
 	this.updateCellRotate = function(cell, orientation){
+		switch(orientation){
+			case 0:
+				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[4];
+				//TODO transform;
+				break;
 
+			case 1:
+				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[0];
+				break;
+
+			case 2:
+				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[5];
+				break;
+
+			case 3:
+				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[3];
+				break;
+			}
 	}
 
 

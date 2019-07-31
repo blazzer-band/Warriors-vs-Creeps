@@ -152,6 +152,7 @@
 	<button onclick = "game.lose()">Проиграть</button>
 	<button onclick = "game.getRender.stopTimer()">Бесконечный таймер</button>
 	<button onclick = "">Проматать x ходов</button>
+	<button id = "rotate">Повернуть всех воинов na 90 gradusov</button>
 	<button onclick = "{let a = document.getElementById('choose-board'); a.style.display = a.style.display === 'none' ? 'inline-block': 'none'}">Скрыть всплывающее окно</button>
 
 	<button onclick = "{let a = document.getElementById('choose-board'); a.style.display = a.style.display === 'none' ? 'inline-block': 'none'}">Скрыть всплывающее окно</button>
@@ -181,6 +182,16 @@ document.getElementById("Log-in").onclick = function(){
 	welcome.style.display = "none";
 	lobby = new RenderLobby();
 };
+
+///Test
+document.getElementById("rotate").onclick = function(){
+	console.log(game);
+	let cells = map.getAllCellHasUnits(0);
+	for (cell of cells){
+		game.getRender.updateCellRotate(cell, 0);
+	}
+	//console.log(game.getRender.updateCellRotate("Hero"));
+}
 
 document.getElementById("create-room").onclick = function(){
 	lobby.room
