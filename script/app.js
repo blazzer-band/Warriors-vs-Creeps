@@ -282,7 +282,7 @@ function Game() {
 
 			/// DEBUG
 			testUser.stacks[0] = [3, 3, 3]
-			testUser.stacks[1] = [1, 1, 1]
+			testUser.stacks[1] = [1]
 			testUser.agent.setStacks(testUser.stacks);
 		}
 
