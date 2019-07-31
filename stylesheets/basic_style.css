@@ -556,7 +556,6 @@ td {
 	background-color: white;
 }
 
-
 #play-game{
 	width:150px;
 	height: 50px;
@@ -683,29 +682,17 @@ div#trackers > div {
   box-shadow: 0 0 3pt 2pt #4aff60;
 }
 
-.stack img:nth-child(2):not(.disabled) {
+.stack img:nth-child(2) {
   margin-top: -100%
 }
-.stack img:nth-child(3):not(.disabled) {
+.stack img:nth-child(3) {
   margin-top: -100%
 }
-.stack img:nth-child(1).disabled{
-	position:relative;
-	top: -140px;
+.stack img:nth-child(4) {
+  margin-top: -100%
 }
-.stack img:nth-child(2).disabled{
-/* img.style.top = "-185px";{ */
-	position:relative;
-	top: -150px;
-}
-.stack img:nth-child(3).disabled{
-	position:relative;
-	top: -160px;
-}
-.stack img:nth-child(4).disabled{
-	position:relative;
-	top: -170px;
-}
+
+
 
 .stack-content{
   width:100%;
