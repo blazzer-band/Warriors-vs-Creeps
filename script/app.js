@@ -281,8 +281,8 @@ function Game() {
 			users.push(testUser);
 
 			/// DEBUG
-			//testUser.stacks[0] = [3, 3]
-			testUser.stacks[1] = [1, 1]
+			testUser.stacks[0] = [3, 3, 3]
+			//testUser.stacks[1] = [1, 1]
 			testUser.agent.setStacks(testUser.stacks);
 		}
 
@@ -411,16 +411,17 @@ function Game() {
 		return new Promise(async function(resolve, reject) {
 			let cardId = stack[level - 1];
 			let card = cardsParams[cardId].levels[level-1];
+			let heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
 
 			if(card.rotate.length !== 0){
 				let rotateAngleId = 0;
 				if(card.rotate.length > 1){
 					rotateAngleId = await user.chooseRotate(card.rotate);
 				}
-				user.myHero.rotation += card.rotate[rotateAngleId] % 4;
+				user.myHero.rotate(card.rotate[rotateAngleId]);
+				render.updateCellRotate(heroCell, user.myHero.rotation)
 			}
 
-			let heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
 
 			if (card.move.length !== 0) {
 				let selVect = null
