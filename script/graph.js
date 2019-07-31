@@ -33,6 +33,7 @@ function Render() {
 		for (let i = 0; i < 6; i++) {
 			stacksParent[i].stackLevel = 0;
 			stacksParent[i].stackType = null;
+			stacksParent[i].isDisabled = false;
 		}
 	};
 
@@ -323,6 +324,20 @@ function Render() {
 				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[3];
 				break;
 			}
+	}
+
+	this.setDisables = function(disablesList){
+
+		for (let i = 0; i < 6; i++){
+			// stacksParent.isDisabled = disablesList;
+			if (disablesList[i]){
+				let img = new Image();
+				img.src = "src/models/disabled.png"
+				img.className = "disabled";
+				stacksParent[i].append(img);
+				stacksParent[i].isDisabled;
+			}
+		}
 	}
 
 

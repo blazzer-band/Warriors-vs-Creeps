@@ -18,6 +18,7 @@ function Game() {
 			this.stacks = [[],[],[],[],[],[]]; // подмассивы - стеки, верхняя карта - последняя
 			this.agent = null;
 			this.myHero = null;
+			this.disables = [false, false, false, false, false, false]; // Массив Карт Повреждений
 		}
 
 		// возвращает текущего пользователя закончившего ход
@@ -72,6 +73,7 @@ function Game() {
 			let user = this;
 			user.agent.setStacks(user.stacks);
 			user.agent.setHand(user.hand);
+			render.setDisables(user.disables);
 
 			// Обновить данные
 			let request = function(){
@@ -101,6 +103,8 @@ function Game() {
 
 					user.agent.setStacks(user.stacks);
 					user.agent.setHand(user.hand);
+					render.setDisables(user.disables);
+
 
 					if(user.hand.length > 0){
 						setTimeout(request, 0);
@@ -613,7 +617,7 @@ function Game() {
 			console.log(atEv.attacked);
 
 			if (atEv.attacked.unit.type === unitType.Hero){
-				console.log("Call disable");
+				getDisable();
 			}
 
 			else if (atEv.attacked.unit.type === unitType.Bomb){
@@ -637,6 +641,13 @@ function Game() {
 		} else {
 			finalAct();
 		}
+	}
+
+	function getDisable(userID = 0){
+		//TODO: random for choosing stacks
+		//let user = this;
+		users[userID].disables[0] = true;
+		render.setDisables(users[userID].disables);
 	}
 
 
