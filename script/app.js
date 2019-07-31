@@ -75,13 +75,13 @@ function Game() {
 
 			// Обновить данные
 			let request = function(){
-				
+
 
 				user.agent.programming(async function(cardPosInHand, stackId){
 
 
 
-					if(stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ 
+					if(stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ
 
 						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
@@ -323,7 +323,7 @@ function Game() {
 		let isFirstRound = roundCounter === 0;
 
 		let selectionCards = [];
-		
+
 		let countCards = isFirstRound ? 10 : 5; // TODO: добавить еще условие для core карт
 
  		for (let i = 0; i < countCards && cardsDeck.length > 0; i++) {
@@ -424,16 +424,16 @@ function Game() {
 					let v = vectorRotate(selVect, user.angle)
 					await goRamming(user, heroCell, heroCell.x + v.x, heroCell.y + v.y);
 				}
-				
+
 			}
 
 
 			/*if (card.attack.length !== 0) {
 				if(card.attack.length === 1){
-					
+
 				}
 				else{
-					
+
 				}
 
 			}*/
@@ -528,7 +528,7 @@ function Game() {
 
 			// проверить есть ли позади или слева или справа бомба или герой
 			// если есть и движение > 1 клетки, предложить выбрать кого тащить
-			
+
 			// если тащит то расстояние движения уменьшается на 1
 
 
@@ -590,12 +590,11 @@ function Game() {
 				}
 			}
 		}
-		
+
 
 
 		function attack(eventId = 0) {
 			let atEv = attackEvent[eventId];
-
 
 			//atEv.attacking
 			//atEv.attacked
@@ -605,10 +604,18 @@ function Game() {
 			console.log(atEv.attacking);
 			console.log('напал на');
 			console.log(atEv.attacked);
-			//
-			lose();
-			return;
 
+			if (atEv.attacked.unit.type === unitType.Hero){
+				console.log("Call disable");
+			}
+
+			else if (atEv.attacked.unit.type === unitType.Bomb){
+				render.updateBombCounter(--bombHP);
+				if (bombHP === 0){
+					lose();
+					return;
+				}
+			}
 
 			if (eventId + 1 < attackEvent.length) {
 				attack(eventId + 1);
@@ -617,6 +624,7 @@ function Game() {
 			}
 
 		}
+
 		if (attackEvent.length > 0) {
 			attack();
 		} else {
