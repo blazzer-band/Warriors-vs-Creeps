@@ -218,6 +218,12 @@ function Render() {
 				if(selectedHandCard !== null) selectedHandCard.style.outline = '';
 				selectedHandCard = e.currentTarget;
 				selectedHandCard.style.outline = '2px solid yellow';
+				let test = document.getElementsByClassName("trash");
+				test[0].onclick = function(e){
+					console.log(selectedHandCard);
+					programmingCallback(selectedHandCard.idInList, -2);
+					selectedHandCard = null;
+				}
 			}
 		}
 	};
