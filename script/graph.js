@@ -348,19 +348,5 @@ function Render() {
 			}
 	}
 
-	this.setDisables = function(disablesList){
-
-		for (let i = 0; i < 6; i++){
-			// stacksParent.isDisabled = disablesList;
-			if ((disablesList[i]) && ((stacksParent[i].childNodes.length === 0) || (stacksParent[i].lastChild.className !== 'disabled'))){
-				let img = new Image();
-				img.src = "src/models/disabled.png"
-				img.className = "disabled";
-				stacksParent[i].append(img);
-				stacksParent[i].isDisabled;
-			}
-		}
-	}
-
 
 }

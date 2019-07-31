@@ -18,7 +18,6 @@ function Game() {
 			this.stacks = [[],[],[],[],[],[]]; // подмассивы - стеки, верхняя карта - последняя
 			this.agent = null;
 			this.myHero = null;
-			this.disables = [false, false, false, false, false, false]; // Массив Карт Повреждений
 		}
 
 		// возвращает текущего пользователя закончившего ход
@@ -73,7 +72,6 @@ function Game() {
 			let user = this;
 			user.agent.setStacks(user.stacks);
 			user.agent.setHand(user.hand);
-			render.setDisables(user.disables);
 
 			// Обновить данные
 			let request = function(){
@@ -107,7 +105,6 @@ function Game() {
 
 					user.agent.setStacks(user.stacks);
 					user.agent.setHand(user.hand);
-					render.setDisables(user.disables);
 
 
 					if(user.hand.length > 0){
@@ -284,6 +281,7 @@ function Game() {
 			/// DEBUG
 			testUser.stacks[0] = [3, 3, 3]
 			testUser.stacks[1] = [1]
+			testUser.stacks[2] = [5, 5, 5]
 			testUser.agent.setStacks(testUser.stacks);
 		}
 
@@ -439,16 +437,14 @@ function Game() {
 
 			}
 
+			heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
+			if (card.attack.length !== 0) {
+				await goAttack(user, heroCell, card.attack, card.targetCount);
+			}
 
-			/*if (card.attack.length !== 0) {
-				if(card.attack.length === 1){
 
-				}
-				else{
 
-				}
-
-			}*/
+			//TODO: Вызвать спец функцию карты
 
 
 			resolve();
@@ -458,14 +454,9 @@ function Game() {
 	}
 
 
-
-
-
 	// Возвращает bool удалось перейти или нет
 	function goRamming(user, thisCell, vecX, vecY) {
 		return new Promise(async function(resolve, reject){
-			// толкать можно бесконечно много до упора только перед собой
-			//resolve(); return;
 
 			let hookArray = []
 			let hookVecs = [vectorRotate({x:-1, y:0}, thisCell.unit.rotation), vectorRotate({x:0, y:-1}, thisCell.unit.rotation), vectorRotate({x:1, y:0}, thisCell.unit.rotation)]
@@ -477,25 +468,17 @@ function Game() {
 				}
 			}
 			hookArray.push(thisCell)
-
 			let unit = thisCell.unit;
 
-			if(hookArray.length !== 0 /*TODO: и сила больше 1*/){
+			if(hookArray.length !== 0){
 				hookSelect = hookArray[await user.selectCells(hookArray, higlightType.Hook)]
 				if(hookSelect !== null && hookSelect !== thisCell)
 					unit.attachedCell = hookSelect
 			}
 
-
 			let toX = thisCell.x + vecX;
 			let toY = thisCell.y + vecY;
-
-
 			let temp = Math.max(Math.abs(vecX), Math.abs(vecY))
-			//let next = {x: thisCell.x + (toX/temp)|0, y: thisCell.y + (toX/temp)|0}
-			//let tempCell = map.get(next.x, next.y)
-
-			//
 
 			// Развернутая рекурсия
 			let stack = []
@@ -531,28 +514,41 @@ function Game() {
 					next.unit.attachedCell = curCell
 				}
 
-
 				stack.push(next)
-
-
 
 			}
 			unit.attachedCell = null
-			//for
-
-
 
 			resolve();
 
 
-			// проверить есть ли позади или слева или справа бомба или герой
-			// если есть и движение > 1 клетки, предложить выбрать кого тащить
-
-			// если тащит то расстояние движения уменьшается на 1
-
-
 		})
+	}
 
+	function goAttack(user, thisCell, attackVecs, count){
+		return new Promise(async function(resolve, reject){
+			let attArray = []
+
+			for (let vec of attackVecs){
+				let dirVec = vectorRotate(vec, thisCell.unit.rotation);
+				let tempCell = map.get(dirVec.x + thisCell.x, thisCell.y - dirVec.y);
+				if(tempCell !== null && tempCell.unit !== null && tempCell.unit.type === unitType.Creep){
+					attArray.push(tempCell)
+				}
+			}
+
+			if(attArray.length <= count){
+				//если найдено больше юнитов чем нужно спросить каких нужно бить
+
+			}
+
+
+			for(let cell of attArray){
+				creepKill(cell);
+			}
+
+			resolve()
+		})
 	}
 
 	function creepKill(cell){
@@ -655,8 +651,7 @@ function Game() {
 	function getDisable(userID = 0){
 		//TODO: random for choosing stacks
 		//let user = this;
-		users[userID].disables[0] = true;
-		render.setDisables(users[userID].disables);
+		//users[userID].disables[0] = true;
 	}
 
 
