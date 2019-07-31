@@ -137,7 +137,8 @@ function Game() {
 
 
 
-	this.seedRandom = 0.5297204857065221//Math.random(); // Общее случайное число, получать его от хоста
+	//this.seedRandom = /*0.5297204857065221//*/Math.random(); // Общее случайное число, получать его от хоста
+	this.seedRandom =  0.12800927790647165 // - рядом с бомбой
 
 	const inputMap = [ // Ландшафт
 		[1, 0, 0, 0, 0, 2,  2, 0, 0, 0, 0, 0],
@@ -474,7 +475,7 @@ function Game() {
 			let unit = thisCell.unit;
 
 			if(hookArray.length !== 0 /*TODO: и сила больше 1*/){
-				hookSelect = await user.selectCells(hookArray, higlightType.Hook)
+				hookSelect = hookArray[await user.selectCells(hookArray, higlightType.Hook)]
 				if(hookSelect !== null)
 					unit.attachedCell = hookSelect
 			}
@@ -521,6 +522,7 @@ function Game() {
 				if(next.unit.attachedCell !== null) { // Если юнит кого-то тащит, то тот занимает ячейку юнита
 					map.moveUnitFromCellToCoords(next.unit.attachedCell, curCell.x, curCell.y);
 					render.moveUnit(next.unit.attachedCell, curCell)
+					next.unit.attachedCell = curCell
 				}
 
 

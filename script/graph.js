@@ -235,13 +235,14 @@ function Render() {
 			callback([]);
 		}
 		for (let cell of cellsArray) {
-			if (cell.x < 0 || cell.x > 11 || cell.y < 0 || cell.y > 5)
-				continue;
 			let cellElement = mapBody.children[cell.y].children[cell.x];
 			cellElement.classList.add(HIGHLIGHT_STYLE[highlight]);
-			cellElement.idCell = i;
+			cellElement.selectId = i
 			cellElement.onclick = function (e) {
-				callback(e.currentTarget.idCell);
+				for (let cell2 of cellsArray) {
+					mapBody.children[cell2.y].children[cell2.x].classList.remove(HIGHLIGHT_STYLE[highlight])
+				}
+				callback(e.currentTarget.selectId);
 			};
 			i++;
 		}
