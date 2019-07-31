@@ -373,13 +373,13 @@ td {
 
 #lobby {
   width: 1200px;
-  height: 800px;
+  height: 700px;
   text-align: center;
   padding: 0;
-  border: 3px double black;
+  /* border: 3px double black; */
   border-radius: 10px;
-  color: antiquewhite;
-  background-color: #00000052;
+  color: #1d1d1d;
+  background-color: #3a3c3ff7;
   top: -110px;
   bottom: 0;
   left: 0;
@@ -387,15 +387,17 @@ td {
   margin: auto;
   z-index: 20;
   /* display: none; */
+  margin-top: 10px;
 }
 
 #welcome {
   display: block;
   position: relative;
   top: 250px;
-  text-align: center;
+  /* text-align: center; */
   font-size: 75px;
-  color: #ffffff;
+  color: #efefef;
+  text-align: center;
 }
 
 #rooms{
@@ -412,14 +414,15 @@ td {
 	font-family: sans-serif;
 	font-size: 50pt;
 	text-align: center;
-	color: #ffffff;
-	background-color: rgba(2,3,4,0.5);
+	color: #dadada;
+	background-color: rgba(0, 0, 0, 0.23);
 	display: block;
+	border-radius: 40px 40px 0 0;
 }
 
 #title-room-description{
 	position: relative;
-	top: -200px;
+	/* top: -200px; */
 }
 
 #lobby-left-block, #lobby-right-block{
@@ -430,7 +433,7 @@ td {
 	position: relative;
 	display: inline-block;
 	width: 600px;
-	height: 600px;
+	height: 550px;
 	left: -40px;
 }
 
@@ -445,9 +448,10 @@ td {
 #list-rooms{
 	position: relative;
 	display: block;
-	background-color: black;
+	background-color: #1f2226;
 	width: auto;
-	height: 600px;
+	border-radius: 0 0 40px 40px;
+	height: 450px;
 }
 
 #create-room{
@@ -462,8 +466,9 @@ td {
 	position: relative;
 	width: auto;
 	height: 300px;
-	background-color: black;
-	top: -200px;
+	background-color: #1f2226;
+	/* top: -200px; */
+	border-radius: 0 0 40px 40px;
 }
 
 #connect-room{
@@ -477,7 +482,7 @@ td {
 #room{
 	position: relative;
 	width: 1200px;
-    height: 800px;
+	height: 800px;
 	display: none;
 	/* background-color: green; */
 }
@@ -487,7 +492,7 @@ td {
 	position: relative;
 	width: 800px;
 	height: 700px;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 }
 
 #room-right-block{
@@ -496,19 +501,24 @@ td {
 	width: 300px;
 	height: 700px;
 	outline: red;
-	border: 1px solid black;
+	text-align: center;
+	/* vertical-align: text-bottom; */
+	/* border: 1px solid black; */
 }
 
 #players-list{
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	position: relative;
 	width: auto;
-	height: 300px;
+	border-radius: 10px;
+	/* height: 300px; */
+	background: #ffffff;
+	padding: 10px;
 }
 
 
 #room-chat{
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	position: relative;
 	width: auto;
 	height: 350px;
@@ -520,17 +530,18 @@ td {
 
 .player-spot{
 	width: 100%;
-	height: 50px;
 	display: block;
 	font-family: sans-serif;
+	margin: 0;
 	font-size: 25pt;
-	border-bottom: 1px solid black;
+	padding: 3px;
+	/* outline: 1px solid #0000003b; */
+	border-bottom: 1px solid #888888;
 }
 
 .current-color{
-	position: absolute;
-	top: 10px;
-	left: 400px;
+	position: relative;
+	/* left: 400px; */
 	display: inline-block;
 	width: 20px;
 	height: 20px;
@@ -556,16 +567,29 @@ td {
 	background-color: white;
 }
 
+
+
+#lobby button{
+	border: none;
+	background: #e2e3e5;
+	color: #1b3043;
+	border-radius: 5px;
+}
+
 #play-game{
-	width:150px;
-	height: 50px;
+	/* bottom: 50px; */
 	font-family: sans-serif;
 	text-align: center;
 	font-size: 30pt;
 	position: relative;
-	left: 70px;
-	top: 650px;
+	/* left: 70px; */
+	padding: 10px;
+	margin: 0 auto;
+	display: inline-block;
+	background: #80e17c !important;
+	top: 550px;
 }
+
 
 /* #welcome, #room{}
 
@@ -752,4 +776,17 @@ div#trackers > div {
   background-color: rgba(255, 255, 255, 0.4);
   height: 88px;
   width: 100%;
+}
+
+.weMessage{
+    
+display: inline-block;
+    
+/* width: 100%; */
+    
+/* margin: 0 auto; */
+}
+
+.loginButton{
+	text-align: center;
 }
