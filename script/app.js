@@ -152,6 +152,7 @@ function Game() {
 		this.type = type;
 		this.rotation = 0; // 1: 90, 2: 180, 3: -90(270)
 		this.ownerUser = null;
+		this.attachedCell = null; // тот кого тащит Unit
 
 		this.rotate = function(angle){  // 1: 90, 2: 180, 3: -90(270)
 			this.rotation += angle;
@@ -275,7 +276,8 @@ function Game() {
 			users.push(testUser);
 
 			/// DEBUG
-			testUser.stacks[0] = [3, 3]
+			//testUser.stacks[0] = [3, 3]
+			testUser.stacks[1] = [1, 1]
 			testUser.agent.setStacks(testUser.stacks);
 		}
 
@@ -410,7 +412,7 @@ function Game() {
 				if(card.rotate.length > 1){
 					rotateAngleId = await user.chooseRotate(card.rotate);
 				}
-				user.angle += card.rotate[rotateAngleId] % 4;
+				user.myHero.rotation += card.rotate[rotateAngleId] % 4;
 			}
 
 			let heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
@@ -421,11 +423,11 @@ function Game() {
 					selVect = card.move[0]
 				}
 				else{
-
+					selVect = card.move[0]
 				}
 				if(selVect !== null){
-					let v = vectorRotate(selVect, user.angle)
-					await goRamming(user, heroCell, heroCell.x + v.x, heroCell.y + v.y);
+					let v = vectorRotate(selVect, user.myHero.rotation)
+					await goRamming(user, heroCell, v.x, v.y);
 				}
 
 			}
@@ -453,36 +455,75 @@ function Game() {
 
 
 	// Возвращает bool удалось перейти или нет
-	function goRamming(user, thisCell, toX, toY) {
+	function goRamming(user, thisCell, vecX, vecY) {
 		return new Promise(async function(resolve, reject){
 			// толкать можно бесконечно много до упора только перед собой
-			resolve(); return;
+			//resolve(); return;
 
 			let hookArray = []
-			let hookVecs = [vectorRotate({x:-1, y:0}, thisCell.unit.angle), vectorRotate({x:0, y:-1}, thisCell.unit.angle), vectorRotate({x:1, y:0}, thisCell.unit.angle)]
+			let hookVecs = [vectorRotate({x:-1, y:0}, thisCell.unit.rotation), vectorRotate({x:0, y:-1}, thisCell.unit.rotation), vectorRotate({x:1, y:0}, thisCell.unit.rotation)]
 			let hookSelect = null
-			for(hook of hookVecs){
+			for(let hook of hookVecs){
 				let hookTemp = map.get(thisCell.x + hook.x, thisCell.y + hook.y)
 				if(hookTemp !== null && hookTemp.hasUnit() && (hookTemp.unit.type === unitType.Hero || hookTemp.unit.type === unitType.Bomb)){
 					hookArray.push(hookTemp)
 				}
 			}
+
+			let unit = thisCell.unit;
+
 			if(hookArray.length !== 0 /*TODO: и сила больше 1*/){
 				hookSelect = await user.selectCells(hookArray, higlightType.Hook)
+				if(hookSelect !== null)
+					unit.attachedCell = hookSelect
 			}
 
 
+			let toX = thisCell.x + vecX;
+			let toY = thisCell.y + vecY;
 
 
-			let temp = Math.max(toX, toY)
+			let temp = Math.max(Math.abs(vecX), Math.abs(vecY))
 			//let next = {x: thisCell.x + (toX/temp)|0, y: thisCell.y + (toX/temp)|0}
-			let tempCell = map.get(next.x, next.y)
+			//let tempCell = map.get(next.x, next.y)
 
-			if(tempCell === null) {
-				return false
+			//
+
+			// Развернутая рекурсия
+			let stack = []
+			stack.push(thisCell) // клетка которую двигаем
+
+
+			while(stack.length !== 0){
+
+				let curCell = stack.pop();
+
+				let next = map.get((curCell.x + vecX/temp)|0, (curCell.y + vecY/temp)|0)
+
+				if(next === null || (curCell.x === toX && curCell.y === toY)) continue; /// Дальше двигаться нельзя
+
+				if(next.unit !== null && (next.unit.type === unitType.Hero || next.unit.type === unitType.Bomb)) { // Следующую можно толкать положить в стек
+					stack.push(curCell)
+					stack.push(next)
+					continue;
+				}
+
+				if(next.unit !== null && next.unit.type === unitType.Creep) creepKill(next)
+
+				map.moveUnitFromCellToCoords(curCell, next.x, next.y)
+				render.moveUnit(curCell, next)
+
+				if(next.unit.attachedCell !== null) { // Если юнит кого-то тащит, то тот занимает ячейку юнита
+					map.moveUnitFromCellToCoords(next.unit.attachedCell, curCell.x, curCell.y);
+					render.moveUnit(next.unit.attachedCell, curCell)
+				}
+
+
+
+
 			}
-
-
+			unit.attachedCell = null
+			//for
 
 
 
@@ -497,6 +538,10 @@ function Game() {
 
 		})
 
+	}
+
+	function creepKill(cell){
+		cell.unit = null;
 	}
 
 
@@ -632,6 +677,7 @@ function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
 		a.x = a.y;
 		a.y = -c;
 	}
+	return(a)
 }
 
 //a, b - {x:X, y:Y}

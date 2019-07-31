@@ -69,6 +69,10 @@ function Render() {
 		mapBody.children[cell.y].children[cell.x].appendChild(img);
 		img.style.transition = "transform .4s";
 		img.style.transform = 'scale(0)';
+
+		if(cell.unit.rotation !== null && cell.unit.type === unitType.Hero){
+			this.updateCellRotate(cell, cell.unit.rotation);
+		}
 		setTimeout(function(){
 			img.style.transform = 'scale(1)';
 		}, 0);
@@ -80,6 +84,7 @@ function Render() {
 	};
 
 	this.selectCards = function(cards, count, callback) {
+
 		programmingSession = false;
 		chooseBoard.classList.remove('noDisplay')
 
@@ -303,20 +308,20 @@ function Render() {
 	this.updateCellRotate = function(cell, orientation){
 		switch(orientation){
 			case 0:
-				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[4];
+				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[4];
 				//TODO transform;
 				break;
 
 			case 1:
-				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[0];
+				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[0];
 				break;
 
 			case 2:
-				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[5];
+				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[5];
 				break;
 
 			case 3:
-				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[3];
+				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[3];
 				break;
 			}
 	}
