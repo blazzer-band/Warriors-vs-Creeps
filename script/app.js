@@ -92,6 +92,9 @@ function Game() {
 						console.log("Don't push this");
 					} else if (user.stacks[stackId].length === 0 || cardsParams[user.stacks[stackId][0]].type === cardsParams[user.hand[cardPosInHand]].type) {
 						if (user.stacks[stackId].length === 3) {
+							for (let i = 1; i < 3; i++){
+								user.stacks[stackId][i - 1] = user.stacks[stackId][i];
+							}
 							user.stacks[stackId].pop();
 						}
 						user.stacks[stackId].push(user.hand[cardPosInHand]);
