@@ -75,6 +75,10 @@ function Render() {
 		}
 		setTimeout(function(){
 			img.style.transform = 'scale(1)';
+			setTimeout(function(){
+				img.style = ''
+			}, 500)
+			
 		}, 0);
 
 	};

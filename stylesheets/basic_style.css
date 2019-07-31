@@ -23,7 +23,7 @@ img {}
     display: table;
     width: 800px;
     height: 400px;
-    overflow: hidden;
+    /* overflow: hidden; */
     border-radius: 12px;
     image-rendering: pixelated;
 }
@@ -638,8 +638,8 @@ div#trackers>div {
 }
 
 .help-cell img {
-    outline: 5px solid chartreuse;
-    outline-offset: -5px;
+    /* outline: 5px solid chartreuse; */
+    /* outline-offset: -5px; */
 }
 
 .escape {
@@ -850,9 +850,25 @@ div#trackers>div {
     display: none !important;
 }
 
-.help-cell img {
+.help-cell img:nth-child(1) {
     outline: 5px solid chartreuse;
     outline-offset: -5px;
+    transition: box-shadow .3s;
+}
+
+.help-cell:hover img:nth-child(1) {
+    box-shadow: 0 0 2px 3px rgb(127, 255, 0);
+}
+.help-cell img:nth-child(2) {
+    transition: transform .3s;
+}
+
+.help-cell:hover img:nth-child(2) {
+    transform:scale(1.1)
+
+}
+.help-cell:hover{
+    z-index:999;
 }
 
 .escape {
