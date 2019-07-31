@@ -283,7 +283,7 @@ function Game() {
 
 			/// DEBUG
 			testUser.stacks[0] = [3, 3, 3]
-			//testUser.stacks[1] = [1, 1]
+			testUser.stacks[1] = [1, 1, 1]
 			testUser.agent.setStacks(testUser.stacks);
 		}
 
@@ -434,7 +434,7 @@ function Game() {
 				}
 				if(selVect !== null){
 					let v = vectorRotate(selVect, user.myHero.rotation)
-					await goRamming(user, heroCell, v.x, v.y);
+					await goRamming(user, heroCell, v.x, -v.y);
 				}
 
 			}
@@ -471,7 +471,7 @@ function Game() {
 			let hookVecs = [vectorRotate({x:-1, y:0}, thisCell.unit.rotation), vectorRotate({x:0, y:-1}, thisCell.unit.rotation), vectorRotate({x:1, y:0}, thisCell.unit.rotation)]
 			let hookSelect = null
 			for(let hook of hookVecs){
-				let hookTemp = map.get(thisCell.x + hook.x, thisCell.y + hook.y)
+				let hookTemp = map.get(thisCell.x + hook.x, thisCell.y - hook.y)
 				if(hookTemp !== null && hookTemp.hasUnit() && (hookTemp.unit.type === unitType.Hero || hookTemp.unit.type === unitType.Bomb)){
 					hookArray.push(hookTemp)
 				}
