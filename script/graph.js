@@ -33,6 +33,7 @@ function Render() {
 		for (let i = 0; i < 6; i++) {
 			stacksParent[i].stackLevel = 0;
 			stacksParent[i].stackType = null;
+			stacksParent[i].isDisabled = false;
 		}
 	};
 
@@ -318,6 +319,22 @@ function Render() {
 				mapBody.children[cell.y].children[cell.x].src = UNIT_IMGS[3];
 				break;
 			}
+	}
+
+	this.setDisables = function(disablesList){
+
+		for (let i = 0; i < 6; i++){
+			// Kostyl'
+			if (disablesList[i]){
+				stacksParent[i].isDisabled = true;
+				let img = new Image();
+				img.src = "src/models/disabled.png"
+				img.style.position = 'relative';
+				img.style.top = "-185px";
+				stacksParent[i].append(img);
+				stacksParent[i].isDisabled;
+			}
+		}
 	}
 
 
