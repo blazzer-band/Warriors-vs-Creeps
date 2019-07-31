@@ -6,6 +6,7 @@
   white-space: nowrap;
   user-select: none;
   -webkit-user-drag: none;
+  /* color: #111111; */
 }
 
 
@@ -380,12 +381,12 @@ td {
   border-radius: 10px;
   color: #1d1d1d;
   background-color: #3a3c3ff7;
-  top: -110px;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  /* top: -110px; */
+  /* bottom: 0; */
+  /* left: 0; */
+  /* right: 0; */
   margin: auto;
-  z-index: 20;
+  /* z-index: 20; */
   /* display: none; */
   margin-top: 10px;
 }
@@ -414,7 +415,7 @@ td {
 	font-family: sans-serif;
 	font-size: 50pt;
 	text-align: center;
-	color: #dadada;
+	color: #edecec;
 	background-color: rgba(0, 0, 0, 0.23);
 	display: block;
 	border-radius: 40px 40px 0 0;
@@ -448,7 +449,7 @@ td {
 #list-rooms{
 	position: relative;
 	display: block;
-	background-color: #1f2226;
+	background-color: #ededed;
 	width: auto;
 	border-radius: 0 0 40px 40px;
 	height: 450px;
@@ -460,13 +461,14 @@ td {
 	height: 55px;
 	top: 30px;
 	left: 175px;
+	background: antiquewhite;
 }
 
 #room-description{
 	position: relative;
 	width: auto;
 	height: 300px;
-	background-color: #1f2226;
+	background-color: #ededed;
 	/* top: -200px; */
 	border-radius: 0 0 40px 40px;
 }
@@ -499,7 +501,7 @@ td {
 	display: inline-block;
 	position: relative;
 	width: 300px;
-	height: 700px;
+	/* height: 700px; */
 	outline: red;
 	text-align: center;
 	/* vertical-align: text-bottom; */
@@ -510,9 +512,9 @@ td {
 	/* border: 1px solid black; */
 	position: relative;
 	width: auto;
-	border-radius: 10px;
+	border-radius: 5px;
 	/* height: 300px; */
-	background: #ffffff;
+	background: #e9ecee;
 	padding: 10px;
 }
 
@@ -522,6 +524,8 @@ td {
 	position: relative;
 	width: auto;
 	height: 350px;
+	background: #232527;
+	border-radius: 5px;
 }
 
 #room-left-block, #room-right-block, #players-list, #room-chat{
@@ -541,9 +545,9 @@ td {
 
 .current-color{
 	position: relative;
-	/* left: 400px; */
+	left: 200px;
 	display: inline-block;
-	width: 20px;
+	width: 50px;
 	height: 20px;
 	background-color: white;
 }
@@ -573,7 +577,7 @@ td {
 	
 border: none;
 	
-background: #e2e3e5;
+background: #ecedef;
 	
 color: #1b3043;
 	
@@ -587,11 +591,11 @@ border-radius: 5px;
 	font-size: 30pt;
 	position: relative;
 	/* left: 70px; */
-	padding: 10px;
+	padding: 10px 20px 10px 20px;
 	margin: 0 auto;
 	display: inline-block;
-	background: #80e17c !important;
-	top: 550px;
+	background: #72cf6e !important;
+	top: 530px;
 }
 
 
@@ -788,6 +792,8 @@ display: inline-block;
     
 /* width: 100%; */
     
+color: #f3f3f4;
+    
 /* margin: 0 auto; */
 }
 
@@ -802,6 +808,11 @@ text-align: center;
 	height: 55px;
 	left: 60px;
 	top: 130px;
+	/* background: aliceblue; */
+}
+.connect-room{
+	
+background: antiquewhite;
 }
 
 #room{
@@ -813,35 +824,35 @@ text-align: center;
 }
 
 #room-left-block{
-	display: inline-block;
-	position: relative;
-	width: 800px;
-	height: 700px;
-	border: 1px solid black;
+	/* display: inline-block; */
+	/* position: relative; */
+	/* width: 800px; */
+	/* height: 700px; */
+	/* border: 1px solid black; */
 }
 
 #room-right-block{
-	display: inline-block;
-	position: relative;
-	width: 300px;
-	height: 700px;
-	outline: red;
-	border: 1px solid black;
+	/* display: inline-block; */
+	/* position: relative; */
+	/* width: 300px; */
+	/* height: 700px; */
+	/* outline: red; */
+	/* border: 1px solid black; */
 }
 
 #players-list{
-	border: 1px solid black;
-	position: relative;
-	width: auto;
-	height: 300px;
+	/* border: 1px solid black; */
+	/* position: relative; */
+	/* width: auto; */
+	/* height: 300px; */
 }
 
 
 #room-chat{
-	border: 1px solid black;
-	position: relative;
-	width: auto;
-	height: 350px;
+	/* border: 1px solid black; */
+	/* position: relative; */
+	/* width: auto; */
+	/* height: 350px; */
 }
 
 #room-left-block, #room-right-block, #players-list, #room-chat{
@@ -849,22 +860,22 @@ text-align: center;
 }
 
 .player-spot{
-	width: 100%;
-	height: 50px;
-	display: block;
-	font-family: sans-serif;
-	font-size: 25pt;
-	border-bottom: 1px solid black;
+	/* width: 100%; */
+	/* height: 50px; */
+	/* display: block; */
+	/* font-family: sans-serif; */
+	/* font-size: 25pt; */
+	/* border-bottom: 1px solid black; */
 }
 
 .current-color{
-	position: absolute;
-	top: 10px;
-	left: 400px;
-	display: inline-block;
-	width: 20px;
-	height: 20px;
-	background-color: white;
+	/* position: absolute; */
+	/* top: 10px; */
+	/* left: 400px; */
+	/* display: inline-block; */
+	/* width: 20px; */
+	/* height: 20px; */
+	/* background-color: white; */
 }
 
 .player-spot, .player-spot-color {
@@ -887,14 +898,9 @@ text-align: center;
 }
 
 #play-game{
-	width:150px;
-	height: 50px;
 	font-family: sans-serif;
 	text-align: center;
 	font-size: 30pt;
-	position: relative;
-	left: 70px;
-	top: 650px;
 }
 
 
@@ -981,7 +987,7 @@ cursor: auto;
 }
 div#hand-content, #footer_footer {
     background-color: #454545;
-    background: #414141;
+    background: #3a3b3bfa;
     background-size: 90px;
     image-rendering: pixelated;
     /* background-blend-mode: saturation; */
@@ -1070,4 +1076,17 @@ div#trackers > div {
     background-size: contain;
     background-repeat: no-repeat;
     background-position-y: center;
+}
+
+.stack img:hover {
+  
+}
+
+#lobby-left-block button{
+	background-color: #99d5f4;
+}
+
+
+#lobby-right-block button{
+    background-color: #9cb6e8;
 }
