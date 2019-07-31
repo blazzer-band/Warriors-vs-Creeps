@@ -300,8 +300,14 @@ function Render() {
 	}
 
 
+	const ROTATE = {0:'360°(0°)', 1:'90°', 2:'180°', 3:'270°(-90°)', 4:'360°(0°)'}
 	this.chooseRotate = function(rotateArray, callback){ // callback(rotateIdInArray)
-		callback(prompt("Выберите вариант поворота вашего персонажа:" + rotateArray, "0")|0)
+		let s = 'Выберите вариант поворота вашего персонажа: ';
+		for (let i = 0; i < rotateArray.length; i++) {
+			s += i + ':' + ROTATE[rotateArray[i]] + ' '
+		};
+
+		callback(prompt(s, "0")|0)
 
 	}
 
