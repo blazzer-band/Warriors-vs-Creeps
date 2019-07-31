@@ -320,11 +320,11 @@ function Game() {
 		//warriorsAct()
 	};
 
-	function lose() {
+	function lose(sms = "") {
 		render.stopSelect();
 		render.stopTimer();
 		render.defeat();
-		render.showMessage("Ты проиграл, позорно!");
+		render.showMessage("Ты проиграл, позорно!<br>"+sms);
 	}
 	this.lose = lose;
 
@@ -343,7 +343,7 @@ function Game() {
 
 		function select(userId = 0) {
 			if(selectionCards.length === 0) {
-				lose();
+				lose("Карты в колоде закончились!");
 				return;
 			}
 
@@ -617,10 +617,10 @@ function Game() {
 
 			// TODO дописать атаку
 			//TEST
-			console.log(atEv.attacking);
+			/*console.log(atEv.attacking);
 			console.log('напал на');
 			console.log(atEv.attacked);
-
+*/
 			if (atEv.attacked.unit.type === unitType.Hero){
 				getDisable();
 			}
@@ -628,7 +628,7 @@ function Game() {
 			else if (atEv.attacked.unit.type === unitType.Bomb){
 				render.updateBombCounter(--bombHP);
 				if (bombHP === 0){
-					lose();
+					lose("Бомба уничтожена!!!");
 					return;
 				}
 			}
