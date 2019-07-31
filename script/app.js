@@ -474,12 +474,13 @@ function Game() {
 					hookArray.push(hookTemp)
 				}
 			}
+			hookArray.push(thisCell)
 
 			let unit = thisCell.unit;
 
 			if(hookArray.length !== 0 /*TODO: и сила больше 1*/){
 				hookSelect = hookArray[await user.selectCells(hookArray, higlightType.Hook)]
-				if(hookSelect !== null)
+				if(hookSelect !== null && hookSelect !== thisCell)
 					unit.attachedCell = hookSelect
 			}
 
