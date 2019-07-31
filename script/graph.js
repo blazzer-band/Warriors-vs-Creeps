@@ -80,7 +80,7 @@ function Render() {
 	};
 
 	this.killUnit = function(cell) {
-		mapBody.children[cell.y].children[cell.x].innerHTML = ''
+		mapBody.children[cell.y].children[cell.x].children[1].outerHTML = ''
 	};
 
 	this.selectCards = function(cards, count, callback) {
@@ -132,7 +132,7 @@ function Render() {
 	}
 
 
-	this.timerId = null;
+	let timerId = null;
 	this.startTimer = function(intSecond){
 		let realSecond = intSecond;
 		let timer = document.getElementById("timer");

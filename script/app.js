@@ -549,6 +549,7 @@ function Game() {
 
 	function creepKill(cell){
 		cell.unit = null;
+		render.killUnit(cell)
 	}
 
 
