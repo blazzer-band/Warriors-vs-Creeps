@@ -212,17 +212,22 @@ function Render() {
 		selectedHandCard = null;
 		programmingCallback = callback;
 		let i = 0;
+		let trash = document.getElementsByClassName("trash")[0];
+		let scrap = document.getElementsByClassName("effect")[0];
 		for (let card of handBoard.children) {
 			card.idInList = i++;
+			if(selectedHandCard !== null) selectedHandCard.style.outline = '';
 			card.onclick = function(e){
-				if(selectedHandCard !== null) selectedHandCard.style.outline = '';
 				selectedHandCard = e.currentTarget;
 				selectedHandCard.style.outline = '2px solid yellow';
-				let test = document.getElementsByClassName("trash");
-				test[0].onclick = function(e){
+				trash.style.display = "block";
+				scrap.style.display = "block";
+				trash.onclick = function(e){
 					console.log(selectedHandCard);
 					programmingCallback(selectedHandCard.idInList, -2);
 					selectedHandCard = null;
+					trash.style.display = "none";
+					scrap.style.display = "none";
 				}
 			}
 		}

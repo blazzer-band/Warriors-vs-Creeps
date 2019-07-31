@@ -570,10 +570,14 @@ td {
 
 
 #lobby button{
-	border: none;
-	background: #e2e3e5;
-	color: #1b3043;
-	border-radius: 5px;
+	
+border: none;
+	
+background: #e2e3e5;
+	
+color: #1b3043;
+	
+border-radius: 5px;
 }
 
 #play-game{
@@ -788,5 +792,282 @@ display: inline-block;
 }
 
 .loginButton{
-	text-align: center;
+	
+text-align: center;
+}
+
+#connect-room{
+	position: relative;
+	width: 250px;
+	height: 55px;
+	left: 60px;
+	top: 130px;
+}
+
+#room{
+	position: relative;
+	width: 1200px;
+    height: 800px;
+	display: none;
+	/* background-color: green; */
+}
+
+#room-left-block{
+	display: inline-block;
+	position: relative;
+	width: 800px;
+	height: 700px;
+	border: 1px solid black;
+}
+
+#room-right-block{
+	display: inline-block;
+	position: relative;
+	width: 300px;
+	height: 700px;
+	outline: red;
+	border: 1px solid black;
+}
+
+#players-list{
+	border: 1px solid black;
+	position: relative;
+	width: auto;
+	height: 300px;
+}
+
+
+#room-chat{
+	border: 1px solid black;
+	position: relative;
+	width: auto;
+	height: 350px;
+}
+
+#room-left-block, #room-right-block, #players-list, #room-chat{
+	margin: 1em 1em 1em;
+}
+
+.player-spot{
+	width: 100%;
+	height: 50px;
+	display: block;
+	font-family: sans-serif;
+	font-size: 25pt;
+	border-bottom: 1px solid black;
+}
+
+.current-color{
+	position: absolute;
+	top: 10px;
+	left: 400px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-color: white;
+}
+
+.player-spot, .player-spot-color {
+	position: relative;
+}
+
+/* .player-spot{
+	display: inline;
+	width: auto;
+	height: 100px;
+} */
+
+.palette{
+	display: none;
+	position: relative;
+	top: 21px;
+	width: 20px;
+	height: 126px;
+	background-color: white;
+}
+
+#play-game{
+	width:150px;
+	height: 50px;
+	font-family: sans-serif;
+	text-align: center;
+	font-size: 30pt;
+	position: relative;
+	left: 70px;
+	top: 650px;
+}
+
+
+#game-map tbody tr {
+  position: relative;
+}
+
+#choose-board,  #message{
+  display: inline-block;
+  align-self: center;
+  position: relative;
+  margin: 0 auto;
+  margin-top: -400px;
+  transition: opacity 0.4s ease 0s;
+  border-radius: 12px;
+  bottom: 300px;
+  background-color: rgba(2,3,4,0.5);
+  z-index: 12;
+  box-shadow: 0 0 24px 30px rgba(0,0,0,0.5);
+}
+
+#message {
+  font-size: 40pt;
+  color: white;
+  text-align: center;
+  transition: opacity 0.4s ease 0s;
+  opacity: 0;
+}
+
+.round-cards {
+  margin-top: 2em;
+  margin-left: 0.33em;
+  display: inline-block;
+  width: 104px;
+  height: 124px;
+}
+
+.round-cards img {
+  width: 100%;
+  border-radius: 7px;
+}
+
+#ok-choose {
+  /* display: none; */
+  /* visibility: hidden; */
+  display: block;
+  position: relative;
+  text-align: center;
+  background-color: #ffffff00;
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 15pt;
+  border: 1px solid #91e696;
+  border-radius: 10px;
+  color: #60ea7f;
+  padding: 1px 10px;
+  margin: 10px auto 0px auto;
+  cursor: pointer;
+}
+
+.noActive{
+
+color: #5f8468;
+
+border: 1px solid #606d61;
+
+cursor: auto;
+}
+
+
+
+
+#win-or-defeat{
+  position: absolute;
+  display: none;
+  margin: 0 auto;
+  /* visibility: hidden; */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(2,3,4,0.5);
+  top: 0px;
+  left: 0px;
+  z-index: 11;
+}
+div#hand-content, #footer_footer {
+    background-color: #454545;
+    background: #414141;
+    background-size: 90px;
+    image-rendering: pixelated;
+    /* background-blend-mode: saturation; */
+}
+div#trackers > div {
+    border-radius: 12px;
+}
+
+.selected-card{
+  box-shadow: 0 0 3pt 2pt #4aff60;
+}
+
+.stack img:nth-child(2) {
+  margin-top: -100%
+}
+.stack img:nth-child(3) {
+  margin-top: -100%
+}
+.stack img:nth-child(4) {
+  margin-top: -100%
+}
+
+.stack-content{
+  width:100%;
+  height:100%;
+}
+.stack-content > img, #hand-board > img{
+  width: 100%;
+  display: block;
+}
+
+
+.move-cell img {
+  outline: 5px solid #ecec56;
+  outline-offset: -5px;
+  /* position: relative; */
+  /* width: 100%; */
+  /* height: 100%; */
+  /* z-index: 5000; */
+  /* background: blue; */
+}
+.attack-cell img {
+  outline: 5px solid #fff;
+  outline-offset: -5px;
+}
+.rotate-cell img {
+  outline: 5px solid #000;
+  outline-offset: -5px;
+}
+
+
+.noDisplay{
+  display: none !important;
+}
+.help-cell img {
+  outline: 5px solid chartreuse;
+  outline-offset: -5px;
+}
+
+.escape {
+  display: inline-block;
+  height: 181px;
+  width: 35px;
+  margin-bottom: 1px;
+  margin-left: 1px;
+}
+
+.trash {
+	display: none;
+    background-color: rgba(255, 21, 21, 0.6);
+    height: 90px;
+    width: 100%;
+    margin-bottom: 3px;
+    border-top-right-radius: 10px;
+    background-image: url("../src/trash.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: center;
+}
+.effect {
+	display: none;
+    background-color: rgba(58, 255, 0, 0.6);
+    height: 88px;
+    width: 100%;
+    background-image: url("../src/models/discard-with-effect.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: center;
 }
