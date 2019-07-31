@@ -81,9 +81,10 @@ function Game() {
 
 				user.agent.programming(async function(cardPosInHand, stackId){
 
-
-
-					if(stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ
+					if (stackId === -2){ // КАРТЫ если она УТИЛИЗИРУЕТСЯ БЕЗ ЭФФЕКТА
+						user.hand.splice(cardPosInHand, 1);
+					}
+					else if (stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ С ЭФФКТОМ
 
 						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
