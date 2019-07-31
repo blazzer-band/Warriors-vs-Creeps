@@ -324,13 +324,11 @@ function Render() {
 	this.setDisables = function(disablesList){
 
 		for (let i = 0; i < 6; i++){
-			// Kostyl'
+			// stacksParent.isDisabled = disablesList;
 			if (disablesList[i]){
-				stacksParent[i].isDisabled = true;
 				let img = new Image();
 				img.src = "src/models/disabled.png"
-				img.style.position = 'relative';
-				img.style.top = "-185px";
+				img.className = "disabled";
 				stacksParent[i].append(img);
 				stacksParent[i].isDisabled;
 			}

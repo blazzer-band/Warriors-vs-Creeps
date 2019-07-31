@@ -73,6 +73,7 @@ function Game() {
 			let user = this;
 			user.agent.setStacks(user.stacks);
 			user.agent.setHand(user.hand);
+			render.setDisables(user.disables);
 
 			// Обновить данные
 			let request = function(){
@@ -102,6 +103,8 @@ function Game() {
 
 					user.agent.setStacks(user.stacks);
 					user.agent.setHand(user.hand);
+					render.setDisables(user.disables);
+
 
 					if(user.hand.length > 0){
 						setTimeout(request, 0);
