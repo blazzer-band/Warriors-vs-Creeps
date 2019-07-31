@@ -140,7 +140,8 @@ function Game() {
 
 
 
-	let seedRandom = Math.random(); // Общее случайное число, получать его от хоста
+	//this.seedRandom = /*0.5297204857065221//*/Math.random(); // Общее случайное число, получать его от хоста
+	this.seedRandom =  0.12800927790647165 // - рядом с бомбой
 
 	const inputMap = [ // Ландшафт
 		[1, 0, 0, 0, 0, 2,  2, 0, 0, 0, 0, 0],
@@ -153,7 +154,7 @@ function Game() {
 
 	function Unit(type) {
 		this.type = type;
-		this.rotation = 0; // 1: 90, 2: 180, 3: -90(270)
+		this.rotation = 1; // 1: 90, 2: 180, 3: -90(270)
 		this.ownerUser = null;
 		this.attachedCell = null; // тот кого тащит Unit
 
@@ -172,6 +173,7 @@ function Game() {
 			this.y = null;
 			this.type = null;
 			this.unit = null;
+			this.stop = false; // Проверка, можно ли продвинуть юнита вперед
 
 			this.hasUnit = function(){
 				return this.unit !== null;
@@ -244,7 +246,7 @@ function Game() {
 	}
 
 	// Инициализация
-	let random = new Math.seedrandom(seedRandom);
+	let random = new Math.seedrandom(this.seedRandom);
 	let map = new MapObject(inputMap);
 
 	const cardsParams = cardsJSON; // Описания карт
@@ -476,7 +478,7 @@ function Game() {
 			let unit = thisCell.unit;
 
 			if(hookArray.length !== 0 /*TODO: и сила больше 1*/){
-				hookSelect = await user.selectCells(hookArray, higlightType.Hook)
+				hookSelect = hookArray[await user.selectCells(hookArray, higlightType.Hook)]
 				if(hookSelect !== null)
 					unit.attachedCell = hookSelect
 			}
@@ -496,6 +498,7 @@ function Game() {
 			let stack = []
 			stack.push(thisCell) // клетка которую двигаем
 
+			let stopMatrix = createArray(map.size.x, map.size.y)
 
 			while(stack.length !== 0){
 
@@ -503,7 +506,10 @@ function Game() {
 
 				let next = map.get((curCell.x + vecX/temp)|0, (curCell.y + vecY/temp)|0)
 
-				if(next === null || (curCell.x === toX && curCell.y === toY)) continue; /// Дальше двигаться нельзя
+				if(next === null || (curCell.x === toX && curCell.y === toY) || stopMatrix[next.x][next.y] == true) { /// Дальше двигаться никак нельзя
+					stopMatrix[curCell.x][curCell.y] = true
+					continue;
+				}
 
 				if(next.unit !== null && (next.unit.type === unitType.Hero || next.unit.type === unitType.Bomb)) { // Следующую можно толкать положить в стек
 					stack.push(curCell)
@@ -519,8 +525,11 @@ function Game() {
 				if(next.unit.attachedCell !== null) { // Если юнит кого-то тащит, то тот занимает ячейку юнита
 					map.moveUnitFromCellToCoords(next.unit.attachedCell, curCell.x, curCell.y);
 					render.moveUnit(next.unit.attachedCell, curCell)
+					next.unit.attachedCell = curCell
 				}
 
+
+				stack.push(next)
 
 
 
@@ -530,7 +539,7 @@ function Game() {
 
 
 
-
+			resolve();
 
 
 			// проверить есть ли позади или слева или справа бомба или герой
@@ -545,6 +554,7 @@ function Game() {
 
 	function creepKill(cell){
 		cell.unit = null;
+		render.killUnit(cell)
 	}
 
 
@@ -675,12 +685,13 @@ function shakeArray(a, random) {
 
 
 function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
-	for (let i = 0; i < a; i++) {
-		let c = a.x;
-		a.x = a.y;
-		a.y = -c;
+	let an = {x:a.x, y:a.y}
+	for (let i = 0; i < angle; i++) {
+		let c = an.x;
+		an.x = an.y;
+		an.y = -c;
 	}
-	return(a)
+	return(an)
 }
 
 //a, b - {x:X, y:Y}
@@ -700,4 +711,20 @@ function getNextCellFromAToB(a, b){
 	if(c.x !== 0 && c.y !== 0) c.x = 0;
 
 	return vectorAdd(a, c);
+}
+
+
+//createArray(3, 2); // [new Array(2),
+                     //  new Array(2),
+                     //  new Array(2)]
+function createArray(length) {
+    var arr = new Array(length || 0),
+        i = length;
+
+    if (arguments.length > 1) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        while(i--) arr[length-1 - i] = createArray.apply(this, args);
+    }
+
+    return arr;
 }

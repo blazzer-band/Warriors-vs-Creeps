@@ -80,7 +80,7 @@ function Render() {
 	};
 
 	this.killUnit = function(cell) {
-		mapBody.children[cell.y].children[cell.x].innerHTML = ''
+		mapBody.children[cell.y].children[cell.x].children[1].outerHTML = ''
 	};
 
 	this.selectCards = function(cards, count, callback) {
@@ -132,7 +132,7 @@ function Render() {
 	}
 
 
-	this.timerId = null;
+	let timerId = null;
 	this.startTimer = function(intSecond){
 		let realSecond = intSecond;
 		let timer = document.getElementById("timer");
@@ -235,13 +235,14 @@ function Render() {
 			callback([]);
 		}
 		for (let cell of cellsArray) {
-			if (cell.x < 0 || cell.x > 11 || cell.y < 0 || cell.y > 5)
-				continue;
 			let cellElement = mapBody.children[cell.y].children[cell.x];
 			cellElement.classList.add(HIGHLIGHT_STYLE[highlight]);
-			cellElement.idCell = i;
+			cellElement.selectId = i
 			cellElement.onclick = function (e) {
-				callback(e.currentTarget.idCell);
+				for (let cell2 of cellsArray) {
+					mapBody.children[cell2.y].children[cell2.x].classList.remove(HIGHLIGHT_STYLE[highlight])
+				}
+				callback(e.currentTarget.selectId);
 			};
 			i++;
 		}
