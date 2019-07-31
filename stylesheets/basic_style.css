@@ -1077,9 +1077,22 @@ div#trackers > div {
     background-repeat: no-repeat;
     background-position-y: center;
 }
+.stack img{
+	transition: transform .3s;
+}
+.stack:hover img {
+  transform: scale(2);
+  z-index:999;
+}
+[class^='number-']{
+	transition: opacity .3s;
+}
 
-.stack img:hover {
-  
+.stack:hover [class^='number-']{
+  opacity:0;
+}
+.stack:hover{
+   z-index:999;
 }
 
 #lobby-left-block button{
