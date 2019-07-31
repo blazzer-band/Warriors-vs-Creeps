@@ -692,8 +692,6 @@ div#trackers > div {
   margin-top: -100%
 }
 
-
-
 .stack-content{
   width:100%;
   height:100%;
@@ -740,16 +738,24 @@ div#trackers > div {
 }
 
 .trash {
-  display: block;
-  background-color: rgba(255, 255, 255, 0.4);
-  height: 90px;
-  width: 100%;
-  margin-bottom: 3px;
-  border-top-right-radius: 10px;
+	display: none;
+    background-color: rgba(255, 21, 21, 0.6);
+    height: 90px;
+    width: 100%;
+    margin-bottom: 3px;
+    border-top-right-radius: 10px;
+    background-image: url("../src/trash.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: center;
 }
 .effect {
-  display: block;
-  background-color: rgba(255, 255, 255, 0.4);
-  height: 88px;
-  width: 100%;
+	display: none;
+    background-color: rgba(58, 255, 0, 0.6);
+    height: 88px;
+    width: 100%;
+    background-image: url("../src/models/discard-with-effect.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: center;
 }
