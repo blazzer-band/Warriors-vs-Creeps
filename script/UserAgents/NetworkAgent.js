@@ -8,7 +8,7 @@ class NetworkAgent extends AbstractAgent{
 		super();
 	}
 
-	selectCards(cards, count, callback){
+	selectCard(cards, callback){
 		//this.callbackSelectCards = callback
 		// Ждать изменения в Firebase, затем вернуть callback
 	}

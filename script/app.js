@@ -22,17 +22,16 @@ function Game() {
 		}
 
 		// возвращает текущего пользователя закончившего ход
-		selectCards(count, cards, callback) { // Запрос пользователю выбрать x карт
+		selectCard(cards, callback) { // Запрос пользователю выбрать x карт
 
 			if(callback !== undefined){
 				let user = this;
 
-				this.agent.selectCards(cards, count, function(sels) {
-					for (let i of sels) {
-						user.hand.push(cards[i]);
-					}
+				this.agent.selectCard(cards, function(selId) {
+					user.hand.push(cards[selId]);
+					
 					user.agent.setHand(user.hand);
-					callback(sels);
+					callback(selId);
 				})
 			}
 		}
@@ -306,7 +305,7 @@ function Game() {
 			testUser.index = 0;
 			users.push(testUser);
 		}
-		{
+/*		{
 			let testUserAgent = new LocalAgent();
 			let testUser = new User(true);
 			testUser.index = 1;
@@ -329,7 +328,7 @@ function Game() {
 			testUser.agent = testUserAgent;
 			users.push(testUser);
 			testUser.agent.setStacks(testUser.stacks);
-		}
+		}*/
 
 
 
@@ -402,13 +401,11 @@ function Game() {
 				return;
 			}
 
-			users[userId].selectCards( users.length === 1 ? (isFirstRound ? 2 : 4) : 1, selectionCards, function(selectedCards) {
+			users[userId].selectCard(selectionCards, function(selectCardId) {
 
-				for (let i = 0; i < selectedCards.length; i++) {
-					selectionCards.splice(selectedCards[i], 1);
-				}
+				selectionCards.splice(selectCardId, 1);
 
-				countGived += selectedCards.length;
+				countGived++
 
 				if (isFirstRound && countGived < (users.length * 2) || !isFirstRound && countGived < 4) {
 					select((userId + 1) % users.length);

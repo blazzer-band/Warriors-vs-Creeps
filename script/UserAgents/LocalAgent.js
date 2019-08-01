@@ -20,14 +20,15 @@ class LocalAgent extends AbstractAgent{
 		return callback;
 	}
 
-	selectCards(cards, count, callback){
-		game.getRender.startTimer(600);
-		game.getRender.selectCards(cards, count, endSelect);
+	selectCard(cards, callback){
+		game.getRender.selectCard(cards, callback); return; // DEBUG
+
+		game.getRender.selectCard(cards, endSelect);
 
 		function endSelect(){
 			game.getRender.stopSelect();
 			game.getRender.stopTimer();
-			let callbackFire = this.updateFirebase("selectCards");
+			let callbackFire = this.updateFirebase("selectCard");
 			callback(callbackFire);
 		}
 	}
@@ -51,6 +52,6 @@ class LocalAgent extends AbstractAgent{
 	}
 
 	selectCells(cellsArray, highlight, count, callback) {
-		game.getRender.selectCells(cellsArray, highlight, callback);
+		game.getRender.selectCells(cellsArray, highlight, count, callback);
 	}
 }

@@ -595,12 +595,6 @@ td {
 }
 
 
-.round-cards img {
-    width: 100%;
-    border-radius: 7px;
-}
-
-
 .noActive {
     color: #5f8468;
     border: 1px solid #606d61;
@@ -821,7 +815,7 @@ div#trackers>div {
     opacity: 0;
 }
 
-.round-cards {
+#desk-card img {
     /* margin-top: 2em; */
     margin-left: 0.33em;
     display: inline-block;
@@ -837,10 +831,6 @@ div#trackers>div {
 	color: #a2cbef;
 }
 
-.round-cards img {
-    width: 100%;
-    border-radius: 7px;
-}
 
 .ok-choose {
     display: block;

@@ -7,12 +7,8 @@ class BotAgent extends AbstractAgent{
 		super();
 	}
 
-	selectCards(cards, count, callback){
-		let out = []
-		for (var i = 0; i < count; i++) {
-			out.push(i)
-		}
-		callback(out)
+	selectCard(cards, callback){
+		callback(0)
 	}
 
 	setHand(cardIds){

@@ -91,9 +91,7 @@ function Render() {
 		mapBody.children[cell.y].children[cell.x].children[1].outerHTML = '';
 	};
 
-	this.selectCards = function(cards, count, callback) {
-
-		programmingSession = false;
+	this.selectCard = function(cards, callback) {
 		chooseBoard.classList.remove('noDisplay')
 
 		chooseBoard.style.opacity = '0';
@@ -103,29 +101,17 @@ function Render() {
 				chooseBoard.style = ''
 			}, 1000)
 		}, 0)
-		let arrayIdSelectedCards = [];
 
 		deskCard.innerHTML = '';
 		for (let i = 0; i < cards.length; i++) {
 			let img = getNewCardElem(cards[i])
-			img.className = "round-cards";
 			img.tempSelectId = i;
 			img.onclick = function(e) {
-				let card = e.currentTarget;
-				if(card.classList.contains('selected-card')){
-					card.classList.remove("selected-card");
-					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== card.tempSelectId);
+				chooseBoard.classList.add('noDisplay')
+				if (callback !== undefined) {
+					callback(e.currentTarget.tempSelectId);
 				}
-				else if (arrayIdSelectedCards.length !== count) {
-					card.classList.add("selected-card");
-					arrayIdSelectedCards.push(card.tempSelectId|0);
-				}
-
-				if (arrayIdSelectedCards.length === count) {
-					if (callback !== undefined) {
-						callback(arrayIdSelectedCards);
-					}
-				}
+				
 			}
 			deskCard.appendChild(img)
 		}
