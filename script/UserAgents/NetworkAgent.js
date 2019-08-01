@@ -6,24 +6,37 @@ class NetworkAgent extends AbstractAgent{
 
 	constructor(){
 		super();
-		this.calbselectCards = null;
-		this.Firebaseid = null;
 	}
-	
+
 	selectCards(cards, count, callback){
-		//game.getRender.selectCards(cards)
-		this.calbWAit = callback
+		//this.callbackSelectCards = callback
 		// Ждать изменения в Firebase, затем вернуть callback
+	}
 
-
+	setHand(cardIds) {
 
 	}
 
-	onFirebaseUpdate(dassad){
-		(dassadif.pole == selectCards)
-			this.calbselectCards(dassad)
+	programming(callback){
+
+	}
+
+	setStacks(stacks){
+
 	}
 
 
+	chooseRotate(rotateArray, callback){
+
+	}
+
+	selectCells(cellsArray, highlight, count, callback) {
+
+	}
+
+	// onFirebaseUpdate(dassad){
+	// 	(dassadif.pole == selectCards)
+	// 		this.calbselectCards(dassad)
+	// }
 
 }
