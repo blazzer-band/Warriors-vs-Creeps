@@ -212,8 +212,10 @@
 	// Initialize Firebase
 	firebase.initializeApp(firebaseConfig);
 	document.getElementById("Log-in").onclick = () => {
-		let provider = new firebase.auth.GoogleAuthProvider();
-		firebase.auth().signInWithPopup(provider).then(function (result) {
+		//let provider = new firebase.auth.GoogleAuthProvider();
+		let email = prompt("Введите свой Email");
+		let password = prompt("Введите свой Password");
+		firebase.auth().signInWithEmailAndPassword(email, password).then(function (result) {
 			console.log(result);
 			console.log(result.additionalUserInfo.profile.id);
 			console.log("OK!");
