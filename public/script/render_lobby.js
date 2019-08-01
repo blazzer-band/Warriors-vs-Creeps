@@ -208,7 +208,18 @@ class RenderRoom{
 		let lobby = document.getElementById("lobby");
 		lobby.style.display = "none";
 		content.style.display = "block";
-		game.start();
+		let countPlayers = 0;
+		let roomIndicator = this.roomKey;
+		let usersIndicator = [];
+		let users = db.ref('Rooms/' + roomIndicator + '/Players');
+		users.on('child_added', function (snapshot) {
+			usersIndicator.push(snapshot.key);
+			countPlayers++;
+		});
+		console.log(usersIndicator);
+		game.start(roomIndicator, usersIndicator);
+		//for all users
+		//database.ref('Rooms/' + roomTitle + '/Game/Players/' + player  + '/Action').set("start");
 	}
 
 	//exit(){}
