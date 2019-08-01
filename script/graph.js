@@ -224,13 +224,13 @@ function Render() {
 				scrap.style.display = "block";
 				trash.onclick = function(e){
 					programmingCallback(selectedHandCard.idInList, -2);
-					selectedHandCard = null;
+					//selectedHandCard = null;
 					trash.style.display = "none";
 					scrap.style.display = "none";
 				}
 				scrap.onclick = function(e){
 					programmingCallback(selectedHandCard.idInList, -1);
-					selectedHandCard = null;
+					//selectedHandCard = null;
 					trash.style.display = "none";
 					scrap.style.display = "none";
 				}

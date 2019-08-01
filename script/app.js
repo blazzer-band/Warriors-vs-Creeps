@@ -87,7 +87,7 @@ function Game() {
 
 				}
 
-				resolve()
+				resolve(true);
 			})
 		}
 
@@ -695,13 +695,14 @@ function Game() {
 		//let user = this;
 		if (damageCardsDeck !== 0){
 			let ranId = getRandomInt(random, 0, 6);
-			if (user.stacks[ranId][user.stacks.length - 1].type === cardType.Deffect){
+			if (user.stacks[ranId].length > 0 && cardsParams[user.stacks[ranId][user.stacks[randId].length - 1]].type === cardType.Deffect){
 				user.stacks[ranId].pop();
 				user.stacks[ranId].push(damageCardsDeck.pop());
 			}
 			else user.stacks[ranId].push(damageCardsDeck.pop());
 
 		}
+		user.agent.setStacks(user.stacks);
 	}
 
 
