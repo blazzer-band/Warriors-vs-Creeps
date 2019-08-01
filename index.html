@@ -199,6 +199,7 @@
 	let lobby, game = null;
 	let activeRoom = null;
 	let roomKey = null;
+	let token = 106629488860016154269;
 	// Your web app's Firebase configuration
 	var firebaseConfig = {
 		apiKey: "AIzaSyB9ky8ziEYKz2RtcQgcMsIRi2y3e_2n8bk",
@@ -213,27 +214,15 @@
 	firebase.initializeApp(firebaseConfig);
 	document.getElementById("Log-in").onclick = () => {
 		//let provider = new firebase.auth.GoogleAuthProvider();
-		let email = prompt("Введите свой Email");
-		let password = prompt("Введите свой Password");
-		firebase.auth().signInWithEmailAndPassword(email, password).then(function (result) {
-			console.log(result);
-			console.log(result.additionalUserInfo.profile.id);
-			console.log("OK!");
-			let userId = result.additionalUserInfo.profile.id;
-			let user = 'user-' + userId;
-			let email = result.additionalUserInfo.profile.email;
-			let nickname = result.additionalUserInfo.profile.given_name;
-			let db = firebase.database();
-			db.ref('Users/' + user + '/Email').set(email);
-			db.ref('Users/' + user + '/UserId').set(userId);
-			db.ref('Users/' + user + '/Nickname').set(nickname);
-			let welcome = document.getElementById("welcome");
-			welcome.style.display = "none";
-			lobby = new RenderLobby(userId);
-		}).catch(function (error) {
-			console.log(error);
-			console.log("Bad!");
-		});
+		let nickname = prompt("Введите свой Ник");
+		let userId = token;
+		let user = 'user-' + token;
+		let db = firebase.database();
+		db.ref('Users/' + user + '/UserId').set(userId);
+		db.ref('Users/' + user + '/Nickname').set(nickname);
+		let welcome = document.getElementById("welcome");
+		welcome.style.display = "none";
+		lobby = new RenderLobby(userId);
 	};
 
 	document.getElementById("create-room").onclick = function(){
