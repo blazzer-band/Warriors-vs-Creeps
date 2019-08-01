@@ -33,11 +33,10 @@ function Render() {
 		for (let i = 0; i < 6; i++) {
 			stacksParent[i].stackLevel = 0;
 			stacksParent[i].stackType = null;
-			stacksParent[i].isDisabled = false;
 		}
 	};
 
-	const UNIT_IMGS = ["src/models/hero_right.png", "src/models/monster.png", "src/models/bomb.png", "src/models/hero_left.png", "src/models/hero_up.png", "src/models/hero_down.png"];
+	const UNIT_IMGS = ["src/models/hero.png", "src/models/monster.png", "src/models/bomb.png"];
 
 	this.moveUnit = function(cellFrom, cellTo) {
 		let fromElem = mapBody.children[cellFrom.y].children[cellFrom.x];
@@ -69,26 +68,17 @@ function Render() {
 		mapBody.children[cell.y].children[cell.x].appendChild(img);
 		img.style.transition = "transform .4s";
 		img.style.transform = 'scale(0)';
-
-		if(cell.unit.rotation !== null && cell.unit.type === unitType.Hero){
-			this.updateCellRotate(cell, cell.unit.rotation);
-		}
 		setTimeout(function(){
 			img.style.transform = 'scale(1)';
-			setTimeout(function(){
-				img.style = ''
-			}, 500)
-
 		}, 0);
 
 	};
 
 	this.killUnit = function(cell) {
-		mapBody.children[cell.y].children[cell.x].children[1].outerHTML = '';
+		mapBody.children[cell.y].children[cell.x].innerHTML = ''
 	};
 
 	this.selectCards = function(cards, count, callback) {
-
 		programmingSession = false;
 		chooseBoard.classList.remove('noDisplay')
 
@@ -116,7 +106,7 @@ function Render() {
 
 				if (arrayIdSelectedCards.length === count) {
 					okChoose.classList.remove("noActive")
-				}
+				} 
 				else {
 					okChoose.classList.add("noActive")
 				}
@@ -136,7 +126,7 @@ function Render() {
 	}
 
 
-	let timerId = null;
+	this.timerId = null;
 	this.startTimer = function(intSecond){
 		let realSecond = intSecond;
 		let timer = document.getElementById("timer");
@@ -200,20 +190,17 @@ function Render() {
 		let i = 0;
 		for (let stack of stacksParent) {
 			stack.stackId = i++;
+
 			stack.addEventListener('click', function(e){
 				if(selectedHandCard !== null){
 					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId);
 					selectedHandCard = null;
-					trash.style.display = "none";
-					scrap.style.display = "none";
 				}
 			})
 		}
 	}
 	let selectedHandCard = null;
 	let programmingCallback = null;
-	let trash = document.getElementsByClassName("trash")[0];
-	let scrap = document.getElementsByClassName("effect")[0];
 	// callback принимает номер карты в руке и номер стека
 	this.programming = function(callback) {
 		selectedHandCard = null;
@@ -222,28 +209,14 @@ function Render() {
 		for (let card of handBoard.children) {
 			card.idInList = i++;
 			card.onclick = function(e){
-				if (selectedHandCard !== null) selectedHandCard.style.outline = '';
+				if(selectedHandCard !== null) selectedHandCard.style.outline = '';
 				selectedHandCard = e.currentTarget;
 				selectedHandCard.style.outline = '2px solid yellow';
-				trash.style.display = "block";
-				scrap.style.display = "block";
-				trash.onclick = function(e){
-					programmingCallback(selectedHandCard.idInList, -2);
-					selectedHandCard = null;
-					trash.style.display = "none";
-					scrap.style.display = "none";
-				}
-				scrap.onclick = function(e){
-					programmingCallback(selectedHandCard.idInList, -1);
-					selectedHandCard = null;
-					trash.style.display = "none";
-					scrap.style.display = "none";
-				}
 			}
 		}
 	};
 
-
+	
 	//const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
 	const HIGHLIGHT_STYLE = ["rotate-cell", "move-cell", "attack-cell", "help-cell"];
 
@@ -256,21 +229,20 @@ function Render() {
 			callback([]);
 		}
 		for (let cell of cellsArray) {
+			if (cell.x < 0 || cell.x > 11 || cell.y < 0 || cell.y > 5)
+				continue;
 			let cellElement = mapBody.children[cell.y].children[cell.x];
 			cellElement.classList.add(HIGHLIGHT_STYLE[highlight]);
-			cellElement.selectId = i
+			cellElement.idCell = i;
 			cellElement.onclick = function (e) {
-				for (let cell2 of cellsArray) {
-					mapBody.children[cell2.y].children[cell2.x].classList.remove(HIGHLIGHT_STYLE[highlight])
-				}
-				callback(e.currentTarget.selectId);
+				callback(e.currentTarget.idCell);
 			};
 			i++;
 		}
 	};
 
 
-	// callback (StackIds[])
+	// callback (StackIds[]) 
 	this.selectStack = function(selectablStacks, count, callback){
 
 	}
@@ -321,37 +293,14 @@ function Render() {
 	}
 
 
-	const ROTATE = {0:'360°(0°)', 1:'90°', 2:'180°', 3:'270°(-90°)', 4:'360°(0°)'}
 	this.chooseRotate = function(rotateArray, callback){ // callback(rotateIdInArray)
-		let s = 'Выберите вариант поворота вашего персонажа: ';
-		for (let i = 0; i < rotateArray.length; i++) {
-			s += i + ':' + ROTATE[rotateArray[i]] + ' '
-		};
-
-		callback(prompt(s, "0")|0)
+		callback(prompt("Выберите вариант поворота вашего персонажа:" + rotateArray, "0")|0)
 
 	}
 
 	//orientation: 0 - ^,  1 - >, 2 - v, 3 - <  // pos: cell.x,  cell.y
 	this.updateCellRotate = function(cell, orientation){
-		switch(orientation){
-			case 0:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[4];
-				//TODO transform;
-				break;
 
-			case 1:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[0];
-				break;
-
-			case 2:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[5];
-				break;
-
-			case 3:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[3];
-				break;
-			}
 	}
 
 
