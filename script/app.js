@@ -299,7 +299,7 @@ function Game() {
 		users = newUsers ? newUsers : [];
 
 		{ /// временная генерация пользователей
-			let testUserAgent = new BotAgent();
+			let testUserAgent = new LocalAgent();
 			let testUser = new User(false);
 			testUser.agent = testUserAgent;
 			users.push(testUser);
@@ -408,15 +408,42 @@ function Game() {
 
 
 	function programmingAct() { // DONE!
-		let countUsers = 0;
-		for (let user of users) {
-			user.programming(function() {
-				countUsers++;
-				if (countUsers === users.length) {
-					setTimeout(warriorsAct, 100)
+		
+		let local = [];
+		let noLocal = [];
+		for (let i = 0; i < users.length; i++) { // Получить локальных
+			if(users[i].agent.constructor.name == 'LocalAgent') local.push(i);
+			else noLocal.Push(i);
+		}
+
+		let countNoLocal = 0;
+		let countLocal = 0;
+		let isEnd = true
+		for (let i of noLocal) {
+			users[i].programming(function() {
+				countNoLocal++;
+				if (countNoLocal === noLocal.length && countLocal === local.length && isEnd) {
+					isEnd = false
+					setTimeout(warriorsAct, 0)
 				}
 			})
 		}
+
+		function localProg(userLocalInd = 0){
+			users[local[userLocalInd]].programming(function() {
+				countLocal++;
+
+				if (userLocalInd + 1 < local.length) {
+					localProg(userLocalInd + 1);
+				} 
+				else if(countNoLocal === noLocal.length && isEnd){
+					isEnd = false
+					setTimeout(warriorsAct, 0);
+				}
+			})
+		}
+		localProg() //доделать
+
 	}
 
 
