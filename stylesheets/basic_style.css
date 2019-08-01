@@ -752,6 +752,12 @@ div#trackers>div {
     height: 124px;
 }
 
+.urls {
+	font-size: 18pt;
+	width: auto;
+	text-align: center;
+}
+
 .round-cards img {
     width: 100%;
     border-radius: 7px;

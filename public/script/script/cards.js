@@ -336,10 +336,5 @@ const cardsJSON = [
 				rotate:[]
 			}
 		]
-	},
-	{
-		name: "Disable test",
-		type: cardType.Defect,
-		effects: ["Go left"],
-	},
+	}
 ]

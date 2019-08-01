@@ -1,0 +1,51 @@
+{
+  "Games" : {
+    "game1" : {
+      "GameId" : 228228,
+      "Players" : {
+        "player1" : {
+          "Nickname" : "Nick",
+          "UserId" : 12020292
+        },
+        "player2" : {
+          "Nickname" : "Mick",
+          "UserId" : 12020294
+        }
+      }
+    }
+  },
+  "Rooms" : {
+    "room1" : {
+      "Players" : {
+        "player1" : {
+          "Email" : "nick123@gmail.com",
+          "Nickname" : "Nick",
+          "UserId" : 12020292
+        }
+      },
+      "RoomId" : 228228
+    },
+    "room2" : {
+      "Players" : {
+        "player1" : {
+          "Email" : "mick123@gmail.com",
+          "Nickname" : "Mick",
+          "UserId" : 12020294
+        }
+      },
+      "RoomId" : 4634633
+    }
+  },
+  "Users" : {
+    "user1" : {
+      "Email" : "nick123@gmail.com",
+      "Nickname" : "Nick",
+      "UserId" : 12020292
+    },
+    "user2" : {
+      "Email" : "mick123@gmail.com",
+      "Nickname" : "Mick",
+      "UserId" : 12020294
+    }
+  }
+}
