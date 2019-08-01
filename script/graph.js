@@ -80,7 +80,7 @@ function Render() {
 	};
 
 	this.killUnit = function(cell) {
-		mapBody.children[cell.y].children[cell.x].children[1].outerHTML = ''
+		mapBody.children[cell.y].children[cell.x].children[1].outerHTML = '';
 	};
 
 	this.selectCards = function(cards, count, callback) {
@@ -196,35 +196,41 @@ function Render() {
 		let i = 0;
 		for (let stack of stacksParent) {
 			stack.stackId = i++;
-
 			stack.addEventListener('click', function(e){
 				if(selectedHandCard !== null){
 					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId);
 					selectedHandCard = null;
+					trash.style.display = "none";
+					scrap.style.display = "none";
 				}
 			})
 		}
 	}
 	let selectedHandCard = null;
 	let programmingCallback = null;
+	let trash = document.getElementsByClassName("trash")[0];
+	let scrap = document.getElementsByClassName("effect")[0];
 	// callback принимает номер карты в руке и номер стека
 	this.programming = function(callback) {
 		selectedHandCard = null;
 		programmingCallback = callback;
 		let i = 0;
-		let trash = document.getElementsByClassName("trash")[0];
-		let scrap = document.getElementsByClassName("effect")[0];
 		for (let card of handBoard.children) {
 			card.idInList = i++;
-			if(selectedHandCard !== null) selectedHandCard.style.outline = '';
 			card.onclick = function(e){
+				if (selectedHandCard !== null) selectedHandCard.style.outline = '';
 				selectedHandCard = e.currentTarget;
 				selectedHandCard.style.outline = '2px solid yellow';
 				trash.style.display = "block";
 				scrap.style.display = "block";
 				trash.onclick = function(e){
-					console.log(selectedHandCard);
 					programmingCallback(selectedHandCard.idInList, -2);
+					selectedHandCard = null;
+					trash.style.display = "none";
+					scrap.style.display = "none";
+				}
+				scrap.onclick = function(e){
+					programmingCallback(selectedHandCard.idInList, -1);
 					selectedHandCard = null;
 					trash.style.display = "none";
 					scrap.style.display = "none";
@@ -344,19 +350,19 @@ function Render() {
 			}
 	}
 
-	this.setDisables = function(disablesList){
-
-		for (let i = 0; i < 6; i++){
-			// stacksParent.isDisabled = disablesList;
-			if ((disablesList[i]) && ((stacksParent[i].childNodes.length === 0) || (stacksParent[i].lastChild.className !== 'disabled'))){
-				let img = new Image();
-				img.src = "src/models/disabled.png"
-				img.className = "disabled";
-				stacksParent[i].append(img);
-				stacksParent[i].isDisabled;
-			}
-		}
-	}
+	// this.setDisables = function(disablesList){
+	//
+	// 	for (let i = 0; i < 6; i++){
+	// 		// stacksParent.isDisabled = disablesList;
+	// 		if ((disablesList[i]) && ((stacksParent[i].childNodes.length === 0) || (stacksParent[i].lastChild.className !== 'disabled'))){
+	// 			let img = new Image();
+	// 			img.src = "src/models/disabled.png"
+	// 			img.className = "disabled";
+	// 			stacksParent[i].append(img);
+	// 			stacksParent[i].isDisabled;
+	// 		}
+	// 	}
+	// }
 
 
 }

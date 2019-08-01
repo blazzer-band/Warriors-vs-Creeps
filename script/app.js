@@ -84,7 +84,7 @@ function Game() {
 					if (stackId === -2){ // КАРТЫ если она УТИЛИЗИРУЕТСЯ БЕЗ ЭФФЕКТА
 						user.hand.splice(cardPosInHand, 1);
 					}
-					else if (stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ С ЭФФКТОМ
+					else if (stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ С ЭФФEКТОМ
 
 						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
@@ -262,6 +262,7 @@ function Game() {
 	const cardsCount = 96;
 	let cardsDeck = null; // Колода карт по 8 карт
 	let bombHP = 7;
+	let killsCount = 0;
 
 
 	let users = null; // Пользователи
@@ -292,9 +293,9 @@ function Game() {
 
 		// Генерация колоды
 		cardsDeck = [];
-		for (let card in cardsParams) {
+		for (let i = 0; i < 12; i++) {
 			for (let i = 0; i < (cardsCount/cardsParams.length)|0; i++) {
-				cardsDeck.push(card);
+				cardsDeck.push(i);
 			}
 		}
 		shakeArray(cardsDeck, random);
@@ -558,6 +559,7 @@ function Game() {
 	function creepKill(cell){
 		cell.unit = null;
 		render.killUnit(cell)
+		render.updateKillsCounter(++killsCount);
 	}
 
 
