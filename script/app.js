@@ -118,12 +118,12 @@ function Game() {
 			}
 			request();
 		}
-
-		async selectCells(cellsArray, highlight){ //
+		// const HIGHLIGHT_STYLE = ["rotate-cell", "move-cell", "attack-cell", "help-cell"];
+		async selectCells(cellsArray, highlight, count = 1){ //
 			let user = this;
 			return new Promise(function(resolve, reject){
-				user.agent.selectCells(cellsArray, highlight, function(selSell){
-					resolve(selSell)
+				user.agent.selectCells(cellsArray, highlight, count, function(selSellsId){
+					resolve(selSellsId)
 				})
 			})
 		}
@@ -424,11 +424,11 @@ function Game() {
 
 			if (card.move.length !== 0) {
 				let selVect = null
-				if(card.move.length === 1){ // card.move[i] - вектор до которого идти нужно до предела
+				if(card.move.length === 1){ // card.move[i] - вектор в конец которого нужно дойти
 					selVect = card.move[0]
 				}
 				else{
-					selVect = card.move[0]
+					selVect = card.move[0] //TODO: Спросить в какую сторону идти
 				}
 				if(selVect !== null){
 					let v = vectorRotate(selVect, user.myHero.rotation)
@@ -448,7 +448,6 @@ function Game() {
 
 
 			resolve();
-			// Punch
 
 		})
 	}
@@ -471,7 +470,7 @@ function Game() {
 			let unit = thisCell.unit;
 
 			if(hookArray.length !== 0){
-				hookSelect = hookArray[await user.selectCells(hookArray, higlightType.Hook)]
+				hookSelect = hookArray[await user.selectCells(hookArray, higlightType.Hook, 1)]
 				if(hookSelect !== null && hookSelect !== thisCell)
 					unit.attachedCell = hookSelect
 			}
@@ -537,13 +536,20 @@ function Game() {
 				}
 			}
 
-			if(attArray.length <= count){
-				//если найдено больше юнитов чем нужно спросить каких нужно бить
-
+			let attCells = []
+			if(attArray.length > count){
+				//если найдено больше юнитов чем нужно, спросить каких нужно бить
+				let atIds = await user.selectCells(attArray, higlightType.Attack, count)
+				for(let atId of atIds){
+					attCells.push(attArray[atId]);
+				}
+			}
+			else{
+				attCells = attArray
 			}
 
 
-			for(let cell of attArray){
+			for(let cell of attCells){
 				creepKill(cell);
 			}
 
@@ -612,15 +618,7 @@ function Game() {
 		function attack(eventId = 0) {
 			let atEv = attackEvent[eventId];
 
-			//atEv.attacking
-			//atEv.attacked
 
-			// TODO дописать атаку
-			//TEST
-			/*console.log(atEv.attacking);
-			console.log('напал на');
-			console.log(atEv.attacked);
-*/
 			if (atEv.attacked.unit.type === unitType.Hero){
 				getDisable();
 			}

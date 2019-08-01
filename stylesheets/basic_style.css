@@ -509,20 +509,6 @@ td {
     position: relative;
 }
 
-#choose-board,
-#message {
-    display: inline-block;
-    align-self: center;
-    position: relative;
-    margin: 0 auto;
-    margin-top: -400px;
-    transition: opacity 0.4s ease 0s;
-    border-radius: 12px;
-    bottom: 300px;
-    background-color: rgba(2, 3, 4, 0.5);
-    z-index: 12;
-    box-shadow: 0 0 24px 30px rgba(0, 0, 0, 0.5);
-}
 
 #message {
     font-size: 40pt;
@@ -532,34 +518,12 @@ td {
     opacity: 0;
 }
 
-.round-cards {
-    margin-top: 2em;
-    margin-left: 0.33em;
-    display: inline-block;
-    width: 104px;
-    height: 124px;
-}
 
 .round-cards img {
     width: 100%;
     border-radius: 7px;
 }
 
-#ok-choose {
-    display: block;
-    position: relative;
-    text-align: center;
-    background-color: #ffffff00;
-    font-family: sans-serif;
-    font-weight: 600;
-    font-size: 15pt;
-    border: 1px solid #91e696;
-    border-radius: 10px;
-    color: #60ea7f;
-    padding: 1px 10px;
-    margin: 10px auto 0px auto;
-    cursor: pointer;
-}
 
 .noActive {
     color: #5f8468;
@@ -735,7 +699,42 @@ div#trackers>div {
     background-color: rgba(2, 3, 4, 0.5);
     z-index: 12;
     box-shadow: 0 0 24px 30px rgba(0, 0, 0, 0.5);
+    
 }
+
+#choose-board{
+    opacity: .1;
+}
+#choose-board:hover{
+    opacity: 1;
+}
+
+#choose-board:hover .ok-choose{
+    opacity:.3;
+}
+.ok-choose{
+    transition: opacity .2s;
+}
+
+.desk:hover .ok-choose{
+     opacity:1 !important;
+}
+
+#desk-card img{
+    transition:transform .2s;
+}
+
+#desk-card img:hover{
+    transform: scale(2.3);
+}
+
+.desk *{
+    z-index: 0;
+}
+.desk{
+    padding:14px 0;
+}
+
 
 #message {
     font-size: 40pt;
@@ -746,7 +745,7 @@ div#trackers>div {
 }
 
 .round-cards {
-    margin-top: 2em;
+    /* margin-top: 2em; */
     margin-left: 0.33em;
     display: inline-block;
     width: 104px;
@@ -758,26 +757,36 @@ div#trackers>div {
     border-radius: 7px;
 }
 
-#ok-choose {
+.ok-choose {
     display: block;
     position: relative;
     text-align: center;
     background-color: #ffffff00;
     font-family: sans-serif;
     font-weight: 600;
-    font-size: 15pt;
+    font-size: 16pt;
     border: 1px solid #91e696;
     border-radius: 10px;
     color: #60ea7f;
-    padding: 1px 10px;
-    margin: 10px auto 0px auto;
+    padding: 5px 20px;
+    margin: 0 auto;
     cursor: pointer;
+    transition: background-color .2s, color .2s;
+    background-color:#60ea7f57;
+}
+.ok-choose:not(.noActive):hover{
+    opacity:1;
+    border: 1px solid #464646;
+    border-radius: 10px;
+    color: #3a3a3a;
+    background-color:#60ea7f;
 }
 
 .noActive {
     color: #5f8468;
     border: 1px solid #606d61;
     cursor: auto;
+    background-color:#00000000;
 }
 
 #win-or-defeat {

@@ -95,6 +95,9 @@ function Render() {
 		chooseBoard.style.opacity = '0';
 		setTimeout(function(){
 			chooseBoard.style.opacity = '1';
+			setTimeout(function(){
+				chooseBoard.style = ''
+			}, 1000)
 		}, 0)
 		let arrayIdSelectedCards = [];
 
@@ -244,7 +247,8 @@ function Render() {
 
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/, isSelected}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
-	this.selectCells = function(cellsArray, highlight, callback) {
+	this.selectCells = function(cellsArray, highlight, count, callback) {
+
 		let i = 0;
 		if (cellsArray.length === 0) {
 			callback([]);
