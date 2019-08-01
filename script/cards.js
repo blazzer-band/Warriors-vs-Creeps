@@ -338,7 +338,7 @@ const cardsJSON = [
 		]
 	},
 	{
-		name: "Disable test",
+		name: "Move left disable",
 		type: cardType.Deffect,
 		effects: [],
 		levels: [
@@ -363,6 +363,99 @@ const cardsJSON = [
 			{// 4 Уровень
 				targetCount: 0,
 				move:[{x:-1,y:0}],
+				attack: [],
+				rotate:[]
+			},
+		]
+	},
+	{
+		name: "Move backward disable",
+		type: cardType.Deffect,
+		effects: [],
+		levels: [
+			{// 1 Уровень
+				targetCount: 0,
+				move:[{x:0,y:-1}],
+				attack: [],
+				rotate:[]
+			},
+			{// 2 Уровень
+				targetCount: 0,
+				move:[{x:0,y:-1}],
+				attack: [],
+				rotate:[]
+			},
+			{// 3 Уровень
+				targetCount: 0,
+				move:[{x:0,y:-1}],
+				attack: [],
+				rotate:[]
+			},
+			{// 4 Уровень
+				targetCount: 0,
+				move:[{x:0,y:-1}],
+				attack: [],
+				rotate:[]
+			},
+		]
+	},
+	{
+		name: "Move forward disable",
+		type: cardType.Deffect,
+		effects: [],
+		levels: [
+			{// 1 Уровень
+				targetCount: 0,
+				move:[{x:0,y:1}],
+				attack: [],
+				rotate:[]
+			},
+			{// 2 Уровень
+				targetCount: 0,
+				move:[{x:0,y:1}],
+				attack: [],
+				rotate:[]
+			},
+			{// 3 Уровень
+				targetCount: 0,
+				move:[{x:0,y:1}],
+				attack: [],
+				rotate:[]
+			},
+			{// 4 Уровень
+				targetCount: 0,
+				move:[{x:0,y:1}],
+				attack: [],
+				rotate:[]
+			},
+		]
+	},
+	{
+		name: "Move right disable",
+		type: cardType.Deffect,
+		effects: [],
+		levels: [
+			{// 1 Уровень
+				targetCount: 0,
+				move:[{x:1,y:0}],
+				attack: [],
+				rotate:[]
+			},
+			{// 2 Уровень
+				targetCount: 0,
+				move:[{x:1,y:0}],
+				attack: [],
+				rotate:[]
+			},
+			{// 3 Уровень
+				targetCount: 0,
+				move:[{x:1,y:0}],
+				attack: [],
+				rotate:[]
+			},
+			{// 4 Уровень
+				targetCount: 0,
+				move:[{x:1,y:0}],
 				attack: [],
 				rotate:[]
 			},

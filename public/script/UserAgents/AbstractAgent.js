@@ -8,29 +8,36 @@
 class AbstractAgent{
 
 	constructor(){
+		this.callbackSelectCards = null;
+		this.callbackProgramming = null;
+		this.callbackWarriorAct = null;
+		this.callbackCreepsAct = null;
 	}
 
 
-	// callback(cardsIds[])
 	selectCards(cards, count, callback){
-		
-		
+
 	}
 
+	setHand(cardIds) {
+
+	}
 
 	programming(callback){
 
+	}
+
+	setStacks(stacks){
 
 	}
 
 
-	SelectCells(cellsArray, callback){
-
+	chooseRotate(rotateArray, callback){
 
 	}
 
+	selectCells(cellsArray, highlight, count, callback) {
 
-
-
+	}
 
 }

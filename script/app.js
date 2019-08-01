@@ -323,7 +323,7 @@ function Game() {
 		// Генерация колоды c командными картами
 		cardsDeck = [];
 		for (let i = 0; i < 12; i++) {
-			for (let j = 0; j < (cardsCount/(cardsParams.length - 1))|0; j++) {
+			for (let j = 0; j < (cardsCount/(cardsParams.length - 2))|0; j++) {
 				cardsDeck.push(i);
 			}
 		}
@@ -331,8 +331,8 @@ function Game() {
 
 		// Генерация колоды с картами повреждений
 		damageCardsDeck = [];
-		for (let i = 0; i < 55; i++){
-			for (let j = 12; j < 13; j++){
+		for (let i = 0; i < 13; i++){
+			for (let j = 12; j < 16; j++){
 				damageCardsDeck.push(j);
 			}
 		}
