@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Warriors vs Creeps</title>
-  <link rel="shortcut icon" href="favicon.png" type="image/png">
-  <link href="stylesheets/basic_style.css" rel="stylesheet">
-  <link href="stylesheets/mobile_style.css" rel="stylesheet">
-  <!-- update the version number as needed -->
-  <script defer src="/__/firebase/6.3.3/firebase-app.js"></script>
-  <!-- include only the Firebase features as you need -->
-  <script defer src="/__/firebase/6.3.3/firebase-auth.js"></script>
-  <script defer src="/__/firebase/6.3.3/firebase-database.js"></script>
-  <script defer src="/__/firebase/6.3.3/firebase-messaging.js"></script>
-  <script defer src="/__/firebase/6.3.3/firebase-storage.js"></script>
-  <!-- initialize the SDK after all desired features are loaded -->
-  <script defer src="/__/firebase/init.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Warriors vs Creeps</title>
+	<link rel="shortcut icon" href="../favicon.png" type="image/png">
+	<link href="../stylesheets/basic_style.css" rel="stylesheet">
+	<link href="../stylesheets/mobile_style.css" rel="stylesheet">
+	<!-- update the version number as needed -->
+	<script defer src="/__/firebase/6.3.3/firebase-app.js"></script>
+	<!-- include only the Firebase features as you need -->
+	<script defer src="/__/firebase/6.3.3/firebase-auth.js"></script>
+	<script defer src="/__/firebase/6.3.3/firebase-database.js"></script>
+	<script defer src="/__/firebase/6.3.3/firebase-messaging.js"></script>
+	<script defer src="/__/firebase/6.3.3/firebase-storage.js"></script>
+	<!-- initialize the SDK after all desired features are loaded -->
+	<script defer src="/__/firebase/init.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-<div id="lobby">
+<div id="lobby" class="lobby">
   <div id="welcome">
-    Добро пожаловать в Лобби!
-    <br>
-    <button id="Log-in" type="button" style="width: 300px; font-size: 30pt; height: 70px; text-align: center; font-family: sans-serif">Войти!</button>
+    <div class="weMessage">
+      <span>Добро пожаловать в Лобби!</span>
+    </div>
+    <div class="urls">
+      <a href="https://github.com/blazzer-band/Warriors-vs-Creeps/wiki" style = "color: inherit; margin-right: 25px"> Прочитать правила игры</a>
+      <a href="https://github.com/blazzer-band/Warriors-vs-Creeps" style = "color: inherit; margin-left: 25px">Открыть репозиторий игры</a>
+    </div>
+    <div class="loginButton">
+      <button id="Log-in" type="button" class="loginButton">Войти!</button>
+    </div>
   </div>
   <div id="rooms">
     <div id="lobby-left-block">
@@ -33,43 +40,47 @@
     <div id="lobby-right-block">
       <span id="title-room-description">Описание</span>
       <div id="room-description"></div>
-      <button style="font-size: 23pt; text-align: center" type="button" name="button" id="connect-room">Подключиться</button>
+      <button style="font-size: 23pt; text-align: center" type="button" name="button" id="connect-room" class="connect-room">Подключиться</button>
     </div>
   </div>
   <div id="room">
     <div id="room-left-block">
       <div id="players-list">
         <div class="player-spot">
+          1.
           <span class="player-name"></span>
           <span class="color-picker">
-							<div class="current-color">
-								<div class="palette"></div>
-							</div>
-						</span>
+						<div class="current-color">
+							<div class="palette"></div>
+						</div>
+					</span>
         </div>
         <div class="player-spot">
+          2.
           <span class="player-name"></span>
           <span class="color-picker">
-							<div class="current-color">
-								<div class="palette"></div>
-							</div>
-						</span>
+						<div class="current-color">
+							<div class="palette"></div>
+						</div>
+					</span>
         </div>
         <div class="player-spot">
+          3.
           <span class="player-name"></span>
           <span class="color-picker">
-							<div class="current-color">
-								<div class="palette"></div>
-							</div>
-						</span>
+						<div class="current-color">
+							<div class="palette"></div>
+						</div>
+					</span>
         </div>
         <div class="player-spot">
+          4.
           <span class="player-name"></span>
           <span class="color-picker">
-							<div class="current-color">
-								<div class="palette"></div>
-							</div>
-						</span>
+						<div class="current-color">
+							<div class="palette"></div>
+						</div>
+					</span>
         </div>
       </div>
       <div id="room-chat"></div>
@@ -80,7 +91,6 @@
       <button id="play-game">Играть!</button>
     </div>
   </div>
-</div>
 </div>
 
 <div id="content">
@@ -147,10 +157,6 @@
 
   <div id="choose-board" class="noDisplay">
     <div id='desk-card'></div>
-
-    <div class="desk">
-      <button id="ok-choose">OK</button>
-    </div>
   </div>
 
   <div id="message" class="noDisplay"></div>
@@ -161,9 +167,15 @@
   <button onclick = "game.lose()">Проиграть</button>
   <button onclick = "game.getRender.stopTimer()">Бесконечный таймер</button>
   <button onclick = "">Проматать x ходов</button>
+  <button id = "rotate">Повернуть всех воинов na 90 gradusov</button>
   <button onclick = "{let a = document.getElementById('choose-board'); a.style.display = a.style.display === 'none' ? 'inline-block': 'none'}">Скрыть всплывающее окно</button>
 
-  <button onclick = "{let a = document.getElementById('choose-board'); a.style.display = a.style.display === 'none' ? 'inline-block': 'none'}">Скрыть всплывающее окно</button>
+  <button onclick = "{
+		document.getElementById('lobby').style.display = 'none';
+		document.getElementById('content').style.display = 'block';
+		game = new Game();
+		game.start();
+		}">Начать игру</button>
 </div>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -172,68 +184,68 @@
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->
 
-<script src="script/cards.js" type="text/javascript"></script>
-<script src="script/seedrandom.min.js"></script>
-<script src="script/graph.js" type="text/javascript" charset="utf-8"></script>
-<script src="script/cardStaticFunctions.js" type="text/javascript" charset="utf-8"></script>
-<script src="script/app.js" type="text/javascript" charset="utf-8"></script>
-<script src="script/UserAgents/AbstractAgent.js" type="text/javascript" charset="utf-8"></script>
-<script src="script/UserAgents/LocalAgent.js" type="text/javascript" charset="utf-8"></script>
-<script src="script/UserAgents/BotAgent.js" type="text/javascript" charset="utf-8"></script>
-<script src="script/UserAgents/NetworkAgent.js" type="text/javascript" charset="utf-8"></script>
-<script src="script/render_lobby.js" type="text/javascript" charset="utf-8"></script>
-<script src="script/cardClasses.js" type="text/javascript"></script>
+<script src="../script/cards.js" type="text/javascript"></script>
+<script src="../script/seedrandom.min.js"></script>
+<script src="../script/graph.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/cardStaticFunctions.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/UserAgents/AbstractAgent.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/UserAgents/LocalAgent.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/UserAgents/BotAgent.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/UserAgents/NetworkAgent.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/render_lobby.js" type="text/javascript" charset="utf-8"></script>
+
 <script type="text/javascript">
-    "use strict"
+	"use strict"
 
-    let lobby, game = null;
-    let activeRoom = null;
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-        apiKey: "AIzaSyB9ky8ziEYKz2RtcQgcMsIRi2y3e_2n8bk",
-        authDomain: "warriors-vs-creeps.firebaseapp.com",
-        databaseURL: "https://warriors-vs-creeps.firebaseio.com",
-        projectId: "warriors-vs-creeps",
-        storageBucket: "warriors-vs-creeps.appspot.com",
-        messagingSenderId: "672875121806",
-        appId: "1:672875121806:web:fe1114f6b8755221"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    document.getElementById("Log-in").onclick = () => {
-        let provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(function (result) {
-            console.log(result);
-            console.log(result.additionalUserInfo.profile.id);
-            console.log("OK!");
-            let userId = result.additionalUserInfo.profile.id;
-            let user = 'user-' + userId;
-            let email = result.additionalUserInfo.profile.email;
-            let nickname = result.additionalUserInfo.profile.given_name;
-            let db = firebase.database();
-            db.ref('Users/' + user + '/Email').set(email);
-            db.ref('Users/' + user + '/UserId').set(userId);
-            db.ref('Users/' + user + '/Nickname').set(nickname);
-            let welcome = document.getElementById("welcome");
-            welcome.style.display = "none";
-            lobby = new RenderLobby(userId);
-        }).catch(function (error) {
-            console.log(error);
-            console.log("Bad!");
-        });
-    };
+	let lobby, game = null;
+	let activeRoom = null;
+	let roomKey = null;
+	// Your web app's Firebase configuration
+	var firebaseConfig = {
+		apiKey: "AIzaSyB9ky8ziEYKz2RtcQgcMsIRi2y3e_2n8bk",
+		authDomain: "warriors-vs-creeps.firebaseapp.com",
+		databaseURL: "https://warriors-vs-creeps.firebaseio.com",
+		projectId: "warriors-vs-creeps",
+		storageBucket: "warriors-vs-creeps.appspot.com",
+		messagingSenderId: "672875121806",
+		appId: "1:672875121806:web:fe1114f6b8755221"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	document.getElementById("Log-in").onclick = () => {
+		let provider = new firebase.auth.GoogleAuthProvider();
+		firebase.auth().signInWithPopup(provider).then(function (result) {
+			console.log(result);
+			console.log(result.additionalUserInfo.profile.id);
+			console.log("OK!");
+			let userId = result.additionalUserInfo.profile.id;
+			let user = 'user-' + userId;
+			let email = result.additionalUserInfo.profile.email;
+			let nickname = result.additionalUserInfo.profile.given_name;
+			let db = firebase.database();
+			db.ref('Users/' + user + '/Email').set(email);
+			db.ref('Users/' + user + '/UserId').set(userId);
+			db.ref('Users/' + user + '/Nickname').set(nickname);
+			let welcome = document.getElementById("welcome");
+			welcome.style.display = "none";
+			lobby = new RenderLobby(userId);
+		}).catch(function (error) {
+			console.log(error);
+			console.log("Bad!");
+		});
+	};
 
-    document.getElementById("create-room").onclick = function(){
-        lobby.createRoom()
-    };
+	document.getElementById("create-room").onclick = function(){
+		lobby.createRoom()
+	};
 
-    document.getElementById("connect-room").onclick = function () {
-        if (activeRoom !== null) {
-            lobby.connectRoom(activeRoom);
-        }
-    }
+	document.getElementById("connect-room").onclick = function () {
+		if (activeRoom !== null) {
+			lobby.connectRoom(roomKey, activeRoom);
+		}
+	}
 </script>
 
 </body>
 </html>
-

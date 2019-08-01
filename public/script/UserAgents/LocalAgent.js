@@ -10,25 +10,22 @@ class LocalAgent extends AbstractAgent{
 	
 	// И отправить кроме этого в FireBase
 	selectCards(cards, count, callback){
-		let timerSecs = 600
-		game.getRender.startTimer(timerSecs)
-
-		let timeout = setTimeout(function(){
-			let out = []
-			for (var i = 0; i < count; i++) {
-				out.push(i)
-			}
-			endSelect(out)
-		}, timerSecs*1000)
+		/*//// Debug
+		let out = []
+		for (var i = 0; i < count; i++) {
+			out.push(i)
+		}
+		callback(out)
+		return
+		/////*/
 
 
+		game.getRender.startTimer(600)
 		game.getRender.selectCards(cards, count, endSelect)
 
 		function endSelect(callb){
 			game.getRender.stopSelect()
 			game.getRender.stopTimer()
-			clearTimeout(timeout)
-
 			callback(callb)
 			
 		}
@@ -41,6 +38,10 @@ class LocalAgent extends AbstractAgent{
 
 
 	programming(callback){
+		//
+		/*callback(0, -1);
+		return*/
+		//DEBUG
 		game.getRender.programming(callback)
 	}
 
@@ -53,7 +54,7 @@ class LocalAgent extends AbstractAgent{
 		game.getRender.chooseRotate(rotateArray, callback)
 	}
 
-	selectCells(cellsArray, highlight, callback) {
+	selectCells(cellsArray, highlight, count, callback) {
 		game.getRender.selectCells(cellsArray, highlight, callback);
 	}
 }

@@ -35,8 +35,12 @@ class BotAgent extends AbstractAgent{
 		callback(0);
 	}
 
-	selectCells(cellsArray, highlight, callback) {
-		callback(0);
+	selectCells(cellsArray, highlight, count, callback) {
+		let calAr = []
+		for (let i = 0; i < count; i++) {
+			calAr[i] = i;
+		}
+		callback(calAr);
 	}
 
 }

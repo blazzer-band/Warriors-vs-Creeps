@@ -4,7 +4,7 @@ const tileType = {Grass:0, Base:1, Runes:2, Target:3};
 const unitType = {Hero:0, Creep:1, Bomb:2};
 const userType = {Human:0, Bot:1, UserAgent:2};
 const ramsType = {Hero: true, Creep: false, Bomb: true};
-
+const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
 
 
 
@@ -75,21 +75,25 @@ function Game() {
 
 			// Обновить данные
 			let request = function(){
-				
+
 
 				user.agent.programming(async function(cardPosInHand, stackId){
 
+					if (stackId === -2){ // КАРТЫ если она УТИЛИЗИРУЕТСЯ БЕЗ ЭФФЕКТА
+						user.hand.splice(cardPosInHand, 1);
+					}
+					else if (cardsParams[user.stacks[stackId][user.stacks[stackId].length - 1]].type === cardType.Deffect) {
 
-
-					if(stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ 
+					}
+					else if (stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ С ЭФФEКТОМ
 
 						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
-
-					} else if (user.stacks[stackId].length === 4) {
-						console.log("Don't push this");
 					} else if (user.stacks[stackId].length === 0 || cardsParams[user.stacks[stackId][0]].type === cardsParams[user.hand[cardPosInHand]].type) {
 						if (user.stacks[stackId].length === 3) {
+							for (let i = 1; i < 3; i++){
+								user.stacks[stackId][i - 1] = user.stacks[stackId][i];
+							}
 							user.stacks[stackId].pop();
 						}
 						user.stacks[stackId].push(user.hand[cardPosInHand]);
@@ -102,6 +106,7 @@ function Game() {
 					user.agent.setStacks(user.stacks);
 					user.agent.setHand(user.hand);
 
+
 					if(user.hand.length > 0){
 						setTimeout(request, 0);
 					}
@@ -113,17 +118,16 @@ function Game() {
 			}
 			request();
 		}
-
-		async selectCells(){
+		// const HIGHLIGHT_STYLE = ["rotate-cell", "move-cell", "attack-cell", "help-cell"];
+		async selectCells(cellsArray, highlight, count = 1){ //
 			let user = this;
 			return new Promise(function(resolve, reject){
-
-
-				resolve()
-
-
+				user.agent.selectCells(cellsArray, highlight, count, function(selSellsId){
+					resolve(selSellsId)
+				})
 			})
 		}
+
 
 
 	}
@@ -134,7 +138,8 @@ function Game() {
 
 
 
-	let seedRandom = Math.random(); // Общее случайное число, получать его от хоста
+	//this.seedRandom = /*0.5297204857065221//*/Math.random(); // Общее случайное число, получать его от хоста
+	this.seedRandom =  0.12800927790647165 // - рядом с бомбой
 
 	const inputMap = [ // Ландшафт
 		[1, 0, 0, 0, 0, 2,  2, 0, 0, 0, 0, 0],
@@ -147,8 +152,9 @@ function Game() {
 
 	function Unit(type) {
 		this.type = type;
-		this.rotation = 0; // 1: 90, 2: 180, 3: -90(270)
+		this.rotation = 1; // 1: 90, 2: 180, 3: -90(270)
 		this.ownerUser = null;
+		this.attachedCell = null; // тот кого тащит Unit
 
 		this.rotate = function(angle){  // 1: 90, 2: 180, 3: -90(270)
 			this.rotation += angle;
@@ -165,6 +171,7 @@ function Game() {
 			this.y = null;
 			this.type = null;
 			this.unit = null;
+			this.stop = false; // Проверка, можно ли продвинуть юнита вперед
 
 			this.hasUnit = function(){
 				return this.unit !== null;
@@ -237,7 +244,7 @@ function Game() {
 	}
 
 	// Инициализация
-	let random = new Math.seedrandom(seedRandom);
+	let random = new Math.seedrandom(this.seedRandom);
 	let map = new MapObject(inputMap);
 
 	const cardsParams = cardsJSON; // Описания карт
@@ -252,6 +259,9 @@ function Game() {
 	const cardsCount = 96;
 	let cardsDeck = null; // Колода карт по 8 карт
 	let bombHP = 7;
+	let killsCount = 0;
+	const damageCardsCount = 55;
+	let damageCardsDeck = null;
 
 
 	let users = null; // Пользователи
@@ -272,21 +282,32 @@ function Game() {
 			users.push(testUser);
 
 			/// DEBUG
-			testUser.stacks[0] = [3, 3]
+			testUser.stacks[0] = [3, 3, 3]
+			testUser.stacks[1] = [1]
+			testUser.stacks[2] = [5, 5, 5]
 			testUser.agent.setStacks(testUser.stacks);
 		}
 
 
 
 
-		// Генерация колоды
+		// Генерация колоды c командными картами
 		cardsDeck = [];
-		for (let card in cardsParams) {
-			for (let i = 0; i < (cardsCount/cardsParams.length)|0; i++) {
-				cardsDeck.push(card);
+		for (let i = 0; i < 12; i++) {
+			for (let j = 0; j < (cardsCount/(cardsParams.length - 1))|0; j++) {
+				cardsDeck.push(i);
 			}
 		}
 		shakeArray(cardsDeck, random);
+
+		// Генерация колоды с картами повреждений
+		damageCardsDeck = [];
+		for (let i = 0; i < 55; i++){
+			for (let j = 12; j < 13; j++){
+				damageCardsDeck.push(j);
+			}
+		}
+		shakeArray(damageCardsDeck, random);
 
 		// Начальный спаун мобов на рунах
 		let runesFree = map.getAllCellsByType(tileType.Runes).filter(cell => !cell.hasUnit());
@@ -311,11 +332,11 @@ function Game() {
 		//warriorsAct()
 	};
 
-	function lose() {
+	function lose(sms = "") {
 		render.stopSelect();
 		render.stopTimer();
 		render.defeat();
-		render.showMessage("Ты проиграл, позорно!");
+		render.showMessage("Ты проиграл, позорно!<br>"+sms);
 	}
 	this.lose = lose;
 
@@ -323,7 +344,7 @@ function Game() {
 		let isFirstRound = roundCounter === 0;
 
 		let selectionCards = [];
-		
+
 		let countCards = isFirstRound ? 10 : 5; // TODO: добавить еще условие для core карт
 
  		for (let i = 0; i < countCards && cardsDeck.length > 0; i++) {
@@ -334,7 +355,7 @@ function Game() {
 
 		function select(userId = 0) {
 			if(selectionCards.length === 0) {
-				lose();
+				lose("Карты в колоде закончились!");
 				return;
 			}
 
@@ -401,63 +422,157 @@ function Game() {
 		return new Promise(async function(resolve, reject) {
 			let cardId = stack[level - 1];
 			let card = cardsParams[cardId].levels[level-1];
+			let heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
 
 			if(card.rotate.length !== 0){
 				let rotateAngleId = 0;
 				if(card.rotate.length > 1){
 					rotateAngleId = await user.chooseRotate(card.rotate);
 				}
-				user.angle += card.rotate[rotateAngleId] % 4;
+				user.myHero.rotate(card.rotate[rotateAngleId]);
+				render.updateCellRotate(heroCell, user.myHero.rotation)
 			}
 
-			let heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
 
 			if (card.move.length !== 0) {
-				if(card.move.length === 1){ // card.move[i] - вектор до которого идти нужно до предела
-					vectorRotate(card.move[0], user.angle)
-					//await goRamming(thisCell, endCell)
+				let selVect = null
+				if(card.move.length === 1){ // card.move[i] - вектор в конец которого нужно дойти
+					selVect = card.move[0]
 				}
 				else{
-
+					selVect = card.move[0] //TODO: Спросить в какую сторону идти
+				}
+				if(selVect !== null){
+					let v = vectorRotate(selVect, user.myHero.rotation)
+					await goRamming(user, heroCell, v.x, -v.y);
 				}
 
 			}
 
+			heroCell = map.getAllCellHasUnits(unitType.Hero).filter(cell => cell.unit === user.myHero)[0]
+			if (card.attack.length !== 0) {
+				await goAttack(user, heroCell, card.attack, card.targetCount);
+			}
 
-			/*if (card.attack.length !== 0) {
-				if(card.attack.length === 1){
-					
-				}
-				else{
-					
-				}
 
-			}*/
+
+			//TODO: Вызвать спец функцию карты
 
 
 			resolve();
-			// Punch
 
 		})
 	}
 
 
-
-
-
 	// Возвращает bool удалось перейти или нет
-	function goRamming (thisCell, endCell) {
-		// толкать можно бесконечно много до упора только перед собой
+	function goRamming(user, thisCell, vecX, vecY) {
+		return new Promise(async function(resolve, reject){
+
+			let hookArray = []
+			let hookVecs = [vectorRotate({x:-1, y:0}, thisCell.unit.rotation), vectorRotate({x:0, y:-1}, thisCell.unit.rotation), vectorRotate({x:1, y:0}, thisCell.unit.rotation)]
+			let hookSelect = null
+			for(let hook of hookVecs){
+				let hookTemp = map.get(thisCell.x + hook.x, thisCell.y - hook.y)
+				if(hookTemp !== null && hookTemp.hasUnit() && (hookTemp.unit.type === unitType.Hero || hookTemp.unit.type === unitType.Bomb)){
+					hookArray.push(hookTemp)
+				}
+			}
+			hookArray.push(thisCell)
+			let unit = thisCell.unit;
+
+			if(hookArray.length !== 0){
+				hookSelect = hookArray[await user.selectCells(hookArray, higlightType.Hook, 1)]
+				if(hookSelect !== null && hookSelect !== thisCell)
+					unit.attachedCell = hookSelect
+			}
+
+			let toX = thisCell.x + vecX;
+			let toY = thisCell.y + vecY;
+			let temp = Math.max(Math.abs(vecX), Math.abs(vecY))
+
+			// Развернутая рекурсия
+			let stack = []
+			stack.push(thisCell) // клетка которую двигаем
+
+			let stopMatrix = createArray(map.size.x, map.size.y)
+
+			while(stack.length !== 0){
+
+				let curCell = stack.pop();
+
+				let next = map.get((curCell.x + vecX/temp)|0, (curCell.y + vecY/temp)|0)
+
+				if(next === null || (curCell.x === toX && curCell.y === toY) || stopMatrix[next.x][next.y] == true) { /// Дальше двигаться никак нельзя
+					stopMatrix[curCell.x][curCell.y] = true
+					continue;
+				}
+
+				if(next.unit !== null && (next.unit.type === unitType.Hero || next.unit.type === unitType.Bomb)) { // Следующую можно толкать положить в стек
+					stack.push(curCell)
+					stack.push(next)
+					continue;
+				}
+
+				if(next.unit !== null && next.unit.type === unitType.Creep) creepKill(next)
+
+				map.moveUnitFromCellToCoords(curCell, next.x, next.y)
+				render.moveUnit(curCell, next)
+
+				if(next.unit.attachedCell !== null) { // Если юнит кого-то тащит, то тот занимает ячейку юнита
+					map.moveUnitFromCellToCoords(next.unit.attachedCell, curCell.x, curCell.y);
+					render.moveUnit(next.unit.attachedCell, curCell)
+					next.unit.attachedCell = curCell
+				}
+
+				stack.push(next)
+
+			}
+			unit.attachedCell = null
+
+			resolve();
 
 
-		// проверить есть ли позади или слева или справа бомба или герой
-		// если есть и движение > 1 клетки, предложить выбрать кого тащить
-		
-		// если тащит то расстояние движения уменьшается на 1
+		})
+	}
 
-		if (startCell.unit === unitType.Creep) {
-			attackCell(startCell);
-		}
+	function goAttack(user, thisCell, attackVecs, count){
+		return new Promise(async function(resolve, reject){
+			let attArray = []
+
+			for (let vec of attackVecs){
+				let dirVec = vectorRotate(vec, thisCell.unit.rotation);
+				let tempCell = map.get(dirVec.x + thisCell.x, thisCell.y - dirVec.y);
+				if(tempCell !== null && tempCell.unit !== null && tempCell.unit.type === unitType.Creep){
+					attArray.push(tempCell)
+				}
+			}
+
+			let attCells = []
+			if(attArray.length > count){
+				//если найдено больше юнитов чем нужно, спросить каких нужно бить
+				let atIds = await user.selectCells(attArray, higlightType.Attack, count)
+				for(let atId of atIds){
+					attCells.push(attArray[atId]);
+				}
+			}
+			else{
+				attCells = attArray
+			}
+
+
+			for(let cell of attCells){
+				creepKill(cell);
+			}
+
+			resolve()
+		})
+	}
+
+	function creepKill(cell){
+		cell.unit = null;
+		render.killUnit(cell)
+		render.updateKillsCounter(++killsCount);
 	}
 
 
@@ -510,25 +625,24 @@ function Game() {
 				}
 			}
 		}
-		
+
 
 
 		function attack(eventId = 0) {
 			let atEv = attackEvent[eventId];
 
 
-			//atEv.attacking
-			//atEv.attacked
+			if (atEv.attacked.unit.type === unitType.Hero){
+				getDisable(atEv.attacked.unit.ownerUser);
+			}
 
-			// TODO дописать атаку
-			//TEST
-			console.log(atEv.attacking);
-			console.log('напал на');
-			console.log(atEv.attacked);
-			//
-			lose();
-			return;
-
+			else if (atEv.attacked.unit.type === unitType.Bomb){
+				render.updateBombCounter(--bombHP);
+				if (bombHP === 0){
+					lose("Бомба уничтожена!!!");
+					return;
+				}
+			}
 
 			if (eventId + 1 < attackEvent.length) {
 				attack(eventId + 1);
@@ -537,10 +651,21 @@ function Game() {
 			}
 
 		}
+
 		if (attackEvent.length > 0) {
 			attack();
 		} else {
 			finalAct();
+		}
+	}
+
+	function getDisable(user){
+		//TODO: random for choosing stacks
+		//let user = this;
+		//users[userID].disables[0] = true;
+		//let user = this;
+		if (damageCardsDeck !== 0){
+			user.stacks[getRandomInt(random, 0, 7)].push(damageCardsDeck.pop());
 		}
 	}
 
@@ -573,11 +698,13 @@ function shakeArray(a, random) {
 
 
 function vectorRotate(a, angle){ // angle 0 - 0; 1 - 90; 2 - 180; 3 - 270
-	for (let i = 0; i < a; i++) {
-		let c = a.x;
-		a.x = a.y;
-		a.y = -c;
+	let an = {x:a.x, y:a.y}
+	for (let i = 0; i < angle; i++) {
+		let c = an.x;
+		an.x = an.y;
+		an.y = -c;
 	}
+	return(an)
 }
 
 //a, b - {x:X, y:Y}
@@ -597,4 +724,20 @@ function getNextCellFromAToB(a, b){
 	if(c.x !== 0 && c.y !== 0) c.x = 0;
 
 	return vectorAdd(a, c);
+}
+
+
+//createArray(3, 2); // [new Array(2),
+                     //  new Array(2),
+                     //  new Array(2)]
+function createArray(length) {
+    var arr = new Array(length || 0),
+        i = length;
+
+    if (arguments.length > 1) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        while(i--) arr[length-1 - i] = createArray.apply(this, args);
+    }
+
+    return arr;
 }

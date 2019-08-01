@@ -15,7 +15,7 @@ class RenderLobby{
 		///Вызывается от сервера
 	}
 
-    showDescription(){
+	showDescription(){
 
 	}
 
@@ -28,7 +28,6 @@ class RenderLobby{
 			console.log(snapshot.key);
 			rooms.appendChild(document.createElement('div'));
 			rooms.lastElementChild.textContent = snapshot.key;
-			rooms.lastElementChild.style.color = 'white';
 			rooms.lastElementChild.className = "room-element";
 			rooms.lastElementChild.onclick = function(e){
 				let keyRoom = e.currentTarget.textContent;
@@ -37,6 +36,7 @@ class RenderLobby{
 				let list = db.ref('Rooms');
 				list.on('child_added', function (snapshot) {
 					if (snapshot.key.toString() === keyRoom) {
+						roomKey = snapshot.key.toString();
 						activeRoom = snapshot.val().RoomId;
 						console.log(activeRoom);
 					}
@@ -50,9 +50,10 @@ class RenderLobby{
 	}
 
 	createRoom(){
-		this.room = new RenderRoom(this, this.userID, true);
 		let db = firebase.database();
-		let roomTitle = "room-" + this.userID;
+		let roomTitle = null;
+		while (roomTitle === null)
+			roomTitle = prompt("Название вашей комнаты:", "Room-" + this.userID);
 		let nameCreator = "user-" + this.userID;
 		let root = db.ref("Users");
 		let userId = this.userID;
@@ -62,41 +63,51 @@ class RenderLobby{
 				let username = snapshot.val().Nickname;
 				let email = snapshot.val().Email;
 				let userId_ = snapshot.val().UserId;
-				let ishost = true;
-				db.ref('Rooms/' + roomTitle + "/Players/" + username + "/Email").set(email);
-				db.ref('Rooms/' + roomTitle + "/Players/" + username + "/UserId").set(userId_);
-				db.ref('Rooms/' + roomTitle + "/Players/" + username + "/Host").set(ishost);
-				db.ref('Rooms/' + roomTitle + "/Players/" + username + "/Nickname").set(username);
+				let isHost = true;
+				let indicator = username + '-' + userId_;
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Email").set(email);
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/UserId").set(userId_);
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Host").set(isHost);
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Action").set("atRoom");
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Host").set(isHost);
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/UserId").set(userId_);
 			}
 		});
 		db.ref('Rooms/' + roomTitle + '/Game/Active').set(false);
-		// game - players
 		db.ref('Rooms/' + roomTitle + '/RoomId').set(userId);
+		roomKey = roomTitle;
+		this.room = new RenderRoom(roomKey, this, this.userID);
 		this.hideLobby();
 	}
 
-	connectRoom(selectedRoomID){
+	connectRoom(roomKey, selectedRoomID){
 		this.selectedRoomHostID = selectedRoomID;
+		console.log(this.selectedRoomHostID);
 		let db = firebase.database();
 		let nameCreator = "user-" + this.userID;
 		let root = db.ref("Users");
-		let roomTitle = 'room-' + this.selectedRoomHostID;
+		let roomTitle = roomKey;
 		root.on('child_added', function (snapshot) {
 			if (snapshot.key.toString() === nameCreator) {
-				let name = 'user-' + snapshot.val().UserId;
 				let username = snapshot.val().Nickname;
 				let email = snapshot.val().Email;
 				let userId_ = snapshot.val().UserId;
-				let ishost = false;
-				db.ref('Rooms/' + roomTitle + "/Players/" + name + "/Email").set(email);
-				db.ref('Rooms/' + roomTitle + "/Players/" + name + "/UserId").set(userId_);
-				db.ref('Rooms/' + roomTitle + "/Players/" + name + "/Host").set(ishost);
-				db.ref('Rooms/' + roomTitle + "/Players/" + name + "/Nickname").set(username);
-				// game ++ players
-				this.room = new RenderRoom(this, this.selectedRoomHostID, false);
-				this.roomList.hideLobby();
+				let isHost = false;
+				let indicator = username + '-' + userId_;
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Email").set(email);
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/UserId").set(userId_);
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Host").set(isHost);
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Action").set("atRoom");
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Host").set(isHost);
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/UserId").set(userId_);
 			}
 		});
+		this.room = new RenderRoom(roomKey, this, this.selectedRoomHostID);
+		this.hideLobby();
 	}
 
 
@@ -104,11 +115,15 @@ class RenderLobby{
 
 class RenderRoom{
 
-	constructor(id, isHost){
+	constructor(roomKey, lobby, id){
+		this.roomKey = roomKey;
 		let room = this;
 		this.id = id;
+		this.count = 1;
 		this.showRoom();
-		document.getElementById("play-game").onclick = function (e) {room.beginGame()};
+		document.getElementById("play-game").onclick = function () {
+			room.beginGame();
+		};
 	}
 
 
@@ -121,22 +136,27 @@ class RenderRoom{
 		roomList.style.display = "none";
 		let roomBlock = document.getElementById("room");
 		roomBlock.style.display = "flex";
-		let keyRoom = 'room-' + this.id;
+		this.makePalette(4);
+		this.loadUsers();
+	}
+
+	loadUsers() {
+		let keyRoom = this.roomKey;
 		console.log(keyRoom);
 		let db = firebase.database();
 		let list = db.ref('Rooms');
 		list.on('child_added', function (snapshot) {
 			if (snapshot.key.toString() === keyRoom) {
-				let list_players = db.ref('Rooms/' + keyRoom + '/Players');
+				let list_players = db.ref('Rooms/' + snapshot.key + '/Players');
 				let i = 0;
 				let players = document.getElementsByClassName('player-name');
 				list_players.on('child_added', function (snapshot) {
 					players[i].textContent = snapshot.val().Nickname;
+					players[i].style.color = 'black';
 					i++;
 				});
 			}
 		});
-		this.makePalette(4);
 	}
 
 	makePalette(count){
@@ -159,6 +179,7 @@ class RenderRoom{
 			}
 			if (i !== 0){playersList.children[i].children[1].style.display = "none"}
 		}
+		this.loadUsers();
 	}
 
 	showPalette(i){
@@ -170,6 +191,7 @@ class RenderRoom{
 		else {
 			palette.style.display = "none";
 		}
+		this.loadUsers();
 	}
 
 	setColor(playerSpot, color){
@@ -179,6 +201,8 @@ class RenderRoom{
 	}
 
 	beginGame(){
+		let db = firebase.database();
+		db.ref('Rooms/' + this.roomKey + '/Game/Active').set(true);
 		game = new Game();
 		let content = document.getElementById("content");
 		let lobby = document.getElementById("lobby");
@@ -187,7 +211,5 @@ class RenderRoom{
 		game.start();
 	}
 
-	exit(){
-		//
-	}
+	//exit(){}
 }

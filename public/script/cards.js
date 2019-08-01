@@ -233,24 +233,24 @@ const cardsJSON = [
 	{
 		name: "Ripsaw",
 		type: cardType.Metal,
-		effects: [],
+		effects: ["Ripsaw"],
 		levels:[
 			{// 1 Уровень
 				targetCount: 1,
 				move:[],
-				attack: [{x:0,y:1},{x:0,y:2}], // Аттака в конце хода
+				attack: [{x:0, y:1}], // Аттака в конце хода
 				rotate:[]
 			},
 			{// 2 Уровень
 				targetCount: 2,
 				move:[],
-				attack: [{x:0,y:1},{x:0,y:2},{x:-1,y:2},{x:1,y:2}], // Аттака в конце хода
+				attack: [{x:0, y:1}], // Аттака в конце хода
 				rotate:[]
 			},
 			{// 3 Уровень
 				targetCount: 3,
 				move:[],
-				attack: [{x:0,y:1},{x:0,y:2},{x:-1,y:2},{x:1,y:2},{x:-1,y:3},{x:0,y:3},{x:1,y:3}], // Аттака в конце хода
+				attack: [{x:0, y:1}], // Аттака в конце хода
 				rotate:[]
 			}
 		]
@@ -262,25 +262,25 @@ const cardsJSON = [
 		effects: [],
 		levels:[
 			{// 1 Уровень
-				targetCount: 0,
+				targetCount: 999,
 				move:[],
-				attack: [],
+				attack: [{x:1,y:1},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1}],
 				rotate:[ // 1: 90,  2: 180, 3: 270(-90), 4:360
 					1, 3
 				]
 			},
 			{// 2 Уровень +2 cards
-				targetCount: 0,
+				targetCount: 999,
 				move:[],
-				attack: [],
+				attack: [{x:1,y:1},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},/**/{x:2,y:2},{x:-2,y:-2},{x:2,y:-2},{x:-2,y:2}],
 				rotate:[ // 1: 90,  2: 180, 3: 270(-90), 4:360
 					1, 2, 3
 				]
 			},
 			{// 3 Уровень +3 cards
-				targetCount: 0,
+				targetCount: 999,
 				move:[],
-				attack: [],
+				attack: [{x:1,y:1},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},/**/{x:2,y:2},{x:-2,y:-2},{x:2,y:-2},{x:-2,y:2},/**/{x:3,y:3},{x:-3,y:-3},{x:3,y:-3},{x:-3,y:3}],
 				rotate:[ // 1: 90,  2: 180, 3: 270(-90), 4:360
 					1, 2, 3, 4
 				]
@@ -293,20 +293,20 @@ const cardsJSON = [
 		effects: [],
 		levels:[
 			{// 1 Уровень
-				targetCount: 2,
-				move:  [{x:0,y:1}, {x:-1,y:0}, {x:1,y:0}],
+				targetCount: 0,
+				move:  [{x:0,y:1}, {x:0,y:2}],
 				attack: [],
 				rotate:[]
 			},
 			{// 2 Уровень
-				targetCount: 2,
-				move:[{x:0,y:2}, {x:-2,y:0}, {x:2,y:0}],
+				targetCount: 0,
+				move:[{x:0,y:2},{x:0,y:3},{x:0,y:4}],
 				attack: [],
 				rotate:[]
 			},
 			{// 3 Уровень
-				targetCount: 2,
-				move:[{x:0,y:3}, {x:-3,y:0}, {x:3,y:0}],
+				targetCount: 0,
+				move:[{x:0,y:3},{x:0,y:4},{x:0,y:5},{x:0,y:6}],
 				attack: [],
 				rotate:[]
 			}
@@ -315,33 +315,57 @@ const cardsJSON = [
 	{
 		name: "Chain Lightning",
 		type: cardType.Electro,
-		effects: [],
+		effects: ["ChainLightning"],
 		levels:[
 			{// 1 Уровень
-				targetCount: 0,
+				targetCount: 1,
 				move:[],
-				attack: [{x:0,y:1},{x:1,y:1},{x:1,y:0},{x:1,y:-1},{x:0,y:-1},{x:-1,y:-1},{x:-1,y:0},{x:-1,y:1}],
+				attack: [{x:0,y:1}],
+				rotate:[]
+			},
+			{// 2 Уровень
+				targetCount: 1,
+				move:[],
+				attack: [{x:0,y:1}],
+				rotate:[]
+			},
+			{// 3 Уровень
+				targetCount: 1,
+				move:[],
+				attack: [{x:0,y:1}],
+				rotate:[]
+			}
+		]
+	},
+	{
+		name: "Disable test",
+		type: cardType.Deffect,
+		effects: [],
+		levels: [
+			{// 1 Уровень
+				targetCount: 0,
+				move:[{x:-1,y:0}],
+				attack: [],
 				rotate:[]
 			},
 			{// 2 Уровень
 				targetCount: 0,
-				move:[],
-				attack: [{x:0,y:1},{x:1,y:1},{x:1,y:0},{x:1,y:-1},{x:0,y:-1},{x:-1,y:-1},{x:-1,y:0},{x:-1,y:1},
-					{x:0,y:2},{x:1,y:2},{x:2,y:2},{x:2,y:1},{x:2,y:0},{x:2,y:-1},{x:2,y:-2},{x:1,y:-2},
-					{x:0,y:-2},{x:-1,y:-2},{x:-2,y:-2},{x:-2,y:-1},{x:-2,y:0},{x:-2,y:1},{x:-2,y:2},{x:-1,y:2}],
+				move:[{x:-1,y:0}],
+				attack: [],
 				rotate:[]
 			},
 			{// 3 Уровень
 				targetCount: 0,
-				move:[],
-				attack: [{x:0,y:1},{x:1,y:1},{x:1,y:0},{x:1,y:-1},{x:0,y:-1},{x:-1,y:-1},{x:-1,y:0},{x:-1,y:1},
-					{x:0,y:2},{x:1,y:2},{x:2,y:2},{x:2,y:1},{x:2,y:0},{x:2,y:-1},{x:2,y:-2},{x:1,y:-2},
-					{x:0,y:-2},{x:-1,y:-2},{x:-2,y:-2},{x:-2,y:-1},{x:-2,y:0},{x:-2,y:1},{x:-2,y:2},{x:-1,y:2},
-					{x:0,y:3},{x:1,y:3},{x:2,y:3},{x:3,y:3},{x:3,y:2},{x:3,y:1},{x:3,y:0},{x:3,y:-1},
-					{x:3,y:-2},{x:3,y:-3},{x:2,y:-3},{x:1,y:-3},{x:0,y:-3},{x:-1,y:-3},{x:-2,y:-3},{x:-3,y:-3},
-					{x:-3,y:-2},{x:-3,y:-1},{x:-3,y:0},{x:-3,y:1},{x:-3,y:2},{x:-3,y:3},{x:-2,y:3},{x:-1,y:3}],
+				move:[{x:-1,y:0}],
+				attack: [],
 				rotate:[]
-			}
+			},
+			{// 4 Уровень
+				targetCount: 0,
+				move:[{x:-1,y:0}],
+				attack: [],
+				rotate:[]
+			},
 		]
-	}
+	},
 ]
