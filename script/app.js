@@ -167,8 +167,8 @@ function Game() {
 
 
 
-	//this.seedRandom = /*0.5297204857065221//*/Math.random(); // Общее случайное число, получать его от хоста
-	this.seedRandom =  0.12800927790647165 // - рядом с бомбой
+	this.seedRandom = /*0.5297204857065221//*/Math.random(); // Общее случайное число, получать его от хоста
+	//this.seedRandom =  0.12800927790647165 // - рядом с бомбой
 
 	const inputMap = [ // Ландшафт
 		[1, 0, 0, 0, 0, 2,  2, 0, 0, 0, 0, 0],
@@ -311,9 +311,9 @@ function Game() {
 			users.push(testUser);
 
 			/// DEBUG
-			testUser.stacks[0] = [3, 3, 3]
-			testUser.stacks[1] = [1]
-			testUser.stacks[2] = [5, 5, 5]
+			// testUser.stacks[0] = [3, 3, 3]
+			// testUser.stacks[1] = [1]
+			// testUser.stacks[2] = [5, 5, 5]
 			testUser.agent.setStacks(testUser.stacks);
 		}
 
@@ -695,7 +695,7 @@ function Game() {
 		//let user = this;
 		if (damageCardsDeck !== 0){
 			let ranId = getRandomInt(random, 0, 6);
-			if (user.stacks[ranId].length > 0 && cardsParams[user.stacks[ranId][user.stacks[randId].length - 1]].type === cardType.Deffect){
+			if (user.stacks[ranId].length > 0 && cardsParams[user.stacks[ranId][user.stacks[ranId].length - 1]].type === cardType.Deffect){
 				user.stacks[ranId].pop();
 				user.stacks[ranId].push(damageCardsDeck.pop());
 			}
@@ -707,7 +707,15 @@ function Game() {
 
 
 	function finalAct() {
+		let bombCell = map.getAllCellHasUnits(unitType.Bomb)[0];
+		let target = map.getAllCellsByType(tileType.Target)[0];
+		if (bombCell === target){
+			lose("Ты выиграл, молодец!");
+			return;
+
+		}
 		users.unshift(users.pop());
+
 		roundCounter++;
 
 		setTimeout(chooseСards, 500);
