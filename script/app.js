@@ -13,6 +13,7 @@ function Game() {
 
 	class User {
 		constructor(isHost) {
+			this.index = null;
 			this.isHost = isHost;
 			this.hand = []; // Карты в руке, int id типы карт
 			this.stacks = [[],[],[],[],[],[]]; // подмассивы - стеки, верхняя карта - последняя
@@ -302,18 +303,31 @@ function Game() {
 			let testUserAgent = new LocalAgent();
 			let testUser = new User(false);
 			testUser.agent = testUserAgent;
+			testUser.index = 0;
 			users.push(testUser);
 		}
 		{
 			let testUserAgent = new LocalAgent();
 			let testUser = new User(true);
+			testUser.index = 1;
 			testUser.agent = testUserAgent;
 			users.push(testUser);
-
-			/// DEBUG
-			// testUser.stacks[0] = [3, 3, 3]
-			// testUser.stacks[1] = [1]
-			// testUser.stacks[2] = [5, 5, 5]
+			testUser.agent.setStacks(testUser.stacks);
+		}
+		{
+			let testUserAgent = new LocalAgent();
+			let testUser = new User(true);
+			testUser.index = 2;
+			testUser.agent = testUserAgent;
+			users.push(testUser);
+			testUser.agent.setStacks(testUser.stacks);
+		}
+		{
+			let testUserAgent = new LocalAgent();
+			let testUser = new User(true);
+			testUser.index = 3;
+			testUser.agent = testUserAgent;
+			users.push(testUser);
 			testUser.agent.setStacks(testUser.stacks);
 		}
 
@@ -442,7 +456,7 @@ function Game() {
 				}
 			})
 		}
-		localProg() //доделать
+		localProg();
 
 	}
 

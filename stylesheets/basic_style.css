@@ -34,7 +34,7 @@ td {
     border-collapse: collapse;
 }
 
-td img {
+#game-map td * {
     position: absolute;
     top: 0;
     left: 0;
@@ -42,6 +42,81 @@ td img {
     image-rendering: pixelated;
     height: 100%;
 }
+
+#game-map [unit="hero"]{
+    background: url(../src/models/hero.png);
+}
+
+#game-map [unit="creep"]{
+    background: url(../src/models/monster.png);
+}
+
+#game-map [unit="bomb"]{
+    background: url(../src/models/bomb.png);
+}
+
+#game-map [unit]{
+    background-size:cover;
+}
+
+#game-map [user]{
+    background-blend-mode: luminosity;
+    mask-image: url(../src/models/hero.png);
+    mask-mode: alpha;
+    mask-size: cover;
+    -webkit-mask-image: url(../src/models/hero.png);
+    -webkit-mask-mode: alpha;
+    -webkit-mask-size: cover;
+}
+
+#game-map [user="0"]{
+    background-color:#ffffff;
+}
+#game-map [user="1"]{
+    background-color:#490054;
+}
+#game-map [user="2"]{
+    background-color:#005d28;
+}
+#game-map [user="3"]{
+    background-color:#00234a;
+}
+
+#game-map [rotate]:after{
+    position:absolute;
+    font-family:sans-serif;
+    font-weight:bold;
+    font-size:35px;
+    color:#1c1c1c
+    -webkit-mask-image: none;
+    mask: none !important;
+}
+
+#game-map [rotate="right"]:after{
+    content:'>';
+    right:2px;
+    top:16px;
+}
+
+#game-map [rotate="top"]:after{
+    content:'^';
+    left:23px;
+    top:0;
+}
+
+#game-map [rotate="left"]:after{
+    content:'<';
+    left:0;
+    top:16px;
+}
+
+#game-map [rotate="bottom"]:after{
+    content:'v';
+    left:23px;
+    bottom:0;
+}
+
+
 
 td {
     position: relative;

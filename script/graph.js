@@ -61,10 +61,11 @@ function Render() {
 		}, 0)
 	};
 
+	let cssUnitAttr = {0: 'hero', 2: 'bomb', 1: 'creep' }
 	this.initUnit = function(cell) {
 
-		let img = new Image();
-		img.src = UNIT_IMGS[cell.unit.type];
+		let img = document.createElement('div')
+		img.setAttribute('unit', cssUnitAttr[cell.unit.type]);
 		mapBody.children[cell.y].children[cell.x].appendChild(img);
 		img.style.transition = "transform .4s";
 		img.style.transform = 'scale(0)';
@@ -72,6 +73,10 @@ function Render() {
 		if(cell.unit.rotation !== null && cell.unit.type === unitType.Hero){
 			this.updateCellRotate(cell, cell.unit.rotation);
 		}
+		if(cell.unit.ownerUser !== null){
+			img.setAttribute('user', cell.unit.ownerUser.index);
+		}
+
 		setTimeout(function(){
 			img.style.transform = 'scale(1)';
 			setTimeout(function(){
@@ -327,24 +332,9 @@ function Render() {
 	}
 
 	//orientation: 0 - ^,  1 - >, 2 - v, 3 - <  // pos: cell.x,  cell.y
+	const rotAr = ['top', 'right', 'bottom', 'left' ]
 	this.updateCellRotate = function(cell, orientation){
-		switch(orientation){
-			case 0:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[4];
-				//TODO transform;
-				break;
-			case 1:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[0];
-				break;
-
-			case 2:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[5];
-				break;
-
-			case 3:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[3];
-				break;
-			}
+		mapBody.children[cell.y].children[cell.x].children[1].setAttribute('rotate', rotAr[orientation])
 	}
 
 	//Выбор стеков
