@@ -7,7 +7,6 @@ function Render() {
 	const stacksParent = document.getElementsByClassName("stack-content")
 	const chooseBoard = document.getElementById("choose-board")
 	const deskCard = document.getElementById("desk-card")
-	const okChoose = document.getElementById("ok-choose")
 
 	const DATA_CARDS = cardsJSON;
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
@@ -118,19 +117,12 @@ function Render() {
 				}
 
 				if (arrayIdSelectedCards.length === count) {
-					okChoose.classList.remove("noActive")
-				}
-				else {
-					okChoose.classList.add("noActive")
+					if (callback !== undefined) {
+						callback(arrayIdSelectedCards);
+					}
 				}
 			}
 			deskCard.appendChild(img)
-		}
-		okChoose.classList.add("noActive")
-		okChoose.onclick = function (e) {
-			if (callback !== undefined && !e.currentTarget.classList.contains("noActive")) {
-				callback(arrayIdSelectedCards);
-			}
 		}
 	}
 
