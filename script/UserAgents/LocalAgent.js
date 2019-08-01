@@ -4,32 +4,32 @@
 
 class LocalAgent extends AbstractAgent{
 
-	constructor(){
+	constructor(roomIndicator, userIndicator, userId, isHost){
 		super();
+		this.roomIndicator = roomIndicator;
+		this.userIndicator = userIndicator;
+		this.userId = userId;
+		this.isHost = isHost;
 	}
 
-	// И отправить кроме этого в FireBase
+	updateFirebase(action, callback) {
+		let database = firebase.database();
+		let roomTitle = this.roomIndicator;
+		let player = this.userIndicator;
+		database.ref('Rooms/' + roomTitle + '/Game/Players/' + player  + '/Action').set(action);
+		return callback;
+	}
+
 	selectCards(cards, count, callback){
-		//// Debug
-		/*let out = []
-		for (var i = 0; i < count; i++) {
-			out.push(i)
+		game.getRender.startTimer(600);
+		game.getRender.selectCards(cards, count, endSelect);
+
+		function endSelect(){
+			game.getRender.stopSelect();
+			game.getRender.stopTimer();
+			let callbackFire = this.updateFirebase("selectCards");
+			callback(callbackFire);
 		}
-		callback(out)
-		return*/
-		/////
-
-
-		game.getRender.startTimer(600)
-		game.getRender.selectCards(cards, count, endSelect)
-
-		function endSelect(callb){
-			game.getRender.stopSelect()
-			game.getRender.stopTimer()
-			callback(callb)
-
-		}
-
 	}
 
 	setHand(cardIds){
@@ -38,9 +38,6 @@ class LocalAgent extends AbstractAgent{
 
 
 	programming(callback){
-		//
-		/*callback(0, -2);*/
-		//DEBUG
 		game.getRender.programming(callback)
 	}
 
@@ -54,10 +51,6 @@ class LocalAgent extends AbstractAgent{
 	}
 
 	selectCells(cellsArray, highlight, count, callback) {
-		game.getRender.selectCells(cellsArray, highlight, count, callback);
-	}
-
-	selectStacks(stacks, count, callback){
-		game.getRender.selectStacks(stacks, count, callback)
+		game.getRender.selectCells(cellsArray, highlight, callback);
 	}
 }
