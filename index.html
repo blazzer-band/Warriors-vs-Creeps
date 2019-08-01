@@ -216,7 +216,7 @@
 		//let provider = new firebase.auth.GoogleAuthProvider();
 		let nickname = prompt("Введите свой Ник");
 		let userId = token;
-		let user = 'user-' + token;
+		let user = 'user-' + token++;
 		let db = firebase.database();
 		db.ref('Users/' + user + '/UserId').set(userId);
 		db.ref('Users/' + user + '/Nickname').set(nickname);
