@@ -333,11 +333,12 @@ td {
 #welcome {
     display: block;
     position: relative;
-    top: 250px;
+    top: 208px;
     /* text-align: center; */
     font-size: 75px;
     color: #efefef;
     text-align: center;
+    /* padding-bottom: 0px; */
 }
 
 #rooms {
@@ -637,6 +638,7 @@ div#trackers>div {
 
 .loginButton {
     text-align: center;
+    padding-bottom: 50px;
 }
 
 #connect-room {
@@ -756,6 +758,8 @@ div#trackers>div {
 	font-size: 18pt;
 	width: auto;
 	text-align: center;
+	padding: 20px 0;
+	color: #a2cbef;
 }
 
 .round-cards img {
