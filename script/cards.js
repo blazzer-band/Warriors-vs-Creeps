@@ -339,7 +339,33 @@ const cardsJSON = [
 	},
 	{
 		name: "Disable test",
-		type: cardType.Defect,
-		effects: ["Go left"],
+		type: cardType.Deffect,
+		effects: [],
+		levels: [
+			{// 1 Уровень
+				targetCount: 0,
+				move:[{x:-1,y:0}],
+				attack: [],
+				rotate:[]
+			},
+			{// 2 Уровень
+				targetCount: 0,
+				move:[{x:-1,y:0}],
+				attack: [],
+				rotate:[]
+			},
+			{// 3 Уровень
+				targetCount: 0,
+				move:[{x:-1,y:0}],
+				attack: [],
+				rotate:[]
+			},
+			{// 4 Уровень
+				targetCount: 0,
+				move:[{x:-1,y:0}],
+				attack: [],
+				rotate:[]
+			},
+		]
 	},
 ]

@@ -82,13 +82,13 @@ function Game() {
 					if (stackId === -2){ // КАРТЫ если она УТИЛИЗИРУЕТСЯ БЕЗ ЭФФЕКТА
 						user.hand.splice(cardPosInHand, 1);
 					}
+					else if (cardsParams[user.stacks[stackId][user.stacks[stackId].length - 1]].type === cardType.Deffect) {
+
+					}
 					else if (stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ С ЭФФEКТОМ
 
 						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
-
-					} else if (user.stacks[stackId].length === 4) {
-						console.log("Don't push this");
 					} else if (user.stacks[stackId].length === 0 || cardsParams[user.stacks[stackId][0]].type === cardsParams[user.hand[cardPosInHand]].type) {
 						if (user.stacks[stackId].length === 3) {
 							for (let i = 1; i < 3; i++){
@@ -260,6 +260,8 @@ function Game() {
 	let cardsDeck = null; // Колода карт по 8 карт
 	let bombHP = 7;
 	let killsCount = 0;
+	const damageCardsCount = 55;
+	let damageCardsDeck = null;
 
 
 	let users = null; // Пользователи
@@ -289,14 +291,23 @@ function Game() {
 
 
 
-		// Генерация колоды
+		// Генерация колоды c командными картами
 		cardsDeck = [];
 		for (let i = 0; i < 12; i++) {
-			for (let i = 0; i < (cardsCount/cardsParams.length)|0; i++) {
+			for (let j = 0; j < (cardsCount/(cardsParams.length - 1))|0; j++) {
 				cardsDeck.push(i);
 			}
 		}
 		shakeArray(cardsDeck, random);
+
+		// Генерация колоды с картами повреждений
+		damageCardsDeck = [];
+		for (let i = 0; i < 55; i++){
+			for (let j = 12; j < 13; j++){
+				damageCardsDeck.push(j);
+			}
+		}
+		shakeArray(damageCardsDeck, random);
 
 		// Начальный спаун мобов на рунах
 		let runesFree = map.getAllCellsByType(tileType.Runes).filter(cell => !cell.hasUnit());
@@ -614,17 +625,8 @@ function Game() {
 		function attack(eventId = 0) {
 			let atEv = attackEvent[eventId];
 
-			//atEv.attacking
-			//atEv.attacked
-
-			// TODO дописать атаку
-			//TEST
-			/*console.log(atEv.attacking);
-			console.log('напал на');
-			console.log(atEv.attacked);
-*/
 			if (atEv.attacked.unit.type === unitType.Hero){
-				getDisable();
+				getDisable(atEv.attacked.unit.ownerUser);
 			}
 
 			else if (atEv.attacked.unit.type === unitType.Bomb){
@@ -650,10 +652,14 @@ function Game() {
 		}
 	}
 
-	function getDisable(userID = 0){
+	function getDisable(user){
 		//TODO: random for choosing stacks
 		//let user = this;
 		//users[userID].disables[0] = true;
+		//let user = this;
+		if (damageCardsDeck !== 0){
+			user.stacks[getRandomInt(random, 0, 7)].push(damageCardsDeck.pop());
+		}
 	}
 
 
