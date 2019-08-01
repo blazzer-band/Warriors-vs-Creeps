@@ -204,7 +204,7 @@
 	var firebaseConfig = {
 		apiKey: "AIzaSyB9ky8ziEYKz2RtcQgcMsIRi2y3e_2n8bk",
 		authDomain: "warriors-vs-creeps.firebaseapp.com",
-		databaseURL: "https://warriors-vs-creeps.firebaseio.com",
+		databaseURL: "https://blazzer-band.github.io/Warriors-vs-Creeps/index.html",
 		projectId: "warriors-vs-creeps",
 		storageBucket: "warriors-vs-creeps.appspot.com",
 		messagingSenderId: "672875121806",
@@ -212,7 +212,7 @@
 	};
 	// Initialize Firebase
 	firebase.initializeApp(firebaseConfig);
-	document.getElementById("Log-in").onclick = () => {
+	document.getElementById("Log-in").onclick = function () {
 		//let provider = new firebase.auth.GoogleAuthProvider();
 		let nickname = prompt("Введите свой Ник");
 		let userId = token;
