@@ -7,7 +7,6 @@ function Render() {
 	const stacksParent = document.getElementsByClassName("stack-content")
 	const chooseBoard = document.getElementById("choose-board")
 	const deskCard = document.getElementById("desk-card")
-	const okChoose = document.getElementById("ok-choose")
 
 	const DATA_CARDS = cardsJSON;
 	const TILES_IMG = ["src/models/green.png", "src/models/stone_tex.png", "src/models/rune.png", "src/models/blue.png"]
@@ -95,6 +94,9 @@ function Render() {
 		chooseBoard.style.opacity = '0';
 		setTimeout(function(){
 			chooseBoard.style.opacity = '1';
+			setTimeout(function(){
+				chooseBoard.style = ''
+			}, 1000)
 		}, 0)
 		let arrayIdSelectedCards = [];
 
@@ -115,19 +117,12 @@ function Render() {
 				}
 
 				if (arrayIdSelectedCards.length === count) {
-					okChoose.classList.remove("noActive")
-				}
-				else {
-					okChoose.classList.add("noActive")
+					if (callback !== undefined) {
+						callback(arrayIdSelectedCards);
+					}
 				}
 			}
 			deskCard.appendChild(img)
-		}
-		okChoose.classList.add("noActive")
-		okChoose.onclick = function (e) {
-			if (callback !== undefined && !e.currentTarget.classList.contains("noActive")) {
-				callback(arrayIdSelectedCards);
-			}
 		}
 	}
 
@@ -250,11 +245,10 @@ function Render() {
 
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/, isSelected}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
-	this.selectCells = function(cellsArray, highlight, callback) {
+	this.selectCells = function(cellsArray, highlight, count, callback) {
+		let callbackIdArr = callback
+
 		let i = 0;
-		if (cellsArray.length === 0) {
-			callback([]);
-		}
 		for (let cell of cellsArray) {
 			let cellElement = mapBody.children[cell.y].children[cell.x];
 			cellElement.classList.add(HIGHLIGHT_STYLE[highlight]);
@@ -263,7 +257,7 @@ function Render() {
 				for (let cell2 of cellsArray) {
 					mapBody.children[cell2.y].children[cell2.x].classList.remove(HIGHLIGHT_STYLE[highlight])
 				}
-				callback(e.currentTarget.selectId);
+				callbackIdArr([e.currentTarget.selectId]);
 			};
 			i++;
 		}
@@ -339,7 +333,6 @@ function Render() {
 				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[4];
 				//TODO transform;
 				break;
-
 			case 1:
 				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[0];
 				break;
