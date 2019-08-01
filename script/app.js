@@ -82,14 +82,18 @@ function Game() {
 					if (stackId === -2){ // КАРТЫ если она УТИЛИЗИРУЕТСЯ БЕЗ ЭФФЕКТА
 						user.hand.splice(cardPosInHand, 1);
 					}
-					else if (cardsParams[user.stacks[stackId][user.stacks[stackId].length - 1]].type === cardType.Deffect) {
-
-					}
+					
 					else if (stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ С ЭФФEКТОМ
 
 						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
-					} else if (user.stacks[stackId].length === 0 || cardsParams[user.stacks[stackId][0]].type === cardsParams[user.hand[cardPosInHand]].type) {
+					} 
+					else if (user.stacks[stackId].length > 0 && cardsParams[user.stacks[stackId][user.stacks[stackId].length - 1]].type === cardType.Deffect) {
+
+					}
+
+
+					else if (user.stacks[stackId].length === 0 || cardsParams[user.stacks[stackId][0]].type === cardsParams[user.hand[cardPosInHand]].type) {
 						if (user.stacks[stackId].length === 3) {
 							for (let i = 1; i < 3; i++){
 								user.stacks[stackId][i - 1] = user.stacks[stackId][i];
