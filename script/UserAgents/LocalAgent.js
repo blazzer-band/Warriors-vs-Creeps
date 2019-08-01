@@ -54,4 +54,8 @@ class LocalAgent extends AbstractAgent{
 	selectCells(cellsArray, highlight, count, callback) {
 		game.getRender.selectCells(cellsArray, highlight, count, callback);
 	}
+
+	selectStacks(cellsArray, count, callback) {
+		game.getRender.selectStacks(cellsArray, count, callback);
+	}
 }

@@ -255,11 +255,6 @@ function Render() {
 	};
 
 
-	// callback (StackIds[])
-	this.selectStack = function(selectablStacks, count, callback){
-
-	}
-
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 
