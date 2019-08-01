@@ -54,11 +54,36 @@ function Game() {
 			return new Promise(function(resolve, reject){
 				//user
 				if(type === cardType.Fire || type === cardType.Metal){
+					let disabledStacks = [];
 
+					for (let i = 0; i < 6; i++){
+						if (user.stacks[i].length > 0 && cardsParams[user.stacks[i][user.stacks[i].length - 1]].type === cardType.Deffect){
+							disabledStacks.push(i);
+						}
+					}
+
+					if (disabledStacks.length > 0) {
+						user.agent.selectStacks(disabledStacks, 1, function(selectedStacksIds){
+							user.stacks[disabledStacks[selectedStacksIds[0]]].pop();
+						});
+					}
 
 				}
-				else if(type === cardType.Fire || type === cardType.Metal){
+				else if(type === cardType.Electro || type === cardType.Computer){
+					let notDisabledStacks = [];
 
+					for (let i = 0; i < 6; i++){
+						if (user.stacks[i].length === 0 || cardsParams[user.stacks[i][user.stacks[i].length - 1]].type !== cardType.Deffect){
+							notDisabledStacks.push(i);
+						}
+					}
+					if (notDisabledStacks.length >= 2){
+						user.agent.selectStacks(notDisabledStacks, 2, function(selectedStacksIds){
+							let tmpStack = user.stacks[selectedStacksIds[0]];
+							user.stacks[selectedStacksIds[0]] = user.stacks[selectedStacksIds[1]];
+							user.stacks[selectedStacksIds[1]] = tmpStack;
+						});
+					}
 
 				}
 
@@ -82,12 +107,12 @@ function Game() {
 					if (stackId === -2){ // КАРТЫ если она УТИЛИЗИРУЕТСЯ БЕЗ ЭФФЕКТА
 						user.hand.splice(cardPosInHand, 1);
 					}
-					
+
 					else if (stackId === -1){// Карты если она УТИЛИЗИРУЕТСЯ С ЭФФEКТОМ
 
 						await user.scrapRequest(cardsParams[user.hand[cardPosInHand]].type)
 						user.hand.splice(cardPosInHand, 1);
-					} 
+					}
 					else if (user.stacks[stackId].length > 0 && cardsParams[user.stacks[stackId][user.stacks[stackId].length - 1]].type === cardType.Deffect) {
 
 					}
@@ -669,7 +694,13 @@ function Game() {
 		//users[userID].disables[0] = true;
 		//let user = this;
 		if (damageCardsDeck !== 0){
-			user.stacks[getRandomInt(random, 0, 7)].push(damageCardsDeck.pop());
+			let ranId = getRandomInt(random, 0, 6);
+			if (user.stacks[ranId][user.stacks.length - 1].type === cardType.Deffect){
+				user.stacks[ranId].pop();
+				user.stacks[ranId].push(damageCardsDeck.pop());
+			}
+			else user.stacks[ranId].push(damageCardsDeck.pop());
+
 		}
 	}
 

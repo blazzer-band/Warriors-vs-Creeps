@@ -7,7 +7,7 @@ class LocalAgent extends AbstractAgent{
 	constructor(){
 		super();
 	}
-	
+
 	// И отправить кроме этого в FireBase
 	selectCards(cards, count, callback){
 		/*//// Debug
@@ -27,7 +27,7 @@ class LocalAgent extends AbstractAgent{
 			game.getRender.stopSelect()
 			game.getRender.stopTimer()
 			callback(callb)
-			
+
 		}
 
 	}
@@ -55,6 +55,10 @@ class LocalAgent extends AbstractAgent{
 	}
 
 	selectCells(cellsArray, highlight, count, callback) {
-		game.getRender.selectCells(cellsArray, highlight, callback);
+		game.getRender.selectCells(cellsArray, highlight, count, callback);
+	}
+
+	selectStacks(stacks, count, callback){
+		game.getRender.selectStacks(stacks, count, callback)
 	}
 }

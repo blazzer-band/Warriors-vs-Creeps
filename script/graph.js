@@ -347,5 +347,15 @@ function Render() {
 			}
 	}
 
+	//Выбор стеков
+	this.selectStacks = function(stacks, count, callback){
+		let s = 'Выберите '+count+' номер стеков';
+		for (let i = 0; i < stacks.length; i++) {
+			s += i + ':' + stacks[i] + ' ';
+		};
+		let array = prompt(s, "0").split(" ");
+		callback(array);
+	}
+
 
 }
