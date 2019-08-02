@@ -20,6 +20,8 @@ class RenderLobby{
 	}
 
 	showLobby(){
+		let roomDes = document.getElementById("room-description");
+		roomDes.innerHTML = "";
 		this.roomList.style.display = "block";
 		let isHandled = false;
 		let db = firebase.database();
@@ -46,7 +48,6 @@ class RenderLobby{
 					roomKey = snapshot.key.toString();
 					activeRoom = snapshot.val().RoomId;
 					console.log(activeRoom);
-					let roomDes = document.getElementById("room-description");
 					roomDes.innerHTML = "";
 					let playersCell = db.ref("Rooms/" + roomKey + "/Players");
 					let playersList = [];
@@ -186,22 +187,49 @@ class RenderRoom{
 		roomList.style.display = "none";
 		let roomBlock = document.getElementById("room");
 		roomBlock.style.display = "flex";
+		let playersList = document.getElementById("players-list");
+		let players = document.getElementsByClassName('player-name');
+		for (let player of players){
+			player.innerHTML = "Открыто";
+		}
 		this.loadUsers();
 	}
 
 	exitRoom() {
 		let db = firebase.database();
-		let list = db.ref('Rooms/' + this.roomKey + '/RoomId');
-
+		let roomId = db.ref('Rooms/' + this.roomKey + '/RoomId');
+		let playersList = db.ref('Rooms/' + this.roomKey + '/Players');
+		let host = db.ref('Rooms/' + this.roomKey + '/Players/' + this.roomKey);
+		let hostChangded = false;
+		//let hostRoomId = null;
+		let hostTo = null;
 		let room = this;
 
-		list.once("value", function(snapshot){
-				if (snapshot.val().toString() === globalUserIdWithoutNick){
-					db.ref('Rooms/' + room.roomKey).remove();
-					room.disConnect();
-				}
+		playersList.on('child_added', function (snapshot){
+			let name = snapshot.val();
+			if (name.Nickname === '1Botb' || name.Nickname === '2Botb'
+			|| name.Nickname === '3Botb' || name.Nickname === '4Botb'){
+
+			}
+			else if (name.UserId === globalUserIdWithoutNick) {
+				//hostRoomId = name.userID;
+				db.ref('Rooms/' + room.roomKey + '/Players/' + snapshot.key).remove();
+			} else {
+				db.ref('Rooms/' + room.roomKey + '/Players/' + snapshot.key + "/Host").set(true);
+				hostTo = snapshot.val().UserId;
+				hostChangded = true;
+			}
+
 		})
 
+		if (!hostChangded){
+			db.ref('Rooms/' + room.roomKey).remove();
+		}
+		else {
+			db.ref('Rooms/' + room.roomKey + '/RoomId').set(hostTo);
+		}
+
+		room.disConnect();
 
 	}
 
