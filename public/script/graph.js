@@ -211,10 +211,11 @@ function Render() {
 
 	function stopProgramming(){
 		if(selectedHandCard !== null){
-			programmingCallback([selectedHandCard.idInList, -1]);
-			selectedHandCard = null;
 			trash.style.display = "none";
 			scrap.style.display = "none";
+			let id = selectedHandCard.idInList;
+			selectedHandCard = null;
+			programmingCallback([id, -1]);
 		}
 	}
 	
