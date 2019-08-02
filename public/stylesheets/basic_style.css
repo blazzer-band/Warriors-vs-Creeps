@@ -34,7 +34,7 @@ td {
     border-collapse: collapse;
 }
 
-td img {
+#game-map td * {
     position: absolute;
     top: 0;
     left: 0;
@@ -42,6 +42,81 @@ td img {
     image-rendering: pixelated;
     height: 100%;
 }
+
+#game-map [unit="hero"]{
+    background: url(../src/models/hero.png);
+}
+
+#game-map [unit="creep"]{
+    background: url(../src/models/monster.png);
+}
+
+#game-map [unit="bomb"]{
+    background: url(../src/models/bomb.png);
+}
+
+#game-map [unit]{
+    background-size:cover;
+}
+
+#game-map [user]{
+    background-blend-mode: luminosity;
+    mask-image: url(../src/models/hero.png);
+    mask-mode: alpha;
+    mask-size: cover;
+    -webkit-mask-image: url(../src/models/hero.png);
+    -webkit-mask-mode: alpha;
+    -webkit-mask-size: cover;
+}
+
+#game-map [user="0"]{
+    background-color:#ffffff;
+}
+#game-map [user="1"]{
+    background-color:#490054;
+}
+#game-map [user="2"]{
+    background-color:#005d28;
+}
+#game-map [user="3"]{
+    background-color:#00234a;
+}
+
+#game-map [rotate]:after{
+    position:absolute;
+    font-family:sans-serif;
+    font-weight:bold;
+    font-size:35px;
+    color:#1c1c1c
+    -webkit-mask-image: none;
+    mask: none !important;
+}
+
+#game-map [rotate="right"]:after{
+    content:'>';
+    right:2px;
+    top:16px;
+}
+
+#game-map [rotate="top"]:after{
+    content:'^';
+    left:23px;
+    top:0;
+}
+
+#game-map [rotate="left"]:after{
+    content:'<';
+    left:0;
+    top:16px;
+}
+
+#game-map [rotate="bottom"]:after{
+    content:'v';
+    left:23px;
+    bottom:0;
+}
+
+
 
 td {
     position: relative;
@@ -389,14 +464,20 @@ td {
     display: block;
     background-color: #ededed;
     width: auto;
-    border-radius: 0 0 40px 40px;
-    height: 70%;
+    height: 64%;
+	overflow-y: auto;
     width: 700px;
+}
+.footer-list{
+	width: auto;
+	height: 35px;
+	background-color: #ededed;
+	border-radius: 0 0 40px 40px;
 }
 
 #create-room {
     position: relative;
-    margin-top: 60px;
+    margin-top: 59px;
     background: #99a1de;
 }
 
@@ -406,6 +487,25 @@ td {
     height: 70%;
     background-color: #ededed;
     border-radius: 0 0 40px 40px;
+	font-family: sans-serif;
+	font-size: 16pt;
+}
+
+.span-dis{
+	padding-top: 10px;
+	padding-left: 20px;
+	position: relative;
+	display: block;
+}
+
+#make-bot{
+	background: #ecedef !important;
+    top: 0px;
+    left: 20px;
+	font-family: sans-serif;
+	font-size: 20pt;
+    text-align: center;
+	position: relative;
 }
 
 #room {
@@ -503,7 +603,21 @@ td {
     margin: 0 auto;
     display: inline-block;
     background: #72cf6e !important;
+    top: 430px;
+	left: 70px;
+}
+
+#go-lobby{
+	font-family: sans-serif;
+    text-align: center;
+    font-size: 30pt;
+    position: relative;
+    padding: 10px 20px 10px 20px;
+    margin: 0 auto;
+    display: inline-block;
+    background: #ff4848 !important;
     top: 530px;
+	left: -100px;
 }
 
 #game-map tbody tr {
@@ -517,12 +631,6 @@ td {
     text-align: center;
     transition: opacity 0.4s ease 0s;
     opacity: 0;
-}
-
-
-.round-cards img {
-    width: 100%;
-    border-radius: 7px;
 }
 
 
@@ -719,7 +827,7 @@ div#trackers>div {
 }
 
 .desk:hover .ok-choose{
-    opacity:1 !important;
+     opacity:1 !important;
 }
 
 #desk-card img{
@@ -746,7 +854,7 @@ div#trackers>div {
     opacity: 0;
 }
 
-.round-cards {
+#desk-card img {
     /* margin-top: 2em; */
     margin-left: 0.33em;
     display: inline-block;
@@ -755,17 +863,13 @@ div#trackers>div {
 }
 
 .urls {
-    font-size: 18pt;
-    width: auto;
-    text-align: center;
-    padding: 20px 0;
-    color: #a2cbef;
+	font-size: 18pt;
+	width: auto;
+	text-align: center;
+	padding: 20px 0;
+	color: #a2cbef;
 }
 
-.round-cards img {
-    width: 100%;
-    border-radius: 7px;
-}
 
 .ok-choose {
     display: block;
