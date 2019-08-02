@@ -292,7 +292,7 @@ function Render() {
 		defeatBlock.style.display = 'block'
 		defeatBlock.src = "src/lose.mp4";
 		defeatBlock.muted = "";
-		//defeatBlock.play();
+		defeatBlock.play();
 	}
 
 
@@ -339,11 +339,11 @@ function Render() {
 
 	//Выбор стеков
 	this.selectStacks = function(stacks, count, callback){
-		let s = 'Выберите '+count+' номер стеков';
+		let s = 'Выберите '+ count +' id стека карт для свапа: ';
 		for (let i = 0; i < stacks.length; i++) {
 			s += i + ':' + stacks[i] + ' ';
 		};
-		let array = prompt(s, "0").split(" ");
+		let array = prompt(s, "0 1").split(" ");
 		callback(array);
 	}
 
