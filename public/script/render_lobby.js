@@ -216,7 +216,7 @@ class RenderRoom{
 				db.ref('Rooms/' + room.roomKey + '/Players/' + snapshot.key).remove();
 			} else {
 				db.ref('Rooms/' + room.roomKey + '/Players/' + snapshot.key + "/Host").set(true);
-				hostTo = snapshot.key;
+				hostTo = snapshot.val().UserId;
 				hostChangded = true;
 			}
 
