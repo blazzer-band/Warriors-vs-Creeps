@@ -7,37 +7,34 @@
 
 class AbstractAgent{
 
-	constructor(){
-		this.callbackSelectCards = null;
-		this.callbackProgramming = null;
-		this.callbackWarriorAct = null;
-		this.callbackCreepsAct = null;
-	}
-
+	constructor(){}
 
 	selectCards(cards, callback){
-
+		throw new Error('Method not implemented');
 	}
 
 	setHand(cardIds) {
-
+		throw new Error('Method not implemented');
 	}
 
 	programming(callback){
-
+		throw new Error('Method not implemented');
 	}
 
 	setStacks(stacks){
-
+		throw new Error('Method not implemented');
 	}
-
 
 	chooseRotate(rotateArray, callback){
-
+		throw new Error('Method not implemented');
 	}
 
-	selectCells(cellsArray, highlight, count, callback) {
+	selectCells(cellsArray, highlight, count, callback){
+		throw new Error('Method not implemented');
+	}
 
+	selectStacks(cellsArray, count, callback) {
+		throw new Error('Method not implemented');
 	}
 
 }

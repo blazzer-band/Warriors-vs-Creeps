@@ -6,12 +6,17 @@ class NetworkAgent extends AbstractAgent{
 
 	constructor(connectedUserId){
 		super();
+		this.callbackSelectCards = null;
+		this.callbackProgramming = null;
+		this.callbackWarriorAct = null;
+		this.callbackCreepsAct = null;
 		this.connectedUserId = connectedUserId;
 	}
 
 	selectCard(cards, callback){
 		//this.callbackSelectCards = callback
 		// Ждать изменения в Firebase, затем вернуть callback
+		//callback(sel)
 	}
 
 	setHand(cardIds) {

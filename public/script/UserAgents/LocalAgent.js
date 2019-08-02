@@ -9,23 +9,23 @@ class LocalAgent extends AbstractAgent{
 		this.userIndicator = userIndicator;
 	}
 
-	updateFirebase(action, callback) {
+	updateFirebase(action) {
 		let database = firebase.database();
 		let player = this.userIndicator;
 		database.ref('Rooms/' + globalRoomIndicator + '/Game/Players/' + player  + '/Action').set(action);
-		return callback;
 	}
+
 
 	selectCard(cards, callback){
 		let agent = this;
 		game.getRender.startTimer(600);
 		game.getRender.selectCard(cards, endSelect);
 
-		function endSelect(){
+		function endSelect(sel){
 			game.getRender.stopSelect();
 			game.getRender.stopTimer();
-			let callbackFire = agent.updateFirebase("selectCards");
-			callback(callbackFire);
+			// Вместо комментария вставить отправку sel в файрбайз
+			callback(sel);
 		}
 	}
 
@@ -41,7 +41,6 @@ class LocalAgent extends AbstractAgent{
 	setStacks(stacks){
 		game.getRender.setStacks(stacks)
 	}
-
 
 	chooseRotate(rotateArray, callback){
 		game.getRender.chooseRotate(rotateArray, callback)
