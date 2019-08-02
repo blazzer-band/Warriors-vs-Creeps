@@ -219,9 +219,9 @@
 			console.log("OK!");
 			let userId = result.additionalUserInfo.profile.id;
 			let user = 'user-' + userId;
-			globalUserId = userId;
 			let email = result.additionalUserInfo.profile.email;
 			let nickname = result.additionalUserInfo.profile.given_name;
+			globalUserId =nickname +'-'+ userId;
 			let db = firebase.database();
 			db.ref('Users/' + user + '/Email').set(email);
 			db.ref('Users/' + user + '/UserId').set(userId);

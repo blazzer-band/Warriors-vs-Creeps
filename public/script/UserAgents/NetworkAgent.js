@@ -11,6 +11,12 @@ class NetworkAgent extends AbstractAgent{
 		this.callbackWarriorAct = null;
 		this.callbackCreepsAct = null;
 		this.connectedUserId = connectedUserId;
+
+		let db = firebase.database();
+		let list = db.ref('Rooms/'+activeRoom+'/Game/Players/' + connectedUserId+'/Action');
+		list.on('child_changed', function (data){
+			console.log(data);
+		})
 	}
 
 	selectCard(cards, callback){

@@ -10,9 +10,16 @@ class LocalAgent extends AbstractAgent{
 	}
 
 	updateFirebase(action) {
-		let database = firebase.database();
+		let db = firebase.database();
 		let player = this.userIndicator;
-		database.ref('Rooms/' + globalRoomIndicator + '/Game/Players/' + player  + '/Action').set(action);
+		db.ref('Rooms/' + globalRoomIndicator + '/Game/Players/' + player  + '/Action').set(action);
+		
+	}
+
+	serializeObject(name, data){
+		let temp = {}
+		temp[name] = data;
+		return temp
 	}
 
 
@@ -25,6 +32,7 @@ class LocalAgent extends AbstractAgent{
 			game.getRender.stopSelect();
 			game.getRender.stopTimer();
 			// Вместо комментария вставить отправку sel в файрбайз
+			agent.updateFirebase(agent.serializeObject('selectCard', sel))
 			callback(sel);
 		}
 	}
