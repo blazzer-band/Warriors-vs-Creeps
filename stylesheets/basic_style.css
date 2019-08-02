@@ -578,6 +578,18 @@ td {
     margin: 0 auto;
     display: inline-block;
     background: #72cf6e !important;
+    top: 430px;
+}
+
+#go-lobby{
+	font-family: sans-serif;
+    text-align: center;
+    font-size: 30pt;
+    position: relative;
+    padding: 10px 20px 10px 20px;
+    margin: 0 auto;
+    display: inline-block;
+    background: #red !important;
     top: 530px;
 }
 
@@ -770,7 +782,7 @@ div#trackers>div {
     background-color: rgba(2, 3, 4, 0.5);
     z-index: 12;
     box-shadow: 0 0 24px 30px rgba(0, 0, 0, 0.5);
-    
+
 }
 
 #choose-board{
