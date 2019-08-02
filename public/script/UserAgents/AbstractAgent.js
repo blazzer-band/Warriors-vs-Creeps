@@ -15,7 +15,7 @@ class AbstractAgent{
 	}
 
 
-	selectCards(cards, count, callback){
+	selectCards(cards, callback){
 
 	}
 

@@ -4,26 +4,22 @@
 
 class LocalAgent extends AbstractAgent{
 
-	constructor(roomIndicator, userIndicator, userId, isHost){
+	constructor(userIndicator){
 		super();
-		this.roomIndicator = roomIndicator;
 		this.userIndicator = userIndicator;
-		this.userId = userId;
-		this.isHost = isHost;
 	}
 
 	updateFirebase(action, callback) {
 		let database = firebase.database();
-		let roomTitle = this.roomIndicator;
 		let player = this.userIndicator;
-		database.ref('Rooms/' + roomTitle + '/Game/Players/' + player  + '/Action').set(action);
+		database.ref('Rooms/' + globalRoomIndicator + '/Game/Players/' + player  + '/Action').set(action);
 		return callback;
 	}
 
-	selectCards(cards, callback){
-		let agent;
+	selectCard(cards, callback){
+		let agent = this;
 		game.getRender.startTimer(600);
-		game.getRender.selectCards(cards, endSelect);
+		game.getRender.selectCard(cards, endSelect);
 
 		function endSelect(){
 			game.getRender.stopSelect();

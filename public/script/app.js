@@ -14,7 +14,6 @@ function Game() {
 	class User {
 		constructor(isHost) {
 			this.index = null;
-			this.isHost = isHost;
 			this.hand = []; // Карты в руке, int id типы карт
 			this.stacks = [[],[],[],[],[],[]]; // подмассивы - стеки, верхняя карта - последняя
 			this.agent = null;
@@ -273,7 +272,7 @@ function Game() {
 	}
 
 	// Инициализация
-	let random = new Math.seedrandom(this.seedRandom);
+	
 	let map = new MapObject(inputMap);
 
 	const cardsParams = cardsJSON; // Описания карт
@@ -281,7 +280,7 @@ function Game() {
 	let roundCounter = 0; // Увеличивать на 1 в конце спауна мобов
 	const render = new Render();
 	this.getRender = render;
-	this.getRandom = random;
+	
 	render.renderMap(map);
 
 
@@ -292,46 +291,38 @@ function Game() {
 	const damageCardsCount = 55;
 	let damageCardsDeck = null;
 
+	let random = null;
+	this.getRandom = random;
 
-	let users = null; // Пользователи
+	let users = []; // Пользователи
 	// TODO: users: AbstractAgent[] array - инициализированные обьекты пользователей
-	this.start = function(newUsers){
-		users = newUsers ? newUsers : [];
+	this.start = function(newUsers, seedRandom = 42){ // newUsers - массив уникальных идентификаторов
+		random = new Math.seedrandom(seedRandom);
+		let index = 0;
+		for (let userId of newUsers) {
+			let user = new User(); 
+			if(globalUserId === userId){
+				user.agent = new LocalAgent(userId)
+			}
+			else if (userId[userId.length - 1] === 'b'){
+				user.agent = new BotAgent()
+			}
+			else{
+				user.agent = new NetworkAgent(userId)
+			}
+			user.index = index;
 
-		{ /// временная генерация пользователей
+			users.push(user)
+			index++;
+		}
+
+		/*{ /// временная генерация пользователей
 			let testUserAgent = new LocalAgent();
 			let testUser = new User(false);
 			testUser.agent = testUserAgent;
 			testUser.index = 0;
 			users.push(testUser);
-		}
-/*		{
-			let testUserAgent = new LocalAgent();
-			let testUser = new User(true);
-			testUser.index = 1;
-			testUser.agent = testUserAgent;
-			users.push(testUser);
-			testUser.agent.setStacks(testUser.stacks);
-		}
-		{
-			let testUserAgent = new LocalAgent();
-			let testUser = new User(true);
-			testUser.index = 2;
-			testUser.agent = testUserAgent;
-			users.push(testUser);
-			testUser.agent.setStacks(testUser.stacks);
-		}
-		{
-			let testUserAgent = new LocalAgent();
-			let testUser = new User(true);
-			testUser.index = 3;
-			testUser.agent = testUserAgent;
-			users.push(testUser);
-			testUser.agent.setStacks(testUser.stacks);
 		}*/
-
-
-
 
 		// Генерация колоды c командными картами
 		cardsDeck = [];
@@ -424,7 +415,7 @@ function Game() {
 		let noLocal = [];
 		for (let i = 0; i < users.length; i++) { // Получить локальных
 			if(users[i].agent.constructor.name == 'LocalAgent') local.push(i);
-			else noLocal.Push(i);
+			else noLocal.push(i);
 		}
 
 		let countNoLocal = 0;
