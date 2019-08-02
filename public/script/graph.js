@@ -38,28 +38,40 @@ function Render() {
 
 	const UNIT_IMGS = ["src/models/hero_right.png", "src/models/monster.png", "src/models/bomb.png", "src/models/hero_left.png", "src/models/hero_up.png", "src/models/hero_down.png"];
 
-	this.moveUnit = function(cellFrom, cellTo) {
-		let fromElem = mapBody.children[cellFrom.y].children[cellFrom.x];
-		let toElem = mapBody.children[cellTo.y].children[cellTo.x];
+	this.moveUnit = function(cellFrom, cellTo, callback) {
+		return new Promise(function(resolve, reject){
+			let fromElem = mapBody.children[cellFrom.y].children[cellFrom.x];
+			let toElem = mapBody.children[cellTo.y].children[cellTo.x];
 
-		let from_x = fromElem.offsetLeft;
-		let from_y = fromElem.parentElement.offsetTop;
+			let from_x = fromElem.offsetLeft;
+			let from_y = fromElem.parentElement.offsetTop;
 
-		let to_x = toElem.offsetLeft;
-		let to_y = toElem.parentElement.offsetTop;
+			let to_x = toElem.offsetLeft;
+			let to_y = toElem.parentElement.offsetTop;
 
-		let el = fromElem.lastChild;
-		toElem.appendChild(el);
-		el.style.zIndex = '2';
-		el.style.transition = "transform .4s";
-		el.style.transform = 'translateY('+ (from_y-to_y) +'px)';
-		el.style.transform += 'translateX('+ (from_x-to_x) +'px)';
+			let el = fromElem.lastChild;
+			el.style.transform = 'translateY('+ (from_y-to_y) +'px)';
+			el.style.transform += 'translateX('+ (from_x-to_x) +'px)';
+			el.style.zIndex = '2';
+			
 
-		setTimeout(function(){
-			el.style.transform = 'translateY(0px)';
-			el.style.transform += 'translateX(0px)';
-		}, 0)
-	};
+			setTimeout(function(){
+				el.style.transition = "transform .4s";
+			}, 0)
+
+
+
+			toElem.appendChild(el);
+			setTimeout(function(){
+				el.style.transform = 'translateY(0px)';
+				el.style.transform += 'translateX(0px)';
+			}, 100)
+			setTimeout(function(){
+				el.style = ''
+				resolve()
+			}, 550);
+		})
+	}
 
 	let cssUnitAttr = {0: 'hero', 2: 'bomb', 1: 'creep' }
 	this.initUnit = function(cell) {
@@ -237,19 +249,39 @@ function Render() {
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/, isSelected}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 	this.selectCells = function(cellsArray, highlight, count, callback) {
-		let callbackIdArr = callback
+		let callbackIdArr = callback;
 
 		let i = 0;
+		let selectedCount = 0;
+
 		for (let cell of cellsArray) {
 			let cellElement = mapBody.children[cell.y].children[cell.x];
-			cellElement.classList.add(HIGHLIGHT_STYLE[highlight]);
+			cellElement.setAttribute('highlight', HIGHLIGHT_STYLE[highlight]);
 			cellElement.selectId = i
+			cellElement.setAttribute('selected', 'false')
+
+
 			cellElement.onclick = function (e) {
-				for (let cell2 of cellsArray) {
-					mapBody.children[cell2.y].children[cell2.x].classList.remove(HIGHLIGHT_STYLE[highlight])
+				let cell = e.currentTarget;
+				let isSelected = cell.getAttribute('selected') === 'true';
+				cell.setAttribute('selected', isSelected ? 'false' : 'true')
+				selectedCount += isSelected ? -1 : 1;
+				if(selectedCount === count){
+					let selectedIds = []
+					for (let cell2 of cellsArray) {
+						let cel = mapBody.children[cell2.y].children[cell2.x];
+
+						if(cel.getAttribute('selected') === 'true') 
+							selectedIds.push(cel.selectId|0)
+
+						cel.removeAttribute('highlight');
+						cel.removeAttribute('selected');
+						cel.onclick = null;
+					}
+					callbackIdArr(selectedIds);
+					return;
 				}
-				callbackIdArr([e.currentTarget.selectId]);
-			};
+			}
 			i++;
 		}
 	}

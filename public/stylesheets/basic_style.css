@@ -85,35 +85,36 @@ td {
 #game-map [rotate]:after{
     position:absolute;
     font-family:sans-serif;
-    font-weight:bold;
+    font-weight: 900;
     font-size:35px;
-    color:#1c1c1c
+    color: #f7de47;
     -webkit-mask-image: none;
     mask: none !important;
 }
 
 #game-map [rotate="right"]:after{
     content:'>';
-    right:2px;
-    top:16px;
+    right:22px;
+    top:9px;
 }
 
 #game-map [rotate="top"]:after{
     content:'^';
-    left:23px;
-    top:0;
+    left:21px;
+    top:11px;
 }
 
 #game-map [rotate="left"]:after{
     content:'<';
-    left:0;
-    top:16px;
+    right:22px;
+    top:9px;
 }
 
 #game-map [rotate="bottom"]:after{
     content:'v';
+    font-size:33px;
     left:23px;
-    bottom:0;
+    top:5px;
 }
 
 
@@ -590,8 +591,13 @@ td {
     border: none;
     background: #ecedef;
     color: #1b3043;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 40px 10px 40px;
     border-radius: 5px;
+    font-size: 33pt;
+    cursor:pointer;
+}
+.lobby button:hover {
+    background: #b6ccf8;
 }
 
 #play-game {
@@ -664,9 +670,6 @@ div#trackers>div {
     border-radius: 12px;
 }
 
-.selected-card {
-    box-shadow: 0 0 3pt 2pt #4aff60;
-}
 
 .stack img:nth-child(2) {
     margin-top: -100%
@@ -691,29 +694,12 @@ div#trackers>div {
     display: block;
 }
 
-.move-cell img {
-    outline: 5px solid #ecec56;
-    outline-offset: -5px;
-}
 
-.attack-cell img {
-    outline: 5px solid #fff;
-    outline-offset: -5px;
-}
-
-.rotate-cell img {
-    outline: 5px solid #000;
-    outline-offset: -5px;
-}
 
 .noDisplay {
     display: none !important;
 }
 
-.help-cell img {
-    /* outline: 5px solid chartreuse; */
-    /* outline-offset: -5px; */
-}
 
 .escape {
     display: inline-block;
@@ -746,7 +732,7 @@ div#trackers>div {
 
 .loginButton {
     text-align: center;
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
 }
 
 #connect-room {
@@ -954,45 +940,53 @@ div#trackers>div {
     display: block;
 }
 
-.move-cell img {
-    outline: 5px solid #ecec56;
-    outline-offset: -5px;
-}
-
-.attack-cell img {
-    outline: 5px solid #fff;
-    outline-offset: -5px;
-}
-
-.rotate-cell img {
-    outline: 5px solid #000;
-    outline-offset: -5px;
-}
 
 .noDisplay {
     display: none !important;
 }
 
-.help-cell img:nth-child(1) {
-    outline: 5px solid chartreuse;
-    outline-offset: -5px;
-    transition: box-shadow .3s;
+[highlight] *:nth-child(1) {
+    outline: 10px double;
+    outline-offset: -10px;
+    transition: box-shadow .25s;
 }
 
-.help-cell:hover img:nth-child(1) {
-    box-shadow: 0 0 2px 3px rgb(127, 255, 0);
+[highlight]:hover *:nth-child(1) {
+    box-shadow: 0 0 3px 2px rgb(255, 255, 255);
 }
-.help-cell img:nth-child(2) {
+[highlight] *:nth-child(2) {
     transition: transform .3s;
 }
 
-.help-cell:hover img:nth-child(2) {
-    transform:scale(1.1)
-
+[highlight]:hover *:nth-child(2) {
+    /*transform:scale(1.1)*/
 }
-.help-cell:hover{
+
+[highlight]:hover{
     z-index:999;
 }
+
+[highlight=help-cell] *:nth-child(1) {
+    outline-color: #7ff609;
+}
+
+[highlight=move-cell] *:nth-child(1) {
+    outline-color: #5678ec;
+}
+
+[highlight=attack-cell] *:nth-child(1) {
+    outline-color: #ed4848;
+}
+
+[highlight=rotate-cell] *:nth-child(1) {
+    outline-color:#000;
+}
+
+[selected=true] *:nth-child(1) {
+  outline: 10px solid;
+}
+
+
 
 .escape {
     display: inline-block;

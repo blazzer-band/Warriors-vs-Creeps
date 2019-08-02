@@ -61,9 +61,4 @@ class NetworkAgent extends AbstractAgent{
 		this.callbStore['selectStacks'] = callback;
 	}
 
-	// onFirebaseUpdate(dassad){
-	// 	(dassadif.pole == selectCards)
-	// 		this.calbselectCards(dassad)
-	// }
-
 }
