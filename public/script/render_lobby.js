@@ -148,10 +148,15 @@ class RenderRoom{
 		let room = this;
 		this.id = id;
 		this.count = 1;
+		this.botsCount = 0;
 		this.showRoom();
 		document.getElementById("play-game").onclick = function () {
 			room.beginGame();
 		};
+
+		document.getElementById("make-bot").onclick = function(){
+			room.makeBot();
+		}
 	}
 
 
@@ -248,6 +253,22 @@ class RenderRoom{
 		game.start(roomIndicator, usersIndicator);
 		//for all users
 		//database.ref('Rooms/' + roomTitle + '/Game/Players/' + player  + '/Action').set("start");
+	}
+
+	makeBot(){
+		let db = firebase.database();
+		let playersList = db.ref("Rooms/" + this.roomKey + "/Players");
+		let playersCount = 0;
+		playersList.on('child_added', function(){
+			playersCount++;
+		})
+
+		if (playersCount < 4){
+			this.botsCount++;
+			this.count++;
+			let botName = this.botsCount + "Botb";
+			db.ref("Rooms/" + this.roomKey + "/Players/" + botName + "/Nickname").set(botName);
+		}
 	}
 
 	//exit(){}
