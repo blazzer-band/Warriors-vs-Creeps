@@ -51,16 +51,21 @@ class RenderLobby{
 						})
 
 						roomDes.appendChild(document.createElement("span"));
+						roomDes.lastChild.className = "span-dis";
 						roomDes.lastChild.textContent = "1. Количество игроков в комнате: " + playersCount + "/4;";
 
 						roomDes.appendChild(document.createElement("span"));
 						roomDes.lastChild.textContent = "2. Игроки в комнате: ";
+						roomDes.lastChild.className = "span-dis";
 						for (let i = 0; i < playersList.length; i++){
 							roomDes.appendChild(document.createElement("span"));
-							roomDes.lastChild.textContent = "\t" + i + " " + playersList[i];
+							roomDes.lastChild.className = "span-dis";
+							roomDes.lastChild.style.left = "50px";
+							roomDes.lastChild.textContent = "\t" + i + ": " + playersList[i] + ";";
 						}
 
 						roomDes.appendChild(document.createElement("span"));
+						roomDes.lastChild.className = "span-dis";
 						roomDes.lastChild.textContent = "3. Тип миссии: Bomb Keepers;";
 					}
 				});

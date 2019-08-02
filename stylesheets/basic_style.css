@@ -491,6 +491,13 @@ td {
 	font-size: 16pt;
 }
 
+.span-dis{
+	padding-top: 10px;
+	padding-left: 20px;
+	position: relative;
+	display: block;
+}
+
 #room {
     position: relative;
     width: 1200px;
