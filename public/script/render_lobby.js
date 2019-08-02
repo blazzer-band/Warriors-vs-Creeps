@@ -107,6 +107,7 @@ class RenderLobby{
 		db.ref('Rooms/' + roomTitle + '/RoomId').set(userId);
 		roomKey = roomTitle;
 		this.room = new RenderRoom(roomKey, this, this.userID);
+		this.room.loadUsers();
 		this.hideLobby();
 	}
 
@@ -142,7 +143,7 @@ class RenderLobby{
 				}
 			});
 			this.room = new RenderRoom(roomKey, this, this.selectedRoomHostID);
-
+			this.room.loadUsers();
 			this.hideLobby();
 		}
 
