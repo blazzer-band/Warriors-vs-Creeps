@@ -188,7 +188,7 @@ function Render() {
 			stack.stackId = i++;
 			stack.addEventListener('click', function(e){
 				if(selectedHandCard !== null){
-					programmingCallback(selectedHandCard.idInList, e.currentTarget.stackId);
+					programmingCallback([selectedHandCard.idInList, e.currentTarget.stackId]);
 					selectedHandCard = null;
 					trash.style.display = "none";
 					scrap.style.display = "none";
@@ -214,13 +214,13 @@ function Render() {
 				trash.style.display = "block";
 				scrap.style.display = "block";
 				trash.onclick = function(e){
-					programmingCallback(selectedHandCard.idInList, -2);
+					programmingCallback([selectedHandCard.idInList, -2]);
 					//selectedHandCard = null;
 					trash.style.display = "none";
 					scrap.style.display = "none";
 				}
 				scrap.onclick = function(e){
-					programmingCallback(selectedHandCard.idInList, -1);
+					programmingCallback([selectedHandCard.idInList, -1]);
 					//selectedHandCard = null;
 					trash.style.display = "none";
 					scrap.style.display = "none";
@@ -252,11 +252,7 @@ function Render() {
 			};
 			i++;
 		}
-	};
-
-
-	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
-	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
+	}
 
 	//Окно, отображающее поражение для текущей сессии
 	this.defeat = function(){
@@ -282,15 +278,6 @@ function Render() {
 		messageBlock.style.opacity = '0'
 		if(messageTimeout === null) messageTimeout = setTimeout(() => {messageBlock.classList.add('noDisplay'); messageTimeout =  null}, 500)
 	}
-
-
-	//Test
-	/// players -- массив игроков, состоящее из Никнейма и его ID
-	// let players = [{"Host", 0}, {"Bot", 1}];
-	//
-	// this.showPlayers = function(players){
-	//
-	// }(players)
 
 	this.updateBombCounter = function(newVal){
 		document.getElementById('hp-bomb').innerHTML = newVal

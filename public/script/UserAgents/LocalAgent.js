@@ -7,6 +7,7 @@ class LocalAgent extends AbstractAgent{
 	constructor(userIndicator){
 		super();
 		this.userIndicator = userIndicator;
+		this.sendCount = 0
 	}
 
 	updateFirebase(action) {
@@ -18,7 +19,9 @@ class LocalAgent extends AbstractAgent{
 
 	serializeObject(name, data){
 		let temp = {}
-		temp[name] = data;
+		temp[name] = data
+		temp.cur = this.sendCount++
+		console.log('Отправляется ', temp)
 		return temp
 	}
 
@@ -31,7 +34,6 @@ class LocalAgent extends AbstractAgent{
 		function endSelect(sel){
 			game.getRender.stopSelect();
 			game.getRender.stopTimer();
-			// Вместо комментария вставить отправку sel в файрбайз
 			agent.updateFirebase(agent.serializeObject('selectCard', sel))
 			callback(sel);
 		}
@@ -43,7 +45,11 @@ class LocalAgent extends AbstractAgent{
 
 
 	programming(callback){
-		game.getRender.programming(callback)
+		let agent = this;
+		game.getRender.programming(function(ret){
+			agent.updateFirebase(agent.serializeObject('programming', ret))
+			callback(ret)
+		})
 	}
 
 	setStacks(stacks){
@@ -51,14 +57,26 @@ class LocalAgent extends AbstractAgent{
 	}
 
 	chooseRotate(rotateArray, callback){
-		game.getRender.chooseRotate(rotateArray, callback)
+		let agent = this;
+		game.getRender.chooseRotate(rotateArray, function(rotateId){
+			agent.updateFirebase(agent.serializeObject('chooseRotate', rotateId))
+			callback(rotateId);
+		})
 	}
 
 	selectCells(cellsArray, highlight, count, callback) {
-		game.getRender.selectCells(cellsArray, highlight, count, callback);
+		let agent = this;
+		game.getRender.selectCells(cellsArray, highlight, count, function(selSellsIds){
+			agent.updateFirebase(agent.serializeObject('selectCells', selSellsIds))
+			callback(selSellsIds);
+		});
 	}
 
 	selectStacks(cellsArray, count, callback) {
-		game.getRender.selectStacks(cellsArray, count, callback);
+		let agent = this;
+		game.getRender.selectStacks(cellsArray, count, function(selectedStacksIds){
+			agent.updateFirebase(agent.serializeObject('selectStacks', selectedStacksIds))
+			callback(selectedStacksIds);
+		});
 	}
 }

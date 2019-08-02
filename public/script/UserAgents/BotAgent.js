@@ -23,7 +23,7 @@ class BotAgent extends AbstractAgent{
 	}
 
 	programming(callback){
-		callback(0, -1);
+		callback([0, -1]);
 
 	}
 

@@ -119,6 +119,7 @@ class RenderLobby{
 	}
 
 	connectRoom(roomKey, selectedRoomID){
+		globalRoomKey = roomKey;
 		this.selectedRoomHostID = selectedRoomID;
 		console.log(this.selectedRoomHostID);
 		let db = firebase.database();
