@@ -19,7 +19,7 @@
 			<a href="https://github.com/blazzer-band/Warriors-vs-Creeps" style = "color: inherit; margin-left: 25px">Открыть репозиторий игры</a>
 		</div>
 		<div class="loginButton">
-			<button id="Log-in" type="button" class="loginButton">Войти!</button>
+	        <button id="Log-in" type="button" class="loginButton">Войти!</button>
 		</div>
 	</div>
 	<div id="rooms">
@@ -38,7 +38,7 @@
 		<div id="room-left-block">
 			<div id="players-list">
 				<div class="player-spot">
-					<span class="player-name">1. Hostname</span>
+				 	<span class="player-name">1. Hostname</span>
 					<span class="color-picker">
 						<div class="current-color">
 							<div class="palette"></div>
@@ -53,7 +53,7 @@
 						</div>
 					</span>
 				</div>
-				<div class="player-spot">
+				 <div class="player-spot">
 					<span class="player-name">3. Открыто</span>
 					<span class="color-picker">
 						<div class="current-color">
@@ -135,8 +135,8 @@
 			</div>
 		</div>
 		<div id="x-card">
-			<div id="xxx-card"></div>
-		</div>
+            <div id="xxx-card"></div>
+        </div>
 	</div>
 	<div id="footer">
 		<div id="footer_footer"></div>
@@ -166,6 +166,16 @@
 
 </div>
 
+
+<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-database.js"></script>
+
 <script src="script/cards.js" type="text/javascript"></script>
 <script src="script/seedrandom.min.js"></script>
 <script src="script/graph.js" type="text/javascript" charset="utf-8"></script>
@@ -177,23 +187,25 @@
 <script src="script/UserAgents/NetworkAgent.js" type="text/javascript" charset="utf-8"></script>
 <script src="script/render_lobby.js" type="text/javascript" charset="utf-8"></script>
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/6.3.3/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#reserved-urls -->
-
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
-
 <script type="text/javascript">
 	"use strict"
 
 	let lobby, game = null;
 	let activeRoom = null;
 	let roomKey = null;
-	let token = 1066294888600161;
+	let token = 106629488860016154269;
 	// Your web app's Firebase configuration
+	var firebaseConfig = {
+		apiKey: "AIzaSyB9ky8ziEYKz2RtcQgcMsIRi2y3e_2n8bk",
+		authDomain: "warriors-vs-creeps.firebaseapp.com",
+		databaseURL: "https://warriors-vs-creeps.firebaseio.com",
+		projectId: "warriors-vs-creeps",
+		storageBucket: "warriors-vs-creeps.appspot.com",
+		messagingSenderId: "672875121806",
+		appId: "1:672875121806:web:fe1114f6b8755221"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
 	document.getElementById("Log-in").onclick = function () {
 		//let provider = new firebase.auth.GoogleAuthProvider();
 		let nickname = prompt("Введите свой Ник");
