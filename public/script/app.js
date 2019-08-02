@@ -101,7 +101,9 @@ function Game() {
 			let request = function(){
 
 
-				user.agent.programming(async function(cardPosInHand, stackId){
+				user.agent.programming(async function(ret){
+					let cardPosInHand = ret[0]
+					let stackId = ret[1]
 
 					if (stackId === -2){ // КАРТЫ если она УТИЛИЗИРУЕТСЯ БЕЗ ЭФФЕКТА
 						user.hand.splice(cardPosInHand, 1);
@@ -150,8 +152,8 @@ function Game() {
 		async selectCells(cellsArray, highlight, count = 1){ //
 			let user = this;
 			return new Promise(function(resolve, reject){
-				user.agent.selectCells(cellsArray, highlight, count, function(selSellsId){
-					resolve(selSellsId)
+				user.agent.selectCells(cellsArray, highlight, count, function(selSellsIds){
+					resolve(selSellsIds)
 				})
 			})
 		}
