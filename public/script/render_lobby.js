@@ -117,25 +117,35 @@ class RenderLobby{
 		let nameCreator = "user-" + this.userID;
 		let root = db.ref("Users");
 		let roomTitle = roomKey;
-		root.on('child_added', function (snapshot) {
-			if (snapshot.key.toString() === nameCreator) {
-				let username = snapshot.val().Nickname;
-				let email = snapshot.val().Email;
-				let userId_ = snapshot.val().UserId;
-				let isHost = false;
-				let indicator = username + '-' + userId_;
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Email").set(email);
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/UserId").set(userId_);
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Host").set(isHost);
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Action").set("atRoom");
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Host").set(isHost);
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/UserId").set(userId_);
-			}
-		});
-		this.room = new RenderRoom(roomKey, this, this.selectedRoomHostID);
-		this.hideLobby();
+		let playersList = db.ref("Rooms/" + roomKey + "/Players");
+		let playersCount = 0;
+		playersList.on('child_added', function(){
+			playersCount++;
+		})
+
+		if (playersCount < 4){
+			root.on('child_added', function (snapshot) {
+				if (snapshot.key.toString() === nameCreator) {
+					let username = snapshot.val().Nickname;
+					let email = snapshot.val().Email;
+					let userId_ = snapshot.val().UserId;
+					let isHost = false;
+					let indicator = username + '-' + userId_;
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Email").set(email);
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/UserId").set(userId_);
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Host").set(isHost);
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Action").set("atRoom");
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Host").set(isHost);
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/UserId").set(userId_);
+				}
+			});
+			this.room = new RenderRoom(roomKey, this, this.selectedRoomHostID);
+
+			this.hideLobby();
+		}
+
 	}
 
 
@@ -270,6 +280,8 @@ class RenderRoom{
 			let botName = this.botsCount + "Botb";
 			db.ref("Rooms/" + this.roomKey + "/Players/" + botName + "/Nickname").set(botName);
 		}
+
+		this.loadUsers();
 	}
 
 	//exit(){}
