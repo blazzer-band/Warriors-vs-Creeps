@@ -260,18 +260,26 @@ function Render() {
 			cellElement.selectId = i
 			cellElement.setAttribute('selected', 'false')
 
+
 			cellElement.onclick = function (e) {
 				let cell = e.currentTarget;
 				let isSelected = cell.getAttribute('selected') === 'true';
 				cell.setAttribute('selected', isSelected ? 'false' : 'true')
 				selectedCount += isSelected ? -1 : 1;
-
 				if(selectedCount === count){
+					let selectedIds = []
 					for (let cell2 of cellsArray) {
-						mapBody.children[cell2.y].children[cell2.x].removeAttribute('highlight')
-						mapBody.children[cell2.y].children[cell2.x].removeAttribute('selected')
+						let cel = mapBody.children[cell2.y].children[cell2.x];
+
+						if(cel.getAttribute('selected') === 'true') 
+							selectedIds.push(cel.selectId|0)
+
+						cel.removeAttribute('highlight');
+						cel.removeAttribute('selected');
+						cel.onclick = null;
 					}
-					callbackIdArr([e.currentTarget.selectId]);
+					callbackIdArr(selectedIds);
+					return;
 				}
 			}
 			i++;

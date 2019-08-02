@@ -301,8 +301,9 @@ function Game() {
 			if(globalUserId === userId){
 				user.agent = new LocalAgent(userId)
 
-				user.stacks[0] = [4,4,4]
+				/*user.stacks[0] = [4,4,4]
 				user.stacks[1] = [10,10,10]
+				user.stacks[2] = [6,6]*/
 			}
 			else if (userId[userId.length - 1] === 'b'){
 				user.agent = new BotAgent()
@@ -528,8 +529,8 @@ function Game() {
 						selVect = sellVec[0];
 					}
 					else{
-						let moveCellId = await user.selectCells(sellArray, higlightType.Move, 1);
-						selVect = sellVec[moveCellId];
+						let moveCellIds = await user.selectCells(sellArray, higlightType.Move, 1);
+						selVect = sellVec[moveCellIds[0]];
 					}
 				}
 
@@ -545,12 +546,7 @@ function Game() {
 			if (card.attack.length !== 0) {
 				await goAttack(user, heroCell, card.attack, card.targetCount);
 			}
-
-
-
 			//TODO: Вызвать спец функцию карты
-
-
 			resolve();
 
 		})
@@ -614,9 +610,10 @@ function Game() {
 				
 
 				if(next.unit.attachedCell !== null) { // Если юнит кого-то тащит, то тот занимает ячейку юнита
+					let atCell = next.unit.attachedCell;
 					render.moveUnit(curCell, next)
-					map.moveUnitFromCellToCoords(next.unit.attachedCell, curCell.x, curCell.y);
-					await render.moveUnit(next.unit.attachedCell, curCell)
+					map.moveUnitFromCellToCoords(atCell, curCell.x, curCell.y);
+					await render.moveUnit(atCell, curCell)
 					next.unit.attachedCell = curCell
 				}
 				else{
