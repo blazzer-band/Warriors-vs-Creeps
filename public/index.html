@@ -192,6 +192,7 @@
 
 <script type="text/javascript">
 	"use strict"
+	let globalUserId = null;
 
 	let lobby, game = null;
 	let activeRoom = null;
@@ -218,6 +219,7 @@
 			console.log("OK!");
 			let userId = result.additionalUserInfo.profile.id;
 			let user = 'user-' + userId;
+			globalUserId = userId;
 			let email = result.additionalUserInfo.profile.email;
 			let nickname = result.additionalUserInfo.profile.given_name;
 			let db = firebase.database();
