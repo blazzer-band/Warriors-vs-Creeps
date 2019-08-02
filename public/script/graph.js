@@ -237,19 +237,31 @@ function Render() {
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/, isSelected}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
 	this.selectCells = function(cellsArray, highlight, count, callback) {
-		let callbackIdArr = callback
+		let callbackIdArr = callback;
 
 		let i = 0;
+		let selectedCount = 0;
+
 		for (let cell of cellsArray) {
 			let cellElement = mapBody.children[cell.y].children[cell.x];
-			cellElement.classList.add(HIGHLIGHT_STYLE[highlight]);
+			cellElement.setAttribute('highlight', HIGHLIGHT_STYLE[highlight]);
 			cellElement.selectId = i
+			cellElement.setAttribute('selected', 'false')
+
 			cellElement.onclick = function (e) {
-				for (let cell2 of cellsArray) {
-					mapBody.children[cell2.y].children[cell2.x].classList.remove(HIGHLIGHT_STYLE[highlight])
+				let cell = e.currentTarget;
+				let isSelected = cell.getAttribute('selected') === 'true';
+				cell.setAttribute('selected', isSelected ? 'false' : 'true')
+				selectedCount += isSelected ? -1 : 1;
+
+				if(selectedCount === count){
+					for (let cell2 of cellsArray) {
+						mapBody.children[cell2.y].children[cell2.x].removeAttribute('highlight')
+						mapBody.children[cell2.y].children[cell2.x].removeAttribute('selected')
+					}
+					callbackIdArr([e.currentTarget.selectId]);
 				}
-				callbackIdArr([e.currentTarget.selectId]);
-			};
+			}
 			i++;
 		}
 	}

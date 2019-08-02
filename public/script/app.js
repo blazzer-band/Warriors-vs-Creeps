@@ -39,9 +39,7 @@ function Game() {
 			let user = this;
 			return new Promise(function(resolve, reject){
 				user.agent.chooseRotate(rotateArray, function(rotateId){
-
 					resolve(rotateId)
-
 				})
 			})
 		}
@@ -157,9 +155,6 @@ function Game() {
 				})
 			})
 		}
-
-
-
 	}
 
 
@@ -305,6 +300,9 @@ function Game() {
 			let user = new User(); 
 			if(globalUserId === userId){
 				user.agent = new LocalAgent(userId)
+
+				user.stacks[0] = [4,4,4]
+				user.stacks[1] = [10,10,10]
 			}
 			else if (userId[userId.length - 1] === 'b'){
 				user.agent = new BotAgent()
@@ -498,10 +496,44 @@ function Game() {
 				let selVect = null
 				if(card.move.length === 1){ // card.move[i] - вектор в конец которого нужно дойти
 					selVect = card.move[0]
+
 				}
 				else{
-					selVect = card.move[0] //TODO: Спросить в какую сторону идти
+					// Выбор или запрос ячейки для передвижения
+					let sellArray = []
+					let sellVec = []
+					for (let sel of card.move) {
+						let v = vectorRotate(sel, user.myHero.rotation)
+						let temp = Math.max(Math.abs(v.x), Math.abs(v.y))
+						let next = {x: heroCell.x + v.x, y: heroCell.y - v.y};
+
+						while(true){
+							let nextCell = map.get(next.x, next.y)
+							
+							if(next.x === heroCell.x && next.y === heroCell.y) break;
+							if(nextCell !== null){
+								sellArray.push(nextCell);
+								sellVec.push(sel);
+								break;
+							}
+							next = {x:(next.x - v.x/temp)|0, y:(next.y + v.y/temp)|0};
+							continue;
+						}
+					}
+
+					if(sellVec.length === 0){
+						selVect = null;
+					}
+					else if(sellVec.length === 1){
+						selVect = sellVec[0];
+					}
+					else{
+						let moveCellId = await user.selectCells(sellArray, higlightType.Move, 1);
+						selVect = sellVec[moveCellId];
+					}
 				}
+
+
 				if(selVect !== null){
 					let v = vectorRotate(selVect, user.myHero.rotation)
 					await goRamming(user, heroCell, v.x, -v.y);
@@ -541,7 +573,7 @@ function Game() {
 			hookArray.push(thisCell)
 			let unit = thisCell.unit;
 
-			if(hookArray.length !== 0){
+			if(hookArray.length > 1){
 				hookSelect = hookArray[await user.selectCells(hookArray, higlightType.Hook, 1)]
 				if(hookSelect !== null && hookSelect !== thisCell)
 					unit.attachedCell = hookSelect
