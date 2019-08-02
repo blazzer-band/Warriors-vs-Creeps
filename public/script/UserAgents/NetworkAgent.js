@@ -6,6 +6,10 @@ class NetworkAgent extends AbstractAgent{
 
 	constructor(connectedUserId){
 		super();
+		this.callbackSelectCards = null;
+		this.callbackProgramming = null;
+		this.callbackWarriorAct = null;
+		this.callbackCreepsAct = null;
 		this.connectedUserId = connectedUserId;
 	}
 

@@ -14,7 +14,7 @@ class LocalAgent extends AbstractAgent{
 		let player = this.userIndicator;
 		database.ref('Rooms/' + globalRoomIndicator + '/Game/Players/' + player  + '/Action').set(action);
 	}
-	
+
 
 	selectCard(cards, callback){
 		let agent = this;
@@ -41,7 +41,6 @@ class LocalAgent extends AbstractAgent{
 	setStacks(stacks){
 		game.getRender.setStacks(stacks)
 	}
-
 
 	chooseRotate(rotateArray, callback){
 		game.getRender.chooseRotate(rotateArray, callback)
