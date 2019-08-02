@@ -93,13 +93,13 @@ class RenderLobby{
 				let userId_ = snapshot.val().UserId;
 				let isHost = true;
 				let indicator = username + '-' + userId_;
+				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
 				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Email").set(email);
 				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/UserId").set(userId_);
 				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Host").set(isHost);
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
+				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
 				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Action").set("atRoom");
 				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Host").set(isHost);
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
 				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/UserId").set(userId_);
 			}
 		});
@@ -132,18 +132,18 @@ class RenderLobby{
 					let userId_ = snapshot.val().UserId;
 					let isHost = false;
 					let indicator = username + '-' + userId_;
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
 					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Email").set(email);
 					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/UserId").set(userId_);
 					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Host").set(isHost);
-					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
 					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Action").set("atRoom");
 					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Host").set(isHost);
-					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
 					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/UserId").set(userId_);
 				}
 			});
 			this.room = new RenderRoom(roomKey, this, this.selectedRoomHostID);
-			this.room.loadUsers();
+			// this.room.loadUsers();
 			this.hideLobby();
 		}
 
