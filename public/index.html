@@ -173,7 +173,7 @@
 <script type="text/javascript">
 	"use strict"
 	let globalUserId = null;
-
+	let globalUserIdWithoutNick = null;
 	let lobby, game = null;
 	let activeRoom = null;
 	let roomKey = null;
@@ -201,6 +201,7 @@
 			let user = 'user-' + userId;
 			let email = result.additionalUserInfo.profile.email;
 			let nickname = result.additionalUserInfo.profile.given_name;
+			globalUserIdWithoutNick = userId;
 			globalUserId =nickname +'-'+ userId;
 			let db = firebase.database();
 			db.ref('Users/' + user + '/Email').set(email);

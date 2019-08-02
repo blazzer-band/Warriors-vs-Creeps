@@ -21,56 +21,63 @@ class RenderLobby{
 
 	showLobby(){
 		this.roomList.style.display = "block";
+		let isHandled = false;
 		let db = firebase.database();
 		let rooms = document.getElementById("list-rooms");
+		rooms.innerHTML = '';
 		let list = db.ref('Rooms');
-		list.on('child_added', function (snapshot) {
-			console.log(snapshot.key);
+		list.on('child_added', handleEvent);
+		list.on('child_removed', function(snapshot){
+			for (let roomElem of rooms.children){
+				if (roomElem.textContent === snapshot.key){
+					roomElem.outerHTML = '';
+					break;
+				}
+			}
+		});
+
+		function handleEvent(snapshot) {
 			rooms.appendChild(document.createElement('div'));
 			rooms.lastElementChild.textContent = snapshot.key;
 			rooms.lastElementChild.className = "room-element";
 			rooms.lastElementChild.onclick = function(e){
 				let keyRoom = e.currentTarget.textContent;
 				console.log(keyRoom);
-				let db = firebase.database();
-				let list = db.ref('Rooms');
-				list.on('child_added', function (snapshot) {
-					if (snapshot.key.toString() === keyRoom) {
-						roomKey = snapshot.key.toString();
-						activeRoom = snapshot.val().RoomId;
-						console.log(activeRoom);
-						let roomDes = document.getElementById("room-description");
-						roomDes.innerHTML = "";
-						let playersCell = db.ref("Rooms/" + roomKey + "/Players");
-						let playersList = [];
-						let playersCount = 0;
+					roomKey = snapshot.key.toString();
+					activeRoom = snapshot.val().RoomId;
+					console.log(activeRoom);
+					let roomDes = document.getElementById("room-description");
+					roomDes.innerHTML = "";
+					let playersCell = db.ref("Rooms/" + roomKey + "/Players");
+					let playersList = [];
+					let playersCount = 0;
 
-						playersCell.on("child_added", function(player){
-							playersList.push(player.val().Nickname);
-							playersCount++;
-						})
+					playersCell.on("child_added", function(player){
+						playersList.push(player.val().Nickname);
+						playersCount++;
+					})
 
+					roomDes.appendChild(document.createElement("span"));
+					roomDes.lastChild.className = "span-dis";
+					roomDes.lastChild.textContent = "1. Количество игроков в комнате: " + playersCount + "/4;";
+
+					roomDes.appendChild(document.createElement("span"));
+					roomDes.lastChild.textContent = "2. Игроки в комнате: ";
+					roomDes.lastChild.className = "span-dis";
+					for (let i = 0; i < playersList.length; i++){
 						roomDes.appendChild(document.createElement("span"));
 						roomDes.lastChild.className = "span-dis";
-						roomDes.lastChild.textContent = "1. Количество игроков в комнате: " + playersCount + "/4;";
-
-						roomDes.appendChild(document.createElement("span"));
-						roomDes.lastChild.textContent = "2. Игроки в комнате: ";
-						roomDes.lastChild.className = "span-dis";
-						for (let i = 0; i < playersList.length; i++){
-							roomDes.appendChild(document.createElement("span"));
-							roomDes.lastChild.className = "span-dis";
-							roomDes.lastChild.style.left = "50px";
-							roomDes.lastChild.textContent = "\t" + i + ": " + playersList[i] + ";";
-						}
-
-						roomDes.appendChild(document.createElement("span"));
-						roomDes.lastChild.className = "span-dis";
-						roomDes.lastChild.textContent = "3. Тип миссии: Bomb Keepers;";
+						roomDes.lastChild.style.left = "50px";
+						roomDes.lastChild.textContent = "\t" + i + ": " + playersList[i] + ";";
 					}
-				});
+
+					roomDes.appendChild(document.createElement("span"));
+					roomDes.lastChild.className = "span-dis";
+					roomDes.lastChild.textContent = "3. Тип миссии: Bomb Keepers;";
 			};
-		});
+
+		}
+
 	}
 
 	hideLobby(){
@@ -107,7 +114,7 @@ class RenderLobby{
 		db.ref('Rooms/' + roomTitle + '/RoomId').set(userId);
 		roomKey = roomTitle;
 		this.room = new RenderRoom(roomKey, this, this.userID);
-		this.room.loadUsers();
+		//this.room.loadUsers();
 		this.hideLobby();
 	}
 
@@ -169,7 +176,7 @@ class RenderRoom{
 			room.makeBot();
 		};
 		document.getElementById("go-lobby").onclick = function () {
-			room.exitRoom(this.roomKey);
+			room.exitRoom(); //this.roomKey
 		};
 	}
 
@@ -181,18 +188,23 @@ class RenderRoom{
 		this.loadUsers();
 	}
 
-	exitRoom(roomKey) {
+	exitRoom() {
 		let db = firebase.database();
-		let list = db.ref('Rooms/' + roomKey + '/RoomId');
-		list.on('child_added', function (snapshot) {
-			if (snapshot.val().toString() === globalUserId) {
-				db.ref('Rooms/' + roomKey).remove();
-				room.disConnect();
-			}
+		let list = db.ref('Rooms/' + this.roomKey + '/RoomId');
+
+		let room = this;
+
+		list.once("value", function(snapshot){
+				if (snapshot.val().toString() === globalUserIdWithoutNick){
+					db.ref('Rooms/' + room.roomKey).remove();
+					room.disConnect();
+				}
 		})
+
+
 	}
 
-	static disConnect() {
+	disConnect() {
 		lobby.showLobby();
 		let roomCurrent = document.getElementById("room");
 		roomCurrent.style.display = 'none';
