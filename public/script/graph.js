@@ -205,17 +205,18 @@ function Render() {
 	let programmingCallback = null;
 	let trash = document.getElementsByClassName("trash")[0];
 	let scrap = document.getElementsByClassName("effect")[0];
-
+	
+	trash.stackId = -2;
+	scrap.stackId = -1;
 	trash.onclick = stopProgramming;
 	scrap.onclick = stopProgramming;
 
-	function stopProgramming(){
+	function stopProgramming(e){
 		if(selectedHandCard !== null){
 			trash.style.display = "none";
 			scrap.style.display = "none";
-			let id = selectedHandCard.idInList;
+			programmingCallback([selectedHandCard.idInList|0, e.currentTarget.stackId|0]);
 			selectedHandCard = null;
-			programmingCallback([id, -1]);
 		}
 	}
 	
@@ -315,14 +316,19 @@ function Render() {
 	}
 
 
-	const ROTATE = {0:'360°(0°)', 1:'90°', 2:'180°', 3:'270°(-90°)', 4:'360°(0°)'}
+	const ROTATE = {0:'359', 1:'89', 2:'179', 3:'269', 4:'359'}
 	this.chooseRotate = function(rotateArray, callback){ // callback(rotateIdInArray)
-		let s = 'Выберите вариант поворота вашего персонажа: ';
+		let render = this;
+		let rotateCardsArray = []
 		for (let i = 0; i < rotateArray.length; i++) {
-			s += i + ':' + ROTATE[rotateArray[i]] + ' '
-		};
+			rotateCardsArray.push(ROTATE[rotateArray[i]])
 
-		callback(prompt(s, "0")|0)
+		}
+
+		this.selectCard(rotateCardsArray, function(selectRotate){
+			render.stopSelect();
+			callback(selectRotate);
+		})
 
 	}
 

@@ -65,6 +65,9 @@ function Game() {
 							resolve();
 						});
 					}
+					else{
+						resolve();
+					}
 
 				}
 				else if(type === cardType.Electro || type === cardType.Computer){
@@ -82,6 +85,9 @@ function Game() {
 							user.stacks[selectedStacksIds[1]] = tmpStack;
 							resolve();
 						});
+					}
+					else{
+						resolve();
 					}
 
 				}
