@@ -171,16 +171,54 @@ class RenderRoom{
 		this.botsCount = 0;
 		this.showRoom();
 		document.getElementById("play-game").onclick = function () {
-			room.beginGame();
-		};
+			let db = firebase.database();
+			let roomId = db.ref("Rooms/" + room.roomKey + '/RoomId');
+			roomId.once("value", function(snapshot){
+			roomId = snapshot.val();
+		});
+			if (globalUserIdWithoutNick === roomId){
+				room.beginGame();
+			}
+		}
 
 		document.getElementById("make-bot").onclick = function(){
-			room.makeBot();
-		};
+			let db = firebase.database();
+			let roomId = db.ref("Rooms/" + room.roomKey + '/RoomId');
+			roomId.once("value", function(snapshot){
+			roomId = snapshot.val();
+		});
+			if (globalUserIdWithoutNick === roomId){
+				room.makeBot();
+			}
+		}
+
 		document.getElementById("go-lobby").onclick = function () {
 			room.exitRoom(); //this.roomKey
 		};
+
+		//this.demotion();
 	}
+
+	// demotion(){
+	// 	let db = firebase.database();
+	// 	let roomId = db.ref("Rooms/" + this.roomKey + '/RoomId');
+	// 	roomId.once("value", function(snapshot){
+	// 		roomId = snapshot.val();
+	// 	})
+	//
+	// 	if (globalUserIdWithoutNick !== roomId){
+	// 		document.getElementById("play-game").disabled = true;
+	// 		document.getElementById("play-game").style.opacity = ".3";
+	// 		document.getElementById("make-bot").disabled = true;
+	// 		document.getElementById("make-bot").style.opacity = ".3";
+	// 	}
+	// 	else {
+	// 		document.getElementById("play-game").disabled = false;
+	// 		document.getElementById("play-game").style.opacity = "";
+	// 		document.getElementById("make-bot").disabled = false;
+	// 		document.getElementById("make-bot").style.opacity = "";
+	// 	}
+	// }
 
 	showRoom(){
 		let roomList = document.getElementById("rooms");
@@ -240,21 +278,32 @@ class RenderRoom{
 	}
 
 	loadUsers() {
+		let room = this;
 		let keyRoom = this.roomKey;
 		console.log(keyRoom);
 		let db = firebase.database();
+		let param = db.ref('Rooms/' + keyRoom + '/Players')
+		let players = document.getElementsByClassName('player-spot');
 		let list = db.ref('Rooms');
 		list.on('child_added', function (snapshot) {
 			if (snapshot.key.toString() === keyRoom) {
 				let list_players = db.ref('Rooms/' + snapshot.key + '/Players');
 				let i = 0;
-				let players = document.getElementsByClassName('player-name');
 				list_players.on('child_added', function (snapshot) {
 					players[i].textContent = snapshot.val().Nickname;
 					players[i].style.color = 'black';
 					i++;
 				});
 			}
+		});
+		param.on('child_removed', function (snapshot) {
+			let playersList = document.getElementById("players-list");
+			for (let player of playersList.children){
+				if (player.textContent.search(snapshot.val().Nickname) >= 0){
+					player.textContent = "Открыто";
+				}
+			}
+			//room.demotion();
 		});
 	}
 
