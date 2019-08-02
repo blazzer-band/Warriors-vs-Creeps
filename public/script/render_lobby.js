@@ -238,6 +238,7 @@ class RenderRoom{
 		content.style.display = "block";
 		let countPlayers = 0;
 		let roomIndicator = this.roomKey;
+		globalRoomIndicator =  roomIndicator;
 		let usersIndicator = [];
 		let users = db.ref('Rooms/' + roomIndicator + '/Players');
 		users.on('child_added', function (snapshot) {
@@ -245,7 +246,7 @@ class RenderRoom{
 			countPlayers++;
 		});
 		console.log(usersIndicator);
-		game.start(roomIndicator, usersIndicator);
+		game.start(usersIndicator);
 		//for all users
 		//database.ref('Rooms/' + roomTitle + '/Game/Players/' + player  + '/Action').set("start");
 	}

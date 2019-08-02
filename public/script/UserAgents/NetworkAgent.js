@@ -4,8 +4,9 @@
 
 class NetworkAgent extends AbstractAgent{
 
-	constructor(){
+	constructor(connectedUserId){
 		super();
+		this.connectedUserId = connectedUserId;
 	}
 
 	selectCard(cards, callback){

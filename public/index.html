@@ -156,15 +156,15 @@
 	<button type="" disabled="">Выйграть</button>
 	<button onclick = "game.lose()">Проиграть</button>
 	<button onclick = "game.getRender.stopTimer()">Бесконечный таймер</button>
-	<button onclick = "">Проматать x ходов</button>
 	<button id = "rotate">Повернуть всех воинов na 90 gradusov</button>
 	<button onclick = "{let a = document.getElementById('choose-board'); a.style.display = a.style.display === 'none' ? 'inline-block': 'none'}">Скрыть всплывающее окно</button>
 
 	<button onclick = "{
 		document.getElementById('lobby').style.display = 'none';
 		document.getElementById('content').style.display = 'block';
+		globalUserId = 'testUser'
 		game = new Game();
-		game.start();
+		game.start([globalUserId, 'bot1-b', 'bot2-b' ,'bot3-b']);
 		}">Начать игру</button>
 
 </div>
@@ -196,6 +196,8 @@
 	let lobby, game = null;
 	let activeRoom = null;
 	let roomKey = null;
+	let globalRoomIndicator = null;
+	let globalUserId = null;
 	// Your web app's Firebase configuration
 	var firebaseConfig = {
 		apiKey: "AIzaSyB9ky8ziEYKz2RtcQgcMsIRi2y3e_2n8bk",
