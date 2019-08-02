@@ -170,17 +170,16 @@ class RenderRoom{
 		this.count = 1;
 		this.botsCount = 0;
 		this.showRoom();
-		room.beginGame();
-		// document.getElementById("play-game").onclick = function () {
-		// 	let db = firebase.database();
-		// 	let roomId = db.ref("Rooms/" + room.roomKey + '/RoomId');
-		// 	roomId.once("value", function(snapshot){
-		// 	roomId = snapshot.val();
-		// });
-		// 	if (globalUserIdWithoutNick === roomId){
-		// 		room.beginGame();
-		// 	}
-		// }
+		document.getElementById("play-game").onclick = function () {
+			let db = firebase.database();
+			let roomId = db.ref("Rooms/" + room.roomKey + '/RoomId');
+			roomId.once("value", function(snapshot){
+			roomId = snapshot.val();
+		});
+			if (globalUserIdWithoutNick === roomId){
+				room.beginGame();
+			}
+		}
 
 		document.getElementById("make-bot").onclick = function(){
 			let db = firebase.database();
