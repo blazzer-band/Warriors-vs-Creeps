@@ -198,20 +198,26 @@ function Render() {
 		let i = 0;
 		for (let stack of stacksParent) {
 			stack.stackId = i++;
-			stack.addEventListener('click', function(e){
-				if(selectedHandCard !== null){
-					programmingCallback([selectedHandCard.idInList, e.currentTarget.stackId]);
-					selectedHandCard = null;
-					trash.style.display = "none";
-					scrap.style.display = "none";
-				}
-			})
+			stack.addEventListener('click', stopProgramming)
 		}
 	}
 	let selectedHandCard = null;
 	let programmingCallback = null;
 	let trash = document.getElementsByClassName("trash")[0];
 	let scrap = document.getElementsByClassName("effect")[0];
+
+	trash.onclick = stopProgramming;
+	scrap.onclick = stopProgramming;
+
+	function stopProgramming(){
+		if(selectedHandCard !== null){
+			programmingCallback([selectedHandCard.idInList, -1]);
+			selectedHandCard = null;
+			trash.style.display = "none";
+			scrap.style.display = "none";
+		}
+	}
+	
 	// callback принимает номер карты в руке и номер стека
 	this.programming = function(callback) {
 		selectedHandCard = null;
@@ -225,21 +231,9 @@ function Render() {
 				selectedHandCard.style.outline = '2px solid yellow';
 				trash.style.display = "block";
 				scrap.style.display = "block";
-				trash.onclick = function(e){
-					programmingCallback([selectedHandCard.idInList, -2]);
-					//selectedHandCard = null;
-					trash.style.display = "none";
-					scrap.style.display = "none";
-				}
-				scrap.onclick = function(e){
-					programmingCallback([selectedHandCard.idInList, -1]);
-					//selectedHandCard = null;
-					trash.style.display = "none";
-					scrap.style.display = "none";
-				}
 			}
 		}
-	};
+	}
 
 
 	//const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
