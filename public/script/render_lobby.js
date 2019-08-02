@@ -177,7 +177,6 @@ class RenderRoom{
 		roomList.style.display = "none";
 		let roomBlock = document.getElementById("room");
 		roomBlock.style.display = "flex";
-		this.makePalette(4);
 		this.loadUsers();
 	}
 
