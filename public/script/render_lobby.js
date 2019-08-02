@@ -42,6 +42,7 @@ class RenderLobby{
 						let roomDes = document.getElementById("room-description");
 						roomDes.innerHTML = "";
 						let playersCell = db.ref("Rooms/" + roomKey + "/Players");
+
 						let playersList = [];
 						let playersCount = 0;
 
@@ -112,6 +113,7 @@ class RenderLobby{
 	}
 
 	connectRoom(roomKey, selectedRoomID){
+		globalRoomKey = roomKey;
 		this.selectedRoomHostID = selectedRoomID;
 		console.log(this.selectedRoomHostID);
 		let db = firebase.database();
