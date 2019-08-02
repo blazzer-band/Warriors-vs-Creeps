@@ -252,11 +252,7 @@ function Render() {
 			};
 			i++;
 		}
-	};
-
-
-	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
-	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
+	}
 
 	//Окно, отображающее поражение для текущей сессии
 	this.defeat = function(){
@@ -282,15 +278,6 @@ function Render() {
 		messageBlock.style.opacity = '0'
 		if(messageTimeout === null) messageTimeout = setTimeout(() => {messageBlock.classList.add('noDisplay'); messageTimeout =  null}, 500)
 	}
-
-
-	//Test
-	/// players -- массив игроков, состоящее из Никнейма и его ID
-	// let players = [{"Host", 0}, {"Bot", 1}];
-	//
-	// this.showPlayers = function(players){
-	//
-	// }(players)
 
 	this.updateBombCounter = function(newVal){
 		document.getElementById('hp-bomb').innerHTML = newVal
