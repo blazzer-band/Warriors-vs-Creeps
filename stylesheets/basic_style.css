@@ -498,6 +498,14 @@ td {
 	display: block;
 }
 
+#make-bot{
+	background: #ecedef !important;
+    top: 0px;
+    left: 20px;
+    /* width: 100px; */
+    text-align: center;
+}
+
 #room {
     position: relative;
     width: 1200px;
