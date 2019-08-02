@@ -107,6 +107,7 @@ class RenderLobby{
 		db.ref('Rooms/' + roomTitle + '/RoomId').set(userId);
 		roomKey = roomTitle;
 		this.room = new RenderRoom(roomKey, this, this.userID);
+		this.room.loadUsers();
 		this.hideLobby();
 	}
 
@@ -117,25 +118,35 @@ class RenderLobby{
 		let nameCreator = "user-" + this.userID;
 		let root = db.ref("Users");
 		let roomTitle = roomKey;
-		root.on('child_added', function (snapshot) {
-			if (snapshot.key.toString() === nameCreator) {
-				let username = snapshot.val().Nickname;
-				let email = snapshot.val().Email;
-				let userId_ = snapshot.val().UserId;
-				let isHost = false;
-				let indicator = username + '-' + userId_;
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Email").set(email);
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/UserId").set(userId_);
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Host").set(isHost);
-				db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Action").set("atRoom");
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Host").set(isHost);
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
-				db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/UserId").set(userId_);
-			}
-		});
-		this.room = new RenderRoom(roomKey, this, this.selectedRoomHostID);
-		this.hideLobby();
+		let playersList = db.ref("Rooms/" + roomKey + "/Players");
+		let playersCount = 0;
+		playersList.on('child_added', function(){
+			playersCount++;
+		})
+
+		if (playersCount < 4){
+			root.on('child_added', function (snapshot) {
+				if (snapshot.key.toString() === nameCreator) {
+					let username = snapshot.val().Nickname;
+					let email = snapshot.val().Email;
+					let userId_ = snapshot.val().UserId;
+					let isHost = false;
+					let indicator = username + '-' + userId_;
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Email").set(email);
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/UserId").set(userId_);
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Host").set(isHost);
+					db.ref('Rooms/' + roomTitle + "/Players/" + indicator + "/Nickname").set(username);
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Action").set("atRoom");
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Host").set(isHost);
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/Nickname").set(username);
+					db.ref('Rooms/' + roomTitle + '/Game/Players/' + indicator + "/UserId").set(userId_);
+				}
+			});
+			this.room = new RenderRoom(roomKey, this, this.selectedRoomHostID);
+			this.room.loadUsers();
+			this.hideLobby();
+		}
+
 	}
 
 
@@ -156,12 +167,10 @@ class RenderRoom{
 
 		document.getElementById("make-bot").onclick = function(){
 			room.makeBot();
-		}
-	}
-
-
-	static get COLORS(){
-		return ["red", "blue", "aqua", "yellow", "black", "orange"];
+		};
+		document.getElementById("go-lobby").onclick = function () {
+			room.exitRoom(this.roomKey);
+		};
 	}
 
 	showRoom(){
@@ -169,8 +178,24 @@ class RenderRoom{
 		roomList.style.display = "none";
 		let roomBlock = document.getElementById("room");
 		roomBlock.style.display = "flex";
-		this.makePalette(4);
 		this.loadUsers();
+	}
+
+	exitRoom(roomKey) {
+		let db = firebase.database();
+		let list = db.ref('Rooms/' + roomKey + '/RoomId');
+		list.on('child_added', function (snapshot) {
+			if (snapshot.val().toString() === globalUserId) {
+				db.ref('Rooms/' + roomKey).remove();
+				room.disConnect();
+			}
+		})
+	}
+
+	static disConnect() {
+		lobby.showLobby();
+		let roomCurrent = document.getElementById("room");
+		roomCurrent.style.display = 'none';
 	}
 
 	loadUsers() {
@@ -190,47 +215,6 @@ class RenderRoom{
 				});
 			}
 		});
-	}
-
-	makePalette(count){
-		let room = this;
-		let playersList = document.getElementById("players-list");
-		for (let i = 0; i < count; i++){
-			let colorPicker = playersList.children[i].children[1].children[0];
-			colorPicker.style.backgroundColor = RenderRoom.COLORS[i];
-			colorPicker.onclick = function(e) {room.showPalette(i)};
-			colorPicker.style.zIndex = 1488 + i;
-			let palette = colorPicker.children[0];
-			for (let j = 0; j < RenderRoom.COLORS.length; j++){
-				palette.appendChild(document.createElement("div"));
-				palette.children[j].style.width = "20px";
-				palette.children[j].style.height = "20px";
-				palette.children[j].style.backgroundColor = RenderRoom.COLORS[j];
-				palette.children[j].style.marginBottom = "1px";
-				palette.children[j].style.marginTop = "1px";
-				palette.children[j].onclick = function(e) {room.setColor(i, palette.children[j].style.backgroundColor)};
-			}
-			if (i !== 0){playersList.children[i].children[1].style.display = "none"}
-		}
-		this.loadUsers();
-	}
-
-	showPalette(i){
-		let playersList = document.getElementById("players-list");
-		let palette = playersList.children[i].children[1].children[0].children[0];
-		if ((palette.style.display === "") || (palette.style.display === "none")){
-			palette.style.display = "block";
-		}
-		else {
-			palette.style.display = "none";
-		}
-		this.loadUsers();
-	}
-
-	setColor(playerSpot, color){
-		let playersList = document.getElementById("players-list");
-		let colorPicker = playersList.children[playerSpot].children[1].children[0];
-		colorPicker.style.backgroundColor = color;
 	}
 
 	beginGame(){
@@ -270,6 +254,8 @@ class RenderRoom{
 			let botName = this.botsCount + "Botb";
 			db.ref("Rooms/" + this.roomKey + "/Players/" + botName + "/Nickname").set(botName);
 		}
+
+		this.loadUsers();
 	}
 
 	//exit(){}
