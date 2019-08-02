@@ -62,6 +62,7 @@ function Game() {
 					if (disabledStacks.length > 0) {
 						user.agent.selectStacks(disabledStacks, 1, function(selectedStacksIds){
 							user.stacks[disabledStacks[selectedStacksIds[0]]].pop();
+							resolve();
 						});
 					}
 
@@ -79,12 +80,13 @@ function Game() {
 							let tmpStack = user.stacks[selectedStacksIds[0]];
 							user.stacks[selectedStacksIds[0]] = user.stacks[selectedStacksIds[1]];
 							user.stacks[selectedStacksIds[1]] = tmpStack;
+							resolve();
 						});
 					}
 
 				}
 
-				resolve(true);
+				
 			})
 		}
 
