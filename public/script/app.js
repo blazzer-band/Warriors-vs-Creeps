@@ -609,13 +609,20 @@ function Game() {
 				if(next.unit !== null && next.unit.type === unitType.Creep) creepKill(next)
 
 				map.moveUnitFromCellToCoords(curCell, next.x, next.y)
-				render.moveUnit(curCell, next)
+
+
+				
 
 				if(next.unit.attachedCell !== null) { // Если юнит кого-то тащит, то тот занимает ячейку юнита
+					render.moveUnit(curCell, next)
 					map.moveUnitFromCellToCoords(next.unit.attachedCell, curCell.x, curCell.y);
-					render.moveUnit(next.unit.attachedCell, curCell)
+					await render.moveUnit(next.unit.attachedCell, curCell)
 					next.unit.attachedCell = curCell
 				}
+				else{
+					await render.moveUnit(curCell, next)
+				}
+
 
 				stack.push(next)
 
@@ -669,7 +676,7 @@ function Game() {
 
 
 
-	function creepsMoveAct() { // TODO: таранят бомбу или героя если они на пути
+	async function creepsMoveAct() { // TODO: таранят бомбу или героя если они на пути
 
 		let creepsCells = map.getAllCellHasUnits(unitType.Creep);
 		let bombCells = map.getAllCellHasUnits(unitType.Bomb);

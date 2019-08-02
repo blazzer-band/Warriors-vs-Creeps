@@ -38,28 +38,40 @@ function Render() {
 
 	const UNIT_IMGS = ["src/models/hero_right.png", "src/models/monster.png", "src/models/bomb.png", "src/models/hero_left.png", "src/models/hero_up.png", "src/models/hero_down.png"];
 
-	this.moveUnit = function(cellFrom, cellTo) {
-		let fromElem = mapBody.children[cellFrom.y].children[cellFrom.x];
-		let toElem = mapBody.children[cellTo.y].children[cellTo.x];
+	this.moveUnit = function(cellFrom, cellTo, callback) {
+		return new Promise(function(resolve, reject){
+			let fromElem = mapBody.children[cellFrom.y].children[cellFrom.x];
+			let toElem = mapBody.children[cellTo.y].children[cellTo.x];
 
-		let from_x = fromElem.offsetLeft;
-		let from_y = fromElem.parentElement.offsetTop;
+			let from_x = fromElem.offsetLeft;
+			let from_y = fromElem.parentElement.offsetTop;
 
-		let to_x = toElem.offsetLeft;
-		let to_y = toElem.parentElement.offsetTop;
+			let to_x = toElem.offsetLeft;
+			let to_y = toElem.parentElement.offsetTop;
 
-		let el = fromElem.lastChild;
-		toElem.appendChild(el);
-		el.style.zIndex = '2';
-		el.style.transition = "transform .4s";
-		el.style.transform = 'translateY('+ (from_y-to_y) +'px)';
-		el.style.transform += 'translateX('+ (from_x-to_x) +'px)';
+			let el = fromElem.lastChild;
+			el.style.transform = 'translateY('+ (from_y-to_y) +'px)';
+			el.style.transform += 'translateX('+ (from_x-to_x) +'px)';
+			el.style.zIndex = '2';
+			
 
-		setTimeout(function(){
-			el.style.transform = 'translateY(0px)';
-			el.style.transform += 'translateX(0px)';
-		}, 0)
-	};
+			setTimeout(function(){
+				el.style.transition = "transform .4s";
+			}, 0)
+
+
+
+			toElem.appendChild(el);
+			setTimeout(function(){
+				el.style.transform = 'translateY(0px)';
+				el.style.transform += 'translateX(0px)';
+			}, 100)
+			setTimeout(function(){
+				el.style = ''
+				resolve()
+			}, 550);
+		})
+	}
 
 	let cssUnitAttr = {0: 'hero', 2: 'bomb', 1: 'creep' }
 	this.initUnit = function(cell) {
