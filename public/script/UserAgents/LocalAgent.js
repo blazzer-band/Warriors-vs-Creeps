@@ -2,10 +2,10 @@
 // локальный пользователь получающий запросы(из ядра) на данные и управляющий рендером
 // Для каждого локального хранится собственный класс в firebase
 
-class LocalAgent/* extends AbstractAgent*/{
+class LocalAgent extends AbstractAgent{
 
 	constructor(userIndicator){
-		/*super();*/
+		super();
 		this.userIndicator = userIndicator;
 	}
 
@@ -17,7 +17,7 @@ class LocalAgent/* extends AbstractAgent*/{
 	}
 
 	selectCard(cards, callback){
-		let agent;
+		let agent = this;
 		game.getRender.startTimer(600);
 		game.getRender.selectCard(cards, endSelect);
 

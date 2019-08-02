@@ -415,7 +415,7 @@ function Game() {
 		let noLocal = [];
 		for (let i = 0; i < users.length; i++) { // Получить локальных
 			if(users[i].agent.constructor.name == 'LocalAgent') local.push(i);
-			else noLocal.Push(i);
+			else noLocal.push(i);
 		}
 
 		let countNoLocal = 0;
