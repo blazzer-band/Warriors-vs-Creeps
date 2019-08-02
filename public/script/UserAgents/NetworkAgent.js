@@ -14,7 +14,7 @@ class NetworkAgent extends AbstractAgent{
 
 		let db = firebase.database();
 		let list = db.ref('Rooms/'+activeRoom+'/Game/Players/' + connectedUserId+'/Action');
-		list.on('child_changed', function (data){
+		list.on('child_added', function (data){
 			console.log(data);
 		})
 	}
