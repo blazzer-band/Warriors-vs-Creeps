@@ -6,13 +6,9 @@ class BotAgent extends AbstractAgent{
 	constructor(){
 		super();
 	}
-	
-	selectCards(cards, count, callback){
-		let out = []
-		for (var i = 0; i < count; i++) {
-			out.push(i)
-		}
-		callback(out)
+
+	selectCard(cards, callback){
+		callback(0)
 	}
 
 	setHand(cardIds){
@@ -28,7 +24,7 @@ class BotAgent extends AbstractAgent{
 
 	programming(callback){
 		callback(0, -1);
-		
+
 	}
 
 	chooseRotate(rotateArray, callback){
@@ -36,6 +32,14 @@ class BotAgent extends AbstractAgent{
 	}
 
 	selectCells(cellsArray, highlight, count, callback) {
+		let calAr = []
+		for (let i = 0; i < count; i++) {
+			calAr[i] = i;
+		}
+		callback(calAr);
+	}
+
+	selectStacks(cellsArray, count, callback) {
 		let calAr = []
 		for (let i = 0; i < count; i++) {
 			calAr[i] = i;

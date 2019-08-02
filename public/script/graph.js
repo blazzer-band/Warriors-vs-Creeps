@@ -61,10 +61,11 @@ function Render() {
 		}, 0)
 	};
 
+	let cssUnitAttr = {0: 'hero', 2: 'bomb', 1: 'creep' }
 	this.initUnit = function(cell) {
 
-		let img = new Image();
-		img.src = UNIT_IMGS[cell.unit.type];
+		let img = document.createElement('div')
+		img.setAttribute('unit', cssUnitAttr[cell.unit.type]);
 		mapBody.children[cell.y].children[cell.x].appendChild(img);
 		img.style.transition = "transform .4s";
 		img.style.transform = 'scale(0)';
@@ -72,6 +73,10 @@ function Render() {
 		if(cell.unit.rotation !== null && cell.unit.type === unitType.Hero){
 			this.updateCellRotate(cell, cell.unit.rotation);
 		}
+		if(cell.unit.ownerUser !== null){
+			img.setAttribute('user', cell.unit.ownerUser.index);
+		}
+
 		setTimeout(function(){
 			img.style.transform = 'scale(1)';
 			setTimeout(function(){
@@ -86,9 +91,7 @@ function Render() {
 		mapBody.children[cell.y].children[cell.x].children[1].outerHTML = '';
 	};
 
-	this.selectCards = function(cards, count, callback) {
-
-		programmingSession = false;
+	this.selectCard = function(cards, callback) {
 		chooseBoard.classList.remove('noDisplay')
 
 		chooseBoard.style.opacity = '0';
@@ -98,29 +101,17 @@ function Render() {
 				chooseBoard.style = ''
 			}, 1000)
 		}, 0)
-		let arrayIdSelectedCards = [];
 
 		deskCard.innerHTML = '';
 		for (let i = 0; i < cards.length; i++) {
 			let img = getNewCardElem(cards[i])
-			img.className = "round-cards";
 			img.tempSelectId = i;
 			img.onclick = function(e) {
-				let card = e.currentTarget;
-				if(card.classList.contains('selected-card')){
-					card.classList.remove("selected-card");
-					arrayIdSelectedCards = arrayIdSelectedCards.filter(c => c !== card.tempSelectId);
+				chooseBoard.classList.add('noDisplay')
+				if (callback !== undefined) {
+					callback(e.currentTarget.tempSelectId);
 				}
-				else if (arrayIdSelectedCards.length !== count) {
-					card.classList.add("selected-card");
-					arrayIdSelectedCards.push(card.tempSelectId|0);
-				}
-
-				if (arrayIdSelectedCards.length === count) {
-					if (callback !== undefined) {
-						callback(arrayIdSelectedCards);
-					}
-				}
+				
 			}
 			deskCard.appendChild(img)
 		}
@@ -224,13 +215,13 @@ function Render() {
 				scrap.style.display = "block";
 				trash.onclick = function(e){
 					programmingCallback(selectedHandCard.idInList, -2);
-					selectedHandCard = null;
+					//selectedHandCard = null;
 					trash.style.display = "none";
 					scrap.style.display = "none";
 				}
 				scrap.onclick = function(e){
 					programmingCallback(selectedHandCard.idInList, -1);
-					selectedHandCard = null;
+					//selectedHandCard = null;
 					trash.style.display = "none";
 					scrap.style.display = "none";
 				}
@@ -263,11 +254,6 @@ function Render() {
 		}
 	};
 
-
-	// callback (StackIds[])
-	this.selectStack = function(selectablStacks, count, callback){
-
-	}
 
 	// cellsArray[i] = {x:X, y:Y, higlight:/0, 1, 2/}
 	// callback Возвращает id ячеек в массиве cellsArray, на которые кликнули
@@ -327,24 +313,19 @@ function Render() {
 	}
 
 	//orientation: 0 - ^,  1 - >, 2 - v, 3 - <  // pos: cell.x,  cell.y
+	const rotAr = ['top', 'right', 'bottom', 'left' ]
 	this.updateCellRotate = function(cell, orientation){
-		switch(orientation){
-			case 0:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[4];
-				//TODO transform;
-				break;
-			case 1:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[0];
-				break;
+		mapBody.children[cell.y].children[cell.x].children[1].setAttribute('rotate', rotAr[orientation])
+	}
 
-			case 2:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[5];
-				break;
-
-			case 3:
-				mapBody.children[cell.y].children[cell.x].children[1].src = UNIT_IMGS[3];
-				break;
-		}
+	//Выбор стеков
+	this.selectStacks = function(stacks, count, callback){
+		let s = 'Выберите '+count+' номер стеков';
+		for (let i = 0; i < stacks.length; i++) {
+			s += i + ':' + stacks[i] + ' ';
+		};
+		let array = prompt(s, "0").split(" ");
+		callback(array);
 	}
 
 
