@@ -487,6 +487,8 @@ td {
     height: 70%;
     background-color: #ededed;
     border-radius: 0 0 40px 40px;
+	font-family: sans-serif;
+	font-size: 16pt;
 }
 
 #room {
@@ -596,7 +598,7 @@ td {
     padding: 10px 20px 10px 20px;
     margin: 0 auto;
     display: inline-block;
-    background: ##ff4848 !important;
+    background: #ff4848 !important;
     top: 530px;
 	left: -100px;
 }

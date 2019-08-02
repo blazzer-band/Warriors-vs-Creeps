@@ -39,6 +39,29 @@ class RenderLobby{
 						roomKey = snapshot.key.toString();
 						activeRoom = snapshot.val().RoomId;
 						console.log(activeRoom);
+						let roomDes = document.getElementById("room-description");
+						roomDes.innerHTML = "";
+						let playersCell = db.ref("Rooms/" + roomKey + "/Players");
+						let playersList = [];
+						let playersCount = 0;
+
+						playersCell.on("child_added", function(player){
+							playersList.push(player.val().Nickname);
+							playersCount++;
+						})
+
+						roomDes.appendChild(document.createElement("span"));
+						roomDes.lastChild.textContent = "1. Количество игроков в комнате: " + playersCount + "/4;";
+
+						roomDes.appendChild(document.createElement("span"));
+						roomDes.lastChild.textContent = "2. Игроки в комнате: ";
+						for (let i = 0; i < playersList.length; i++){
+							roomDes.appendChild(document.createElement("span"));
+							roomDes.lastChild.textContent = "\t" + i + " " + playersList[i];
+						}
+
+						roomDes.appendChild(document.createElement("span"));
+						roomDes.lastChild.textContent = "3. Тип миссии: Bomb Keepers;";
 					}
 				});
 			};
