@@ -934,6 +934,15 @@ div#trackers>div {
     height: 100%;
 }
 
+[highlightedStack] {
+    outline:10px solid #f4ff218c;  
+    outline-offset: -5px;
+}
+
+[selectedStack=true] {
+    outline-color:#32ff218c;
+}
+
 .stack-content>img,
 #hand-board>img {
     width: 100%;

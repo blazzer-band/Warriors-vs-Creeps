@@ -80,9 +80,9 @@ function Game() {
 					}
 					if (notDisabledStacks.length >= 2){
 						user.agent.selectStacks(notDisabledStacks, 2, function(selectedStacksIds){
-							let tmpStack = user.stacks[selectedStacksIds[0]];
-							user.stacks[selectedStacksIds[0]] = user.stacks[selectedStacksIds[1]];
-							user.stacks[selectedStacksIds[1]] = tmpStack;
+							let tmpStack = user.stacks[notDisabledStacks[selectedStacksIds[0]]];
+							user.stacks[notDisabledStacks[selectedStacksIds[0]]] = user.stacks[notDisabledStacks[selectedStacksIds[1]]];
+							user.stacks[notDisabledStacks[selectedStacksIds[1]]] = tmpStack;
 							resolve();
 						});
 					}

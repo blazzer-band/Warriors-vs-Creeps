@@ -194,11 +194,66 @@ function Render() {
 		return img
 	}
 
+
+	let stackSellCallback = null;
+	let stackSellCountO = null;
+	let stackSellCount = null;
+	//Выбор стеков
+	this.selectStacks = function(stacks, count, callback){
+		/*let s = 'Выберите '+ count +' id стека карт для свапа: ';
+
+		for (let i = 0; i < stacks.length; i++) {
+			s += i + ':' + stacks[i] + ' ';
+		};
+		let array = prompt(s, "0 1").split(" ");
+		callback(array);*/
+		//let hiStacks = stacksParent.filter(q => )
+		stackSellCallback = callback;
+		stackSellCountO = count;
+		stackSellCount = 0;
+
+		for (let stack of stacksParent) {
+			let id = stacks.indexOf(stack.stackId|0);
+			if(id >= 0){
+				stack.setAttribute('selectedStack', 'false');
+				stack.setAttribute('highlightedStack', 'yes');
+				stack.timedIdRet = id;
+			}
+
+		}
+	}
+
+
+	function selectStack(e){
+		let stack= e.currentTarget;
+		if(stack.getAttribute('highlightedStack') !== 'yes') return;
+
+		let isS = e.currentTarget.getAttribute('selectedStack') === 'true';
+
+		stack.setAttribute('selectedStack', isS ? 'false' : 'true');
+		stackSellCount += isS ? -1 : 1;
+
+		if(stackSellCount === stackSellCountO){
+			let retArr = []
+
+			for (let s of stacksParent) {
+				if(s.getAttribute('selectedStack') === 'true'){
+					retArr.push(s.timedIdRet|0);
+				}
+				s.removeAttribute('highlightedStack')
+				s.removeAttribute('selectedStack')
+			}
+			stackSellCallback(retArr);
+		}
+	}
+
+
 	{
 		let i = 0;
 		for (let stack of stacksParent) {
 			stack.stackId = i++;
 			stack.addEventListener('click', stopProgramming)
+			stack.addEventListener('click', selectStack)
 		}
 	}
 	let selectedHandCard = null;
@@ -236,6 +291,8 @@ function Render() {
 			}
 		}
 	}
+
+	
 
 
 	//const higlightType = {Rotate: 0, Move: 1, Attack:2, Hook:3};
@@ -338,15 +395,7 @@ function Render() {
 		mapBody.children[cell.y].children[cell.x].children[1].setAttribute('rotate', rotAr[orientation])
 	}
 
-	//Выбор стеков
-	this.selectStacks = function(stacks, count, callback){
-		let s = 'Выберите '+ count +' id стека карт для свапа: ';
-		for (let i = 0; i < stacks.length; i++) {
-			s += i + ':' + stacks[i] + ' ';
-		};
-		let array = prompt(s, "0 1").split(" ");
-		callback(array);
-	}
+
 
 
 }
