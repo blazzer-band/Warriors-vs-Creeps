@@ -426,22 +426,18 @@ function Game() {
 
 
 	function programmingAct() { // DONE!
-		
-		let local = [];
-		let noLocal = [];
-		for (let i = 0; i < users.length; i++) { // Получить локальных
+
+		//let noLocal = users;
+		/*for (let i = 0; i < users.length; i++) { // Получить локальных
 			if(users[i].agent.constructor.name == 'LocalAgent') local.push(i);
 			else noLocal.push(i);
-		}
+		}*/
 
-		let countNoLocal = 0;
-		let countLocal = 0;
-		let isEnd = true
-		for (let i of noLocal) {
+		let count = 0;
+		for (let i in users) {
 			users[i].programming(function() {
-				countNoLocal++;
-				if (countNoLocal === noLocal.length && countLocal === local.length && isEnd) {
-					isEnd = false
+				count++;
+				if (count === users.length) {
 					render.hideMessage()
 					setTimeout(warriorsAct, 0)
 				}
@@ -450,6 +446,9 @@ function Game() {
 				}
 			})
 		}
+		
+		/*let local = [];
+		
 
 		function localProg(userLocalInd = 0){
 			users[local[userLocalInd]].programming(function() {
@@ -468,7 +467,7 @@ function Game() {
 				}
 			})
 		}
-		localProg();
+		localProg();*/
 
 	}
 
