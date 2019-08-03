@@ -351,7 +351,7 @@ function Render() {
 		setTimeout(() => messageBlock.style.opacity = '1', 0)
 	}
 
-	this.hideMessge = function(){
+	this.hideMessage = function(){
 		messageBlock.style.opacity = '0'
 		if(messageTimeout === null) messageTimeout = setTimeout(() => {messageBlock.classList.add('noDisplay'); messageTimeout =  null}, 500)
 	}

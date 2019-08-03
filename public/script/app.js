@@ -300,6 +300,7 @@ function Game() {
 	this.getRandom = random;
 
 	let users = []; // Пользователи
+	let localUser = null;
 	// TODO: users: AbstractAgent[] array - инициализированные обьекты пользователей
 	this.start = function(newUsers, seedRandom = 42){ // newUsers - массив уникальных идентификаторов
 		random = new Math.seedrandom(seedRandom);
@@ -308,6 +309,7 @@ function Game() {
 			let user = new User(); 
 			if(globalUserId === userId){
 				user.agent = new LocalAgent(userId)
+				localUser = user
 
 				/*user.stacks[0] = [4,4,4]
 				user.stacks[1] = [10,10,10]
@@ -400,8 +402,10 @@ function Game() {
 				lose("Карты в колоде закончились!");
 				return;
 			}
+			if(localUser !== users[userId]) render.showMessage('Сейчас карту выбирает другой пользователь')
 
 			users[userId].selectCard(selectionCards, function(selectCardId) {
+				render.hideMessage()
 
 				selectionCards.splice(selectCardId, 1);
 
@@ -409,7 +413,9 @@ function Game() {
 
 				if (isFirstRound && countGived < (users.length * 2) || !isFirstRound && countGived < 4) {
 					select((userId + 1) % users.length);
-				} else {
+				} 
+				else {
+					
 					setTimeout(programmingAct, 0);
 				}
 			})
@@ -435,7 +441,11 @@ function Game() {
 				countNoLocal++;
 				if (countNoLocal === noLocal.length && countLocal === local.length && isEnd) {
 					isEnd = false
+					render.hideMessage()
 					setTimeout(warriorsAct, 0)
+				}
+				else if(users[i] === localUser){
+					render.showMessage('Другой пользователь ещё расставляет карты,<br>пожалуйста подождите')
 				}
 			})
 		}
@@ -449,7 +459,11 @@ function Game() {
 				} 
 				else if(countNoLocal === noLocal.length && isEnd){
 					isEnd = false
+					render.hideMessage()
 					setTimeout(warriorsAct, 0);
+				}
+				else if(users[local[userLocalInd]] === localUser) {
+					render.showMessage('Другой пользователь ещё расставляет карты,<br>пожалуйста подождите')
 				}
 			})
 		}
