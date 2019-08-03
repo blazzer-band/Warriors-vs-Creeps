@@ -304,6 +304,7 @@ function Game() {
 	// TODO: users: AbstractAgent[] array - инициализированные обьекты пользователей
 	this.start = function(newUsers, seedRandom = 42){ // newUsers - массив уникальных идентификаторов
 		random = new Math.seedrandom(seedRandom);
+		this.getRandom = random;
 		let index = 0;
 		for (let userId of newUsers) {
 			let user = new User(); 

@@ -23,7 +23,7 @@ class BotAgent extends AbstractAgent{
 	}
 
 	programming(callback){
-		callback([0, -1]);
+		callback([0, getRandomInt(game.getRandom, -2, 6)]);
 
 	}
 
@@ -31,18 +31,28 @@ class BotAgent extends AbstractAgent{
 		callback(0);
 	}
 
-	selectCells(cellsArray, highlight, count, callback) {
+	selectCells(arr, highlight, count, callback) {
+		let selInds = []
+		for (let i = 0; i < arr.length; i++) {
+			selInds.push(i);
+		}
+		shakeArray(selInds, game.getRandom);
 		let calAr = []
 		for (let i = 0; i < count; i++) {
-			calAr[i] = i;
+			calAr[i] = selInds[i];
 		}
 		callback(calAr);
 	}
 
-	selectStacks(cellsArray, count, callback) {
+	selectStacks(arr, count, callback) {
+		let selInds = []
+		for (let i = 0; i < arr.length; i++) {
+			selInds.push(i);
+		}
+		shakeArray(selInds, game.getRandom);
 		let calAr = []
 		for (let i = 0; i < count; i++) {
-			calAr[i] = i;
+			calAr[i] = selInds[i];
 		}
 		callback(calAr);
 	}
