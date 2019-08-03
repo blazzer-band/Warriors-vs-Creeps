@@ -244,13 +244,13 @@ const cardsJSON = [
 			{// 2 Уровень
 				targetCount: 2,
 				move:[],
-				attack: [{x:0, y:1}], // Аттака в конце хода
+				attack: [{x:0, y:1},{x:0, y:2}], // Аттака в конце хода
 				rotate:[]
 			},
 			{// 3 Уровень
 				targetCount: 3,
 				move:[],
-				attack: [{x:0, y:1}], // Аттака в конце хода
+				attack: [{x:0, y:1},{x:0, y:2},{x:0, y:3}], // Аттака в конце хода
 				rotate:[]
 			}
 		]
@@ -324,15 +324,15 @@ const cardsJSON = [
 				rotate:[]
 			},
 			{// 2 Уровень
-				targetCount: 1,
+				targetCount: 3,
 				move:[],
-				attack: [{x:0,y:1}],
+				attack: [{x:0,y:1},{x:0,y:2},{x:0,y:3}],
 				rotate:[]
 			},
 			{// 3 Уровень
-				targetCount: 1,
+				targetCount: 5,
 				move:[],
-				attack: [{x:0,y:1}],
+				attack: [{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:0,y:4},{x:0,y:5}],
 				rotate:[]
 			}
 		]
