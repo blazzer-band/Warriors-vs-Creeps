@@ -1082,3 +1082,9 @@ button.loginButton {
     color: black;
     font-size: 30px;
 }
+
+
+[selectedHandCard] {
+    outline: 10px solid #5a00ff5c;
+    outline-offset: -10px;
+}

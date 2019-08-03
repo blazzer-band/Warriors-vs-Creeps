@@ -200,14 +200,6 @@ function Render() {
 	let stackSellCount = null;
 	//Выбор стеков
 	this.selectStacks = function(stacks, count, callback){
-		/*let s = 'Выберите '+ count +' id стека карт для свапа: ';
-
-		for (let i = 0; i < stacks.length; i++) {
-			s += i + ':' + stacks[i] + ' ';
-		};
-		let array = prompt(s, "0 1").split(" ");
-		callback(array);*/
-		//let hiStacks = stacksParent.filter(q => )
 		stackSellCallback = callback;
 		stackSellCountO = count;
 		stackSellCount = 0;
@@ -283,9 +275,9 @@ function Render() {
 		for (let card of handBoard.children) {
 			card.idInList = i++;
 			card.onclick = function(e){
-				if (selectedHandCard !== null) selectedHandCard.style.outline = '';
+				if (selectedHandCard !== null) selectedHandCard.removeAttribute('selectedHandCard')
 				selectedHandCard = e.currentTarget;
-				selectedHandCard.style.outline = '2px solid yellow';
+				selectedHandCard.setAttribute('selectedHandCard', true)
 				trash.style.display = "block";
 				scrap.style.display = "block";
 			}
