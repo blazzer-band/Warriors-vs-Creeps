@@ -258,7 +258,7 @@ td {
 
 .hand-counter {
     text-align: center;
-    font-size: 50px;
+    font-size: 40px;
     position: absolute;
     bottom: -15px;
     color: #d7d7d7;
@@ -293,7 +293,7 @@ td {
     background-image: url("../src/models/card_field_texture.png");
     background-size: 30%;
     background-color: #8593ae;
-    height: 184px;
+    height: 200px;
     width: 99.3%;
     border-radius: 12px 12px 0 0;
     z-index: 1;
@@ -319,7 +319,7 @@ td {
 .number-6-icon {
     position: absolute;
     left: 35px;
-    bottom: -24px;
+    bottom: -44px;
     width: 50px;
     height: 50px;
     z-index: 6;
@@ -389,7 +389,7 @@ td {
 }
 
 #footer_footer {
-    height: 20px;
+    height: 40px;
     width: 1150px;
     border-radius: 0 0 12px 12px;
 }
@@ -672,7 +672,7 @@ div#trackers>div {
 
 
 .stack img:nth-child(2) {
-    margin-top: -100%
+    margin-top: -100%;
 }
 
 .stack img:nth-child(3) {
@@ -799,7 +799,7 @@ div#trackers>div {
 }
 
 #choose-board{
-    opacity: .1;
+    opacity: .2;
 }
 #choose-board:hover{
     opacity: 1;
@@ -917,9 +917,6 @@ div#trackers>div {
     box-shadow: 0 0 3pt 2pt #4aff60;
 }
 
-.stack img:nth-child(2) {
-    margin-top: -100%
-}
 
 .stack img:nth-child(3) {
     margin-top: -100%
