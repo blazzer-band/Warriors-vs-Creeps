@@ -114,6 +114,7 @@ class RenderLobby{
 		db.ref('Rooms/' + roomTitle + '/Game/Active').set(false);
 		db.ref('Rooms/' + roomTitle + '/RoomId').set(userId);
 		roomKey = roomTitle;
+		globalRoomKey = roomKey;
 		this.room = new RenderRoom(roomKey, this, this.userID);
 		//this.room.loadUsers();
 		this.hideLobby();
